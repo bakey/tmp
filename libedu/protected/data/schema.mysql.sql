@@ -66,3 +66,37 @@ create table tbl_item_item(
 parent int(11) not null references tbl_item(id) on delete cascade,
 child int(11) not null references tbl_item(id) on delete cascade
 )engine=innodb default charset=utf8;
+
+create table `tbl_task` (
+	`id` int(11) NOT NULL AUTO_INCREMENT primary key,
+	`course_item_id` int(11) not null references tbl_item(id) on delete cascade,
+	`name` varchar(255) ,
+	`create_time` datetime not null,
+	`last_time` time not null,
+	`creator` int references tbl_user(id) on delete cascade,
+	`description` text,
+	`state` tinyint 
+)engine=innodb default charset=utf8;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
