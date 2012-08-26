@@ -1,0 +1,58 @@
+<?php
+	class Emailer extends CModel{
+	
+		
+		private static $allAddress = array(
+			'no-reply'=>array(
+				'address' => 'no-reply@libedu.com',
+				'username' => 'no-reply@libedu.com',
+				'password' => '',
+			),
+			'service'=>array(
+				'address' => 'service@libedu.com',
+				'username' => 'service@libedu.com',
+				'password' => '',
+			),
+			'admin'=>array(
+				'address' => 'admin@libedu.com',
+				'username' => 'admin@libedu.com',
+				'password' => '',
+			),
+		);
+
+		private $_fromAddress;
+		private $_mailUsername;
+		private $_mainPassword;
+		private $_template;
+		private $_msgBody = array();
+		private $isForeignAddress = false;
+		private $_serverAddress = '';
+		private $_serverPort = 123;
+		private $_serverRequestSSL = true;
+		
+		function Emailer($fromAddress = 'no-reply', $template = 'notification', $msgBody= array()){
+			
+			//set necessary info & var
+			
+			if(isset($allAddress[$fromAddress])){
+				$_fromAddress = $allAddress[$fromAddress]['address'];
+				$_mailUsername = $allAddress[$fromAddress]['username'];
+				$_mailPassword = $allAddress[$fromAddress]['password'];
+			}else{
+				$isForeignAddress = true;
+				$_fromAddress = $fromAddress;
+			}
+
+			$_fromAddress = $fromAddress;
+			$_template = $template;
+			$_msgBody = $msgBody;
+            
+			//init swift mailer
+
+
+
+		}
+
+	}
+
+?>
