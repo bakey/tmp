@@ -27,7 +27,8 @@ return array(
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
-		
+		'user',
+		'teach',		
 	),
 
 	// application components
@@ -36,7 +37,6 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
-		'timeZone'=>"Asia/Shanghai",
 		'authManager'=>array(
 			'class'=>'CDbAuthManager',
 			'connectionID'=>'db',
@@ -95,4 +95,5 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'chengchao@libedu.com',
 	),
+	'timeZone'=>"Asia/Shanghai",
 );
