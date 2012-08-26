@@ -7,7 +7,7 @@ CREATE TABLE `tbl_user` (
   `salt` varchar(255) NOT NULL,
   `status` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf-8
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 create table tbl_user_active(
 uid int(11) references tbl_user(id) on delete cascade,
