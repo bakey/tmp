@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 26, 2012 at 09:01 AM
+-- Generation Time: Aug 26, 2012 at 09:40 AM
 -- Server version: 5.5.25a
 -- PHP Version: 5.4.4
 
@@ -80,7 +80,14 @@ CREATE TABLE IF NOT EXISTS `tbl_school` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tbl_school`
+--
+
+INSERT INTO `tbl_school` (`id`, `name`, `description`) VALUES
+(1, '测试', NULL);
 
 -- --------------------------------------------------------
 
@@ -122,4 +129,16 @@ CREATE TABLE IF NOT EXISTS `tbl_user_course` (
   `course_id` int(11) NOT NULL,
   `role` tinyint(4) NOT NULL,
   `start_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_user_school`
+--
+
+CREATE TABLE IF NOT EXISTS `tbl_user_school` (
+  `user_id` int(11) NOT NULL,
+  `school_id` int(11) NOT NULL,
+  `role` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
