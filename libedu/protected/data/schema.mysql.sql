@@ -12,7 +12,7 @@ CREATE TABLE `tbl_user` (
 create table tbl_user_active(
 uid int(11) references tbl_user(id) on delete cascade,
 active_id varchar(255) not null,
-create_time timestamp not null
+create_time datetime not null
 );
 
 create table tbl_profile(
@@ -48,5 +48,5 @@ create table tbl_user_course(
 user_id int(11) not null references tbl_user(id) on delete cascade ,
 course_id int(11) not null references tbl_course(id) on delete cascade,
 role tinyint not null,
-start_time timestamp not null
+start_time datetime not null
 );
