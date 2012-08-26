@@ -1,0 +1,521 @@
+2012/08/26 08:53:54 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:53:55 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:22 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:23 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:26 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:27 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:41 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:52 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:53 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 08:54:54 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:42 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:43 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:46 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:56 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:58 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:14:59 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:07 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:08 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:10 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:11 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:16 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:18 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:48 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:50 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_school`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:51 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:15:52 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:02 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:03 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:03 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:06 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:07 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:07 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:14 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\libedu\libedu\protected\controllers\UserController.php (125)
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:15 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\protected\controllers\UserController.php (125)
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:15 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\libedu\libedu\protected\controllers\UserController.php (125)
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:15 [trace] [system.db.ar.CActiveRecord] User.count()
+in D:\xampp\htdocs\libedu\libedu\protected\views\user\index.php (20)
+in D:\xampp\htdocs\libedu\libedu\protected\controllers\UserController.php (128)
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:15 [trace] [system.db.CDbCommand] Querying SQL: SELECT COUNT(*) FROM `tbl_user` `t`
+in D:\xampp\htdocs\libedu\libedu\protected\views\user\index.php (20)
+in D:\xampp\htdocs\libedu\libedu\protected\controllers\UserController.php (128)
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:15 [trace] [system.db.ar.CActiveRecord] User.findAll()
+in D:\xampp\htdocs\libedu\libedu\protected\views\user\index.php (20)
+in D:\xampp\htdocs\libedu\libedu\protected\controllers\UserController.php (128)
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/26 09:16:15 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_user` `t` LIMIT 10
+in D:\xampp\htdocs\libedu\libedu\protected\views\user\index.php (20)
+in D:\xampp\htdocs\libedu\libedu\protected\controllers\UserController.php (128)
+in D:\xampp\htdocs\libedu\libedu\index.php (13)
