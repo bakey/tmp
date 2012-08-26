@@ -61,8 +61,3 @@ create table tbl_course_item(
 edition int(11) not null references tbl_course_edition(id) on delete cascade ,
 item int(11) not null references tbl_item(id) on delete cascade
 )engine=innodb default charset=utf8;
-
-create table tbl_item_item(
-parent int(11) not null references tbl_item(id) on delete cascade,
-child int(11) not null references tbl_item(id) on delete cascade
-)engine=innodb default charset=utf8;
