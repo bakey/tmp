@@ -8,9 +8,10 @@ class CourseController extends Controller
 		{
 			$course_id = $_GET['id'];
 			$course = Course::model()->findByPk( $course_id );
-			//$edition = $course->edition;
-			var_dump( $course->edition );
-			//echo($edition->name);
+			//echo($course->edition_id);
+			$edition = $course->edition;
+			//var_dump( $course->edition );
+			echo($edition->name);
 			exit();
 		}
 		

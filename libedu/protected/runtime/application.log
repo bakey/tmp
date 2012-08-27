@@ -1149,3 +1149,225 @@ in E:\wamp\www\project\libedu\index.php (13)
 2012/08/27 21:21:35 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'libedu.{{course_edition}}' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `{{course_edition}}`.
 in E:\wamp\www\project\libedu\protected\modules\teach\controllers\CourseController.php (12)
 in E:\wamp\www\project\libedu\index.php (13)
+2012/08/28 01:49:34 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:49:34 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:49:34 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:49:34 [trace] [system.db.ar.CActiveRecord] Course.findByPk()
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:49:34 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_course` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:49:34 [trace] [system.db.ar.CActiveRecord] lazy loading Course.edition
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:49:34 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `{{course_edition}}`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:49:34 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'libedu.{{course_edition}}' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `{{course_edition}}`.
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:50:06 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:50:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:50:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:50:06 [trace] [system.db.ar.CActiveRecord] Course.findByPk()
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:50:06 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_course` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:50:06 [trace] [system.db.ar.CActiveRecord] lazy loading Course.edition
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:50:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:50:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:50:06 [trace] [system.db.CDbCommand] Querying SQL: SELECT `edition`.`id` AS `t1_c0`, `edition`.`name` AS `t1_c1`, `edition`.`description` AS `t1_c2` FROM `tbl_course_edition` `edition`  WHERE (`edition`.`edition_id`=:ypl0). Bound with :ypl0='1'
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:50:06 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'edition.edition_id' in 'where clause'. The SQL statement executed was: SELECT `edition`.`id` AS `t1_c0`, `edition`.`name` AS `t1_c1`, `edition`.`description` AS `t1_c2` FROM `tbl_course_edition` `edition`  WHERE (`edition`.`edition_id`=:ypl0). Bound with :ypl0='1'.
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:51:31 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:51:31 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:51:31 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:51:31 [trace] [system.db.ar.CActiveRecord] Course.findByPk()
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:51:31 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_course` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:51:31 [trace] [system.db.ar.CActiveRecord] lazy loading Course.edition
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:51:31 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:51:31 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:51:31 [trace] [system.db.CDbCommand] Querying SQL: SELECT `edition`.`id` AS `t1_c0`, `edition`.`name` AS `t1_c1`, `edition`.`description` AS `t1_c2` FROM `tbl_course_edition` `edition`  WHERE (`edition`.`edition_id`=:ypl0). Bound with :ypl0='1'
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:51:31 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'edition.edition_id' in 'where clause'. The SQL statement executed was: SELECT `edition`.`id` AS `t1_c0`, `edition`.`name` AS `t1_c1`, `edition`.`description` AS `t1_c2` FROM `tbl_course_edition` `edition`  WHERE (`edition`.`edition_id`=:ypl0). Bound with :ypl0='1'.
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:55:42 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:55:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:55:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:55:42 [trace] [system.db.ar.CActiveRecord] Course.findByPk()
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:55:42 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_course` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:55:42 [trace] [system.db.ar.CActiveRecord] lazy loading Course.edition
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:55:42 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `{{course_edition}}`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:55:42 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'libedu.{{course_edition}}' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `{{course_edition}}`.
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:59:39 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:59:39 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:59:39 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:59:39 [trace] [system.db.ar.CActiveRecord] Course.findByPk()
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:59:39 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_course` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:59:47 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:59:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:59:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:59:47 [trace] [system.db.ar.CActiveRecord] Course.findByPk()
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 01:59:47 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_course` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:01 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:01 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:01 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:01 [trace] [system.db.ar.CActiveRecord] Course.findByPk()
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:01 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_course` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:06 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:06 [trace] [system.db.ar.CActiveRecord] Course.findByPk()
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:06 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_course` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:21 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:21 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:21 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:21 [trace] [system.db.ar.CActiveRecord] Course.findByPk()
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:21 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_course` `t` WHERE `t`.`id`=2 LIMIT 1
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:21 [trace] [system.db.ar.CActiveRecord] lazy loading Course.edition
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:21 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:21 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)
+2012/08/28 02:00:21 [trace] [system.db.CDbCommand] Querying SQL: SELECT `edition`.`id` AS `t1_c0`, `edition`.`name` AS `t1_c1`, `edition`.`description` AS `t1_c2` FROM `tbl_course_edition` `edition`  WHERE (`edition`.`id`=:ypl0). Bound with :ypl0='2'
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\protected\modules\teach\controllers\CourseController.php (12)
+in E:\wamp\www\libedu_dev\mydeveloping\libedu\index.php (13)

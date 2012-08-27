@@ -57,7 +57,7 @@ content text,
 level tinyint
 )ENGINE=Innodb default charset=utf8;
 
-create table tbl_course_item(
+create table tbl_edition_item(
 edition int(11) not null references tbl_course_edition(id) on delete cascade ,
 item int(11) not null references tbl_item(id) on delete cascade
 )engine=innodb default charset=utf8;

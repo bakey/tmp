@@ -25,7 +25,7 @@ class CourseEdition extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{course_edition}}';
+		return 'tbl_course_edition';
 	}
 
 	/**
