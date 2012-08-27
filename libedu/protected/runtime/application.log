@@ -519,3 +519,271 @@ in D:\xampp\htdocs\libedu\libedu\index.php (13)
 in D:\xampp\htdocs\libedu\libedu\protected\views\user\index.php (20)
 in D:\xampp\htdocs\libedu\libedu\protected\controllers\UserController.php (128)
 in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:22:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [error] [system.db.CDbCommand] CDbCommand::fetchAll() failed: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'libedu.course' doesn't exist. The SQL statement executed was: SHOW COLUMNS FROM `course`.
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:38 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:23:49 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:24:06 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:26:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW TABLES
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_class`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_class`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item_item`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_course`
+in E:\wamp\www\dev\libedu\index.php (13)
+2012/08/27 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_course`
+in E:\wamp\www\dev\libedu\index.php (13)

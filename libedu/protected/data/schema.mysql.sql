@@ -9,7 +9,7 @@ CREATE TABLE `tbl_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
-create table tbl_user_active(
+create table IF NOT EXISTS tbl_user_active(
 uid int(11) references tbl_user(id) on delete cascade,
 active_id varchar(255) not null,
 create_time datetime not null
@@ -22,7 +22,7 @@ avatar varchar(255) not null,
 description text
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table tbl_class(
+create table if not exists tbl_class(
 id int(11) not null auto_increment,
 name varchar(255) not null,
 grade int ,
@@ -30,13 +30,13 @@ description text,
 PRIMARY KEY(`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table tbl_course_edition(
+create table if not exists tbl_course_edition(
 id int(11) not null auto_increment primary key,
 name varchar(255) not null,
 description text
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table tbl_course(
+create table if not exists tbl_course(
 id int(11) not null auto_increment primary key,
 edition_id int(11) references tbl_course_edition(id) on delete cascade ,
 name varchar(255) ,
