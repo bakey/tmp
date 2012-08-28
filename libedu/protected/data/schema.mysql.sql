@@ -67,7 +67,19 @@ parent int(11) not null references tbl_item(id) on delete cascade,
 child int(11) not null references tbl_item(id) on delete cascade
 )engine=innodb default charset=utf8;
 
-create table `tbl_task` (
+create table if not exists `tbl_problem`(
+ `id` int not null auto_increment primary key,
+ `type` int not null,
+  `content` text not null,
+  `source` varchar(255),
+  `difficuty` tinyint,
+  `create_time` datetime not null,
+  `reference_ans` text,
+  `use_count` INTEGER
+  )engine=innodb default charset=utf8;
+   
+
+create table if not exists `tbl_task` (
 	`id` int(11) NOT NULL AUTO_INCREMENT primary key,
 	`course_item_id` int(11) not null references tbl_item(id) on delete cascade,
 	`name` varchar(255) ,
@@ -77,7 +89,26 @@ create table `tbl_task` (
 	`description` text,
 	`state` tinyint 
 )engine=innodb default charset=utf8;
+
+create table if not exists tbl_task_problem(
+ `task_id` int not null references tbl_task(id) on delete cascade,
+ `problem_id` int not null references tbl_problem(id) on delete cascade,
+ `problem_score` int not null 
+ )engine=innodb default charset=utf8;
 	
+	
+create table if not exists tbl_school(
+	`id` int(11) not null auto_increment primary key,
+	`name` varchar(255) not null ,
+	`description` varchar(255) not null
+)engine=innodb default charset=utf8;
+
+create table if not exists tbl_user_school(
+ `user_id` int not null references tbl_user(id) on delete cascade,
+ `school_id` int not null references tbl_school(id) on delete cascade,
+ `role` int not null
+ )engine=innodb default charset=utf8;
+ 
 	
 	
 	
