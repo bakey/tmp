@@ -1,21 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "tbl_course".
+ * This is the model class for table "tbl_edition_item".
  *
- * The followings are the available columns in table 'tbl_course':
- * @property integer $id
- * @property integer $edition_id
- * @property string $name
- * @property string $description
- * @property integer $view_count
+ * The followings are the available columns in table 'tbl_edition_item':
+ * @property integer $edition
+ * @property integer $item
  */
-class Course extends CActiveRecord
+class EditionItem extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Course the static model class
+	 * @return EditionItem the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -27,7 +24,7 @@ class Course extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_course';
+		return 'tbl_edition_item';
 	}
 
 	/**
@@ -38,12 +35,11 @@ class Course extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('edition_id, view_count', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>255),
-			array('description', 'safe'),
+			array('edition, item', 'required'),
+			array('edition, item', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, edition_id, name, description, view_count', 'safe', 'on'=>'search'),
+			array('edition, item', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,7 +51,7 @@ class Course extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-				'edition'=>array(self::BELONGS_TO , 'CourseEdition','edition_id'),
+				//'item'=>array(self:)
 		);
 	}
 
@@ -65,11 +61,8 @@ class Course extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'edition_id' => 'Edition',
-			'name' => 'Name',
-			'description' => 'Description',
-			'view_count' => 'View Count',
+			'edition' => 'Edition',
+			'item' => 'Item',
 		);
 	}
 
@@ -84,11 +77,8 @@ class Course extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('edition_id',$this->edition_id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('description',$this->description,true);
-		$criteria->compare('view_count',$this->view_count);
+		$criteria->compare('edition',$this->edition);
+		$criteria->compare('item',$this->item);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
