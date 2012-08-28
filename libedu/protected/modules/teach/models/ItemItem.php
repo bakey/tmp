@@ -1,19 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "tbl_course_edition".
+ * This is the model class for table "tbl_item_item".
  *
- * The followings are the available columns in table 'tbl_course_edition':
- * @property integer $id
- * @property string $name
- * @property string $description
+ * The followings are the available columns in table 'tbl_item_item':
+ * @property integer $parent
+ * @property integer $child
  */
-class CourseEdition extends CActiveRecord
+class ItemItem extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return CourseEdition the static model class
+	 * @return ItemItem the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -25,7 +24,7 @@ class CourseEdition extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_course_edition';
+		return 'tbl_item_item';
 	}
 
 	/**
@@ -36,11 +35,11 @@ class CourseEdition extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name', 'required'),
-			array('name, description', 'length', 'max'=>255),
+			array('parent, child', 'required'),
+			array('parent, child', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, description', 'safe', 'on'=>'search'),
+			array('parent, child', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,7 +51,6 @@ class CourseEdition extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-				'items'=>array(self::MANY_MANY,'Item','tbl_edition_item(edition,item)'),
 		);
 	}
 
@@ -62,9 +60,8 @@ class CourseEdition extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'name' => 'Name',
-			'description' => 'Description',
+			'parent' => 'Parent',
+			'child' => 'Child',
 		);
 	}
 
@@ -79,9 +76,8 @@ class CourseEdition extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('description',$this->description,true);
+		$criteria->compare('parent',$this->parent);
+		$criteria->compare('child',$this->child);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

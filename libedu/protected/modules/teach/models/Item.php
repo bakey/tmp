@@ -25,8 +25,7 @@ class Item extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		//return 'tbl_item';
-		return '{{item}}';
+		return 'tbl_item';
 	}
 
 	/**

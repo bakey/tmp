@@ -8,11 +8,14 @@ class CourseController extends Controller
 		{
 			$course_id = $_GET['id'];
 			$course = Course::model()->findByPk( $course_id );
-			//echo($course->edition_id);
-			$edition = $course->edition;
-			//var_dump( $course->edition );
-			echo($edition->name);
-			exit();
+			if ( $course != null )
+			{
+				$items = $course->edition->items;
+				$this->render( 'index' , array('item'=>$items , ) );
+			}
+			else{
+				throw new CHttpException(404,'The requested page does not exist.');
+			}
 		}
 		
 	}
