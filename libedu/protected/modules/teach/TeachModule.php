@@ -12,6 +12,8 @@ class TeachModule extends CWebModule
 			'teach.models.*',
 			'teach.components.*',
 		));
+		/*$this->layoutPath = Yii::getPathOfAlias('teach.views.layouts');
+		$this->layout = 'main';*/
 	}
 
 	public function beforeControllerAction($controller, $action)
