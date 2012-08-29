@@ -1,2 +1,3 @@
 libedu/protected/runtime/application.log
 *.bak
+\.settings\*
