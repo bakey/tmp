@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 eclipse.preferences.version=1
 include_path=0;/libedu_project
 use_asp_tags_as_php=false
+=======
+eclipse.preferences.version=1
+include_path=0;/libedu_project
+use_asp_tags_as_php=false
+>>>>>>> 597c27d0893309aa460e3cf020ccb55caba79df1

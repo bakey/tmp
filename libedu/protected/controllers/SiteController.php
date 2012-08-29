@@ -29,12 +29,20 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
+<<<<<<< HEAD
 		/*$mailer = new Emailer('bakey1985@qq.com','ZhangMeng');
+=======
+		$mailer = new Emailer('bakey1985@qq.com','ZhangMeng');
+>>>>>>> 597c27d0893309aa460e3cf020ccb55caba79df1
 		$mailer->setMsgSubject('This is a test email');
 		$mailer->setMsgBody(array('ZhangMeng',array('Hello World!','This is paragraph 2','paragraph 3')));
 		//$mailer->setMsgType('text');
 		//$mailer->setMsgBody('Text based email。中文测试');
+<<<<<<< HEAD
 		$mailer->doSendMail();*/
+=======
+		$mailer->doSendMail();
+>>>>>>> 597c27d0893309aa460e3cf020ccb55caba79df1
 		$this->render('index');
 	}
 
