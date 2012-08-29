@@ -40,7 +40,7 @@ class SiteController extends Controller
 
 		//$mailer->doSendMail();
 
-		$mailer->doSendMail();*/
+		//$mailer->doSendMail();
 //		$mailer->doSendMail();
 		$this->render('index');
 	}

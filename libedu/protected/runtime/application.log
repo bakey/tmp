@@ -5671,3 +5671,438 @@ in D:\xampp\htdocs\libedu\libedu\index.php (13)
 in D:\xampp\htdocs\libedu\libedu\protected\modules\user\controllers\ProfileController.php (170)
 in D:\xampp\htdocs\libedu\libedu\protected\modules\user\controllers\ProfileController.php (106)
 in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/08/29 18:28:43 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:44 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:44 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:48 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:48 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:48 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:48 [trace] [system.db.ar.CActiveRecord] LibUser.exists()
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (105)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (34)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:48 [trace] [system.db.CDbCommand] Querying SQL: SELECT 1 FROM `tbl_user` `t` WHERE `t`.`user_name`=:ycp0 LIMIT 1. Bound with :ycp0='bakey'
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (105)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (34)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:48 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:48 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:48 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:48 [trace] [system.db.ar.CActiveRecord] LibUser.exists()
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (105)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (34)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:48 [trace] [system.db.CDbCommand] Querying SQL: SELECT 1 FROM `tbl_user` `t` WHERE `t`.`user_name`=:ycp0 LIMIT 1. Bound with :ycp0='bakey'
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (105)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (34)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:53 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:53 [trace] [system.db.ar.CActiveRecord] LibUser.exists()
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (105)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (34)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SELECT 1 FROM `tbl_user` `t` WHERE `t`.`user_name`=:ycp0 LIMIT 1. Bound with :ycp0='bakey'
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (105)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (34)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:53 [trace] [system.db.ar.CActiveRecord] LibUser.exists()
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (105)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (34)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:53 [trace] [system.db.CDbCommand] Querying SQL: SELECT 1 FROM `tbl_user` `t` WHERE `t`.`email`=:ycp1 LIMIT 1. Bound with :ycp1='bakey1985@qq.com'
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (105)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (34)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.ar.CActiveRecord] LibUser.exists()
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.CDbCommand] Querying SQL: SELECT 1 FROM `tbl_user` `t` WHERE `t`.`user_name`=:ycp0 LIMIT 1. Bound with :ycp0='bakey'
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.ar.CActiveRecord] LibUser.exists()
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.CDbCommand] Querying SQL: SELECT 1 FROM `tbl_user` `t` WHERE `t`.`email`=:ycp1 LIMIT 1. Bound with :ycp1='bakey1985@qq.com'
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.ar.CActiveRecord] LibUser.insert()
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.CDbCommand] Executing SQL: INSERT INTO `tbl_user` (`user_name`, `mobile`, `email`, `password`, `status`, `salt`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5). Bound with :yp0='bakey', :yp1='', :yp2='bakey1985@qq.com', :yp3='c0753e2cb25975c994cea50d06ea296f', :yp4=1, :yp5='libedu1346236137bakey'
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (153)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (153)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.ar.CActiveRecord] LibUser.findByAttributes()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (154)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_user` `t` WHERE `t`.`user_name`=:yp0 LIMIT 1. Bound with :yp0='bakey'
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (154)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.ar.CActiveRecord] UserActive.insert()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (159)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:28:57 [trace] [system.db.CDbCommand] Executing SQL: INSERT INTO `tbl_user_active` (`uid`, `active_id`, `create_time`) VALUES (:yp0, :yp1, :yp2). Bound with :yp0=1, :yp1='a9407eef6cffcfc194a17044fcae5b29', :yp2='2012-08-29 18:28:57'
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (159)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:00 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_profile`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (170)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:00 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_profile`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (170)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:00 [trace] [system.db.ar.CActiveRecord] Profile.insert()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (175)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:00 [trace] [system.db.CDbCommand] Executing SQL: INSERT INTO `tbl_profile` (`uid`, `avatar`, `real_name`, `description`) VALUES (:yp0, :yp1, :yp2, :yp3). Bound with :yp0=1, :yp1='default_avatar.jpg', :yp2='NOT_DONE_AT_REGISTER_FORM', :yp3='这个人很懒，什么都没写'
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (175)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (39)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (24)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (24)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (24)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (116)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (116)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.ar.CActiveRecord] UserActive.findByAttributes()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (117)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_user_active` `t` WHERE `t`.`active_id`=:yp0 LIMIT 1. Bound with :yp0='a9407eef6cffcfc194a17044fcae5b29'
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (117)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.ar.CActiveRecord] LibUser.findByPk()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (121)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_user` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (121)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.ar.CActiveRecord] LibUser.findAll()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_user` `t` WHERE `t`.`user_name`=:ycp0 LIMIT 2. Bound with :ycp0='bakey'
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.ar.CActiveRecord] LibUser.findAll()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_user` `t` WHERE `t`.`email`=:ycp1 LIMIT 2. Bound with :ycp1='bakey1985@qq.com'
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.ar.CActiveRecord] LibUser.update()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.ar.CActiveRecord] LibUser.updateByPk()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.CDbCommand] Executing SQL: UPDATE `tbl_user` SET `id`=:yp0, `user_name`=:yp1, `mobile`=:yp2, `email`=:yp3, `password`=:yp4, `salt`=:yp5, `status`=:yp6 WHERE `tbl_user`.`id`=1. Bound with :yp0=1, :yp1='bakey', :yp2='', :yp3='bakey1985@qq.com', :yp4='c0753e2cb25975c994cea50d06ea296f', :yp5='libedu1346236137bakey', :yp6=2
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.ar.CActiveRecord] UserActive.delete()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (124)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:29:26 [trace] [system.db.ar.CActiveRecord] UserActive.deleteByPk()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (124)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (24)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (24)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (24)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user_active`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (116)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user_active`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (116)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.ar.CActiveRecord] UserActive.findByAttributes()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (117)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_user_active` `t` WHERE `t`.`active_id`=:yp0 LIMIT 1. Bound with :yp0='a9407eef6cffcfc194a17044fcae5b29'
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (117)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.ar.CActiveRecord] LibUser.findByPk()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (121)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_user` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (121)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.ar.CActiveRecord] LibUser.findAll()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_user` `t` WHERE `t`.`user_name`=:ycp0 LIMIT 2. Bound with :ycp0='bakey'
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.ar.CActiveRecord] LibUser.findAll()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_user` `t` WHERE `t`.`email`=:ycp1 LIMIT 2. Bound with :ycp1='bakey1985@qq.com'
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.ar.CActiveRecord] LibUser.update()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.ar.CActiveRecord] LibUser.updateByPk()
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:39 [trace] [system.db.CDbCommand] Executing SQL: UPDATE `tbl_user` SET `id`=:yp0, `user_name`=:yp1, `mobile`=:yp2, `email`=:yp3, `password`=:yp4, `salt`=:yp5, `status`=:yp6 WHERE `tbl_user`.`id`=1. Bound with :yp0=1, :yp1='bakey', :yp2='', :yp3='bakey1985@qq.com', :yp4='c0753e2cb25975c994cea50d06ea296f', :yp5='libedu1346236137bakey', :yp6=2
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (123)
+in E:\wamp\www\project\project\libedu\protected\modules\user\controllers\LibUserController.php (70)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:32:45 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (24)
+in E:\wamp\www\project\project\libedu\protected\components\UserIdentity.php (23)
+in E:\wamp\www\project\project\libedu\protected\models\LoginForm.php (52)
+2012/08/29 18:32:45 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (24)
+in E:\wamp\www\project\project\libedu\protected\components\UserIdentity.php (23)
+in E:\wamp\www\project\project\libedu\protected\models\LoginForm.php (52)
+2012/08/29 18:32:45 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in E:\wamp\www\project\project\libedu\protected\modules\user\models\LibUser.php (24)
+in E:\wamp\www\project\project\libedu\protected\components\UserIdentity.php (23)
+in E:\wamp\www\project\project\libedu\protected\models\LoginForm.php (52)
+2012/08/29 18:32:45 [trace] [system.db.ar.CActiveRecord] LibUser.findByAttributes()
+in E:\wamp\www\project\project\libedu\protected\components\UserIdentity.php (23)
+in E:\wamp\www\project\project\libedu\protected\models\LoginForm.php (52)
+in E:\wamp\www\project\project\libedu\protected\controllers\SiteController.php (107)
+2012/08/29 18:32:45 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_user` `t` WHERE `t`.`user_name`=:yp0 LIMIT 1. Bound with :yp0='bakey'
+in E:\wamp\www\project\project\libedu\protected\components\UserIdentity.php (23)
+in E:\wamp\www\project\project\libedu\protected\models\LoginForm.php (52)
+in E:\wamp\www\project\project\libedu\protected\controllers\SiteController.php (107)
+2012/08/29 18:33:31 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\project\project\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.ar.CActiveRecord] Course.findByPk()
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_course` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.ar.CActiveRecord] lazy loading Course.edition
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.CDbCommand] Querying SQL: SELECT `edition`.`id` AS `t1_c0`, `edition`.`name` AS `t1_c1`, `edition`.`description` AS `t1_c2` FROM `tbl_course_edition` `edition`  WHERE (`edition`.`id`=:ypl0). Bound with :ypl0='3'
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.ar.CActiveRecord] lazy loading CourseEdition.items
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_edition_item`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_edition_item`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:31 [trace] [system.db.CDbCommand] Querying SQL: SELECT `items`.`id` AS `t1_c0`, `items`.`content` AS `t1_c1`, `items`.`level` AS `t1_c2` FROM `tbl_item` `items`  INNER JOIN `tbl_edition_item` `items_items` ON (`items_items`.`edition`=:ypl0) AND (`items`.`id`=`items_items`.`item`). Bound with :ypl0='3'
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\project\project\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.ar.CActiveRecord] Course.findByPk()
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_course` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.ar.CActiveRecord] lazy loading Course.edition
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.CDbCommand] Querying SQL: SELECT `edition`.`id` AS `t1_c0`, `edition`.`name` AS `t1_c1`, `edition`.`description` AS `t1_c2` FROM `tbl_course_edition` `edition`  WHERE (`edition`.`id`=:ypl0). Bound with :ypl0='3'
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.ar.CActiveRecord] lazy loading CourseEdition.items
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_edition_item`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_edition_item`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:33:36 [trace] [system.db.CDbCommand] Querying SQL: SELECT `items`.`id` AS `t1_c0`, `items`.`content` AS `t1_c1`, `items`.`level` AS `t1_c2` FROM `tbl_item` `items`  INNER JOIN `tbl_edition_item` `items_items` ON (`items_items`.`edition`=:ypl0) AND (`items`.`id`=`items_items`.`item`). Bound with :ypl0='3'
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.CDbConnection] Opening DB connection
+in E:\wamp\www\project\project\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\models\Course.php (22)
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.ar.CActiveRecord] Course.findByPk()
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.CDbCommand] Querying SQL: SELECT * FROM `tbl_course` `t` WHERE `t`.`id`=1 LIMIT 1
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (10)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.ar.CActiveRecord] lazy loading Course.edition
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_course_edition`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_course_edition`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.CDbCommand] Querying SQL: SELECT `edition`.`id` AS `t1_c0`, `edition`.`name` AS `t1_c1`, `edition`.`description` AS `t1_c2` FROM `tbl_course_edition` `edition`  WHERE (`edition`.`id`=:ypl0). Bound with :ypl0='3'
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.ar.CActiveRecord] lazy loading CourseEdition.items
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_item`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_item`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_edition_item`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_edition_item`
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)
+2012/08/29 18:34:25 [trace] [system.db.CDbCommand] Querying SQL: SELECT `items`.`id` AS `t1_c0`, `items`.`content` AS `t1_c1`, `items`.`level` AS `t1_c2` FROM `tbl_item` `items`  INNER JOIN `tbl_edition_item` `items_items` ON (`items_items`.`edition`=:ypl0) AND (`items`.`id`=`items_items`.`item`). Bound with :ypl0='3'
+in E:\wamp\www\project\project\libedu\protected\modules\teach\controllers\CourseController.php (13)
+in E:\wamp\www\project\project\libedu\index.php (13)

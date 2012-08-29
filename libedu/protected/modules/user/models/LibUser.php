@@ -121,7 +121,7 @@ class LibUser extends CActiveRecord
 			$cusr = $this->findByPk($res->uid);
 			$cusr->status = 2;
 			$cusr->save();
-			$res->delete();
+			//$res->delete();
 			return true;
 		}
 	}
