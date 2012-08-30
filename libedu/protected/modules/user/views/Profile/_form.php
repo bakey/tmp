@@ -23,9 +23,9 @@
 			array(
 			        'id'=>'uploadFile',
 			        'config'=>array(
-			               'action'=>Yii::app()->createUrl('user/profile/upload'),
+			               'action'=>Yii::app()->createUrl('user/profile/uploadavatar'),
 			               'allowedExtensions'=>array("jpg","png","gif"),//array("jpg","jpeg","gif","exe","mov" and etc...
-			               'sizeLimit'=>10*1024*1024,// maximum file size in bytes
+			               'sizeLimit'=>1*1024*1024,// maximum file size in bytes
 			               //'minSizeLimit'=>10*1024*1024,// minimum file size in bytes
 			               'onComplete'=>"js:function(id, fileName, responseJSON){ alert(fileName); }",
 			               'messages'=>array(
