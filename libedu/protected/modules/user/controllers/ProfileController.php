@@ -32,7 +32,7 @@ class ProfileController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','uploadavatar'),
+				'actions'=>array('create','update','uploadavatar','cropavatar'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -83,7 +83,7 @@ class ProfileController extends Controller
 	{
         Yii::import("ext.EAjaxUpload.qqFileUploader");
  
-        $folder='/abc';// folder for uploaded files
+        $folder='./bin_data/temp_upload/';// folder for uploaded files
         $allowedExtensions = array("jpg","png","gif");//array("jpg","jpeg","gif","exe","mov" and etc...
         $sizeLimit = 1 * 1024 * 1024;// maximum file size in bytes
         $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
@@ -92,8 +92,33 @@ class ProfileController extends Controller
  
         //$fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
         //$fileName=$result['filename'];//GETTING FILE NAME
+
+        //resize and rename uploaded image
+        Yii::import("ext.EPhpThumb.EPhpThumb");
+		$thumb=new EPhpThumb();
+		$thumb->init(); 
+		$thumb->create('./bin_data/temp_upload/'.$result['filename'])
+		      ->resize(400,400)
+		      ->save('./bin_data/temp_upload/'.$result['filename']);
  
         echo $return;// it's array
+	}
+
+	public function actionCropAvatar(){
+		Yii::import("ext.EPhpThumb.EPhpThumb");
+		$thumb=new EPhpThumb();
+		$thumb->init(); 
+		$newFileName = './bin_data/temp_upload/'.time().$_POST['fname'];
+		$thumb->create('./bin_data/temp_upload/'.$_POST['fname'])
+			  ->crop($_POST['cx'], $_POST['cy'], $_POST['cw'], $_POST['ch'])
+			  ->resize(64,64)
+			  ->save($newFileName);
+	    if(file_exists($newFileName)){
+	    	unlink('./bin_data/temp_upload/'.$_POST['fname']);
+	    	echo Yii::app()->request->baseUrl.substr($newFileName,1);
+	    }else{
+	    	echo 'fail';
+	    }
 	}
 
 	/**

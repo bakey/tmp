@@ -72,6 +72,25 @@ class Profile extends CActiveRecord
 		);
 	}
 
+	public function beforeSave(){
+		if(!$this->isNewRecord){
+			$olddata = $this->findByPk($this->uid);
+			if($olddata->avatar != $this->avatar){
+				if(!is_dir('./bin_data/'.Yii::app()->user->id)){
+					mkdir('./bin_data/'.Yii::app()->user->id);
+				}
+				if(!is_dir('./bin_data/'.Yii::app()->user->id.'/avatar')){
+					mkdir('./bin_data/'.Yii::app()->user->id.'/avatar');
+				}
+				$oldFileName = './bin_data/temp_upload/'.$this->avatar;
+				$newFileName = './bin_data/'.Yii::app()->user->id.'/avatar/'.$this->avatar;
+				copy($oldFileName,$newFileName);
+				unlink($oldFileName);
+			}
+		}
+		return parent::beforeSave();
+	}
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

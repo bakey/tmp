@@ -10,7 +10,7 @@ class EAjaxUploadAction extends CAction
                 // list of valid extensions, ex. array("jpeg", "xml", "bmp")
                 $allowedExtensions = array("jpg");
                 // max file size in bytes
-                $sizeLimit = 1 * 1024 * 1024;
+                $sizeLimit = 10 * 1024 * 1024;
 
                 $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
                 $result = $uploader->handleUpload('upload/');
