@@ -16,8 +16,6 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
-		'application.modules.user.models.*',
-		'application.modules.teach.models.*',
 	),
 
 	'modules'=>array(

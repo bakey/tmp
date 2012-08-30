@@ -53,14 +53,13 @@ start_time datetime not null
 
 create table tbl_item(
 id int(11) not null auto_increment primary key,
+edition int not null references tbl_course_edition(id) on delete cascade,
+index int not null,
 content text,
-level tinyint
+level tinyint,
+create_time datetime
 )ENGINE=Innodb default charset=utf8;
 
-create table tbl_edition_item(
-edition int(11) not null references tbl_course_edition(id) on delete cascade ,
-item int(11) not null references tbl_item(id) on delete cascade
-)engine=innodb default charset=utf8;
 
 create table tbl_item_item(
 parent int(11) not null references tbl_item(id) on delete cascade,

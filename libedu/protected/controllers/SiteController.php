@@ -36,12 +36,18 @@ class SiteController extends Controller
 		//$mailer->setMsgSubject('This is a test email');
 		//$mailer->setMsgBody(array('ZhangMeng',array('Hello World!','This is paragraph 2','paragraph 3')));*/
 		//$mailer->setMsgType('text');
-		//$mailer->setMsgBody('Text based email。中文测�?);
+		//$mailer->setMsgBody('Text based email。中文测�?);
 
 		//$mailer->doSendMail();
 
 		//$mailer->doSendMail();
 //		$mailer->doSendMail();
+		/*$mailer = new Emailer('bakey1985@qq.com','ZhangMeng');
+		$mailer->setMsgSubject('This is a test email');
+		$mailer->setMsgBody(array('ZhangMeng',array('Hello World!','This is paragraph 2','paragraph 3')));*/
+		//$mailer->setMsgType('text');
+		//$mailer->setMsgBody('Text based email。中文测试');
+		//$mailer->doSendMail();
 		$this->render('index');
 	}
 
