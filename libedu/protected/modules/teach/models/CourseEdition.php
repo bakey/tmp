@@ -66,7 +66,6 @@ class CourseEdition extends CActiveRecord
 			'description' => '教材描述',
 		);
 	}
-
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -85,5 +84,13 @@ class CourseEdition extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	protected function beforeSave()
+	{
+		parent::beforeSave();
+	}
+	protected function afterSave()
+	{
+		parent::afterSave();
 	}
 }
