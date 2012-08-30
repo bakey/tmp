@@ -12,7 +12,8 @@ CREATE TABLE `tbl_user` (
 create table IF NOT EXISTS tbl_user_active(
 uid int(11) references tbl_user(id) on delete cascade,
 active_id varchar(255) not null,
-create_time datetime not null
+create_time datetime not null,
+primary key(`uid`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 create table tbl_profile(
