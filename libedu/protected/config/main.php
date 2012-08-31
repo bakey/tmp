@@ -98,4 +98,6 @@ return array(
 		'adminEmail'=>'chengchao@libedu.com',
 	),
 	'timeZone'=>"Asia/Shanghai",
+	'language'=>"zh_cn",
+	'sourceLanguage'=>"zh_cn",
 );

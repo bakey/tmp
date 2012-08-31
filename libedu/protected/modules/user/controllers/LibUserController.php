@@ -45,6 +45,78 @@ class LibUserController extends Controller
 		));
 	}
 
+
+	public function actionImportStudentList(){
+		$this->render('importstuinfo');
+	}
+
+	public function actionDoImportStudentList(){
+		Yii::import("ext.EAjaxUpload.qqFileUploader");
+ 
+        $folder='./bin_data/temp_upload/';// folder for uploaded files
+        $allowedExtensions = array("xls","xlsx");//array("jpg","jpeg","gif","exe","mov" and etc...
+        $sizeLimit = 1 * 1024 * 1024;// maximum file size in bytes
+        $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+        $result = $uploader->handleUpload($folder);
+        $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+         echo $return;// it's array
+	}
+
+	public function actionLoadStudentInfo(){
+		$stuinfo = array();
+		if(!$_REQUEST['fname']){
+			$fname = null;
+		}else{
+			$fname = $_REQUEST['fname'];
+		}
+		$filePath = './bin_data/temp_upload/'.$fname;
+		$applicationPath = Yii::getPathOfAlias('webroot');
+		spl_autoload_unregister(array('YiiBase','autoload')); 
+		require_once $applicationPath.'/protected/vendors/phpexcel/PHPExcel.php';
+		spl_autoload_register(array('YiiBase','autoload'));
+		if($fname != null){
+			$PHPExcel = new PHPExcel(); 
+		    $PHPReader = new PHPExcel_Reader_Excel2007(); 
+			if(!$PHPReader->canRead($filePath)){ 
+				$PHPReader = new PHPExcel_Reader_Excel5(); 
+				if(!$PHPReader->canRead($filePath)){ 
+					echo '无法读取文件'; 
+					return ; 
+				} 
+			} 
+			
+			$PHPExcel = $PHPReader->load($filePath); 
+			$currentSheet = $PHPExcel->getSheet(0); 
+			
+			$ttlColumn = $currentSheet->getHighestColumn(); 
+			$ttlRow = $currentSheet->getHighestRow(); 
+			
+			for($irow=4;$irow < $ttlRow; $irow++){
+				for($icolumn=0;$icolumn<5;$icolumn++){
+					if($currentSheet->getCellByColumnAndRow($icolumn,$irow)->getValue() == ''){
+						break 2;
+					}			
+					$stuinfo[$irow-4][$currentSheet->getCellByColumnAndRow($icolumn,3)->getValue()] = $currentSheet->getCellByColumnAndRow($icolumn,$irow)->getValue();
+				}
+			}
+		}else{
+			echo '无法读取文件！';
+		}
+		$dataProvider=new CArrayDataProvider($stuinfo, array(
+		    'id'=>'loadeduser',
+		    'keyField'=>'序号',
+		    'sort'=>array(
+		        'attributes'=>array(
+		             '学号', '班级', '姓名',
+		        ),
+		    ),
+		    'pagination'=>array(
+		        'pageSize'=>15,
+		    ),
+		));
+		$this->renderPartial('_uploadedStudentInfo', array('dataProvider'=>$dataProvider), false, true);
+	}
+
 	public function actionResendActivationCode($status = 2){
 		//未完成
 		$model = new LibUser;
