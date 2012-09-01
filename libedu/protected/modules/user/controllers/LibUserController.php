@@ -45,6 +45,7 @@ class LibUserController extends Controller
 		));
 	}
 
+<<<<<<< HEAD
 
 	public function actionImportStudentList(){
 		$this->render('importstuinfo');
@@ -141,6 +142,8 @@ class LibUserController extends Controller
 		}
 	}
 
+=======
+>>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
 	public function actionResendActivationCode($status = 2){
 		//未完成
 		$model = new LibUser;

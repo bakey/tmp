@@ -18,6 +18,10 @@ class CourseController extends Controller
 			}
 		}
 		
+<<<<<<< HEAD
 	}
+=======
+	}
+>>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
 }
 ?>

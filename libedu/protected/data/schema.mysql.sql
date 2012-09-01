@@ -12,7 +12,8 @@ CREATE TABLE `tbl_user` (
 create table IF NOT EXISTS tbl_user_active(
 uid int(11) references tbl_user(id) on delete cascade,
 active_id varchar(255) not null,
-create_time datetime not null
+create_time datetime not null,
+primary key(`uid`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 create table tbl_profile(
@@ -51,16 +52,15 @@ role tinyint not null,
 start_time datetime not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table tbl_item(
+create table if not exists `tbl_item`(
 id int(11) not null auto_increment primary key,
+edition int not null references tbl_course_edition(id) on delete cascade,
+edi_index int(11) not null,
 content text,
-level tinyint
+level tinyint,
+create_time datetime not null
 )ENGINE=Innodb default charset=utf8;
 
-create table tbl_edition_item(
-edition int(11) not null references tbl_course_edition(id) on delete cascade ,
-item int(11) not null references tbl_item(id) on delete cascade
-)engine=innodb default charset=utf8;
 
 create table tbl_item_item(
 parent int(11) not null references tbl_item(id) on delete cascade,

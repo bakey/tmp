@@ -33,6 +33,10 @@
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
 				array('label'=>'数学', 'url'=>array('/teach/course/index&id=1')),
+				array('label'=>'添加教材', 'url'=>array('/teach/edition/add')),
+				array('label'=>'查看当前的教材', 'url'=>array('/teach/edition/view')),
+				array('label'=>'管理教材', 'url'=>array('/teach/edition/admin')),
+				array('label'=>'用户注册', 'url'=>array('/user/libuser/register')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),

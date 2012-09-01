@@ -9,6 +9,7 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'profile-form',
 	'enableAjaxValidation'=>false,
+<<<<<<< HEAD
 )); 
 	//register js file
 		$baseUrl = Yii::app()->baseUrl; 
@@ -18,10 +19,14 @@
 		$cs->registerCssFile($baseUrl.'/css/jcrop/jquery.Jcrop.min.css');
         
 ?>
+=======
+)); ?>
+>>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
+<<<<<<< HEAD
 	<script type="text/javascript">
 		
 	</script>
@@ -35,11 +40,18 @@
 			$avatarCode = CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->avatar,'alt',array('width'=>64,'height'=>64,'id'=>'currentAvatar'));
 		}
 		echo $avatarCode; ?>
+=======
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'avatar'); ?>
+		<?php echo CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->avatar,'alt',array('width'=>64,'height'=>64)); ?>
+>>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
 		<?php
 			$this->widget('ext.EAjaxUpload.EAjaxUpload',
 			array(
 			        'id'=>'uploadFile',
 			        'config'=>array(
+<<<<<<< HEAD
 			               'action'=>Yii::app()->createUrl('user/profile/uploadavatar'),
 			               'allowedExtensions'=>array("jpg","png","gif"),//array("jpg","jpeg","gif","exe","mov" and etc...
 			               'sizeLimit'=>1*1024*1024,// maximum file size in bytes
@@ -85,6 +97,13 @@
 									            setSelect:   [ 100, 100, 64, 64 ],
 											});
 			               }",
+=======
+			               'action'=>Yii::app()->createUrl('user/profile/upload'),
+			               'allowedExtensions'=>array("jpg","png","gif"),//array("jpg","jpeg","gif","exe","mov" and etc...
+			               'sizeLimit'=>10*1024*1024,// maximum file size in bytes
+			               //'minSizeLimit'=>10*1024*1024,// minimum file size in bytes
+			               'onComplete'=>"js:function(id, fileName, responseJSON){ alert(fileName); }",
+>>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
 			               'messages'=>array(
 			                                 'typeError'=>"{file} has invalid extension. Only {extensions} are allowed.",
 			                                 'sizeError'=>"{file} is too large, maximum file size is {sizeLimit}.",
@@ -92,14 +111,21 @@
 			                                 'emptyError'=>"{file} is empty, please select files again without it.",
 			                                 'onLeave'=>"The files are being uploaded, if you leave now the upload will be cancelled."
 			                                ),
+<<<<<<< HEAD
 			               //'showMessage'=>"js:function(message){ alert(message); }"
+=======
+			               'showMessage'=>"js:function(message){ alert(message); }"
+>>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
 			              )
 			));
 		?>
 		<?php echo $form->hiddenField($model,'avatar',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'avatar'); ?>
+<<<<<<< HEAD
 		<div id="uploaded_avatar" style="display:none">
 		</div>
+=======
+>>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
 	</div>
 
 	<div class="row">

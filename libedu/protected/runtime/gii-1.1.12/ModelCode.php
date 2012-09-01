@@ -4,6 +4,11 @@ return array (
   'connectionId' => 'db',
   'tablePrefix' => 'tbl',
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+  'modelPath' => 'application.modules.user.models',
+>>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
   'modelPath' => 'application.modules.teach.models',
 =======
   'modelPath' => 'application.modules.user.models',

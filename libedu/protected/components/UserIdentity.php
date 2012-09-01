@@ -35,7 +35,7 @@ class UserIdentity extends CUserIdentity
 	}
 	
 	public function getEmail(){
-		return $_uemail;
+		return $this->_uemail;
 	}
 
 	public function getId(){
