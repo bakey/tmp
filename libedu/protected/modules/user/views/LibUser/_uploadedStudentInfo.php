@@ -16,6 +16,9 @@
 						'name' => '年级'
 					),
 					array(
+						'name' => '班级ID'
+					),
+					array(
 						'name' => '班级'
 					),
 					 

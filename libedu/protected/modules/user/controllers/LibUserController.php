@@ -62,13 +62,11 @@ class LibUserController extends Controller
          echo $return;// it's array
 	}
 
-	public function actionLoadStudentInfo(){
-		$stuinfo = array();
-		if(!$_REQUEST['fname']){
-			$fname = null;
-		}else{
-			$fname = $_REQUEST['fname'];
+	private function getStudentInfoFromExcelFile($fname = null){
+		if($fname == null){
+			return array();
 		}
+		$stuinfo = array();
 		$filePath = './bin_data/temp_upload/'.$fname;
 		$applicationPath = Yii::getPathOfAlias('webroot');
 		spl_autoload_unregister(array('YiiBase','autoload')); 
@@ -92,7 +90,7 @@ class LibUserController extends Controller
 			$ttlRow = $currentSheet->getHighestRow(); 
 			
 			for($irow=4;$irow < $ttlRow; $irow++){
-				for($icolumn=0;$icolumn<5;$icolumn++){
+				for($icolumn=0;$icolumn<6;$icolumn++){
 					if($currentSheet->getCellByColumnAndRow($icolumn,$irow)->getValue() == ''){
 						break 2;
 					}			
@@ -102,12 +100,23 @@ class LibUserController extends Controller
 		}else{
 			echo '无法读取文件！';
 		}
+		return $stuinfo;
+	}
+
+	public function actionLoadStudentInfo(){
+		$stuinfo = array();
+		if(!$_REQUEST['fname']){
+			$fname = null;
+		}else{
+			$fname = $_REQUEST['fname'];
+		}
+		$stuinfo = $this->getStudentInfoFromExcelFile($fname);
 		$dataProvider=new CArrayDataProvider($stuinfo, array(
 		    'id'=>'loadeduser',
 		    'keyField'=>'序号',
 		    'sort'=>array(
 		        'attributes'=>array(
-		             '学号', '班级', '姓名',
+		             '学号', '班级', '姓名', '班级ID'
 		        ),
 		    ),
 		    'pagination'=>array(
@@ -115,6 +124,20 @@ class LibUserController extends Controller
 		    ),
 		));
 		$this->renderPartial('_uploadedStudentInfo', array('dataProvider'=>$dataProvider), false, true);
+	}
+
+	public function actionDoLoadStudentInfo(){
+		if(!isset($_REQUEST['fname'])){
+			$fname = null;
+		}else{
+			$fname = $_REQUEST['fname'];
+		}
+		$stuinfo = $this->getStudentInfoFromExcelFile($fname);
+		if(!$stuinfo){
+			echo '学生列表为空或文件读取错误，请再试一次！';
+		}else{
+			print_r(Libuser::model()->addUserFromArray($stuinfo));
+		}
 	}
 
 	public function actionResendActivationCode($status = 2){

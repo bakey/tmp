@@ -142,7 +142,7 @@
 
 	    private function generateMsgBody(){
 	    	$applicationPath = Yii::getPathOfAlias('webroot');
-			include $applicationPath.'/protected/views/email_template/'.$this->msgTemplate.'.php';
+			include_once $applicationPath.'/protected/views/email_template/'.$this->msgTemplate.'.php';
 	    	if(empty($this->msgBody)){
 	    		die('Message Body Not Set');
 	    	}else{

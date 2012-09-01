@@ -146,6 +146,39 @@ class LibUser extends CActiveRecord
 		}
 		return parent::beforeSave();
 	}
+
+	public function addUserFromArray($stuinfo = null){
+		$result = array('status'=>0,'total'=>0,'success'=>0,'fail'=>0);
+		if(!$stuinfo){
+			$result['status'] = -1;
+			return $result;
+		}
+		$ttlRec = 0;
+		$secRec = 0;
+		$failRec = 0;
+		foreach($stuinfo as $singlestu){
+			$cusr = new LibUser;
+			$cusr->user_name = md5(uniqid());
+			$cusr->password = md5(uniqid());
+			$cusr->email = md5(uniqid()).'@someschool.com';
+			$cusr->mobile = '13999999999';
+			if($cusr->save(false)){
+				$ttlRec ++;
+				$secRec ++;
+			}else{
+				$failRec ++;
+			}
+		}
+		if($failRec == 0){
+			$result['status'] = 1;	
+		}
+		$result['total'] = $ttlRec;
+		$result['success'] = $secRec;
+		$result['fail'] = $failRec;
+
+		return $result;
+		
+	}
 	
 	public function afterSave(){
 		if ($this->isNewRecord){
@@ -159,12 +192,13 @@ class LibUser extends CActiveRecord
 			$res = $usractive->save();
 
 			//send activation email
-
-			$mailer = new Emailer($insertedUser->email,'User_Real_Name_To_Be_Done_Add_Profile_Table');
-			$mailer->setMsgSubject('激活您的LibSchool帐号');
-			$mailer->setMsgTemplate('activation');
-			$mailer->setMsgBody(array('User_Real_Name_To_Be_Done_Add_Profile_Table',array('<a href="http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid )).'">http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid )).'</a>')));
-			$mailer->doSendMail();
+			if($insertedUser->mobile != '13999999999'){
+				$mailer = new Emailer($insertedUser->email,'User_Real_Name_To_Be_Done_Add_Profile_Table');
+				$mailer->setMsgSubject('激活您的LibSchool帐号');
+				$mailer->setMsgTemplate('activation');
+				$mailer->setMsgBody(array('User_Real_Name_To_Be_Done_Add_Profile_Table',array('<a href="http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid )).'">http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid )).'</a>')));
+				$mailer->doSendMail();
+			}
 
 			//create default profile
 			$cprofile = new Profile;

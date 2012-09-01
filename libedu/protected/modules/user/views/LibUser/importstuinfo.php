@@ -10,26 +10,30 @@ $this->breadcrumbs=array(
 <h1>导入学生信息</h1>
 
 <h3 id="subtitle">请选择要导入的文件（只支持.xls 和 .xlsx 文件）</h3>
+<?php echo CHtml::ajaxButton ("确认导入学生信息",
+                              CController::createUrl('/user/libuser/doloadstudentinfo'), 
+                              array('update' => '#loadedstuinfo','data'=>'js:{fname: $(this).attr(\'rel\')}'),array('style'=>'float:right;display:none','id'=>'confirmimportbtn')); ?>
 <?php
 			$this->widget('ext.EAjaxUpload.EAjaxUpload',
 			array(
 			        'id'=>'uploadFile',
 			        'config'=>array(
-			               'action'=>Yii::app()->createUrl('user/libuser/doimportstudentlist'),
+			               'action'=>Yii::app()->createUrl('/user/libuser/doimportstudentlist'),
 			               'allowedExtensions'=>array("xls","xlsx"),//array("jpg","jpeg","gif","exe","mov" and etc...
 			               'sizeLimit'=>10*1024*1024,// maximum file size in bytes
 			               //'minSizeLimit'=>10*1024*1024,// minimum file size in bytes
 			               'onComplete'=>"js:function(id, fileName, responseJSON){  
 										$.post('".Yii::app()->createUrl('user/libuser/loadstudentinfo')."&fname='+responseJSON.filename, { fname:responseJSON.filename }, function(data){
 																$('#loadedstuinfo').html(data);
-																$('#subtitle').html('请确认您导入的学生信息');
+																$('#subtitle').html('请您仔细确认即将导入的学生信息，并确认班级ID的正确性。');
 																$('#uploading').fadeOut(200);
-																$('#subtitle').fadeIn();
 																$('#loadedstuinfo').fadeIn(1000);
+																$('#confirmimportbtn').attr('rel',responseJSON.filename);
+																$('#confirmimportbtn').fadeIn();
 														} );
 			               }",
 			               'onSubmit'=>"js:function(id,fileName){
-			               				$('#subtitle').fadeOut();
+			               				$('#subtitle').html('文件正在上传中……');
 			               				$('#uploadFile').fadeOut();
 										$('#uploading').fadeIn(200);
 			               }",
