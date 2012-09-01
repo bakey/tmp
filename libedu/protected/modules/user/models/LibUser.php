@@ -161,7 +161,7 @@ class LibUser extends CActiveRecord
 			$cusr->user_name = md5(uniqid());
 			$cusr->password = md5(uniqid());
 			$cusr->email = md5(uniqid()).'@someschool.com';
-			$cusr->mobile = '13999999999';
+			$cusr->mobile = '99999999999';
 			if($cusr->save(false)){
 				$ttlRec ++;
 				$secRec ++;
@@ -192,7 +192,7 @@ class LibUser extends CActiveRecord
 			$res = $usractive->save();
 
 			//send activation email
-			if($insertedUser->mobile != '13999999999'){
+			if($insertedUser->mobile != '99999999999'){
 				$mailer = new Emailer($insertedUser->email,'User_Real_Name_To_Be_Done_Add_Profile_Table');
 				$mailer->setMsgSubject('激活您的LibSchool帐号');
 				$mailer->setMsgTemplate('activation');
