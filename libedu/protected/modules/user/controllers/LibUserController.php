@@ -115,6 +115,7 @@ class LibUserController extends Controller
 		    'id'=>'loadeduser',
 		    'keyField'=>'序号',
 		    'sort'=>array(
+		    	
 		        'attributes'=>array(
 		             '学号', '班级', '姓名', '班级ID'
 		        ),
