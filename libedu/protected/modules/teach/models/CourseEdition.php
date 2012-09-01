@@ -87,10 +87,10 @@ class CourseEdition extends CActiveRecord
 	}
 	protected function beforeSave()
 	{
-		parent::beforeSave();
+		return parent::beforeSave();
 	}
 	protected function afterSave()
 	{
-		parent::afterSave();
+		return parent::afterSave();
 	}
 }

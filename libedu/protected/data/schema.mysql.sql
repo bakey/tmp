@@ -52,13 +52,13 @@ role tinyint not null,
 start_time datetime not null
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table tbl_item(
+create table if not exists `tbl_item`(
 id int(11) not null auto_increment primary key,
 edition int not null references tbl_course_edition(id) on delete cascade,
-index int not null,
+edi_index int(11) not null,
 content text,
 level tinyint,
-create_time datetime
+create_time datetime not null
 )ENGINE=Innodb default charset=utf8;
 
 

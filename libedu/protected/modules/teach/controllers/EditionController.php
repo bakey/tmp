@@ -2,6 +2,7 @@
 
 class EditionController extends Controller
 {
+	const ITEM_LEVEL_TOP = 1;
 	public function actionIndex()
 	{
 		$this->render('index');
@@ -9,7 +10,7 @@ class EditionController extends Controller
 	public function actionAdd()
 	{
 		$model = new CourseEdition;
-		$this->performAjaxValidation($model);
+		$this->performAjaxValidation($model , 'edition-form');
 		if(isset($_POST['CourseEdition']))
 		{
 			//var_dump( $_POST['CourseEdition'] );
@@ -20,7 +21,8 @@ class EditionController extends Controller
 				$this->redirect( array('edition/view') );
 			}
 			else {
-				echo("save failed ");
+				//echo("保存教材到数据库错误" . "<br>");
+				throw new CHttpException( 500 , "保存教材到数据库错误");
 			}
 		}
 		$this->render('add' , array('model'=>$model));		
@@ -42,14 +44,57 @@ class EditionController extends Controller
 	}
 	public function actionUpdate($id)
 	{
-		$model = $this->loadModel($id);
-		/*$this->render('view',array(
-				'model'=>$this->loadModel($id),
-		));*/
+		$edition = $this->loadModel($id);
+		$edition_items = $this->loadItemsByEdition( $edition );
+		$item_providor = new CActiveDataProvider('Item',array(
+				'pagination'=>array('pageSize'=>15),
+		));
+		if ( $edition == null || $edition_items == null )
+		{
+			throw new CHttpException( 500 , "抱歉，数据库查询错误" );
+		}
+		$this->performAjaxValidation($edition_items , 'item-form');
+		$new_item = new Item;
+		if(isset($_POST['Item']))
+		{
+			$new_item->edi_index   = $_POST['Item']['edi_index'];
+			$new_item->content     = $_POST['Item']['content'];
+			$new_item->edition     = $id;
+			$new_item->level       = self::ITEM_LEVEL_TOP ; //这个页面的level都为1
+			$new_item->create_time = time();
+			
+			if ( $new_item->save() )
+			{
+				$this->redirect( array('edition/update&id=' . $id ) );
+			}
+			else {
+				throw new CHttpException( 500 , "保存教材到数据库错误");
+			}
+		}
+		$this->render('update',array(
+				'edition' => $edition ,
+				'items' => $edition_items,
+				'new_item' => $new_item,	
+				'dataProvider' => $item_providor,			
+		));
 	}
-	protected function performAjaxValidation($model)
+	public function actionDelete($id)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='edition-form')
+		if(Yii::app()->request->isPostRequest)
+		{
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
+	
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(array('view'));
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+	}
+	protected function performAjaxValidation($model , $whichForm)
+	{
+		if(isset($_POST['ajax']) && $_POST['ajax']=== $whichForm /*'edition-form'*/)
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
@@ -58,9 +103,18 @@ class EditionController extends Controller
 	public function loadModel($id)
 	{
 		$model=CourseEdition::model()->findByPk($id);
-		if($model===null)
+		if($model===null) {
 			throw new CHttpException(404,'The requested page does not exist.');
+		}
 		return $model;
+	}
+	public function loadItemsByEdition($edition)
+	{
+		$critieria = new CDbCriteria;
+		$critieria->condition = 'edition=:edition';
+		$critieria->params = array(
+				':edition' => $edition->id );
+		return Item::model()->findAll( $critieria );
 	}
 
 	// Uncomment the following methods and override them if needed

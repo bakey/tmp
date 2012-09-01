@@ -37,6 +37,7 @@ class Item extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('level', 'numerical', 'integerOnly'=>true),
+			array('edi_index' , 'numerical' , 'integerOnly'=>true),
 			array('content', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -61,9 +62,10 @@ class Item extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'content' => 'Content',
-			'level' => 'Level',
+			//'id' => 'ID',
+			'edition_index' => '第几章',
+			'content' => '本章内容',
+			//'level' => 'Level',
 		);
 	}
 
