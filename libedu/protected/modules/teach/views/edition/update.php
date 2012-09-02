@@ -42,12 +42,13 @@ $this->breadcrumbs=array(
 	</div>
 <?php $this->endWidget(); ?>
 <?php 
+$url = 'edition/ajaxFillTree&edition_id=' . $edition->id;
 $this->widget(
 	    'CTreeView',
 		array(
             'animated'=>'fast', //quick animation
-            'collapsed' => true,
-            'url' => array('localhost/dev/libedu/index.php?r=teach/edition/ajaxFillTree'), 
+            'collapsed' => false,
+            'url' => array( $url ), 
 		)
 );
 ?>
