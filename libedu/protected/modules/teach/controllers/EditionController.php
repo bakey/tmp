@@ -61,7 +61,7 @@ class EditionController extends Controller
 			$new_item->content     = $_POST['Item']['content'];
 			$new_item->edition     = $id;
 			$new_item->level       = self::ITEM_LEVEL_TOP ; //这个页面的level都为1
-			$new_item->create_time = time();
+			$new_item->create_time = date ("Y-m-d H:i:s", time() );
 			
 			if ( $new_item->save() )
 			{
@@ -77,6 +77,32 @@ class EditionController extends Controller
 				'new_item' => $new_item,	
 				'dataProvider' => $item_providor,			
 		));
+	}
+	public function actionAjaxFillTree()
+	{
+		// accept only AJAX request (comment this when debugging)
+		/*if (!Yii::app()->request->isAjaxRequest) {
+			exit();
+		}*/
+		var_dump( $_GET );
+		exit();
+		// parse the user input
+		$parentId = "NULL";
+		if (isset($_GET['root']) && $_GET['root'] !== 'source') {
+			$parentId = (int) $_GET['root'];
+		}
+		// read the data (this could be in a model)
+		$children = Yii::app()->db->createCommand(
+				"SELECT m1.id, m1.name AS text, m2.id IS NOT NULL AS hasChildren "
+				. "FROM tree AS m1 LEFT JOIN tree AS m2 ON m1.id=m2.parent_id "
+				. "WHERE m1.parent_id <=> $parentId "
+				. "GROUP BY m1.id ORDER BY m1.name ASC"
+        )->queryAll();
+				echo str_replace(
+		'"hasChildren":"0"',
+		'"hasChildren":false',
+				CTreeView::saveDataAsJson($children)
+						);
 	}
 	public function actionDelete($id)
 	{

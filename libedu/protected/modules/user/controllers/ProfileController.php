@@ -32,11 +32,7 @@ class ProfileController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-<<<<<<< HEAD
 				'actions'=>array('create','update','uploadavatar','cropavatar'),
-=======
-				'actions'=>array('create','update'),
->>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -87,20 +83,14 @@ class ProfileController extends Controller
 	{
         Yii::import("ext.EAjaxUpload.qqFileUploader");
  
-<<<<<<< HEAD
         $folder='./bin_data/temp_upload/';// folder for uploaded files
         $allowedExtensions = array("jpg","png","gif");//array("jpg","jpeg","gif","exe","mov" and etc...
         $sizeLimit = 1 * 1024 * 1024;// maximum file size in bytes
-=======
-        $folder='upload/';// folder for uploaded files
-        $allowedExtensions = array("jpg","png","gif");//array("jpg","jpeg","gif","exe","mov" and etc...
-        $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
->>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
+
         $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
         $result = $uploader->handleUpload($folder);
         $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
  
-<<<<<<< HEAD
         //$fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
         //$fileName=$result['filename'];//GETTING FILE NAME
 
@@ -111,15 +101,10 @@ class ProfileController extends Controller
 		$thumb->create('./bin_data/temp_upload/'.$result['filename'])
 		      ->resize(400,400)
 		      ->save('./bin_data/temp_upload/'.$result['filename']);
-=======
-        $fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
-        $fileName=$result['filename'];//GETTING FILE NAME
->>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
  
         echo $return;// it's array
 	}
 
-<<<<<<< HEAD
 	public function actionCropAvatar(){
 		Yii::import("ext.EPhpThumb.EPhpThumb");
 		$thumb=new EPhpThumb();
@@ -136,9 +121,6 @@ class ProfileController extends Controller
 	    	echo 'fail';
 	    }
 	}
-
-=======
->>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

@@ -41,3 +41,27 @@ $this->breadcrumbs=array(
 		<?php echo CHtml::submitButton('增加一章'); ?>
 	</div>
 <?php $this->endWidget(); ?>
+<?php 
+$this->widget(
+	    'CTreeView',
+		array(
+            'animated'=>'fast', //quick animation
+            'collapsed' => true,
+            'url' => array('localhost/dev/libedu/index.php?r=teach/edition/ajaxFillTree'), 
+		)
+);
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
