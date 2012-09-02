@@ -5,4 +5,5 @@ libedu/protected/runtime/application.log
 id_rsa
 id_rsa.pub
 .project
+libedu/bin_data/13/avatar/*.db
 
