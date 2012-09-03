@@ -72,7 +72,6 @@ class Profile extends CActiveRecord
 		);
 	}
 
-<<<<<<< HEAD
 	public function beforeSave(){
 		if(!$this->isNewRecord){
 			$olddata = $this->findByPk($this->uid);
@@ -92,8 +91,6 @@ class Profile extends CActiveRecord
 		return parent::beforeSave();
 	}
 
-=======
->>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

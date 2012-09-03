@@ -146,7 +146,6 @@ class LibUser extends CActiveRecord
 		}
 		return parent::beforeSave();
 	}
-<<<<<<< HEAD
 
 	public function addUserFromArray($stuinfo = null){
 		$result = array('status'=>0,'total'=>0,'success'=>0,'fail'=>0);
@@ -180,9 +179,6 @@ class LibUser extends CActiveRecord
 		return $result;
 		
 	}
-=======
->>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
-	
 	public function afterSave(){
 		if ($this->isNewRecord){
 			//get inserted user info (getInsertedID() not working) and generate activation code
@@ -195,7 +191,7 @@ class LibUser extends CActiveRecord
 			$res = $usractive->save();
 
 			//send activation email
-<<<<<<< HEAD
+
 			if($insertedUser->mobile != '99999999999'){
 				$mailer = new Emailer($insertedUser->email,'User_Real_Name_To_Be_Done_Add_Profile_Table');
 				$mailer->setMsgSubject('激活您的LibSchool帐号');
@@ -203,15 +199,7 @@ class LibUser extends CActiveRecord
 				$mailer->setMsgBody(array('User_Real_Name_To_Be_Done_Add_Profile_Table',array('<a href="http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid )).'">http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid )).'</a>')));
 				$mailer->doSendMail();
 			}
-=======
-
-			$mailer = new Emailer($insertedUser->email,'User_Real_Name_To_Be_Done_Add_Profile_Table');
-			$mailer->setMsgSubject('激活您的LibSchool帐号');
-			$mailer->setMsgTemplate('activation');
-			$mailer->setMsgBody(array('User_Real_Name_To_Be_Done_Add_Profile_Table',array('<a href="http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid )).'">http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid )).'</a>')));
-			$mailer->doSendMail();
->>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
-
+			
 			//create default profile
 			$cprofile = new Profile;
 			$cprofile->uid = $insertedUser->id;
