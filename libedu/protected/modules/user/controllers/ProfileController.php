@@ -32,7 +32,10 @@ class ProfileController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1be7b28a2ddab36954aa0f39e0bb123541b7ddc6
 				'actions'=>array('create','update','uploadavatar','cropavatar'),
 				'users'=>array('@'),
 			),
@@ -83,16 +86,26 @@ class ProfileController extends Controller
 	public function actionUploadAvatar()
 	{
         Yii::import("ext.EAjaxUpload.qqFileUploader");
+<<<<<<< HEAD
 
         $folder='./bin_data/temp_upload/';// folder for uploaded files
         $allowedExtensions = array("jpg","png","gif");//array("jpg","jpeg","gif","exe","mov" and etc...
         $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
+=======
+ 
+        $folder='./bin_data/temp_upload/';// folder for uploaded files
+        $allowedExtensions = array("jpg","png","gif");//array("jpg","jpeg","gif","exe","mov" and etc...
+        $sizeLimit = 1 * 1024 * 1024;// maximum file size in bytes
+>>>>>>> 1be7b28a2ddab36954aa0f39e0bb123541b7ddc6
 
         $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
         $result = $uploader->handleUpload($folder);
         $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
  
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1be7b28a2ddab36954aa0f39e0bb123541b7ddc6
         //$fileSize=filesize($folder.$result['filename']);//GETTING FILE SIZE
         //$fileName=$result['filename'];//GETTING FILE NAME
 
@@ -107,7 +120,10 @@ class ProfileController extends Controller
         echo $return;// it's array
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1be7b28a2ddab36954aa0f39e0bb123541b7ddc6
 	public function actionCropAvatar(){
 		Yii::import("ext.EPhpThumb.EPhpThumb");
 		$thumb=new EPhpThumb();
@@ -124,7 +140,10 @@ class ProfileController extends Controller
 	    	echo 'fail';
 	    }
 	}
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1be7b28a2ddab36954aa0f39e0bb123541b7ddc6
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

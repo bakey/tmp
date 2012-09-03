@@ -124,10 +124,17 @@ class qqFileUploader {
         }
 
         $pathinfo = pathinfo($this->file->getName());
+<<<<<<< HEAD
 
         //$filename = $pathinfo['filename'];
         $filename = md5(uniqid());
 
+=======
+        //$filename = $pathinfo['filename'];
+        //$filename = md5(uniqid());
+        $filename = $pathinfo['filename'];
+        //$filename = md5(uniqid());
+>>>>>>> 1be7b28a2ddab36954aa0f39e0bb123541b7ddc6
         $ext = $pathinfo['extension'];
 
         if($this->allowedExtensions && !in_array(strtolower($ext), $this->allowedExtensions)){

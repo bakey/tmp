@@ -17,11 +17,6 @@ class CourseController extends Controller
 				throw new CHttpException(404,'The requested page does not exist.');
 			}
 		}
-		
-<<<<<<< HEAD
 	}
-=======
-	}
->>>>>>> 533f54baa83bcadd115374ca1cf6cd6904febf3c
 }
 ?>

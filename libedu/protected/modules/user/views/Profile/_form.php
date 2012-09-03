@@ -18,11 +18,21 @@
 		$cs->registerCssFile($baseUrl.'/css/jcrop/jquery.Jcrop.min.css');
  
 ?>
+<<<<<<< HEAD
+=======
+)); ?>
+>>>>>>> 1be7b28a2ddab36954aa0f39e0bb123541b7ddc6
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
+<<<<<<< HEAD
 
+=======
+	<script type="text/javascript">
+		
+	</script>
+>>>>>>> 1be7b28a2ddab36954aa0f39e0bb123541b7ddc6
 	<div class="row">
 		<?php echo $form->labelEx($model,'avatar'); ?>
 		<?php 
@@ -42,7 +52,10 @@
 			array(
 			        'id'=>'uploadFile',
 			        'config'=>array(
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1be7b28a2ddab36954aa0f39e0bb123541b7ddc6
 			               'action'=>Yii::app()->createUrl('user/profile/uploadavatar'),
 			               'allowedExtensions'=>array("jpg","png","gif"),//array("jpg","jpeg","gif","exe","mov" and etc...
 			               'sizeLimit'=>1*1024*1024,// maximum file size in bytes
@@ -88,7 +101,10 @@
 									            setSelect:   [ 100, 100, 64, 64 ],
 											});
 			               }",
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1be7b28a2ddab36954aa0f39e0bb123541b7ddc6
 			               'action'=>Yii::app()->createUrl('user/profile/upload'),
 			               'allowedExtensions'=>array("jpg","png","gif"),//array("jpg","jpeg","gif","exe","mov" and etc...
 			               'sizeLimit'=>10*1024*1024,// maximum file size in bytes
@@ -101,9 +117,13 @@
 			                                 'emptyError'=>"{file} is empty, please select files again without it.",
 			                                 'onLeave'=>"The files are being uploaded, if you leave now the upload will be cancelled."
 			                                ),
+<<<<<<< HEAD
 
 			               //'showMessage'=>"js:function(message){ alert(message); }"
 
+=======
+			               //'showMessage'=>"js:function(message){ alert(message); }"
+>>>>>>> 1be7b28a2ddab36954aa0f39e0bb123541b7ddc6
 			               'showMessage'=>"js:function(message){ alert(message); }"
 			              )
 			));

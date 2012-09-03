@@ -41,3 +41,28 @@ $this->breadcrumbs=array(
 		<?php echo CHtml::submitButton('增加一章'); ?>
 	</div>
 <?php $this->endWidget(); ?>
+<?php 
+$url = 'edition/ajaxFillTree&edition_id=' . $edition->id;
+$this->widget(
+	    'CTreeView',
+		array(
+            'animated'=>'fast', //quick animation
+            'collapsed' => false,
+            'url' => array( $url ), 
+		)
+);
+?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

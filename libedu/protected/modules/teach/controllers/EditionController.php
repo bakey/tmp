@@ -45,15 +45,21 @@ class EditionController extends Controller
 	public function actionUpdate($id)
 	{
 		$edition = $this->loadModel($id);
-		$edition_items = $this->loadItemsByEdition( $edition );
+		
+		$critieria = new CDbCriteria;
+		$critieria->condition = 'edition=:edition';
+		$critieria->params = array(
+				':edition' => $id );
 		$item_providor = new CActiveDataProvider('Item',array(
 				'pagination'=>array('pageSize'=>15),
+				'criteria' => $critieria , 
 		));
-		if ( $edition == null || $edition_items == null )
+		
+		if ( $edition == null )
 		{
 			throw new CHttpException( 500 , "抱歉，数据库查询错误" );
 		}
-		$this->performAjaxValidation($edition_items , 'item-form');
+		$this->performAjaxValidation( $item_providor->getData() , 'item-form');
 		$new_item = new Item;
 		if(isset($_POST['Item']))
 		{
@@ -61,7 +67,7 @@ class EditionController extends Controller
 			$new_item->content     = $_POST['Item']['content'];
 			$new_item->edition     = $id;
 			$new_item->level       = self::ITEM_LEVEL_TOP ; //这个页面的level都为1
-			$new_item->create_time = time();
+			$new_item->create_time = date ("Y-m-d H:i:s", time() );
 			
 			if ( $new_item->save() )
 			{
@@ -73,10 +79,57 @@ class EditionController extends Controller
 		}
 		$this->render('update',array(
 				'edition' => $edition ,
-				'items' => $edition_items,
 				'new_item' => $new_item,	
 				'dataProvider' => $item_providor,			
 		));
+	}
+	public function actionAjaxFillTree()
+	{
+		// accept only AJAX request (comment this when debugging)
+		/*if (!Yii::app()->request->isAjaxRequest) {
+			exit();
+		}*/
+		// parse the user input
+		$parentId = "NULL";
+		$levelCondition = "";
+		if ( isset($_GET['root']) ) {
+			if ( $_GET['root'] !== 'source' ){
+				$parentId = (int) $_GET['root'];
+				$levelCondition = " tbl_item.level > 1 ";
+			}else if( isset($_GET['edition_id']) ) {
+				$parentId = (int)$_GET['edition_id'];
+				$levelCondition = " tbl_item.level <=> 1 "; 
+			}
+			else {
+				exit();
+			}
+		}
+		
+		// read the data (this could be in a model)
+		$children = Yii::app()->db->createCommand(
+				"SELECT tbl_item.id, tbl_item.content AS text, tbl_item.id<=>tbl_item_item.parent AS hasChildren "
+				."FROM tbl_item join tbl_item_item where tbl_item.edition <=> "
+				. $parentId . " and "
+				. $levelCondition
+				. " group by tbl_item.id"
+        )->queryAll();
+		
+		$treedata=array();
+		foreach($children as $child){
+			$options=array('href'=>'#','id'=>$child['id'],'class'=>'treenode');
+			$nodeText = CHtml::openTag('a', $options);
+			$nodeText.= $child['text'];
+			$nodeText.= CHtml::closeTag('a')."\n";
+			$child['text'] = $nodeText;
+			$treedata[]=$child;
+		}
+		
+		echo str_replace(
+			'"hasChildren":"0"',
+			'"hasChildren":false',
+			CTreeView::saveDataAsJson($treedata)
+		 	//CTreeView::saveDataAsJson($children)
+		);
 	}
 	public function actionDelete($id)
 	{
@@ -108,14 +161,14 @@ class EditionController extends Controller
 		}
 		return $model;
 	}
-	public function loadItemsByEdition($edition)
+	/*public function loadItemsByEdition($edition)
 	{
 		$critieria = new CDbCriteria;
 		$critieria->condition = 'edition=:edition';
 		$critieria->params = array(
 				':edition' => $edition->id );
 		return Item::model()->findAll( $critieria );
-	}
+	}*/
 
 	// Uncomment the following methods and override them if needed
 	/*
