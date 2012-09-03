@@ -147,7 +147,7 @@ class LibUser extends CActiveRecord
 		return parent::beforeSave();
 	}
 
-	public function addUserFromArray($stuinfo = null){
+	public function addUserFromArray($stuinfo = null,$schoolid){
 		$result = array('status'=>0,'total'=>0,'success'=>0,'fail'=>0);
 		if(!$stuinfo){
 			$result['status'] = -1;
@@ -157,16 +157,34 @@ class LibUser extends CActiveRecord
 		$secRec = 0;
 		$failRec = 0;
 		foreach($stuinfo as $singlestu){
-			$cusr = new LibUser;
-			$cusr->user_name = md5(uniqid());
-			$cusr->password = md5(uniqid());
-			$cusr->email = md5(uniqid()).'@someschool.com';
-			$cusr->mobile = '99999999999';
-			if($cusr->save(false)){
-				$ttlRec ++;
-				$secRec ++;
+			$usc = new UserSchool;
+			$cres = $usc->findByAttributes(array('school_id'=>$schoolid,'school_unique_id'=>$singlestu['学号']));
+			if(!$cres){
+				$cusr = new LibUser;
+				$tempusername = md5(uniqid());
+				$cusr->user_name = $tempusername;
+				$cusr->password = md5(uniqid());
+				$cusr->email = md5(uniqid()).'@someschool.com';
+				$cusr->mobile = '99999999999';
+
+				if($cusr->save(false)){
+					$insertedStu = $cusr->findByAttributes(array('user_name' => $tempusername));
+					$usc = new UserSchool;
+					$usc->user_id = $insertedStu->id;
+					$usc->school_id = $schoolid;
+					$usc->school_unique_id = $singlestu['学号'];
+					$usc->role = 1;
+					if($usc->save()){
+						$ttlRec ++;
+						$secRec ++;	
+					}
+				}else{
+					$ttlRec ++;
+					$failRec ++;
+				}
 			}else{
-				$failRec ++;
+				$ttlRec ++;
+				$failRec ++;	
 			}
 		}
 		if($failRec == 0){

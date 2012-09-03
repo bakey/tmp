@@ -1,3 +1,4 @@
+<h4>学校：<?php echo $schoolname;?> （学校ID：<?php echo $schoolid; ?>）</h4>
 <?php $this->widget('zii.widgets.grid.CGridView',
 		array(
 			'id'=>'uploadedStu',

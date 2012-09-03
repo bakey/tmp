@@ -66,6 +66,8 @@ class LibUserController extends Controller
 			return array();
 		}
 		$stuinfo = array();
+		$finalinfo = array();
+
 		$filePath = './bin_data/temp_upload/'.$fname;
 		$applicationPath = Yii::getPathOfAlias('webroot');
 		spl_autoload_unregister(array('YiiBase','autoload')); 
@@ -87,6 +89,9 @@ class LibUserController extends Controller
 			
 			$ttlColumn = $currentSheet->getHighestColumn(); 
 			$ttlRow = $currentSheet->getHighestRow(); 
+
+			$finalinfo['schoolname'] = $currentSheet->getCellByColumnAndRow(1,2)->getValue();
+			$finalinfo['schoolid'] = $currentSheet->getCellByColumnAndRow(3,2)->getValue();  
 			
 			for($irow=4;$irow < $ttlRow; $irow++){
 				for($icolumn=0;$icolumn<6;$icolumn++){
@@ -96,10 +101,11 @@ class LibUserController extends Controller
 					$stuinfo[$irow-4][$currentSheet->getCellByColumnAndRow($icolumn,3)->getValue()] = $currentSheet->getCellByColumnAndRow($icolumn,$irow)->getValue();
 				}
 			}
+			$finalinfo['stuinfo'] = $stuinfo;
 		}else{
 			echo '无法读取文件！';
 		}
-		return $stuinfo;
+		return $finalinfo;
 	}
 
 	public function actionLoadStudentInfo(){
@@ -110,7 +116,7 @@ class LibUserController extends Controller
 			$fname = $_REQUEST['fname'];
 		}
 		$stuinfo = $this->getStudentInfoFromExcelFile($fname);
-		$dataProvider=new CArrayDataProvider($stuinfo, array(
+		$dataProvider=new CArrayDataProvider($stuinfo['stuinfo'], array(
 		    'id'=>'loadeduser',
 		    'keyField'=>'序号',
 		    'sort'=>array(
@@ -123,7 +129,7 @@ class LibUserController extends Controller
 		        'pageSize'=>15,
 		    ),
 		));
-		$this->renderPartial('_uploadedStudentInfo', array('dataProvider'=>$dataProvider), false, true);
+		$this->renderPartial('_uploadedStudentInfo', array('dataProvider'=>$dataProvider,'schoolname'=>$stuinfo['schoolname'],'schoolid'=>$stuinfo['schoolid']), false, true);
 	}
 
 	public function actionDoLoadStudentInfo(){
@@ -136,7 +142,7 @@ class LibUserController extends Controller
 		if(!$stuinfo){
 			echo '学生列表为空或文件读取错误，请再试一次！';
 		}else{
-			print_r(Libuser::model()->addUserFromArray($stuinfo));
+			print_r(Libuser::model()->addUserFromArray($stuinfo['stuinfo'],$stuinfo['schoolid']));
 		}
 	}
 

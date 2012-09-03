@@ -12,7 +12,9 @@ $this->breadcrumbs=array(
 <h3 id="subtitle">请选择要导入的文件（只支持.xls 和 .xlsx 文件）</h3>
 <?php echo CHtml::ajaxButton ("确认导入学生信息",
                               CController::createUrl('/user/libuser/doloadstudentinfo'), 
-                              array('update' => '#loadedstuinfo','data'=>'js:{fname: $(this).attr(\'rel\')}'),array('style'=>'float:right;display:none','id'=>'confirmimportbtn')); ?>
+                              array('update' => '#loadedstuinfo','data'=>'js:{fname: $(this).attr(\'rel\')}','beforeSend'=>'js:function(){$(\'#loadinghover\').trigger(\'click\');}','complete'=>'js:function(){$(\'.fancybox-wrap\').stop(true).trigger(\'onReset\').fadeOut(500);
+																$(\'.fancybox-overlay\').fadeOut();}'),array('style'=>'float:right;display:none','id'=>'confirmimportbtn')); ?>
+
 <?php
 			$this->widget('ext.EAjaxUpload.EAjaxUpload',
 			array(
@@ -26,16 +28,17 @@ $this->breadcrumbs=array(
 										$.post('".Yii::app()->createUrl('user/libuser/loadstudentinfo')."&fname='+responseJSON.filename, { fname:responseJSON.filename }, function(data){
 																$('#loadedstuinfo').html(data);
 																$('#subtitle').html('请您仔细确认即将导入的学生信息，并确认班级ID的正确性。');
-																$('#uploading').fadeOut(200);
 																$('#loadedstuinfo').fadeIn(1000);
 																$('#confirmimportbtn').attr('rel',responseJSON.filename);
 																$('#confirmimportbtn').fadeIn();
+																$('.fancybox-wrap').stop(true).trigger('onReset').fadeOut(500);
+																$('.fancybox-overlay').fadeOut();
 														} );
 			               }",
 			               'onSubmit'=>"js:function(id,fileName){
 			               				$('#subtitle').html('文件正在上传中……');
 			               				$('#uploadFile').fadeOut();
-										$('#uploading').fadeIn(200);
+										$('#loadinghover').trigger('click');
 			               }",
 			               'messages'=>array(
 			                                 'typeError'=>"{file} has invalid extension. Only {extensions} are allowed.",
@@ -49,9 +52,16 @@ $this->breadcrumbs=array(
 			));
 ?>
 
-<div id="uploading" style="display:none;">
-	<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/ajax-loader.gif" />
-</div>
-
+<?php $this->widget('application.extensions.fancybox.EFancyBox', array(
+        'target'=>'a.fancylink',
+        'config'=>array('minWidth'=>'300px','minHeight'=>'100px','closeBtn'=>false),));  
+?>  
 <div id="loadedstuinfo" style="display:none">
+</div>
+<a href="#fancydata" class="fancylink" id="loadinghover" style="display:none">&nbsp;</a>
+<div style="display:none">
+	<div id="fancydata">
+		<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/ajax-loader.gif" />
+		<p>AJAX is WORKING.................</p>
+	</div>
 </div>
