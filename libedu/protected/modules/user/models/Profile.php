@@ -90,10 +90,6 @@ class Profile extends CActiveRecord
 		}
 		return parent::beforeSave();
 	}
-<<<<<<< HEAD
-
-=======
->>>>>>> 1be7b28a2ddab36954aa0f39e0bb123541b7ddc6
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
