@@ -159,6 +159,8 @@ class LibUser extends CActiveRecord
 		foreach($stuinfo as $singlestu){
 			$usc = new UserSchool;
 			$cres = $usc->findByAttributes(array('school_id'=>$schoolid,'school_unique_id'=>$singlestu['学号']));
+			
+			// check if the record is a replica
 			if(!$cres){
 				$cusr = new LibUser;
 				$tempusername = md5(uniqid());
@@ -167,13 +169,25 @@ class LibUser extends CActiveRecord
 				$cusr->email = md5(uniqid()).'@someschool.com';
 				$cusr->mobile = '99999999999';
 
+				//create user and create school/class student relation record
 				if($cusr->save(false)){
 					$insertedStu = $cusr->findByAttributes(array('user_name' => $tempusername));
+					
+					//save realname into the user's profile
+					$cprof = new Profile;
+					$insertedStuProfile = $cprof->findByPk($insertedStu->id);
+					$insertedStuProfile->real_name = $singlestu['姓名'];
+					$insertedStuProfile->save();
+
+					//create school student relation
 					$usc = new UserSchool;
 					$usc->user_id = $insertedStu->id;
 					$usc->school_id = $schoolid;
 					$usc->school_unique_id = $singlestu['学号'];
-					$usc->role = 1;
+					$usc->role = 1; //for now 1 means student
+
+					//create class student relation
+					
 					if($usc->save()){
 						$ttlRec ++;
 						$secRec ++;	
