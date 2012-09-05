@@ -177,7 +177,6 @@ class LibUser extends CActiveRecord
 					$cprof = new Profile;
 					$insertedStuProfile = $cprof->findByPk($insertedStu->id);
 					$insertedStuProfile->real_name = $singlestu['姓名'];
-					$insertedStuProfile->save();
 
 					//create school student relation
 					$usc = new UserSchool;
@@ -187,10 +186,20 @@ class LibUser extends CActiveRecord
 					$usc->role = 1; //for now 1 means student
 
 					//create class student relation
-					
-					if($usc->save()){
+					$cls = new LibClass;
+					$ccls = $cls->findByPk($singlestu['班级ID']);
+
+					$ucls = new LibUserClass;
+					$ucls->student_id = $insertedStu->id;
+					$ucls->teacher_id = $ccls->classhead_id;
+					$ucls->class_id = $ccls->id;
+
+					if($insertedStuProfile->save()&&$usc->save()&&$ucls->save()){
 						$ttlRec ++;
 						$secRec ++;	
+					}else{
+						$ttlRec ++;
+						$failRec ++;
 					}
 				}else{
 					$ttlRec ++;

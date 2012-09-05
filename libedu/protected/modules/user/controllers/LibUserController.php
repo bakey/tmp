@@ -142,7 +142,14 @@ class LibUserController extends Controller
 		if(!$stuinfo){
 			echo '学生列表为空或文件读取错误，请再试一次！';
 		}else{
-			print_r(Libuser::model()->addUserFromArray($stuinfo['stuinfo'],$stuinfo['schoolid']));
+			$importres = Libuser::model()->addUserFromArray($stuinfo['stuinfo'],$stuinfo['schoolid']);
+			echo '<h4>学生列表导入结果</h4><ul>
+				<li>总记录条数：<strong>'.$importres['total'].'</strong></li>
+				<li>成功导入<strong>'.$importres['success'].'</strong>名学生</li>
+				<li><strong>'.$importres['fail'].'</strong>名学生导入失败</li>
+				<li>失败原因：记录格式错误或者改学生已经在系统中存在</li>
+			</ul>';
+
 		}
 	}
 
