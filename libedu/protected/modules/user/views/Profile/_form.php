@@ -35,9 +35,6 @@
 		}
 		echo $avatarCode; ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'avatar'); ?>
-		<?php echo CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->avatar,'alt',array('width'=>64,'height'=>64)); ?>
 		<?php
 			$this->widget('ext.EAjaxUpload.EAjaxUpload',
 			array(
@@ -90,11 +87,6 @@
 											});
 			               }",
 
-			               'action'=>Yii::app()->createUrl('user/profile/upload'),
-			               'allowedExtensions'=>array("jpg","png","gif"),//array("jpg","jpeg","gif","exe","mov" and etc...
-			               'sizeLimit'=>10*1024*1024,// maximum file size in bytes
-			               //'minSizeLimit'=>10*1024*1024,// minimum file size in bytes
-			               'onComplete'=>"js:function(id, fileName, responseJSON){ alert(fileName); }",
 			               'messages'=>array(
 			                                 'typeError'=>"{file} has invalid extension. Only {extensions} are allowed.",
 			                                 'sizeError'=>"{file} is too large, maximum file size is {sizeLimit}.",
