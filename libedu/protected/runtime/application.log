@@ -2604,3 +2604,12 @@ in D:\xampp\htdocs\libedu\libedu\index.php (13)
 2012/09/05 15:52:22 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
 in D:\xampp\htdocs\libedu\libedu\protected\modules\user\controllers\LibUserController.php (31)
 in D:\xampp\htdocs\libedu\libedu\index.php (13)
+2012/09/05 17:03:46 [trace] [system.db.CDbConnection] Opening DB connection
+in D:\xampp\htdocs\localdev\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in D:\xampp\htdocs\localdev\libedu\index.php (13)
+2012/09/05 17:03:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW COLUMNS FROM `tbl_user`
+in D:\xampp\htdocs\localdev\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in D:\xampp\htdocs\localdev\libedu\index.php (13)
+2012/09/05 17:03:47 [trace] [system.db.CDbCommand] Querying SQL: SHOW CREATE TABLE `tbl_user`
+in D:\xampp\htdocs\localdev\libedu\protected\modules\user\controllers\LibUserController.php (31)
+in D:\xampp\htdocs\localdev\libedu\index.php (13)

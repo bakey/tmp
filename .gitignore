@@ -1,4 +1,3 @@
-libedu/protected/runtime/application.log
 *.bak
 \.settings\*
 .buildpath
@@ -6,4 +5,5 @@ id_rsa
 id_rsa.pub
 .project
 libedu/bin_data/13/avatar/*.db
-
+libedu/bin_data/temp_upload/*
+libedu/protected/runtime/*
