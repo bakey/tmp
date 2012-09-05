@@ -15,6 +15,14 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
+	<?php 
+		echo CHtml::label('请选择您的角色','usrtype');
+		echo CHtml::dropDownList('usrtype','0',array('0'=>'学生','1'=>'教师'),array('ajax'=>array(
+				'url'=>Yii::app()->createUrl('/user/libuser/changeregisterrole'),
+				'update'=> '.form',
+			)));
+	?>
+
 	<div class="row">
 		<?php echo $form->labelEx($model,'user_name'); ?>
 		<?php echo $form->textField($model,'user_name',array('size'=>60,'maxlength'=>255)); ?>
@@ -44,5 +52,4 @@
 	</div>
 
 <?php $this->endWidget(); ?>
-
 </div><!-- form -->

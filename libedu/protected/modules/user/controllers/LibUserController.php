@@ -45,6 +45,10 @@ class LibUserController extends Controller
 		));
 	}
 
+	public function actionChangeRegisterRole(){
+		echo '<h1>Ahahahahahahahahah !</h1>';
+	}
+
 	public function actionImportStudentList(){
 		$this->render('importstuinfo');
 	}
