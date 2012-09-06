@@ -43,6 +43,12 @@ return array(
 			'class'=>'CDbAuthManager',
 			'connectionID'=>'db',
 		),
+
+		 'clientScript' => array(
+    'class' => 'application.components.NLSClientScript',
+    'excludePattern' => '/\.tpl/i', //js regexp, files with matching paths won't be filtered is set to other than 'null'
+    //'includePattern' => '/\.php/' //js regexp, only files with matching paths will be filtered if set to other than 'null'
+  		),
 		// uncomment the following to enable URLs in path-format
 		/*
 		'urlManager'=>array(

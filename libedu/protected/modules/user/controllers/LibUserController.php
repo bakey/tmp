@@ -40,13 +40,17 @@ class LibUserController extends Controller
 				$this->redirect(array('/site/login'));
 		}
 
-		$this->render('create',array(
+		if(!isset($_REQUEST['role'])){
+			$this->render('create',array(
 			'model'=>$model,
-		));
-	}
-
-	public function actionChangeRegisterRole(){
-		echo '<h1>Ahahahahahahahahah !</h1>';
+			));
+		}else{
+			if($_REQUEST['role'] == 1){
+				$this->renderPartial('_form_lec', array('model'=>$model),false,true);		
+			}else{
+				$this->renderPartial('_form_stu', array('model'=>$model),false,true);		
+			}
+		}
 	}
 
 	public function actionImportStudentList(){

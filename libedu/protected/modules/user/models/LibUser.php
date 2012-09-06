@@ -19,6 +19,9 @@ class LibUser extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return User the static model class
 	 */
+
+	public $repeatpassword = null;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -40,7 +43,7 @@ class LibUser extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_name, email, password', 'required'),
+			array('user_name, email, password,repeatpassword', 'required'),
 			array('user_name, email, mobile', 'unique'),
 			array('email', 'email'),
 			array('mobile','match', 'pattern'=>'/^(1(([35][0-9])|(47)|[8][01236789]))\d{8}$/'),
@@ -48,6 +51,7 @@ class LibUser extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, user_name, mobile, email', 'safe', 'on'=>'search'),
+			array('repeatpassword', 'compare', 'compareAttribute'=>'password'),
 		);
 	}
 
@@ -74,9 +78,10 @@ class LibUser extends CActiveRecord
 			'user_name' => '用户名',
 			'mobile' => '手机号码',
 			'email' => '电子邮件',
-			'password' => 'Password',
+			'password' => '密码',
 			'salt' => 'Salt',
 			'status' => 'Status',
+			'repeatpassword'=>'密码确认'
 		);
 	}
 
@@ -143,6 +148,9 @@ class LibUser extends CActiveRecord
 			$this->status = 1;
 			$this->salt = 'libedu'.time().$this->user_name;
 			$this->password = $this->hashPassword($this->password,$this->salt);
+		}else{
+			if($this->repeatpassword != null)
+				$this->repeatpassword = $this->password;
 		}
 		return parent::beforeSave();
 	}
