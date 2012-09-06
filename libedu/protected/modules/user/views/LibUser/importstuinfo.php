@@ -15,7 +15,7 @@ $this->breadcrumbs=array(
                               array('update' => '#loadedstuinfo','data'=>'js:{fname: $(this).attr(\'rel\')}','beforeSend'=>'js:function(){$(\'#loadinghover\').trigger(\'click\');}','complete'=>'js:function(){
                               	$(\'#confirmimportbtn\').fadeOut();$(\'#subtitle\').fadeOut();
                               	$(\'.fancybox-wrap\').stop(true).trigger(\'onReset\').fadeOut(500);
-																$(\'.fancybox-overlay\').fadeOut();}'),array('style'=>'float:right;display:none','id'=>'confirmimportbtn')); ?>
+																$(\'.fancybox-overlay\').fadeOut();$(\'body\').removeClass(\'fancybox-lock\');}'),array('style'=>'float:right;display:none','id'=>'confirmimportbtn')); ?>
 
 <?php
 			$this->widget('ext.EAjaxUpload.EAjaxUpload',
@@ -35,6 +35,7 @@ $this->breadcrumbs=array(
 																$('#confirmimportbtn').fadeIn();
 																$('.fancybox-wrap').stop(true).trigger('onReset').fadeOut(500);
 																$('.fancybox-overlay').fadeOut();
+																$('body').removeClass('fancybox-lock');
 														} );
 			               }",
 			               'onSubmit'=>"js:function(id,fileName){

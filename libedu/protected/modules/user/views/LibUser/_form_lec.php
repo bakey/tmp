@@ -17,7 +17,7 @@
 				'data'=> array('role'=>'js:$(this).val()'),
 				'beforeSend'=>'js:function(){$(\'#loadinghover\').trigger(\'click\');}',
 				'complete'=>'js:function(){$(\'.fancybox-wrap\').stop(true).trigger(\'onReset\').fadeOut(500);
-																$(\'.fancybox-overlay\').fadeOut();}',
+																$(\'.fancybox-overlay\').fadeOut();$(\'body\').removeClass(\'fancybox-lock\');}',
 			)));
 	?>
 	</fieldset>
