@@ -22,6 +22,10 @@
 					array(
 						'name' => '班级'
 					),
+					array(
+						'header'=>'备注',
+						'name' => 'failreason',
+					),
 					 
 			),
 		)

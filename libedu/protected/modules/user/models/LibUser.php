@@ -155,6 +155,33 @@ class LibUser extends CActiveRecord
 		return parent::beforeSave();
 	}
 
+	
+	public function validateUserFromArray($stuinfo = null,$schoolid){
+		if(!$stuinfo){
+			return null;
+		}
+		$result = array();
+		$ttl = -1;
+		foreach($stuinfo as $singlestu){
+			$usc = new UserSchool;
+			$cres = $usc->findByAttributes(array('school_id'=>$schoolid,'school_unique_id'=>$singlestu['学号']));
+			$ttl ++;
+			$result[$ttl] = $singlestu;
+			// check if the record is a replica
+			$result[$ttl]['filreason'] = '';
+			if(!$cres){				
+				$cls = new LibClass;
+				$ccls = $cls->findByPk($singlestu['班级ID']);
+				if(!$ccls){
+					$result[$ttl]['filreason'] = '该学生所在班级不存在，请先建立班级';	
+				}
+			}else{
+				$result[$ttl]['failreason'] = '该学生在系统中已存在';
+			}
+		}
+		return $result;
+	}
+
 	public function addUserFromArray($stuinfo = null,$schoolid){
 		$result = array('status'=>0,'total'=>0,'success'=>0,'fail'=>0);
 		if(!$stuinfo){

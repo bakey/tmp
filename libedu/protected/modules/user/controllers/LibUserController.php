@@ -124,13 +124,14 @@ class LibUserController extends Controller
 			$fname = $_REQUEST['fname'];
 		}
 		$stuinfo = $this->getStudentInfoFromExcelFile($fname);
+		$stuinfo['stuinfo'] = LibUser::model()->validateUserFromArray($stuinfo['stuinfo'],$stuinfo['schoolid']);
 		$dataProvider=new CArrayDataProvider($stuinfo['stuinfo'], array(
 		    'id'=>'loadeduser',
 		    'keyField'=>'序号',
 		    'sort'=>array(
 		    	
 		        'attributes'=>array(
-		             '学号', '班级', '姓名', '班级ID'
+		             '学号', '班级', '姓名', '班级ID','failreason'
 		        ),
 		    ),
 		    'pagination'=>array(
@@ -155,7 +156,6 @@ class LibUserController extends Controller
 				<li>总记录条数：<strong>'.$importres['total'].'</strong></li>
 				<li>成功导入<strong>'.$importres['success'].'</strong>名学生</li>
 				<li><strong>'.$importres['fail'].'</strong>名学生导入失败</li>
-				<li>失败原因：记录格式错误或者改学生已经在系统中存在</li>
 			</ul>';
 
 		}
