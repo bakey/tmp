@@ -29,7 +29,7 @@
 		<?php 
 		$avatarCode = ''; 
 		if($model->avatar != 'default_avatar.jpg'){
-			$avatarCode = CHtml::image(Yii::app()->request->baseUrl.'/bin_data/'.$model->user_info->id.'/avatar/'.$model->avatar,'alt',array('width'=>64,'height'=>64,'id'=>'currentAvatar'));
+			$avatarCode = CHtml::image(Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$model->user_info->id.'/avatar/'.$model->avatar,'alt',array('width'=>64,'height'=>64,'id'=>'currentAvatar'));
 		}else{
 			$avatarCode = CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->avatar,'alt',array('width'=>64,'height'=>64,'id'=>'currentAvatar'));
 		}
@@ -60,7 +60,7 @@
 											}
 			               					$('#currentAvatar').fadeOut();
 			               					$('.qq-uploader').fadeOut(300);
-			               					$('#uploaded_avatar').html('<img id=\"currentAvatarImg\" src=\"".Yii::app()->request->baseUrl.'/bin_data/temp_upload/'."'+responseJSON.filename+'\" width=\"400px\"/><h4>头像预览</h4><div style=\"width:80px; height:80px; overflow:hidden;\"><img id=\"preview\" src=\"".Yii::app()->request->baseUrl.'/bin_data/temp_upload/'."'+responseJSON.filename+'\"/></div>');
+			               					$('#uploaded_avatar').html('<img id=\"currentAvatarImg\" src=\"".Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/temp_upload/'."'+responseJSON.filename+'\" width=\"400px\"/><h4>头像预览</h4><div style=\"width:80px; height:80px; overflow:hidden;\"><img id=\"preview\" src=\"".Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/temp_upload/'."'+responseJSON.filename+'\"/></div>');
 			               					$('#uploaded_avatar').fadeIn(1000);
 											$('#currentAvatarImg').Jcrop({
 												onChange: showPreview,

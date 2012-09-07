@@ -76,7 +76,7 @@ class LibUserController extends Controller
 		$stuinfo = array();
 		$finalinfo = array();
 
-		$filePath = './bin_data/temp_upload/'.$fname;
+		$filePath = './'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$fname;
 		$applicationPath = Yii::getPathOfAlias('webroot');
 		spl_autoload_unregister(array('YiiBase','autoload')); 
 		require_once $applicationPath.'/protected/vendors/phpexcel/PHPExcel.php';

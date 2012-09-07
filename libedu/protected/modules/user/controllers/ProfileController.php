@@ -83,7 +83,7 @@ class ProfileController extends Controller
 	{
         Yii::import("ext.EAjaxUpload.qqFileUploader");
 
-        $folder='./bin_data/temp_upload/';// folder for uploaded files
+        $folder='./'.Yii::app()->params['uploadFolder'].'/temp_upload/';// folder for uploaded files
         $allowedExtensions = array("jpg","png","gif");//array("jpg","jpeg","gif","exe","mov" and etc...
         $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
 
@@ -95,9 +95,9 @@ class ProfileController extends Controller
         Yii::import("ext.EPhpThumb.EPhpThumb");
 		$thumb=new EPhpThumb();
 		$thumb->init(); 
-		$thumb->create('./bin_data/temp_upload/'.$result['filename'])
+		$thumb->create('./'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$result['filename'])
 		      ->resize(400,400)
-		      ->save('./bin_data/temp_upload/'.$result['filename']);
+		      ->save('./'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$result['filename']);
  
         echo $return;// it's array
 	}
@@ -107,13 +107,13 @@ class ProfileController extends Controller
 		Yii::import("ext.EPhpThumb.EPhpThumb");
 		$thumb=new EPhpThumb();
 		$thumb->init(); 
-		$newFileName = './bin_data/temp_upload/'.time().$_POST['fname'];
-		$thumb->create('./bin_data/temp_upload/'.$_POST['fname'])
+		$newFileName = './'.Yii::app()->params['uploadFolder'].'/temp_upload/'.time().$_POST['fname'];
+		$thumb->create('./'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$_POST['fname'])
 			  ->crop($_POST['cx'], $_POST['cy'], $_POST['cw'], $_POST['ch'])
 			  ->resize(64,64)
 			  ->save($newFileName);
 	    if(file_exists($newFileName)){
-	    	unlink('./bin_data/temp_upload/'.$_POST['fname']);
+	    	unlink('./'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$_POST['fname']);
 	    	echo Yii::app()->request->baseUrl.substr($newFileName,1);
 	    }else{
 	    	echo 'fail';

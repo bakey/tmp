@@ -14,7 +14,7 @@ $this->breadcrumbs=array(
 <?php
 $avatarCode = ''; 
 if($model->avatar != 'default_avatar.jpg'){
-	$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/bin_data/'.$model->user_info->id.'/avatar/'.$model->avatar,'alt',array('width'=>64,'height'=>64)));
+	$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$model->user_info->id.'/avatar/'.$model->avatar,'alt',array('width'=>64,'height'=>64)));
 }else{
 	$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->avatar,'alt',array('width'=>64,'height'=>64)));
 }

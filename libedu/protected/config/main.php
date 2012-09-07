@@ -102,6 +102,7 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'chengchao@libedu.com',
+		'uploadFolder'=>'bin_data',
 	),
 	'timeZone'=>"Asia/Shanghai",
 	'language'=>"zh_cn",
