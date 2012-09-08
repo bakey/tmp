@@ -31,11 +31,24 @@ description text,
 PRIMARY KEY(`id`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+create table if not exists tbl_grade(
+ `grade_index` integer not null ,
+ `grade_name` varchar(255) not null
+    -> )engine=innodb default charset=utf8;
+    
 create table if not exists tbl_course_edition(
 id int(11) not null auto_increment primary key,
 name varchar(255) not null,
 description text
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+create table `tbl_publisher`(
+   `id` int(11) not null auto_increment,
+   `name` varchar(255) not null,
+   `description` text,
+   PRIMARY KEY(`id`)
+)engine=InnoDB default charset=utf8;
+
 
 create table if not exists tbl_course(
 id int(11) not null auto_increment primary key,
@@ -55,7 +68,7 @@ start_time datetime not null
 create table if not exists `tbl_item`(
 id int(11) not null auto_increment primary key,
 edition int not null references tbl_course_edition(id) on delete cascade,
-index int not null,
+edi_index int(11) not null,
 content text,
 level tinyint,
 create_time datetime not null
@@ -65,6 +78,16 @@ create_time datetime not null
 create table tbl_item_item(
 parent int(11) not null references tbl_item(id) on delete cascade,
 child int(11) not null references tbl_item(id) on delete cascade
+)engine=innodb default charset=utf8;
+
+create table if not exists `tbl_news_feed`(
+	`id` int not null auto_increment primary key,
+	`publisher` int not null references tbl_user(id) on delete cascade,
+	`receiver` int not null references tbl_user(id) on delete cascade,
+	`type` tinyint not null ,
+	`create_time` datetime default NULL,
+	`resource_id` int ,
+	`content` text not null
 )engine=innodb default charset=utf8;
 
 create table if not exists `tbl_problem`(
@@ -109,6 +132,18 @@ create table if not exists tbl_user_school(
  `role` int not null
  )engine=innodb default charset=utf8;
  
+ create table if not exists tbl_knowledge_point(
+ `id` int(11) not null auto_increment primary key,
+ `course_id` int ,  
+ `name` varchar(255) not null,
+ `level` int not null,
+ `description` text
+ )engine=innodb default charset=utf8;
+ 
+ create table if not exists tbl_kp_level(
+ `parent` int not null,
+ `child` int not null
+ )engine=innodb default charset=utf8;
 	
 	
 	

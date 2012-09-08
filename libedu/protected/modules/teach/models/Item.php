@@ -15,6 +15,7 @@ class Item extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return Item the static model class
 	 */
+	public $parent ;
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -42,6 +43,7 @@ class Item extends CActiveRecord
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, content, level', 'safe', 'on'=>'search'),
+			array('parent' , 'numerical' , 'integerOnly'=>true),
 		);
 	}
 
@@ -63,9 +65,10 @@ class Item extends CActiveRecord
 	{
 		return array(
 			//'id' => 'ID',
-			'edition_index' => '第几章',
+			'edi_index' => '第几章/第几节',
 			'content' => '本章内容',
-			//'level' => 'Level',
+			'level' => 'Level',
+			'parent' => '父章节的id',
 		);
 	}
 

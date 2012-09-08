@@ -10,7 +10,7 @@ class CourseController extends Controller
 			$course = Course::model()->findByPk( $course_id );
 			if ( $course != null )
 			{
-				$items = $course->edition->items;
+				$items = $course->edition;
 				$this->render( 'index' , array('item'=>$items , ) );
 			}
 			else{

@@ -1,3 +1,5 @@
+
+
 <?php
 $this->breadcrumbs=array(
 	'Update Edition',
@@ -17,30 +19,21 @@ $this->breadcrumbs=array(
 		array('dataProvider'=>$dataProvider)
 	);
 ?>
-<div class="form">
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php
+
+ /*$form=$this->beginWidget('CActiveForm', array(
 	'id'=>'item-form',
 	'enableClientValidation'=>true,
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
 	),
-)); ?>
+));
+*/
+ ?>
 <p class="note">Fields with <span class="required">*</span> are required.</p>
-	<div class="row">
-		<?php echo $form->labelEx($new_item,'edi_index'); ?>
-		<?php echo $form->textField($new_item,'edi_index',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($new_item,'edi_index'); ?>
-	</div>
+<div class="form">
+<?php echo $form; ?>
 	
-	<div class="row">
-		<?php echo $form->labelEx($new_item,'content'); ?>
-		<?php echo $form->textField($new_item,'content',array('size'=>60,'maxlength'=>512)); ?>
-		<?php echo $form->error($new_item,'contents'); ?>
-	</div>
-	<div class="row buttons">
-		<?php echo CHtml::submitButton('增加一章'); ?>
-	</div>
-<?php $this->endWidget(); ?>
 <?php 
 $url = 'edition/ajaxFillTree&edition_id=' . $edition->id;
 $this->widget(
@@ -52,6 +45,7 @@ $this->widget(
 		)
 );
 ?>
+
 
 
 

@@ -37,6 +37,8 @@
 				array('label'=>'查看当前的教材', 'url'=>array('/teach/edition/view')),
 				array('label'=>'管理教材', 'url'=>array('/teach/edition/admin')),
 				array('label'=>'用户注册', 'url'=>array('/user/libuser/register')),
+				array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint&school_id=1')),
+				array('label'=>'系统通知发送', 'url'=>array('/user/newsfeed/create')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),

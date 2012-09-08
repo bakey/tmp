@@ -56,6 +56,7 @@ class Course extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 				'edition'=>array(self::BELONGS_TO , 'CourseEdition','edition_id'),
+				'gg'=>array(self::HAS_ONE ,'Grade','grade_index'),
 		);
 	}
 
@@ -66,7 +67,7 @@ class Course extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'edition_id' => 'Edition',
+			'edition_id' => 'Edition',	
 			'name' => 'Name',
 			'description' => 'Description',
 			'view_count' => 'View Count',
