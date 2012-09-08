@@ -1,22 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "tbl_class".
+ * This is the model class for table "tbl_class_apply".
  *
- * The followings are the available columns in table 'tbl_class':
- * @property integer $id
- * @property integer $school_id
- * @property string $name
- * @property integer $grade
- * @property integer $classhead_id
- * @property string $description
+ * The followings are the available columns in table 'tbl_class_apply':
+ * @property integer $applicant
+ * @property integer $approver
+ * @property integer $class_id
+ * @property string $statement
  */
-class LibClass extends CActiveRecord
+class LibClassApply extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return LibClass the static model class
+	 * @return ClassApply the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -28,7 +26,7 @@ class LibClass extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_class';
+		return 'tbl_class_apply';
 	}
 
 	/**
@@ -39,13 +37,11 @@ class LibClass extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('school_id, name, classhead_id', 'required'),
-			array('school_id, grade, classhead_id', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>255),
-			array('description', 'safe'),
+			array('class_id,statement', 'required'),
+			array('applicant, approver, class_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, school_id, name, grade, classhead_id, description', 'safe', 'on'=>'search'),
+			array('applicant, approver, class_id, statement', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,7 +53,9 @@ class LibClass extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'school_info'=>array(self::BELONGS_TO,'School','school_id'),
+			'applicant_info'=>array(self::BELONGS_TO,'LibUser','applicant'),
+			'approver_info'=>array(self::BELONGS_TO,'LibUser','approver'),
+			'class_info'=>array(self::BELONGS_TO,'LibClass','class_id'),
 		);
 	}
 
@@ -67,13 +65,25 @@ class LibClass extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'school_id' => 'School',
-			'name' => 'Name',
-			'grade' => 'Grade',
-			'classhead_id' => 'Classhead',
-			'description' => 'Description',
+			'applicant' => '申请人',
+			'approver' => '批准人',
+			'class_id' => '要加入的班级',
+			'statement' => '申请附言',
 		);
+	}
+
+	public function beforeSave(){
+		if ($this->isNewRecord){
+			$this->applicant = Yii::app()->user->getId();
+			$ccls = new LibClass;
+			$cls = $ccls->findByPk($this->class_id);
+			$this->approver = $cls->classhead_id;
+		}
+		return parent::beforeSave();
+	}
+
+	public function afterSave(){
+		return parent::afterSave();
 	}
 
 	/**
@@ -87,12 +97,10 @@ class LibClass extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('school_id',$this->school_id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('grade',$this->grade);
-		$criteria->compare('classhead_id',$this->classhead_id);
-		$criteria->compare('description',$this->description,true);
+		$criteria->compare('applicant',$this->applicant);
+		$criteria->compare('approver',$this->approver);
+		$criteria->compare('class_id',$this->class_id);
+		$criteria->compare('statement',$this->statement,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

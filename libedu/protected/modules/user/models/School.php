@@ -53,6 +53,8 @@ class School extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'user_list'=>array(self::MANY_MANY,'LibUser','tbl_user_school(school_id,user_id)'),
+			'class_list'=>array(self::HAS_MANY,'LibClass','school_id'),
 		);
 	}
 

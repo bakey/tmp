@@ -3,43 +3,40 @@
 /* @var $model User */
 /* @var $form CActiveForm */
 ?>
-<?php $this->widget('application.extensions.fancybox.EFancyBox', array(
-        'target'=>'a.fancylink',
-        'config'=>array('minWidth'=>'300px','minHeight'=>'100px','closeBtn'=>false),));  
-?>  
-<a href="#fancydata" class="fancylink" id="loadinghover" style="display:none">&nbsp;</a>
-<div style="display:none">
-	<div id="fancydata">
-		<img src="<?php echo Yii::app()->request->baseUrl; ?>/images/ajax-loader.gif" />
-		<p>请稍等，正在和服务器通信……</p>
+
+<div id="choose-box-wrapper">
+	  <div id="choose-box">
+		<div id="choose-box-title">
+			<span>选择学校</span>
+		</div>
+		<div id="choose-a-province">
+		</div>
+		<div id="choose-a-school">
+		</div>
+		<div id="choose-box-bottom">
+			<input type="botton" onclick="hide()" value="关闭" />
+		</div>
+	  </div>
 	</div>
-</div>
+
 
 <div class="form" id="form-container">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'libuser-form',
 	'enableAjaxValidation'=>true,
-)); ?>
+)); 
+
+	$baseUrl = Yii::app()->baseUrl; 
+		$cs = Yii::app()->getClientScript();
+		$cs->registerScriptFile($baseUrl.'/js/jquery.rrschool.js');
+		$cs->registerScriptFile($baseUrl.'/js/jquery.rrschool.list.js');
+		$cs->registerCssFile($baseUrl.'/css/rrschool.css');
+?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
-	<fieldset>
-		<legend>
-			用户类型		
-		</legend>	
-	<?php 
-		echo CHtml::dropDownList('usrtype','0',array('0'=>'学生','1'=>'教师'),array('ajax'=>array(
-				'url'=>Yii::app()->createUrl('/user/libuser/register'),
-				'update'=> '#form-container',
-				'data'=> array('role'=>'js:$(this).val()'),
-				'beforeSend'=>'js:function(){$(\'#loadinghover\').trigger(\'click\');}',
-				'complete'=>'js:function(){$(\'.fancybox-wrap\').stop(true).trigger(\'onReset\').fadeOut(500);
-																$(\'.fancybox-overlay\').fadeOut();$(\'body\').removeClass(\'fancybox-lock\');}',
-			)));
-	?>
-	</fieldset>
 	
 	<fieldset>
 	<legend>
@@ -79,6 +76,10 @@
 		<legend>
 			详细资料
 		</legend>
+	<div class="row">
+		<?php echo CHtml::label('请选择您的学校','schoolid');?>
+		<?php echo CHTML::textField('schoolid',null,array('onClick'=>"pop()",'readonly'=>'readonly'));?>
+	</div>
 	</fieldset>
 	
 	<div class="row buttons">
