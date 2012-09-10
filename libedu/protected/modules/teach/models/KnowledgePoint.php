@@ -38,7 +38,7 @@ class KnowledgePoint extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, level', 'required'),
+			array('name, level,description,level', 'required'),
 			array('course_id, level', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			array('description', 'safe'),
@@ -67,9 +67,9 @@ class KnowledgePoint extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'course_id' => 'Course',
-			'name' => 'Name',
+			'name' => '知识点名',
 			'level' => 'Level',
-			'description' => 'Description',
+			'description' => '知识点描述',
 		);
 	}
 
