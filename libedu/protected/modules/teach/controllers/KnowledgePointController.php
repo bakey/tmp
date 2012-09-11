@@ -23,15 +23,15 @@ class KnowledgePointController extends Controller
 		}else {
 			throw new CHttpException( 500 , "No this school id : " . $school_id );
 		}
-		$dataProvider=new CActiveDataProvider('KnowledgePoint',array(
-				'pagination'=>array('pageSize'=>15),
-		));
 		$list_course = CHtml::listData($courses, 'id', 'name');
 		$list_grade = array();
 		foreach( $courses as $course )
 		{
 			$grade = Grade::model()->findByPk( $course->grade )	;
-			$list_grade[ $course->grade ] = $grade->grade_name ;			
+			if ( $grade != null )
+			{
+				$list_grade[ $course->grade ] = $grade->grade_name ;
+			}			
 		}
 		$kp_model = new KnowledgePoint;
 		if ( isset($_POST['KnowledgePoint']) )
@@ -42,6 +42,33 @@ class KnowledgePointController extends Controller
 			$kp_model->course_id = (int) $_POST['KnowledgePoint']['course_id'];
 			$kp_model->save();				
 		}
+		$dataProvider=new CActiveDataProvider('KnowledgePoint',array(
+				'criteria'=>array(
+						'condition'=>'course_id=1',
+				),
+				'pagination'=>array('pageSize'=>15),
+		));
+		$condition = null;
+		if ( isset( $_POST['course']) )
+		{
+			$condition .= "course_id=" . $_POST['course'];			
+		}
+		$dataProvider = null;
+		if ( $condition != null )
+		{
+			$dataProvider=new CActiveDataProvider('KnowledgePoint',array(
+					'criteria'=>array(
+							'condition'=>$condition ,
+					),
+					'pagination'=>array('pageSize'=>15),
+			));			
+		}
+		else
+		{
+			$dataProvider=new CActiveDataProvider('KnowledgePoint',array(
+					'pagination'=>array('pageSize'=>15),
+			));
+		}		
 		$this->render('index' , array(
 				'dataProvider'=>$dataProvider,
 				'list_course'=>$list_course,

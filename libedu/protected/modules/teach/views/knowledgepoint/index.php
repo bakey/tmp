@@ -21,25 +21,30 @@ $this->breadcrumbs=array(
 		));*/
 ?>
 <?php
-/*echo $form->dropDownList( 'country_id' , '' , array(
-        'A' => '1',
-        'B' => '2',)
-		);*/
 echo "科目: ";
 echo CHtml::dropDownList( 'list_course','', $list_course ,
 	array(
 		'empty'=>'请选择一门课程',
-		'onchange' => 'js:alert( $("#list_course").val() )',
-		'ajax' => array(
+		//'onchange' => 'js:alert( $("#list_course").val() )',
+		/*'ajax' => array(
 			'type'=>'POST',
-			'url'=>CController::createUrl('knowledgepoint/FilterKnowledgePoint'), //url to call.
+			'url'=>CController::createUrl('knowledgepoint/FilterKnowledgePoint'), 
 			'update'=>'#city_id', //selector to update
-			)
+			)*/
 	 )
 ); 
 echo " 年级:";
 echo CHtml::dropDownList( 'list_grade' , '' , $list_grade ,
 		array(
+		'onchange' => 'js:alert( $("#list_course").val() )',
+		'ajax' => array(
+			'type'=>'POST',
+			'url'=>CController::createUrl('index&school_id=1'),
+			'data' => array('course'=>'js:$("#list_course").val()',
+				'grade'=>'js:$("#list_grade").val()',
+			),
+			//'update'=>'#city_id', //selector to update
+		),
 		'empty'=>'全部',
 ) );
 //empty since it will be filled by the other dropdown
