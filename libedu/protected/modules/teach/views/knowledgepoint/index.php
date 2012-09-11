@@ -42,7 +42,6 @@ echo CHtml::dropDownList( 'list_grade' , '' , $list_grade ,
 		array(
 		'empty'=>'全部',
 ) );
- 
 //empty since it will be filled by the other dropdown
 //echo CHtml::dropDownList('city_id','', array());
 
