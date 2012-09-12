@@ -49,33 +49,33 @@ class KnowledgePointController extends Controller
 				'pagination'=>array('pageSize'=>15),
 		));
 		$condition = null;
+		$dataProvider = null;
 		if ( isset( $_POST['course']) )
 		{
-			$condition .= "course_id=" . $_POST['course'];			
-		}
-		$dataProvider = null;
-		if ( $condition != null )
-		{
+			$condition .= "course_id=" . $_POST['course'];
 			$dataProvider=new CActiveDataProvider('KnowledgePoint',array(
 					'criteria'=>array(
 							'condition'=>$condition ,
 					),
 					'pagination'=>array('pageSize'=>15),
-			));			
+			));	
+			$this->renderPartial( '_form_showkp' , array('dataProvider' => $dataProvider));
 		}
 		else
 		{
 			$dataProvider=new CActiveDataProvider('KnowledgePoint',array(
 					'pagination'=>array('pageSize'=>15),
 			));
-		}		
-		$this->render('index' , array(
-				'dataProvider'=>$dataProvider,
-				'list_course'=>$list_course,
-				'list_grade'=>$list_grade,
-				'courses'=>$courses,
-				'kp_model'=>$kp_model,
-		));
+			$this->render('index' , array(
+					'dataProvider'=>$dataProvider,
+					'list_course'=>$list_course,
+					'list_grade'=>$list_grade,
+					'courses'=>$courses,
+					'kp_model'=>$kp_model,
+			));
+		}	
+	
+	
 	}	
 	public function actionFilterKnowledgePoint()
 	{

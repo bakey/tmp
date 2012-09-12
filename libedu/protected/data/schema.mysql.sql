@@ -145,11 +145,15 @@ create table if not exists tbl_user_school(
  `child` int not null
  )engine=innodb default charset=utf8;
 	
-	
-	
-	
-	
-	
+create table if not exists tbl_course_post(
+	`id` int not null auto_increment primary key,
+	`post` text not null,
+	`author` int not null references tbl_user(id) on delete cascade,
+	`item_id` int not null references tbl_item(id) on delete cascade,
+	`status` tinyint not null,
+	`create_time` datetime not null,
+	`update_time` datetime not null
+)engine=innodb default charset=utf8;
 	
 	
 	

@@ -1,6 +1,6 @@
 <?php
 
-class NewsFeedController extends Controller
+class CoursePostController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -15,6 +15,7 @@ class NewsFeedController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
+			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -61,22 +62,31 @@ class NewsFeedController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new NewsFeed;
-
+		$course_post_model =new CoursePost;
+		$course_post_model->unsetAttributes();
+		$item_id = $_GET['item_id'];
+		if ( $item_id == null )
+		{
+			throw new CHttpException(400 , "参数错误，没有item_id");
+		}
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-		$model->publisher=Yii::app()->user->id;
-		$model->create_time=date('Y-m-d H:i:s',time());
 
-		if(isset($_POST['NewsFeed']))
+		if(isset($_POST['CoursePost']))
 		{
-			$model->attributes=$_POST['NewsFeed'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			$course_post_model->attributes=$_POST['CoursePost'];
+			$course_post_model->create_time = $course_post_model->update_time = date("Y-m-d H:i:s", time() );
+			$course_post_model->author = Yii::app()->user->id;
+			$course_post_model->item_id = $_GET['item_id'];
+			$course_post_model->status = CoursePost::STATUS_DRAFT;
+			if($course_post_model->save())
+			{
+				$this->redirect(array('view','id'=>$course_post_model->id));
+			}
 		}
 
 		$this->render('create',array(
-			'model'=>$model,
+			'model'=>$course_post_model,
 		));
 	}
 
@@ -92,9 +102,9 @@ class NewsFeedController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['NewsFeed']))
+		if(isset($_POST['CoursePost']))
 		{
-			$model->attributes=$_POST['NewsFeed'];
+			$model->attributes=$_POST['CoursePost'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -111,17 +121,11 @@ class NewsFeedController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		if(Yii::app()->request->isPostRequest)
-		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+		$this->loadModel($id)->delete();
 
-			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
-				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-		}
-		else
-			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if(!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
 	/**
@@ -129,13 +133,7 @@ class NewsFeedController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('NewsFeed',array(
-			'criteria'=>array(
-			'with'=>array('sender'),
-			'condition'=>'receiver=:receiverId',
-			'params'=>array(
-				':receiverId'=>Yii::app()->user->id),
-			),));
+		$dataProvider=new CActiveDataProvider('CoursePost');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -146,10 +144,10 @@ class NewsFeedController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new NewsFeed('search');
+		$model=new CoursePost('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['NewsFeed']))
-			$model->attributes=$_GET['NewsFeed'];
+		if(isset($_GET['CoursePost']))
+			$model->attributes=$_GET['CoursePost'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -163,7 +161,7 @@ class NewsFeedController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=NewsFeed::model()->findByPk((int)$id);
+		$model=CoursePost::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -175,7 +173,7 @@ class NewsFeedController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='news-feed-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='course-post-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

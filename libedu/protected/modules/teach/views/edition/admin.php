@@ -3,7 +3,7 @@ $this->breadcrumbs=array(
 	'Manage edition',
 );
 ?>
-<h1>Manage Editions</h1>
+<h1>教材管理</h1>
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$model->search(),

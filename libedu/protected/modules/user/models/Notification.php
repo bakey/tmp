@@ -12,7 +12,7 @@
  * @property integer $resource_id
  * @property string $content
  */
-class NewsFeed extends CActiveRecord
+class Notification extends CActiveRecord
 {
 	const SYSTEM=0;
 	const AUDIT=1;
@@ -20,7 +20,7 @@ class NewsFeed extends CActiveRecord
 	const TEST=3;
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return NewsFeed the static model class
+	 * @return Notification the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -32,7 +32,7 @@ class NewsFeed extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_news_feed';
+		return 'tbl_notification';
 	}
 
 	/**

@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'News Feeds',
+	'Notification',
 );
 
 $this->menu=array(
@@ -9,7 +9,7 @@ $this->menu=array(
 );
 ?>
 
-<h1>News Feeds</h1>
+<h1>Notification</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
