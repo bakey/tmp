@@ -69,10 +69,17 @@ class CoursePostController extends Controller
 		var_dump( count($file_content) );
 		exit();*/
 		$file_name = md5( $_FILES['file']['tmp_name'] ) . ".";
-		$file_name .= explode( '/' , $_FILES['file']['type'] )[1];
+		$suffix = explode( '/' , $_FILES['file']['type'] );
+		$file_name .= $suffix[1];
 		//$fh_write = fopen( $folder . $file_name , "wb");
 		//fwrite( $fh_write , $file_content );
-		copy( $_FILES['file']['tmp_name'] , "./" . Yii::app()->params['uploadFolder'].'/temp_upload/'.$file_name );
+		$target_folder = "./" . Yii::app()->params['uploadFolder'].'/temp_upload/';
+		if ( !is_dir($target_folder) )
+		{
+			mkdir( $target_folder );
+		} 
+		copy( $_FILES['file']['tmp_name'] , $target_folder.$file_name );
+		//echo stripslashes(json_encode($array));
 		$image_url = Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" . Yii::app()->params['uploadFolder'].'/temp_upload/'.$file_name;
 		//$image_url = Yii::app()->createUrl('teach/coursepost/'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$file_name );
 		echo( "<p><img src='" . $image_url . "'></p>");	

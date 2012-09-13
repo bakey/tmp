@@ -23,7 +23,7 @@ class EditionController extends Controller
 						'users'=>array('*'),
 				),
 				array('allow', // allow authenticated user to perform 'create' and 'update' actions
-						'actions'=>array('admin','update','ajaxfilltree'),
+						'actions'=>array('admin','update','ajaxfilltree','add'),
 						'users'=>array('@'),
 				),
 				array('deny',  // deny all users
