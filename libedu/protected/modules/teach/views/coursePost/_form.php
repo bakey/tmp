@@ -5,30 +5,27 @@
 ?>
 
 <div class="form">
-
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'course-post-form',
 	'enableAjaxValidation'=>false,
 )); ?>
-
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'post'); ?>
-		<?php echo $form->textArea($model,'post',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'post'); ?>
-	</div>
-
-	<div class="row buttons">
+<?php echo $form->labelEx($model,'post'); ?>
+<?php
+	$this->widget('application.extensions.redactorjs.Redactor',array(
+		'model'=>$model,
+		'attribute'=>'post',
+		'editorOptions' => array(
+			'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
+			)
+	));
+?>
+<div class="row buttons">
 		<?php
 		 echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save');
 		 echo CHtml::submitButton('存草稿' ,array('name'=>'draft'));
 		 echo CHtml::submitButton('取消' ,array('name'=>'cancel'));
 		?>
 	</div>
-
-<?php $this->endWidget(); ?>
+	<?php $this->endWidget(); ?>
 
 </div><!-- form -->

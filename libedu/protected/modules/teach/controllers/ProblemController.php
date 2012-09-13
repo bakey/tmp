@@ -1,6 +1,6 @@
 <?php
 
-class CoursePostController extends Controller
+class ProblemController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -15,7 +15,6 @@ class CoursePostController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -32,7 +31,7 @@ class CoursePostController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','upload'),
+				'actions'=>array('create','update','admin'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -55,29 +54,6 @@ class CoursePostController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-	/*
-	 * 处理用户上传二进制文件
-	 */
-	public function actionUpload()
-	{
-		//$file_stream = readfile( $_SERVER['file']['tmp_name'] );
-		/*$fh_read = fopen( $_FILES['file']['tmp_name'] , "rb" );
-		$folder='./'.Yii::app()->params['uploadFolder'].'/temp_upload/';
-		//取文件前2k数据做md5
-		$file_sign_data = fread( $fh_read , 2*1024 );
-		$file_content = fread( $fh_read , (int)$_FILES['file']['size'] );
-		var_dump( count($file_content) );
-		exit();*/
-		$file_name = md5( $_FILES['file']['tmp_name'] ) . ".";
-		$file_name .= explode( '/' , $_FILES['file']['type'] )[1];
-		//$fh_write = fopen( $folder . $file_name , "wb");
-		//fwrite( $fh_write , $file_content );
-		copy( $_FILES['file']['tmp_name'] , "./" . Yii::app()->params['uploadFolder'].'/temp_upload/'.$file_name );
-		$image_url = Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" . Yii::app()->params['uploadFolder'].'/temp_upload/'.$file_name;
-		//$image_url = Yii::app()->createUrl('teach/coursepost/'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$file_name );
-		echo( "<p><img src='" . $image_url . "'></p>");	
-		exit();	
-	}
 
 	/**
 	 * Creates a new model.
@@ -85,32 +61,53 @@ class CoursePostController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$course_post_model =new CoursePost;
-		$course_post_model->unsetAttributes();
-		$item_id = $_GET['item_id'];
-		if ( $item_id == null )
-		{
-			throw new CHttpException(400 , "参数错误，没有item_id");
-		}
+		$model=new Problem;
+		$model->create_time=date('Y-m-d H:i:s',time());
+	
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['CoursePost']))
+		if(isset($_POST['Problem']))
 		{
-			$course_post_model->attributes=$_POST['CoursePost'];
-			$course_post_model->create_time = $course_post_model->update_time = date("Y-m-d H:i:s", time() );
-			$course_post_model->author = Yii::app()->user->id;
-			$course_post_model->item_id = $_GET['item_id'];
-			$course_post_model->status = CoursePost::STATUS_DRAFT;
-			if($course_post_model->save())
+			$model->course=$_POST['Problem']['course'];
+			$model->type=$_POST['topic'];
+			$model->source=$_POST['Problem']['source'];
+			$model->difficulty=$_POST['Problem']['difficulty'];
+			$model->use_count = 0;
+			if($model->type==0)
 			{
-				$this->redirect(array('view','id'=>$course_post_model->id));
+				$model->reference_ans=$_POST['same'];
 			}
+			if($model->type==1)
+			{
+				$types=$_POST['same'];
+				for($i=0;$i<count($types);$i++)
+				{
+					$model->reference_ans=$model->reference_ans.$types[$i];
+				}
+			}
+			$model->content=$_POST['Problem']['content'];
+			$num=$_POST['sel'];
+			if($num==1)
+			{
+				$model->content=$model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
+					$_POST['C']."\n".$_POST['D'];
+			}
+			else if($num==2)
+				$model->content=$model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
+					$_POST['C']."\n".$_POST['D']."\n".$_POST['E'];
+			else if($num==3)
+                $model->content=$model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
+					$_POST['C']."\n".$_POST['D']."\n".$_POST['E']."\n".$_POST['F'];
+			$model->ans_explain=$_POST['Problem']['ans_explain'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('create',array(
-			'model'=>$course_post_model,
+			'model'=>$model,
 		));
+
 	}
 
 	/**
@@ -125,9 +122,9 @@ class CoursePostController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['CoursePost']))
+		if(isset($_POST['Problem']))
 		{
-			$model->attributes=$_POST['CoursePost'];
+			$model->attributes=$_POST['Problem'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -144,11 +141,17 @@ class CoursePostController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		if(Yii::app()->request->isPostRequest)
+		{
+			// we only allow deletion via POST request
+			$this->loadModel($id)->delete();
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+			if(!isset($_GET['ajax']))
+				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
+		else
+			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
 
 	/**
@@ -156,9 +159,11 @@ class CoursePostController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('CoursePost');
+		$model = new Problem();
+		$dataProvider=new CActiveDataProvider('Problem');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
+			'problem'=>$model,
 		));
 	}
 
@@ -167,10 +172,10 @@ class CoursePostController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new CoursePost('search');
+		$model=new Problem('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['CoursePost']))
-			$model->attributes=$_GET['CoursePost'];
+		if(isset($_GET['Problem']))
+			$model->attributes=$_GET['Problem'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -184,10 +189,9 @@ class CoursePostController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=CoursePost::model()->findByPk($id);
-		if($model===null){
+		$model=Problem::model()->findByPk((int)$id);
+		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
-		}
 		return $model;
 	}
 
@@ -197,10 +201,11 @@ class CoursePostController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='course-post-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='problem-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
 	}
 }
+

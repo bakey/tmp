@@ -92,12 +92,14 @@ create table if not exists `tbl_news_feed`(
 
 create table if not exists `tbl_problem`(
  `id` int not null auto_increment primary key,
+ `course` int not null references tbl_course(id) on delete cascade,
  `type` int not null,
   `content` text not null,
   `source` varchar(255),
-  `difficuty` tinyint,
+  `difficulty` tinyint,
   `create_time` datetime not null,
   `reference_ans` text,
+  `ans_explain` text,
   `use_count` INTEGER
   )engine=innodb default charset=utf8;
    
@@ -149,7 +151,7 @@ create table if not exists tbl_course_post(
 	`id` int not null auto_increment primary key,
 	`post` text not null,
 	`author` int not null references tbl_user(id) on delete cascade,
-	`item_id` int not null,
+	`item_id` int not null references tbl_item(id) on delete cascade,
 	`status` tinyint not null,
 	`create_time` datetime not null,
 	`update_time` datetime not null

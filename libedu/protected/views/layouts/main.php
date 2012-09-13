@@ -35,6 +35,7 @@
 				array('label'=>'添加教材', 'url'=>array('/teach/edition/add')),
 				array('label'=>'教材管理', 'url'=>array('/teach/edition/admin')),
 				array('label'=>'课程管理', 'url'=>array('/teach/course/admin')),
+				array('label'=>'题库管理', 'url'=>array('/teach/problem')),
 				array('label'=>'用户注册', 'url'=>array('/user/libuser/register')),
 				array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint&school_id=1')),
 				array('label'=>'系统通知发送', 'url'=>array('/user/notification/create')),

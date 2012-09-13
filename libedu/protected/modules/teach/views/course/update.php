@@ -7,7 +7,8 @@ $this->breadcrumbs=array(
 );
 foreach( $edition->getItems() as $item )
 {
-	echo("第" . $item->edi_index . " 章<br>");
-	
+	$content = "第" . $item->edi_index . " 章<br>";
+	$url = CController::createUrl('coursepost/create&item_id=' . $item->id );
+	echo CHtml::link( $content , $url );
 }
 ?>

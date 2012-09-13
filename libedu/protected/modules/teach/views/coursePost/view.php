@@ -17,15 +17,15 @@ $this->menu=array(
 ?>
 
 <h1>View CoursePost #<?php echo $model->id; ?></h1>
+<?php
+   
+?>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id',
-		'post',
-		'author',
-		'item_id',
-		'status',
+		'post:html',
 		'create_time',
 		'update_time',
 	),

@@ -33,15 +33,15 @@ class CourseController extends Controller
 	}
 	public function actionUpdate( $id )
 	{
-		/*$edition_model = $this->loadEditionModel( $id );
+		$edition_model = $this->loadEditionModel( $id );
 		$this->render('update' , array(
 				'edition'=>$edition_model,
-			));*/
+			));
 	
 			// accept only AJAX request (comment this when debugging)
-			if (!Yii::app()->request->isAjaxRequest) {
+			/*if (!Yii::app()->request->isAjaxRequest) {
 				exit();
-			}
+			}*/
 			// parse the user input
 			/*$parentId = null ;
 			$editionId = null ;
@@ -69,14 +69,14 @@ class CourseController extends Controller
 			 * 我们期望或得到类似" id content hasChildren"排列的数据，通过json方式返回给ajax调用，
 			* 前端接收到后根据这个信息渲染出树状结构。
 			*/
-			$sql_cmd = sprintf("SELECT %s.id, %s.content AS text, max(%s.id<=>%s.parent) AS hasChildren FROM %s join %s where %s.edition <=> %s ",
-					self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , $editionId );
+		/*	$sql_cmd = sprintf("SELECT %s.id, %s.content AS text, max(%s.id<=>%s.parent) AS hasChildren FROM %s join %s where %s.edition <=> %s ",
+					self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , $editionId );*/
 		
 		
 			//$sql_cmd = "SELECT tbl_item.id, tbl_item.content AS text, max(tbl_item.id<=>tbl_item_item.parent) AS hasChildren "
 			//	."FROM tbl_item join tbl_item_item where tbl_item.edition <=> " . $editionId ;
 		
-			if ( $parentId != null)
+			/*if ( $parentId != null)
 			{
 				$sql_cmd .= " and tbl_item.id <=> tbl_item_item.child ";
 				$sql_cmd .= " and tbl_item_item.parent <=> " . $parentId ;
@@ -102,7 +102,7 @@ class CourseController extends Controller
 					'"hasChildren":false',
 					CTreeView::saveDataAsJson($treedata)
 					//CTreeView::saveDataAsJson($children)
-			);
+			);*/
 			
 	}
 	
