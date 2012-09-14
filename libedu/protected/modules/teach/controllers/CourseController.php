@@ -8,6 +8,9 @@ class CourseController extends Controller
 	{
 		$uid = Yii::app()->user->id;
 		$dataProvider=new CActiveDataProvider('Course',array(
+				'criteria'=>array(
+						'condition'=>'',
+						),
 				'pagination'=>array('pageSize'=>15),
 		));
 		$this->render('admin' , array(
