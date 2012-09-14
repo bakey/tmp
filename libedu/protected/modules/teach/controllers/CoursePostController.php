@@ -161,7 +161,15 @@ class CoursePostController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('CoursePost');
+		$cur_user = Yii::app()->user->id;
+		$dataProvider=new CActiveDataProvider('CoursePost',array(
+				'criteria'=>array(
+						'condition'=>('author='.$cur_user),
+				),
+				'pagination'=>array(
+						'pageSize'=>15,
+				)
+		));
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));

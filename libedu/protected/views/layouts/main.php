@@ -30,11 +30,8 @@
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site/index')),
-				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
-				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('label'=>'添加教材', 'url'=>array('/teach/edition/add')),
-				array('label'=>'教材管理', 'url'=>array('/teach/edition/admin')),
 				array('label'=>'课程管理', 'url'=>array('/teach/course/admin')),
+				array('label'=>'教材管理', 'url'=>array('/teach/edition/admin')),				
 				array('label'=>'题库管理', 'url'=>array('/teach/problem')),
 				array('label'=>'用户注册', 'url'=>array('/user/libuser/register')),
 				array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint&school_id=1')),

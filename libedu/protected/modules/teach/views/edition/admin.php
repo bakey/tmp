@@ -24,3 +24,8 @@ $this->breadcrumbs=array(
 		),
 	),
 )); ?>
+<?php
+$this->renderPartial('_form_addedition' , array(
+			'model'=>$model,)
+	); 
+?>

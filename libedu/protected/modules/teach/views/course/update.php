@@ -5,10 +5,32 @@ $this->breadcrumbs=array(
 	'课程'=>array('/teach/course'),
 	'Update',
 );
-foreach( $edition->getItems() as $item )
+/*
+foreach( $item_post as $ip )
 {
-	$content = "第" . $item->edi_index . " 章<br>";
-	$url = CController::createUrl('coursepost/create&item_id=' . $item->id );
-	echo CHtml::link( $content , $url );
+	$content = "第" . $ip['item']->edi_index . " 章<br>";
+	
+	if ( !$ip['post_exist'] ) 
+	{
+		$url = CController::createUrl('coursepost/create&item_id=' . $ip['item']->id );
+		echo CHtml::link( $content , $url );
+	}
+	else {
+		$url = CController::createUrl('coursepost/index');
+		echo CHtml::link( $content , $url );
+	}
 }
+*/
+?>
+	
+<?php 
+$url = 'course/ajaxLoadItem&edition_id=' . $edition_id;
+$this->widget(
+	    'CTreeView',
+		array(
+            'animated'=>'fast', //quick animation
+            'collapsed' => false,
+            'url' => array( $url ), 
+		)
+);
 ?>

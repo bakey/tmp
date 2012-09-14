@@ -12,7 +12,9 @@ $this->menu=array(
 );
 ?>
 
-<h1>Course Posts</h1>
+<h1><?php 
+echo(Yii::app()->user->real_name . "你好 , 你发布的课程如下:");
+ ?></h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
