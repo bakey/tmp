@@ -62,7 +62,7 @@ class CourseController extends Controller
 		$user_id = Yii::app()->user->id;
 		$item_post = array();
 		foreach( $edition_model->getItems() as $item )
-		{
+		{		
 			$exist = CoursePost::model()->exists(
 					'author=:author and item_id=:item_id',
 						array(
@@ -89,6 +89,7 @@ class CourseController extends Controller
 		$editionId = null ;
 		$levelCondition = "";
 		$user_id = Yii::app()->user->id;
+		$cur_level = 0;
 		
 		if ( isset($_GET['edition_id']) ) {
 			$editionId = $_GET['edition_id'];
@@ -98,6 +99,7 @@ class CourseController extends Controller
 				//深层查询,获取父亲id
 				$parentId = (int) $_GET['root'];
 				$levelCondition = " tbl_item.level > 1 " ;
+				$cur_level = 1;
 			}else if( isset($_GET['edition_id']) ) {
 				//第一层查询
 				//$parentId = (int)$_GET['edition_id'];
@@ -107,6 +109,10 @@ class CourseController extends Controller
 				exit();
 			}
 		}
+		else {
+			exit();
+		}
+		//echo( $levelCondition );
 		
 		/*
 		 * 我们期望或得到类似" id content hasChildren"排列的数据，通过json方式返回给ajax调用，
@@ -123,6 +129,7 @@ class CourseController extends Controller
 		}
 		$sql_cmd .= " and " . $levelCondition . " group by tbl_item.id";
 		
+		//echo( $sql_cmd );
 		
 		// read the data (this could be in a model)
 		$children = Yii::app()->db->createCommand( $sql_cmd )->queryAll();
@@ -133,7 +140,12 @@ class CourseController extends Controller
 		foreach($children as $child){
 			$status = $this->getItemPostStatus($user_id , $child['id']);
 			$item_model = Item::model()->findByPk( $child['id'] );
-			$content = "第" . $item_model->edi_index . " 章:";
+			$content = "第" . $item_model->edi_index;
+			if ( $cur_level > 0 ){
+				$content .= " 节:";
+			}else {
+				$content .= " 章:";
+			}
 			$url = "";
 			//var_dump( $status['post_exist'] );			
 			if ( !$status['post_exist'] ) {
