@@ -11,4 +11,4 @@ $this->breadcrumbs=array(
 
 <h1>用户注册</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_form', array('model'=>$model,'classlist'=>$classlist)); ?>

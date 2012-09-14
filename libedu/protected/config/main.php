@@ -5,6 +5,10 @@
 
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
+
+//get current school from url and save to $currentschoolid variable
+$currntschoolid = 1;
+
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'励博教育',
@@ -103,6 +107,7 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'chengchao@libedu.com',
 		'uploadFolder'=>'bin_data',
+		'currentSchoolID'=>$currntschoolid,
 	),
 	'timeZone'=>"Asia/Shanghai",
 	'language'=>"zh_cn",

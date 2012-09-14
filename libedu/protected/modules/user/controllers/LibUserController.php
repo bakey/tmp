@@ -6,7 +6,6 @@ class LibUserController extends Controller
 	{
 		$dataProvider=new CActiveDataProvider('LibUser',array(
 			'criteria'=>array(
-				'with'=>array('activation_record'),
 			),
 			'pagination'=>array('pageSize'=>15),
 		));
@@ -27,6 +26,10 @@ class LibUserController extends Controller
 		));
 	}
 
+	public function actionNotActived(){
+		$this->render('noactive',array('uemail'=>Yii::app()->User->uemail));
+	}
+
 	public function actionRegister(){
 		$model=new LibUser;
 
@@ -36,21 +39,21 @@ class LibUserController extends Controller
 		if(isset($_POST['LibUser']))
 		{
 			$model->attributes=$_POST['LibUser'];
-			if($model->save())
+			if($model->save()){
 				$this->redirect(array('/site/login'));
+			}				
 		}
 
-		if(!isset($_REQUEST['role'])){
-			$this->render('create',array(
-			'model'=>$model,
-			));
-		}else{
-			if($_REQUEST['role'] == 1){
-				$this->renderPartial('_form_lec', array('model'=>$model),false,true);		
-			}else{
-				$this->renderPartial('_form_stu', array('model'=>$model),false,true);		
-			}
+		$csch = new LibClass;
+		$finalres = array();
+		$res = $csch->findAllByAttributes(array('school_id'=>Yii::app()->params['currentSchoolID']));
+		foreach($res as $singleres){
+			$finalres[$singleres->id] = $singleres->name;
 		}
+		$this->render('create',array(
+			'model'=>$model, 'classlist'=>$finalres
+			));
+		
 	}
 
 	public function actionImportStudentList(){
@@ -68,6 +71,98 @@ class LibUserController extends Controller
         $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
          echo $return;// it's array
 	}
+
+	//teacher relavent
+
+	public function actionImportTeacherList(){
+		$this->render('importlecinfo');
+	}
+
+	public function actionDoImportTeacherList(){
+		Yii::import("ext.EAjaxUpload.qqFileUploader");
+ 
+        $folder='./bin_data/temp_upload/';// folder for uploaded files
+        $allowedExtensions = array("xls","xlsx");//array("jpg","jpeg","gif","exe","mov" and etc...
+        $sizeLimit = 1 * 1024 * 1024;// maximum file size in bytes
+        $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+        $result = $uploader->handleUpload($folder);
+        $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+         echo $return;// it's array
+	}
+
+	public function actionLoadTeacherInfo(){
+		$stuinfo = array();
+		if(!$_REQUEST['fname']){
+			$fname = null;
+		}else{
+			$fname = $_REQUEST['fname'];
+		}
+		$stuinfo = $this->getTeacherInfoFromExcelFile($fname);
+		$stuinfo['stuinfo'] = LibUser::model()->validateTeacherFromArray($stuinfo['stuinfo'],$stuinfo['schoolid']);
+		$dataProvider=new CArrayDataProvider($stuinfo['stuinfo'], array(
+		    'id'=>'loadeduser',
+		    'keyField'=>'序号',
+		    'sort'=>array(
+		        'attributes'=>array(
+		             '姓名', '邮箱'
+		        ),
+		    ),
+		    'pagination'=>array(
+		        'pageSize'=>15,
+		    ),
+		));
+		$this->renderPartial('_uploadedTeacherInfo', array('dataProvider'=>$dataProvider,'schoolname'=>$stuinfo['schoolname'],'schoolid'=>$stuinfo['schoolid']), false, true);
+	}
+
+	private function getTeacherInfoFromExcelFile($fname = null){
+		if($fname == null){
+			return array();
+		}
+		$stuinfo = array();
+		$finalinfo = array();
+
+		$filePath = './'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$fname;
+		$applicationPath = Yii::getPathOfAlias('webroot');
+		spl_autoload_unregister(array('YiiBase','autoload')); 
+		require_once $applicationPath.'/protected/vendors/phpexcel/PHPExcel.php';
+		spl_autoload_register(array('YiiBase','autoload'));
+		if($fname != null){
+			$PHPExcel = new PHPExcel(); 
+		    $PHPReader = new PHPExcel_Reader_Excel2007(); 
+			if(!$PHPReader->canRead($filePath)){ 
+				$PHPReader = new PHPExcel_Reader_Excel5(); 
+				if(!$PHPReader->canRead($filePath)){ 
+					echo '无法读取文件'; 
+					return ; 
+				} 
+			} 
+			
+			$PHPExcel = $PHPReader->load($filePath); 
+			$currentSheet = $PHPExcel->getSheet(0); 
+			
+			$ttlColumn = $currentSheet->getHighestColumn(); 
+			$ttlRow = $currentSheet->getHighestRow(); 
+
+			$finalinfo['schoolname'] = $currentSheet->getCellByColumnAndRow(1,2)->getValue();
+			$finalinfo['schoolid'] = $currentSheet->getCellByColumnAndRow(3,2)->getValue();  
+			
+			for($irow=4;$irow < $ttlRow; $irow++){
+				for($icolumn=0;$icolumn<2;$icolumn++){
+					if($currentSheet->getCellByColumnAndRow(1,$irow)->getValue() == ''){
+						break 2;
+					}
+					$stuinfo[$irow-4][$currentSheet->getCellByColumnAndRow(0,3)->getValue()] = $currentSheet->getCellByColumnAndRow(0,$irow)->getValue();
+					$stuinfo[$irow-4][$currentSheet->getCellByColumnAndRow(1,3)->getValue()] = $currentSheet->getCellByColumnAndRow(1,$irow)->getValue();			
+					$stuinfo[$irow-4][$currentSheet->getCellByColumnAndRow(3,3)->getValue()] = $currentSheet->getCellByColumnAndRow(3,$irow)->getValue();
+				}
+			}
+			$finalinfo['stuinfo'] = $stuinfo;
+		}else{
+			echo '无法读取文件！';
+		}
+		return $finalinfo;
+	}
+
 
 	private function getStudentInfoFromExcelFile($fname = null){
 		if($fname == null){
@@ -156,9 +251,31 @@ class LibUserController extends Controller
 				<li>总记录条数：<strong>'.$importres['total'].'</strong></li>
 				<li>成功导入<strong>'.$importres['success'].'</strong>名学生</li>
 				<li><strong>'.$importres['fail'].'</strong>名学生导入失败</li>
-			</ul>';
+			</ul><a href="'.Yii::app()->createUrl('/user/libuser/generatestudentinfocard').'">打印学生信息卡片</a>';
 
 		}
+	}
+
+	public function actionGenerateStudentInfoCard(){
+	    $criteria = new CDbCriteria();
+		$criteria->compare('create_time', '>'.(time()-300));
+		//to do
+		var_dump($ua);
+		die('a');
+		$dataProvider=new CArrayDataProvider($stuinfo['stuinfo'], array(
+		    'id'=>'loadeduser',
+		    'keyField'=>'序号',
+		    'sort'=>array(
+		    	
+		        'attributes'=>array(
+		             '学号', '班级', '姓名', '班级ID'
+		        ),
+		    ),
+		    'pagination'=>array(
+		        'pageSize'=>15,
+		    ),
+		));
+		//$this->renderPartial('_uploadedStudentInfo', array('dataProvider'=>$dataProvider,'schoolname'=>$stuinfo['schoolname'],'schoolid'=>$stuinfo['schoolid']), false, true);
 	}
 
 	public function actionResendActivationCode($status = 2){
@@ -182,8 +299,8 @@ class LibUserController extends Controller
 		}
 	}	
 
-	public function actionActivate($aid){
-		if(LibUser::model()->validateActivationCode($aid)){
+	public function actionActivate($aid,$uid){
+		if(LibUser::model()->validateActivationCode($aid,$uid)){
 			$this->render('active',array(
 				'msg'=>'账户激活成功！',
 				'result' => 1,

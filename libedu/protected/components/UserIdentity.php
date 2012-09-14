@@ -17,18 +17,21 @@ class UserIdentity extends CUserIdentity
 	 */
 	public $id;
 	private $_uemail;
+	private $_ustatus;
 	
 	public function authenticate(){
 		$username=strtolower($this->username);
-		$user=LibUser::model()->findByAttributes(array('user_name'=>$username));
+		$user=LibUser::model()->findByAttributes(array('email'=>$username));
 		if($user===null)
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
 		else if(!$user->validatePassword($this->password,$user->salt))
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		else{
 			$this->id=$user->id;
-			$this->username=$user->user_name;
+			$this->username=$user->email;
 			$this->_uemail = $user->email;
+			$this->setState('ustatus',$user->status);
+			$this->setState('uemail',$user->email);
 			$this->errorCode=self::ERROR_NONE;
 		}
 		return $this->errorCode==self::ERROR_NONE;
@@ -38,7 +41,4 @@ class UserIdentity extends CUserIdentity
 		return $this->_uemail;
 	}
 
-	public function getId(){
-		return $this->id;
-	}
 }
