@@ -6,9 +6,11 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<p>
-课程查看
-</p>
+
+<?php
+echo(Yii::app()->user->real_name . ",");
+echo("我的课程: " ); 
+?>
 <?php
 /* @var $this DefaultController */
 

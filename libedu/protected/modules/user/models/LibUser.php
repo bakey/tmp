@@ -71,6 +71,7 @@ class LibUser extends CActiveRecord
 		return array(
 			'user_profile'=>array(self::HAS_ONE,'Profile','uid'),
 			'school_info'=>array(self::MANY_MANY,'School','tbl_user_school(user_id,school_id)'),
+			'user_course'=>array(self::MANY_MANY,'Course','tbl_user_course(user_id,course_id)'),
 		);
 	}
 

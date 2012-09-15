@@ -57,10 +57,16 @@ class EditionController extends Controller
 		$model->unsetAttributes();
 		$this->render('admin' , array('model'=>$model , ));
 	}
-	public function actionView()
+	public function actionView($id)
 	{
 		$dataProvider=new CActiveDataProvider('CourseEdition',array(
 				'pagination'=>array('pageSize'=>15),
+				'criteria'=>array(
+						'condition'=>'id=:id',
+						),
+				'params'=>array(
+						':id'=>$id,
+						),
 		));
 		$this->render('view',array(
 				'dataProvider'=>$dataProvider,
@@ -177,10 +183,10 @@ class EditionController extends Controller
 		
 		$treedata=array();
 		foreach($children as $child){
-			$options=array('href'=>'#','id'=>$child['id'],'class'=>'treenode');
-			$nodeText = CHtml::openTag('a', $options);
-			$nodeText.= $child['text'];
-			$nodeText.= CHtml::closeTag('a')."\n";
+			$options=array(/*'href'=>'#',*/'id'=>$child['id'],'class'=>'treenode');
+		//	$nodeText = CHtml::openTag('a', $options);
+			$nodeText = $child['text'];
+			//$nodeText.= CHtml::closeTag('a')."\n";
 			$child['text'] = $nodeText;
 			$treedata[]=$child;
 		}

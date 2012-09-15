@@ -6,25 +6,28 @@ class CourseController extends Controller
 	const TBL_ITEM_LEVEL = "tbl_item_item";
 	public function actionAdmin()
 	{
-		$uid = Yii::app()->user->id;
-		$dataProvider=new CActiveDataProvider('Course',array(
-				'criteria'=>array(
-						'condition'=>'',
-						),
+		$user_model = LibUser::model()->findByPk( Yii::app()->user->id );
+		$courses = $user_model->user_course;
+		$userCourseData = new CActiveDataProvider('Course',array(
 				'pagination'=>array('pageSize'=>15),
 		));
+		$userCourseData->setData( $courses );
 		$this->render('admin' , array(
-				'dataProvider'=>$dataProvider,
+				'dataProvider'=>$userCourseData,
 				));
 	}
 
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Course',array(
+		$user_id = Yii::app()->user->id;
+		$user_model = LibUser::model()->findByPk( $user_id );
+		$courses = $user_model->user_course;
+		$userCourseData = new CActiveDataProvider('Course',array(
 				'pagination'=>array('pageSize'=>15),
-		));
+				));
+		$userCourseData->setData( $courses );
 		$this->render('index' , array(
-				'dataProvider'=>$dataProvider,
+				'dataProvider'=>$userCourseData,
 				));
 	}
 	public function loadEditionModel( $id )
@@ -75,13 +78,7 @@ class CourseController extends Controller
 		$this->render('update' , array(
 				'item_post'=>$item_post,
 				'edition_id'=>$edition_id,
-		));
-	
-			// accept only AJAX request (comment this when debugging)
-			/*if (!Yii::app()->request->isAjaxRequest) {
-				exit();
-			}*/
-			
+		));			
 	}
 	public function actionAjaxLoadItem()
 	{
@@ -129,12 +126,8 @@ class CourseController extends Controller
 		}
 		$sql_cmd .= " and " . $levelCondition . " group by tbl_item.id";
 		
-		//echo( $sql_cmd );
-		
 		// read the data (this could be in a model)
 		$children = Yii::app()->db->createCommand( $sql_cmd )->queryAll();
-		
-		//$url = CController::createUrl('coursepost/index');
 		
 		$treedata=array();
 		foreach($children as $child){
@@ -146,15 +139,13 @@ class CourseController extends Controller
 			}else {
 				$content .= " 章:";
 			}
-			$url = "";
-			//var_dump( $status['post_exist'] );			
+			$url = "";			
 			if ( !$status['post_exist'] ) {
 				$url = CController::createUrl('coursepost/create&item_id=' . $child['id'] );
 			}else {
 				$url = CController::createUrl('coursepost/index');
 			}
 			$child['text'] = $content . $child['text'];
-			//var_dump( $child['text']);
 			
 			$options=array('href'=>$url,'id'=>$child['id'],'class'=>'treenode');
 			$nodeText = CHtml::openTag('a', $options);
@@ -168,7 +159,6 @@ class CourseController extends Controller
 				'"hasChildren":"0"',
 				'"hasChildren":false',
 				CTreeView::saveDataAsJson($treedata)
-				//CTreeView::saveDataAsJson($children)
 		);
 		
 	}

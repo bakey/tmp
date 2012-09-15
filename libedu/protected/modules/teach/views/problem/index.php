@@ -11,8 +11,9 @@ $this->menu=array(
 
 <h1>Problems</h1>
 
-<?php $this->widget('zii.widgets.CListView', array(
+<?php 
+$this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>
-<?php echo $this->renderPartial('_form', array('model'=>$problem)); ?>
+<?php echo $this->renderPartial('_form_add_problem', array('model'=>$problem)); ?>
