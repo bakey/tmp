@@ -10,8 +10,8 @@ $this->breadcrumbs=array(
 <h1>导入教师信息</h1>
 
 <h3 id="subtitle">请选择要导入的文件（只支持.xls 和 .xlsx 文件）</h3>
-<?php echo CHtml::ajaxButton ("确认导入学生信息",
-                              CController::createUrl('/user/libuser/doloadlecinfo'), 
+<?php echo CHtml::ajaxButton ("确认导入教师信息",
+                              CController::createUrl('/user/libuser/doloadteacherinfo'), 
                               array('update' => '#loadedlecinfo','data'=>'js:{fname: $(this).attr(\'rel\')}','beforeSend'=>'js:function(){$(\'#loadinghover\').trigger(\'click\');}','complete'=>'js:function(){
                               	$(\'#confirmimportbtn\').fadeOut();$(\'#subtitle\').fadeOut();
                               	$(\'.fancybox-wrap\').stop(true).trigger(\'onReset\').fadeOut(500);

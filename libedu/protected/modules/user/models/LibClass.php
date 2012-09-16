@@ -58,6 +58,7 @@ class LibClass extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'school_info'=>array(self::BELONGS_TO,'School','school_id'),
+			'grade_info'=>array(self::BELONGS_TO,'Grade','grade'),
 		);
 	}
 

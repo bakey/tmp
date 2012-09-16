@@ -31,8 +31,8 @@ class LibUserController extends Controller
 	}
 
 	public function actionRegister(){
-		$model=new LibUser;
 
+		$model = new LibUser;
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
@@ -112,6 +112,26 @@ class LibUserController extends Controller
 		    ),
 		));
 		$this->renderPartial('_uploadedTeacherInfo', array('dataProvider'=>$dataProvider,'schoolname'=>$stuinfo['schoolname'],'schoolid'=>$stuinfo['schoolid']), false, true);
+	}
+
+	public function actionDoLoadTeacherInfo(){
+		if(!isset($_REQUEST['fname'])){
+			$fname = null;
+		}else{
+			$fname = $_REQUEST['fname'];
+		}
+		$stuinfo = $this->getTeacherInfoFromExcelFile($fname);
+		if(!$stuinfo){
+			echo '学生列表为空或文件读取错误，请再试一次！';
+		}else{
+			$importres = Libuser::model()->addTeacherFromArray($stuinfo['stuinfo'],$stuinfo['schoolid']);
+			echo '<h4>教师列表导入结果</h4><ul>
+				<li>总记录条数：<strong>'.$importres['total'].'</strong></li>
+				<li>成功导入<strong>'.$importres['success'].'</strong>名教师</li>
+				<li><strong>'.$importres['fail'].'</strong>名教师导入失败</li>
+			</ul>';
+
+		}
 	}
 
 	private function getTeacherInfoFromExcelFile($fname = null){
@@ -242,7 +262,7 @@ class LibUserController extends Controller
 		}else{
 			$fname = $_REQUEST['fname'];
 		}
-		$stuinfo = $this->getStudentInfoFromExcelFile($fname);
+		$stuinfo = $this->getStudentInfoFromFile($fname);
 		if(!$stuinfo){
 			echo '学生列表为空或文件读取错误，请再试一次！';
 		}else{
@@ -313,6 +333,55 @@ class LibUserController extends Controller
 		}
 	}
 
+	public function actionLecActivate($aid){
+		if(LibUser::model()->validateLecActivationCode($aid,$uid)){
+			$this->render('active',array(
+				'msg'=>'账户激活成功！',
+				'result' => 1,
+			));
+		}else{
+			$this->render('active',array(
+				'msg'=>'您的帐户激活码不正确或已过期！',
+				'result' => 0,
+			));
+		}
+	}
+
+	public function actionInviteTeacher(){
+		$model = new UserActive;
+		$form = new CForm('application.modules.user.views.LibUser.inviteTeacherForm', $model);
+		if($form->submitted('resendBtn')){
+			$stuinfo = array('schoolid'=>Yii::app()->params['currentSchoolID'],'stuinfo'=>array(array('姓名'=>$_POST['UserActive']['name'],'邮箱'=>$_POST['UserActive']['school_unique_id'])));
+			$res = LibUser::model()->addTeacherFromArray($stuinfo['stuinfo'],Yii::app()->params['currentSchoolID']);
+			if($res['success'] < 1){
+				$this->render('intiveTeacher', array('form'=>$form,'msg'=>'邀请不成功，用户已存在或已被邀请！'));
+				exit();
+			}else{
+				$this->render('intiveTeacher', array('form'=>$form,'msg'=>'教师邀请成功！'));
+				exit();
+			}
+		}
+		$this->render('intiveTeacher', array('form'=>$form));
+	}
+
+	public function actionInviteStudent(){
+		$model = new UserActive;
+		$form = new CForm('application.modules.user.views.LibUser.inviteStudentForm', $model);
+		if($form->submitted('resendBtn')){
+			$cgrd = LibClass::model()->findByPk($_POST['UserActive']['class_id']);
+			$stuinfo = array('schoolid'=>Yii::app()->params['currentSchoolID'],'stuinfo'=>array(array('姓名'=>$_POST['UserActive']['name'],'学号'=>$_POST['UserActive']['school_unique_id'],'班级ID'=>$_POST['UserActive']['class_id'],'年级'=>$cgrd->grade_info->grade_name)));
+			//$res = LibUser::model()->addTeacherFromArray($stuinfo['stuinfo'],Yii::app()->params['currentSchoolID']);
+			$res = Libuser::model()->addUserFromArray($stuinfo['stuinfo'],$stuinfo['schoolid']);
+			if($res['success'] < 1){
+				$this->render('intiveStudent', array('form'=>$form,'msg'=>'添加不成功，用户已存在或已被导入！'));
+				exit();
+			}else{
+				$this->render('intiveStudent', array('form'=>$form,'msg'=>'学生添加成功！'));
+				exit();
+			}
+		}
+		$this->render('intiveTeacher', array('form'=>$form));
+	}
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

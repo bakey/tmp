@@ -32,6 +32,7 @@ class UserIdentity extends CUserIdentity
 			$this->_uemail = $user->email;
 			$this->setState('ustatus',$user->status);
 			$this->setState('uemail',$user->email);
+			$this->setState('uid',$user->id);
 			$this->errorCode=self::ERROR_NONE;
 		}
 		return $this->errorCode==self::ERROR_NONE;

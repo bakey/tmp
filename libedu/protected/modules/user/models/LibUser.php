@@ -154,6 +154,24 @@ class LibUser extends CActiveRecord
 		}
 	}
 
+	public function validateLecActivationCode($aid,$uid){
+		$usractive = new UserActive;
+		$res = $usractive->findByAttributes(array('active_id' => $aid ));
+		if(!$res){
+			return false;
+		}else{
+			$cusr = $this->findByAttributes(array('email'=>$res->school_unique_id));
+			if($cusr->email == Yii::app()->user->name){
+				$cusr->status = 2;
+				$cusr->save(false);
+				$usractive->deleteAllByAttributes(array('active_id'=>$aid));
+				return true;
+			}else{
+				return false;
+			}
+		}
+	}
+
 	public function resendActivationCode($uemail){
 		$res = $this->findByAttributes(array('email' => $uemail));
 		if(!$res){
@@ -221,6 +239,97 @@ class LibUser extends CActiveRecord
 			}
 		}
 		return $result;
+	}
+
+	public function validateTeacherFromArray($stuinfo = null,$schoolid){
+		if(!$stuinfo){
+			return null;
+		}
+		$result = array();
+		$ttl = -1;
+		foreach($stuinfo as $singlestu){
+			$usc = new UserSchool;
+			$cres = $usc->findByAttributes(array('school_id'=>$schoolid,'school_unique_id'=>$singlestu['邮箱']));
+			$ttl ++;
+			$result[$ttl] = $singlestu;
+			// check if the record is a replica
+			$result[$ttl]['failreason'] = '';
+			if(!$cres){
+				$ua = UserActive::model()->findByAttributes(array('school_unique_id'=>$singlestu['邮箱'],'school_id'=>Yii::app()->params['currentSchoolID'],'name'=>$singlestu['姓名']));
+				if($ua){
+					$result[$ttl]['failreason'] .= '该教师在系统中已存在 ';
+				}				
+			}else{
+				$result[$ttl]['failreason'] = '该教师在系统中已存在';
+			}
+		}
+		return $result;
+	}
+
+	public function addTeacherFromArray($stuinfo = null,$schoolid){
+		$result = array('status'=>0,'total'=>0,'success'=>0,'fail'=>0);
+		if(!$stuinfo){
+			$result['status'] = -1;
+			return $result;
+		}
+		$ttlRec = 0;
+		$secRec = 0;
+		$failRec = 0;
+		foreach($stuinfo as $singlestu){
+			$usc = new UserSchool;
+			$cres = $usc->findByAttributes(array('school_id'=>$schoolid,'school_unique_id'=>$singlestu['邮箱']));
+			
+			$ua = UserActive::model()->findByAttributes(array('school_id'=>$schoolid,'school_unique_id'=>$singlestu['邮箱']));
+			$uaa = $this->findByAttributes(array('email'=>$singlestu['邮箱']));
+				
+			// check if the record is a replica
+			
+			/*if((!$cres)&&(($uaa)||($ua))){
+				//notification
+				//accept add
+				//decline add
+			}*/
+
+			if((!$cres)&&(!$ua)&&(!$uaa)){
+
+				//create user active record;
+				$ua = new UserActive;
+				$ua->school_id = $schoolid;
+				$ua->school_unique_id = $singlestu['邮箱'];
+				$ua->name = $singlestu['姓名'];		
+				$aid = md5($singlestu['姓名'].$singlestu['邮箱'].$schoolid.time());
+				$ua->active_id = $aid;
+				$ua->create_time = date('Y-m-d H:i:s');
+
+				if($ua->save()){
+					//send activation email
+
+					$mailer = new Emailer($this->email,$this->realname);
+					$mailer->setMsgSubject('激活您的LibSchool帐号');
+					$mailer->setMsgTemplate('activation');
+					$mailer->setMsgBody(array($this->realname,array('<a href="http://localhost'.Yii::app()->createUrl('/user/libuser/lecactivate',array('aid' => $aid , 'sid'=> $this->schooluniqueid, 'schid'=>Yii::app()->params['currentSchoolID'])).'">http://localhost'.Yii::app()->createUrl('/user/libuser/lecactivate',array('aid' => $aid , 'uid'=> $this->id)).'</a>')));
+					//$mailer->doSendMail();
+					$ttlRec ++;
+					$secRec ++;	
+				}else{
+					$ttlRec ++;
+					$failRec ++;
+				}
+			
+			}else{ //user school relation exist in this school
+				$ttlRec ++;
+				$failRec ++;	
+			}
+		}
+		if($failRec == 0){
+			$result['status'] = 1;	
+		}
+		$result['total'] = $ttlRec;
+		$result['success'] = $secRec;
+		$result['fail'] = $failRec;
+
+		return $result;
+		
 	}
 
 	public function addUserFromArray($stuinfo = null,$schoolid){
@@ -292,7 +401,7 @@ class LibUser extends CActiveRecord
 			$mailer->setMsgSubject('激活您的LibSchool帐号');
 			$mailer->setMsgTemplate('activation');
 			$mailer->setMsgBody(array($this->realname,array('<a href="http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid , 'sid'=> $this->schooluniqueid, 'schid'=>Yii::app()->params['currentSchoolID'])).'">http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid , 'uid'=> $this->id)).'</a>')));
-			$mailer->doSendMail();
+			//$mailer->doSendMail();
 
 			//create default profile
 			$cprofile = new Profile;
