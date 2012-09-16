@@ -10,7 +10,7 @@
 
 	<?php echo $form->errorSummary($model); ?>
     
-	<?php echo $form->labelEx($model,'类型'); ?>
+	<?php echo $form->labelEx($model,'题型'); ?>
     <select name="topic" id="type" onchange="addInput()">
 	<option value="0">单项选择</option>
 	<option value="1">多项选择</option>
@@ -72,12 +72,7 @@
 	<div id="tempID"></div> 
     
 
-		
-	<div class="row" id="textarea">
-		<?php echo $form->labelEx($model,'答案解析'); ?>
-		<?php echo $form->textArea($model,'ans_explain',array('rows'=>6, 'cols'=>50)); ?>
-		<?php echo $form->error($model,'ans_explain'); ?>
-	</div>
+
 
 	<script>
 		window.onload=function(){
@@ -94,6 +89,17 @@
 		)
 	));
 ?>
+<?php
+	echo("参考答案:");
+	$this->widget('application.extensions.redactorjs.Redactor',array(
+		'model'=>$model,
+		'attribute'=>'ans_explain',
+		'editorOptions' => array(
+		//'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
+		)
+	));
+?>
+
 <div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? '创建' : '保存'); ?>
         <input type="reset" name="Clear" value="清空"> 

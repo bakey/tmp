@@ -74,8 +74,6 @@ class KnowledgePointController extends Controller
 					'kp_model'=>$kp_model,
 			));
 		}	
-	
-	
 	}	
 	public function actionFilterKnowledgePoint()
 	{
@@ -90,6 +88,79 @@ class KnowledgePointController extends Controller
 			echo CHtml::tag('option',
 					array('value'=>$value),CHtml::encode($name),true);
 		}*/
+	}
+	private function getKnowledgePointInfoFromExcelFile($fname = null){
+		if($fname == null){
+			return array();
+		}
+		$kpinfo = array();
+		$finalinfo = array();
+	
+		$filePath = './'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$fname;
+		$applicationPath = Yii::getPathOfAlias('webroot');
+		spl_autoload_unregister(array('YiiBase','autoload'));
+		require_once $applicationPath.'/protected/vendors/phpexcel/PHPExcel.php';
+		spl_autoload_register(array('YiiBase','autoload'));
+		if($fname != null){
+			$PHPExcel = new PHPExcel();
+			$PHPReader = new PHPExcel_Reader_Excel2007();
+			if(!$PHPReader->canRead($filePath)){
+				$PHPReader = new PHPExcel_Reader_Excel5();
+				if(!$PHPReader->canRead($filePath)){
+					echo '无法读取文件';
+					return ;
+				}
+			}
+				
+			$PHPExcel = $PHPReader->load($filePath);
+			$currentSheet = $PHPExcel->getSheet(1);
+				
+			$ttlColumn = $currentSheet->getHighestColumn();
+			$ttlRow = $currentSheet->getHighestRow();
+				
+			for($irow=1;$irow < $ttlRow; $irow++){
+				for($icolumn=0;$icolumn<2;$icolumn++){
+					if($currentSheet->getCellByColumnAndRow(1,$irow)->getValue() == ''){
+						break 2;
+					}
+					echo( $currentSheet->getCellByColumnAndRow( $icolumn , $irow ) );
+					/*$stuinfo[$irow-4][$currentSheet->getCellByColumnAndRow(0,3)->getValue()] = $currentSheet->getCellByColumnAndRow(0,$irow)->getValue();
+					$stuinfo[$irow-4][$currentSheet->getCellByColumnAndRow(1,3)->getValue()] = $currentSheet->getCellByColumnAndRow(1,$irow)->getValue();
+					$stuinfo[$irow-4][$currentSheet->getCellByColumnAndRow(3,3)->getValue()] = $currentSheet->getCellByColumnAndRow(3,$irow)->getValue();*/
+				}
+			}
+			//$finalinfo['stuinfo'] = $stuinfo;
+		}else{
+			echo '无法读取文件！';
+		}
+		return $finalinfo;
+	}
+	public function actionTest()
+	{
+		$this->getKnowledgePointInfoFromExcelFile( '015C1200.xlsx' );
+	}
+	
+	public function actionLoadKnowledgePoint()
+	{
+		if(!$_REQUEST['fname']){
+			$fname = null;
+		}else{
+			$fname = $_REQUEST['fname'];
+		}
+		$kpdata = $this->getKnowledgePointInfoFromExcelFile( $fname );
+		
+	}
+	public function actionImportKnowledgePoint()
+	{
+		Yii::import("ext.EAjaxUpload.qqFileUploader");
+		
+		$folder='./bin_data/temp_upload/';
+		$allowedExtensions = array("xls","xlsx");//array("jpg","jpeg","gif","exe","mov" and etc...
+		$sizeLimit = 1 * 1024 * 1024;// maximum file size in bytes
+		$uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+		$result = $uploader->handleUpload($folder);
+		$return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+		echo $return;// it's array		
 	}
 }
 ?>

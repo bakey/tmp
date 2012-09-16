@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 ?>
 <?php
 echo(Yii::app()->user->real_name . ",");
-echo("我的课程: " ); 
+echo("这是你的课程: " ); 
 ?>
 <?php
 $this->renderPartial( '_form_admin_course' , array('dataProvider'=>$dataProvider)); 

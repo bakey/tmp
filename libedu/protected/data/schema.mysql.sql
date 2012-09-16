@@ -157,10 +157,26 @@ create table if not exists tbl_course_post(
 	`update_time` datetime not null
 )engine=innodb default charset=utf8;
 	
+create table tbl_notification (
+  `id` int auto_increment primary key,
+  `publisher` int not null references tbl_user(id) on delete cascade,
+  `receiver` int not null references tbl_user(id) on delete cascade,
+  `type` tinyint not null,
+  `create_time` datetime not null,
+  `resource_id` int not null,
+  `content` text
+)engine=innodb default charset=utf8;
 	
 	
-	
-	
+create table if not exists tbl_news(
+	`id` int auto_increment primary key,
+	`user` int not null references tbl_user(id) on delete cascade,
+	`type` tinyint not null,
+	`resource_id` int not null,
+	`content` text not null,
+	`create_time` datetime not null,
+	`school` int not null references tbl_school(id) on delete cascade
+)engine=innodb default charset=utf8;
 	
 	
 	
