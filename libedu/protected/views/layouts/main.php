@@ -31,10 +31,12 @@
 			'items'=>array(
 				array('label'=>'Home', 'url'=>array('/site/index')),
 				array('label'=>'课程管理', 'url'=>array('/teach/course/admin')),
-				array('label'=>'教材管理', 'url'=>array('/teach/edition/admin')),				
+				array('label'=>'教材管理', 'url'=>array('/teach/edition/admin')),
+				array('label'=>'教材导入', 'url'=>array('/teach/edition/importedition')),				
 				array('label'=>'题库管理', 'url'=>array('/teach/problem')),
 				array('label'=>'用户注册', 'url'=>array('/user/libuser/register')),
-				array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint&school_id=1')),
+				array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint')),
+				array('label'=>'导入知识点', 'url'=>array('/teach/knowledgepoint/importkp&course_id=1')),
 				array('label'=>'系统通知发送', 'url'=>array('/user/notification/create')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)

@@ -19,7 +19,7 @@ class EditionController extends Controller
 	{
 		return array(
 				array('allow',  // allow all users to perform 'index' and 'view' actions
-						'actions'=>array('index','view'),
+						'actions'=>array('index','view','importedition'),
 						'users'=>array('*'),
 				),
 				array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -56,6 +56,10 @@ class EditionController extends Controller
 		$model=new CourseEdition('search');
 		$model->unsetAttributes();
 		$this->render('admin' , array('model'=>$model , ));
+	}
+	public function actionImportEdition()
+	{
+		$this->render('import_edition');
 	}
 	public function actionView($id)
 	{
@@ -129,6 +133,10 @@ class EditionController extends Controller
 				'dataProvider' => $item_providor,
 				'form'	 	   => $form,		
 		));
+	}
+	public function actionDoImportEdition()
+	{
+		
 	}
 	public function actionAjaxFillTree()
 	{
