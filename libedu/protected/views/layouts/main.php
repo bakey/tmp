@@ -27,9 +27,15 @@
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu',array(
+		<?php 
+			$uname = '';
+			if(isset(Yii::app()->user->real_name)){
+				$uname = Yii::app()->user->real_name;
+				$uid = Yii::app()->user->id;
+			}
+			$this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Home', 'url'=>array('/site/index')),
+				array('label'=>'首页', 'url'=>array('/site/index')),
 				array('label'=>'课程管理', 'url'=>array('/teach/course/admin')),
 				array('label'=>'教材管理', 'url'=>array('/teach/edition/admin')),
 				array('label'=>'教材导入', 'url'=>array('/teach/edition/importedition')),				
@@ -38,8 +44,18 @@
 				array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint')),
 				array('label'=>'导入知识点', 'url'=>array('/teach/knowledgepoint/importkp&course_id=1')),
 				array('label'=>'系统通知发送', 'url'=>array('/user/notification/create')),
-				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+
+				array('label'=>'用户相关功能','url'=>array('/user/libuser'),'items'=>array(
+					array('label'=>'用户注册', 'url'=>array('/user/libuser/register')),
+					array('label'=>'从Excel文件导入学生','url'=>array('/user/libuser/importstudentlist')),
+					array('label'=>'从Excel文件导入教师','url'=>array('/user/libuser/importteacherlist')),
+					array('label'=>'查看Profile','url'=>array('/user/profile/view','id'=>$uid),'visible'=>!Yii::app()->user->isGuest),
+					array('label'=>'编辑Profile','url'=>array('/user/profile/update','id'=>$uid),'visible'=>!Yii::app()->user->isGuest),
+					array('label'=>'邀请教师','url'=>array('/user/libuser/inviteteacher')),
+					array('label'=>'添加学生','url'=>array('/user/libuser/invitestudent')),
+					array('label'=>'登陆', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+				array('label'=>'退出系统 ('.$uname.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
+				)),
 			),
 		)); ?>
 	</div><!-- mainmenu -->

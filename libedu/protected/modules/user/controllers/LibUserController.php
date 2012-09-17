@@ -31,7 +31,6 @@ class LibUserController extends Controller
 	}
 
 	public function actionRegister(){
-
 		$model = new LibUser;
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
@@ -262,11 +261,13 @@ class LibUserController extends Controller
 		}else{
 			$fname = $_REQUEST['fname'];
 		}
-		$stuinfo = $this->getStudentInfoFromFile($fname);
+		$stuinfo = $this->getStudentInfoFromExcelFile($fname);
 		if(!$stuinfo){
 			echo '学生列表为空或文件读取错误，请再试一次！';
 		}else{
 			$importres = Libuser::model()->addUserFromArray($stuinfo['stuinfo'],$stuinfo['schoolid']);
+			$importres['addedstuinfo']['schoolname'] = $stuinfo['schoolname'];
+			Yii::app()->user->setState('addedstu',$importres['addedstuinfo']);
 			echo '<h4>学生列表导入结果</h4><ul>
 				<li>总记录条数：<strong>'.$importres['total'].'</strong></li>
 				<li>成功导入<strong>'.$importres['success'].'</strong>名学生</li>
@@ -279,10 +280,8 @@ class LibUserController extends Controller
 	public function actionGenerateStudentInfoCard(){
 	    $criteria = new CDbCriteria();
 		$criteria->compare('create_time', '>'.(time()-300));
-		//to do
-		var_dump($ua);
-		die('a');
-		$dataProvider=new CArrayDataProvider($stuinfo['stuinfo'], array(
+		
+		$dataProvider=new CArrayDataProvider(Yii::app()->user->addedstu, array(
 		    'id'=>'loadeduser',
 		    'keyField'=>'序号',
 		    'sort'=>array(
@@ -291,11 +290,9 @@ class LibUserController extends Controller
 		             '学号', '班级', '姓名', '班级ID'
 		        ),
 		    ),
-		    'pagination'=>array(
-		        'pageSize'=>15,
-		    ),
 		));
-		//$this->renderPartial('_uploadedStudentInfo', array('dataProvider'=>$dataProvider,'schoolname'=>$stuinfo['schoolname'],'schoolid'=>$stuinfo['schoolid']), false, true);
+
+		$this->render('_uploadedStudentInfoCard', array('dataProvider'=>$dataProvider,'schoolname'=>Yii::app()->user->addedstu['schoolname'],'schoolid'=>Yii::app()->params['currentSchoolID']), false, true);
 	}
 
 	public function actionResendActivationCode($status = 2){
