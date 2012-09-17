@@ -14,10 +14,10 @@
 					array(
 						'name' => '邮箱'
 					),
-					/*array(
+					array(
 						'header'=>'备注',
 						'name' => 'failreason',
-					),*/
+					),
 					 
 			),
 		)
