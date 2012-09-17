@@ -261,7 +261,7 @@ class LibUser extends CActiveRecord
 					$result[$ttl]['failreason'] .= '该教师在系统中已存在 ';
 				}				
 			}else{
-				$result[$ttl]['failreason'] = '该教师在系统中已存在';
+				$result[$ttl]['failreason'] = '该教师已经是本校的教师';
 			}
 		}
 		return $result;
