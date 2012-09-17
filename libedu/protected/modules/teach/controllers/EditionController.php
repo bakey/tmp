@@ -23,7 +23,7 @@ class EditionController extends Controller
 						'users'=>array('*'),
 				),
 				array('allow', // allow authenticated user to perform 'create' and 'update' actions
-						'actions'=>array('admin','update','ajaxfilltree','add'),
+						'actions'=>array('admin','test','update','loadedition','doimportedition','ajaxfilltree','add'),
 						'users'=>array('@'),
 				),
 				array('deny',  // deny all users
@@ -136,7 +136,152 @@ class EditionController extends Controller
 	}
 	public function actionDoImportEdition()
 	{
+		Yii::import("ext.EAjaxUpload.qqFileUploader");
 		
+		$uid = Yii::app()->user->id;
+		$folder = './'.Yii::app()->params['uploadFolder'].'/temp_upload/' . $uid . "/";
+		if ( !@is_dir($folder) ) {
+			@mkdir( $folder );
+		}
+		$allowedExtensions = array("xls","xlsx");//array("jpg","jpeg","gif","exe","mov" and etc...
+		$sizeLimit = 1 * 1024 * 1024;// maximum file size in bytes
+		$uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
+		$result = $uploader->handleUpload($folder);
+		$return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
+		echo $return;// it's array		
+	}
+	/*
+	 * 检查知识点excel文件是否已经到文件尾
+	* @return null 如果已到文件尾。如果还没到，返回array，标记下一行数据的cell坐标。array('row','col')
+	*/
+	private function checkEOF( $sheet , $row , $col , $level )
+	{
+		if ( $sheet->getCellByColumnAndRow( $col , $row )->getValue() == '' )
+		{
+			//如果当前cell没数据，那么先往右推一列看看
+			if ( $sheet->getCellByColumnAndRow( $col+1 , $row )->getValue() != '' ) {
+				return array( 'row'=>$row , 'col'=>$col+1 , 'level'=>$level+1 );
+			}
+			/*如果本行本列没有数据，意味着同个level的知识点kp没有了。
+			 * 那么我们往下一行的第一列看看，是否重新开始了一个最高层的知识点kp,如果还没有，那么文件结束。
+			*/
+			if ( $sheet->getCellByColumnAndRow( 0 , $row )->getValue() == '' ) {
+				return null ;
+			}
+			else {
+				return array( 'row'=>$row, 'col'=>0 , 'level'=>1 );
+			}
+		}
+		else
+		{
+			return array( 'row'=>$row , 'col'=>$col , 'level'=>$level );
+		}
+	}
+	private function getEditionFromExcelFile( $fname )
+	{
+		if($fname == null){
+			return array();
+		}
+		$uid = Yii::app()->user->id;		
+		$filePath = './'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$uid . "/" . $fname;
+		$applicationPath = Yii::getPathOfAlias('webroot');
+		spl_autoload_unregister(array('YiiBase','autoload'));
+		require_once $applicationPath.'/protected/vendors/phpexcel/PHPExcel.php';
+		spl_autoload_register(array('YiiBase','autoload'));
+		if($fname != null){
+			$PHPExcel = new PHPExcel();
+			$PHPReader = new PHPExcel_Reader_Excel2007();
+			if(!$PHPReader->canRead($filePath)){
+				$PHPReader = new PHPExcel_Reader_Excel5();
+				if(!$PHPReader->canRead($filePath)){
+					echo '无法读取文件';
+					return ;
+				}
+			}
+		
+			$PHPExcel = $PHPReader->load($filePath);
+			//默认每个模板都放在sheet 0
+			$currentSheet = $PHPExcel->getSheet( 0 );
+		
+			$topColumn = $currentSheet->getHighestColumn();
+			$topRow = $currentSheet->getHighestRow();
+				
+			$currentRow = 1;
+			$currentCol = 0;
+			$edition_item = array();
+			$ei_index = 0;
+			$level = 1;
+			$id = 0;
+				
+			while ( true )
+			{
+				$nextNode = $this->checkEOF( $currentSheet , $currentRow , $currentCol , $level );
+				if ( $nextNode == null ) {
+					break;
+				}
+				$currentRow = $nextNode['row'];
+				$currentCol = $nextNode['col'];
+				$cur_node = array(
+						'edi_index' => $currentSheet->getCellByColumnAndRow( $currentCol , $currentRow )->getValue(),
+						//'name' => $currentSheet->getCellByColumnAndRow( $currentCol+1 , $currentRow )->getValue(),
+						'content' => $currentSheet->getCellByColumnAndRow( $currentCol+1 , $currentRow )->getValue(),
+				);
+				$ei_index = count( $edition_item ) - 1 ;
+				if ( $nextNode['level'] == 1 )
+				{
+					$cur_node['parent'] = -1 ;
+				}
+				else if ( $nextNode['level'] == $level + 1 )
+				{
+					$cur_node['parent'] = $ei_index ;
+				}
+				else {
+					$cur_node['parent'] = $edition_item[ $ei_index ]['parent'];
+				}
+				$level = $nextNode['level'];
+				$cur_node['level'] = $level;
+				$cur_node['id'] = $id ++ ;
+				//echo("current level = " . $level . "<br>" );
+				$edition_item[] = $cur_node;
+				++ $ei_index;
+				++ $currentRow;
+			}
+		}
+		return $edition_item ;
+		
+	}
+	public function actionTest()
+	{
+		$edition = $this->getEditionFromExcelFile( '0d9295a5167ba48d84e665a1891bf010.xlsx' );
+		var_dump( $edition );
+		exit();
+		
+	}
+	public function actionWriteEdition()
+	{
+	}
+	public function actionLoadEdition()
+	{
+		$cid = -1;
+		if(!$_REQUEST['fname']){
+			$fname = null;
+		}else{
+			$fname = $_REQUEST['fname'];
+		}
+		if ( isset($_GET['course_id']) ) {
+			$cid = (int) $_GET['course_id'];
+		}
+		$edition = $this->getEditionFromExcelFile( $fname );
+		
+		$dataProvider=new CArrayDataProvider( $edition , array(
+				'id'=>'loadededition',
+				'pagination'=>array(
+						'pageSize'=>15,
+				),
+		));
+		
+		$this->renderPartial('_show_new_edition' , array(
+				'dataProvider'=>$dataProvider));
 	}
 	public function actionAjaxFillTree()
 	{

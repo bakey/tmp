@@ -143,8 +143,8 @@ create table if not exists tbl_user_school(
  )engine=innodb default charset=utf8;
  
  create table if not exists tbl_kp_level(
- `parent` int not null,
- `child` int not null
+ `parent` int not null references tbl_knowledge_point(id) on delete cascade,
+ `child` int not null references tbl_knowledge_point(id) on delete cascade
  )engine=innodb default charset=utf8;
 	
 create table if not exists tbl_course_post(

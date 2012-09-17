@@ -116,8 +116,6 @@ class KnowledgePointController extends Controller
 		if($fname == null){
 			return array();
 		}
-		$kpinfo = array();
-		$finalinfo = array();
 	
 		$filePath = './'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$fname;
 		$applicationPath = Yii::getPathOfAlias('webroot');
