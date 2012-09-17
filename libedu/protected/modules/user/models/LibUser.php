@@ -334,7 +334,7 @@ class LibUser extends CActiveRecord
 	}
 
 	public function addUserFromArray($stuinfo = null,$schoolid){
-		$result = array('status'=>0,'total'=>0,'success'=>0,'fail'=>0);
+		$result = array('status'=>0,'total'=>0,'success'=>0,'fail'=>0,'addedstuinfo'=>array());
 		if(!$stuinfo){
 			$result['status'] = -1;
 			return $result;
@@ -362,12 +362,14 @@ class LibUser extends CActiveRecord
 				$gid = $grd->findByAttributes(array('grade_name' => $singlestu['年级']));
 				$ua->grade = $gid->grade_index;
 
-				$ua->active_id = md5($singlestu['姓名'].$singlestu['学号'].$schoolid.time());
+				$aid = md5($singlestu['姓名'].$singlestu['学号'].$schoolid.time());
+				$ua->active_id = $aid;
 				$ua->create_time = date('Y-m-d H:i:s');
 
 				if($ua->save()){
 					$ttlRec ++;
 					$secRec ++;	
+					$result['addedstuinfo'][$secRec] = $singlestu;
 				}else{
 					$ttlRec ++;
 					$failRec ++;
@@ -384,7 +386,6 @@ class LibUser extends CActiveRecord
 		$result['total'] = $ttlRec;
 		$result['success'] = $secRec;
 		$result['fail'] = $failRec;
-
 		return $result;
 		
 	}

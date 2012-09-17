@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 
 ?>
 
-<h1>添加学生</h1>
+<h1>添加教师</h1>
 
 <?php 
 	if(isset($msg)){

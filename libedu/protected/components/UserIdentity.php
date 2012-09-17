@@ -27,7 +27,6 @@ class UserIdentity extends CUserIdentity
 		else{
 			$this->setState('ustatus',$user->status);
 			$this->setState('uemail',$user->email);
-
 			$this->setState('real_name',$user->user_profile->real_name );
 			$this->_id = $user->id;
 			$this->errorCode=self::ERROR_NONE;
