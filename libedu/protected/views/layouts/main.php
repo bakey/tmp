@@ -29,7 +29,7 @@
 	<div id="mainmenu">
 		<?php 
 			$uname = '';
-			$uid = '';
+			$uid = -1;
 			if(isset(Yii::app()->user->real_name)){
 				$uname = Yii::app()->user->real_name;
 				$uid = Yii::app()->user->id;
