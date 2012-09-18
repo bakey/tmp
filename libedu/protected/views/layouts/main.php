@@ -54,6 +54,7 @@
 					array('label'=>'编辑Profile','url'=>array('/user/profile/update','id'=>$uid),'visible'=>!Yii::app()->user->isGuest),
 					array('label'=>'邀请教师','url'=>array('/user/libuser/inviteteacher')),
 					array('label'=>'添加学生','url'=>array('/user/libuser/invitestudent')),
+					array('label'=>'学生状态','url'=>array('/user/libuser/classstustatus')),
 					array('label'=>'登陆', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'退出系统 ('.$uname.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 				)),
