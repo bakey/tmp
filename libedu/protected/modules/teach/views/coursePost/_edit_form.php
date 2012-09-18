@@ -16,7 +16,7 @@
 		'attribute'=>'post',
 		'editorOptions' => array(
 			'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
-			)
+		  )
 	));
 ?>
 <div class="row buttons">

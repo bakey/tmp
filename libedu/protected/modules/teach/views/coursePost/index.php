@@ -3,7 +3,8 @@
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Course Posts',
+	'课程管理'=>array('course/admin'),
+	'课程资料',
 );
 
 $this->menu=array(

@@ -78,18 +78,23 @@ class CourseController extends Controller
 		$this->render('update' , array(
 				'item_post'=>$item_post,
 				'edition_id'=>$edition_id,
+				'course_id'=>$id,
 		));			
 	}
 	public function actionAjaxLoadItem()
 	{
 		$parentId = null ;
-		$editionId = null ;
+		$edition_id = null ;
+		$course_id = null;
 		$levelCondition = "";
 		$user_id = Yii::app()->user->id;
 		$cur_level = 0;
 		
 		if ( isset($_GET['edition_id']) ) {
-			$editionId = $_GET['edition_id'];
+			$edition_id = $_GET['edition_id'];
+		}
+		if ( isset($_GET['course_id']) ) {
+			$course_id = $_GET['course_id'];
 		}
 		if ( isset($_GET['root']) ) {
 			if ( $_GET['root'] !== 'source' ){
@@ -116,7 +121,7 @@ class CourseController extends Controller
 		* 前端接收到后根据这个信息渲染出树状结构。
 		*/
 		$sql_cmd = sprintf("SELECT %s.id, %s.content AS text, max(%s.id<=>%s.parent) AS hasChildren FROM %s join %s where %s.edition <=> %s ",
-				self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , $editionId );
+				self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , $edition_id );
 		
 		
 		if ( $parentId != null)
@@ -141,9 +146,9 @@ class CourseController extends Controller
 			}
 			$url = "";			
 			if ( !$status['post_exist'] ) {
-				$url = CController::createUrl('coursepost/create&item_id=' . $child['id'] );
+				$url = CController::createUrl('coursepost/create&item_id=' . $child['id'].'&course_id='.$course_id );
 			}else {
-				$url = CController::createUrl('coursepost/index');
+				$url = CController::createUrl('coursepost/index&item_id=' .$child['id'].'&course_id='.$course_id);
 			}
 			$child['text'] = $content . $child['text'];
 			

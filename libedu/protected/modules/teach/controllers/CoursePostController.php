@@ -60,27 +60,36 @@ class CoursePostController extends Controller
 	 */
 	public function actionUpload()
 	{
-		//$file_stream = readfile( $_SERVER['file']['tmp_name'] );
-		/*$fh_read = fopen( $_FILES['file']['tmp_name'] , "rb" );
-		$folder='./'.Yii::app()->params['uploadFolder'].'/temp_upload/';
-		//取文件前2k数据做md5
-		$file_sign_data = fread( $fh_read , 2*1024 );
-		$file_content = fread( $fh_read , (int)$_FILES['file']['size'] );
-		var_dump( count($file_content) );
-		exit();*/
+		$uid = Yii::app()->user->id;
 		$file_name = md5( $_FILES['file']['tmp_name'] ) . ".";
 		$suffix = explode( '/' , $_FILES['file']['type'] );
 		$file_name .= $suffix[1];
-		$target_folder = "./" . Yii::app()->params['uploadFolder'].'/temp_upload/';
-		if ( !is_dir($target_folder) )
-		{
+		$target_folder = "./" . Yii::app()->params['uploadFolder'].'/temp_upload/' . $uid . '/origin/';
+		$thumb_folder = './' . Yii::app()->params['uploadFolder'].'/temp_upload/' . $uid . '/thumb/';
+		if ( !is_dir( $target_folder ) ) {
 			mkdir( $target_folder );
 		} 
+		if ( !is_dir( $thumb_folder ) ) {
+			mkdir( $thumb_folder );
+		}
 		copy( $_FILES['file']['tmp_name'] , $target_folder.$file_name );
-		//echo stripslashes(json_encode($array));
-		$image_url = Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" . Yii::app()->params['uploadFolder'].'/temp_upload/'.$file_name;
-		//$image_url = Yii::app()->createUrl('teach/coursepost/'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$file_name );
-		echo( "<p><img src='" . $image_url . "'></p>");	
+		
+		Yii::import("ext.EPhpThumb.EPhpThumb");
+		$thumb=new EPhpThumb();
+		$thumb->init();
+		$thumb->create( $target_folder . $file_name )
+		->resize(1024,800)
+		->save( $thumb_folder . $file_name );
+		
+		$image_thumb_url = Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" .
+				Yii::app()->params['uploadFolder'].'/temp_upload/'. $uid . '/thumb/' . $file_name;
+		$image_origin_url = Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" .
+				Yii::app()->params['uploadFolder'].'/temp_upload/'. $uid . '/origin/' . $file_name;
+		
+		$image_code =  CHtml::image( $image_thumb_url );
+		echo CHtml::link( $image_code , $image_origin_url );
+				
+	
 		exit();	
 	}
 
@@ -93,23 +102,48 @@ class CoursePostController extends Controller
 		$course_post_model =new CoursePost;
 		$course_post_model->unsetAttributes();
 		$item_id = $_GET['item_id'];
-		if ( $item_id == null )
-		{
+		$course_id = $_GET['course_id'];
+		if ( $item_id == null ) {
 			throw new CHttpException(400 , "参数错误，没有item_id");
 		}
+		if ( $course_id == null ) {
+			throw new CHttpException( 400 , "参数错误，没有course_id");
+		}
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['CoursePost']))
+		if( isset($_POST['CoursePost']) )
 		{
-			$course_post_model->attributes=$_POST['CoursePost'];
-			$course_post_model->create_time = $course_post_model->update_time = date("Y-m-d H:i:s", time() );
-			$course_post_model->author = Yii::app()->user->id;
-			$course_post_model->item_id = $_GET['item_id'];
-			$course_post_model->status = CoursePost::STATUS_DRAFT;
-			if($course_post_model->save())
+			if ( isset( $_POST['draft']) )
 			{
-				$this->redirect(array('view','id'=>$course_post_model->id));
+				//存草稿	
+				$course_post_model->attributes=$_POST['CoursePost'];
+				$course_post_model->create_time = $course_post_model->update_time = date("Y-m-d H:i:s", time() );
+				$course_post_model->author = Yii::app()->user->id;
+				$course_post_model->item_id = $_GET['item_id'];
+				$course_post_model->status = CoursePost::STATUS_DRAFT;
+				if($course_post_model->save())
+				{
+					$this->redirect(array('view','id'=>$course_post_model->id));
+				}			
+			}
+			else if ( isset($_POST['cancel']) )
+			{
+				//取消，重定向				
+				$this->redirect(array('course/update','id'=>$course_id));
+			}
+			else
+			{
+				$course_post_model->attributes=$_POST['CoursePost'];
+				$course_post_model->create_time = $course_post_model->update_time = date("Y-m-d H:i:s", time() );
+				$course_post_model->author = Yii::app()->user->id;
+				$course_post_model->item_id = $_GET['item_id'];
+				$course_post_model->status = CoursePost::STATUS_PUBLISH;
+				if($course_post_model->save())
+				{
+					$this->redirect(array('view','id'=>$course_post_model->id));
+				}
 			}
 		}
 
@@ -162,9 +196,15 @@ class CoursePostController extends Controller
 	public function actionIndex()
 	{
 		$cur_user = Yii::app()->user->id;
+		$item_id = -1;
+		if ( isset($_GET['item_id']) ){
+			$item_id = $_GET['item_id'];
+		}else {
+			throw new CHttpException( 500 , "缺少item_id参数");
+		}
 		$dataProvider=new CActiveDataProvider('CoursePost',array(
 				'criteria'=>array(
-						'condition'=>('author='.$cur_user),
+						'condition'=>('author='.$cur_user.' and item_id='.$item_id ),						
 				),
 				'pagination'=>array(
 						'pageSize'=>15,

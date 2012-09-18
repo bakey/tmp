@@ -3,7 +3,7 @@
 /* @var $model CoursePost */
 
 $this->breadcrumbs=array(
-	'Course Posts'=>array('index'),
+	'课程管理'=>array('course/admin'),
 	$model->id,
 );
 
@@ -24,9 +24,6 @@ $this->menu=array(
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'id',
 		'post:html',
-		'create_time',
-		'update_time',
 	),
 )); ?>

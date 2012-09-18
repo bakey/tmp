@@ -2,7 +2,6 @@
 /* @var $this CourseController */
 
 $this->breadcrumbs=array(
-	'Course'=>array('/teach/course'),
 	'Admin',
 );
 ?>

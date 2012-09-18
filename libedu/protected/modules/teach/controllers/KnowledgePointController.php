@@ -316,7 +316,7 @@ class KnowledgePointController extends Controller
 	{
 		Yii::import("ext.EAjaxUpload.qqFileUploader");
 		
-		$folder='./bin_data/temp_upload/';
+		$folder = './'.Yii::app()->params['uploadFolder'].'/temp_upload/';
 		$allowedExtensions = array("xls","xlsx");//array("jpg","jpeg","gif","exe","mov" and etc...
 		$sizeLimit = 1 * 1024 * 1024;// maximum file size in bytes
 		$uploader = new qqFileUploader($allowedExtensions, $sizeLimit);

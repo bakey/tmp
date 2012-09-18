@@ -2,7 +2,7 @@
 /* @var $this CourseController */
 
 $this->breadcrumbs=array(
-	'课程'=>array('/teach/course'),
+	'课程管理'=>array('/teach/course/admin'),
 	'Update',
 );
 /*
@@ -24,7 +24,7 @@ foreach( $item_post as $ip )
 ?>
 	
 <?php 
-$url = 'course/ajaxLoadItem&edition_id=' . $edition_id;
+$url = 'course/ajaxLoadItem&edition_id=' . $edition_id.'&course_id=' . $course_id;
 $this->widget(
 	    'CTreeView',
 		array(

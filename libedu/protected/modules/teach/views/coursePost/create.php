@@ -15,6 +15,6 @@ $this->menu=array(
 
 <h1>Create CoursePost</h1>
 
-<?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php echo $this->renderPartial('_edit_form', array('model'=>$model)); ?>
 
 

@@ -23,7 +23,7 @@ class EditionController extends Controller
 						'users'=>array('*'),
 				),
 				array('allow', // allow authenticated user to perform 'create' and 'update' actions
-						'actions'=>array('admin','test','update','loadedition','doimportedition','ajaxfilltree','add'),
+						'actions'=>array('admin','test','update','loadedition','doimportedition','writeedition','ajaxfilltree','add'),
 						'users'=>array('@'),
 				),
 				array('deny',  // deny all users
@@ -139,7 +139,7 @@ class EditionController extends Controller
 		Yii::import("ext.EAjaxUpload.qqFileUploader");
 		
 		$uid = Yii::app()->user->id;
-		$folder = './'.Yii::app()->params['uploadFolder'].'/temp_upload/' . $uid . "/";
+		$folder = './'.Yii::app()->params['uploadFolder'].'/temp_upload/';
 		if ( !@is_dir($folder) ) {
 			@mkdir( $folder );
 		}
@@ -177,13 +177,9 @@ class EditionController extends Controller
 			return array( 'row'=>$row , 'col'=>$col , 'level'=>$level );
 		}
 	}
-	private function getEditionFromExcelFile( $fname )
+	private function getPHPExcelInstance( $fname )
 	{
-		if($fname == null){
-			return array();
-		}
-		$uid = Yii::app()->user->id;		
-		$filePath = './'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$uid . "/" . $fname;
+		$filePath = './'.Yii::app()->params['uploadFolder'].'/temp_upload/' . $fname;
 		$applicationPath = Yii::getPathOfAlias('webroot');
 		spl_autoload_unregister(array('YiiBase','autoload'));
 		require_once $applicationPath.'/protected/vendors/phpexcel/PHPExcel.php';
@@ -195,70 +191,220 @@ class EditionController extends Controller
 				$PHPReader = new PHPExcel_Reader_Excel5();
 				if(!$PHPReader->canRead($filePath)){
 					echo '无法读取文件';
-					return ;
+					return null ;
 				}
-			}
-		
-			$PHPExcel = $PHPReader->load($filePath);
-			//默认每个模板都放在sheet 0
-			$currentSheet = $PHPExcel->getSheet( 0 );
-		
-			$topColumn = $currentSheet->getHighestColumn();
-			$topRow = $currentSheet->getHighestRow();
-				
-			$currentRow = 1;
-			$currentCol = 0;
-			$edition_item = array();
-			$ei_index = 0;
-			$level = 1;
-			$id = 0;
-				
-			while ( true )
-			{
-				$nextNode = $this->checkEOF( $currentSheet , $currentRow , $currentCol , $level );
-				if ( $nextNode == null ) {
-					break;
-				}
-				$currentRow = $nextNode['row'];
-				$currentCol = $nextNode['col'];
-				$cur_node = array(
-						'edi_index' => $currentSheet->getCellByColumnAndRow( $currentCol , $currentRow )->getValue(),
-						//'name' => $currentSheet->getCellByColumnAndRow( $currentCol+1 , $currentRow )->getValue(),
-						'content' => $currentSheet->getCellByColumnAndRow( $currentCol+1 , $currentRow )->getValue(),
-				);
-				$ei_index = count( $edition_item ) - 1 ;
-				if ( $nextNode['level'] == 1 )
-				{
-					$cur_node['parent'] = -1 ;
-				}
-				else if ( $nextNode['level'] == $level + 1 )
-				{
-					$cur_node['parent'] = $ei_index ;
-				}
-				else {
-					$cur_node['parent'] = $edition_item[ $ei_index ]['parent'];
-				}
-				$level = $nextNode['level'];
-				$cur_node['level'] = $level;
-				$cur_node['id'] = $id ++ ;
-				//echo("current level = " . $level . "<br>" );
-				$edition_item[] = $cur_node;
-				++ $ei_index;
-				++ $currentRow;
 			}
 		}
-		return $edition_item ;
 		
+		$PHPExcel = $PHPReader->load($filePath);
+		return $PHPExcel;		
+	}
+	private function getEditionFromExcelFile( $fname )
+	{
+		if($fname == null){
+			return array();
+		}
+		$uid = Yii::app()->user->id;		
+	
+		$PHPExcel = $this->getPHPExcelInstance( $fname );
+		if ( null == $PHPExcel ){
+			throw new CHttpException( 500 , "get php excel instance failed");
+		}
+		
+			//默认每个模板都放在sheet 0
+		$sheet = $PHPExcel->getSheet( 0 );
+		
+		$topColumn = $sheet->getHighestColumn();
+		$topRow    =  $sheet->getHighestRow();
+		$currentRow = 1;
+		$currentCol = 0;
+			
+		$edition_name = $sheet->getCellByColumnAndRow( $currentCol , $currentRow )->getValue();
+		$description = $sheet->getCellByColumnAndRow( $currentCol+1 , $currentRow )->getValue();
+		if ( $description == '' ) {
+			$description = $edition_name;
+		}
+		$publisher = $sheet->getCellByColumnAndRow( $currentCol+2 , $currentRow)->getValue();
+		
+		$edition_info = array(
+				'name'=>$edition_name,
+				'description'=>$description,
+				'uploader'=>$uid,
+				'publisher'=>$publisher,
+				);
+		
+		$return_data = array();
+		$edition_item = array();
+		$ei_index = 0;
+		$level = 1;
+		$id = 0;
+		++ $currentRow;
+				
+		while ( true )
+		{
+			$nextNode = $this->checkEOF( $sheet , $currentRow , $currentCol , $level );
+			if ( $nextNode == null ) {
+				break;
+			}
+			$currentRow = $nextNode['row'];
+			$currentCol = $nextNode['col'];
+			$cur_node = array(
+					'edi_index' => $sheet->getCellByColumnAndRow( $currentCol , $currentRow )->getValue(),
+					//'name' => $currentSheet->getCellByColumnAndRow( $currentCol+1 , $currentRow )->getValue(),
+					'content' => $sheet->getCellByColumnAndRow( $currentCol+1 , $currentRow )->getValue(),
+			);
+			if ( $cur_node['content'] == '' ) {
+				$cur_node['content'] = '默认内容';
+			} 
+			$ei_index = count( $edition_item ) - 1 ;
+			if ( $nextNode['level'] == 1 )
+			{
+				$cur_node['parent'] = -1 ;
+			}
+			else if ( $nextNode['level'] == $level + 1 )
+			{
+				$cur_node['parent'] = $ei_index ;
+			}
+			else {
+				$cur_node['parent'] = $edition_item[ $ei_index ]['parent'];
+			}
+			$level = $nextNode['level'];
+			$cur_node['level'] = $level;
+			$cur_node['id'] = $id ++ ;
+			$edition_item[] = $cur_node;
+			++ $ei_index;
+			++ $currentRow;
+		}
+		$return_data['edition_item'] = $edition_item;
+		$return_data['edition_info'] = $edition_info;
+		return $return_data ;		
 	}
 	public function actionTest()
 	{
-		$edition = $this->getEditionFromExcelFile( '0d9295a5167ba48d84e665a1891bf010.xlsx' );
-		var_dump( $edition );
-		exit();
+		$fname = 'gg.xls';
+		$edition_data = $this->getEditionFromExcelFile( $fname );
 		
+		$edition_model = $this->saveEditionData( $edition_data['edition_info'] );
+		$edition_id = $edition_model->id;
+		$succ = 0;
+		$edi_map = null;
+		$index = 0;
+		$items = $edition_data['edition_item'];
+		foreach( $items as $ed )
+		{
+			$item_model = new Item;
+			$item_model->edition = $edition_id ;
+			$item_model->edi_index = $ed['edi_index'];
+			$item_model->content = $ed['content'];
+			$item_model->level = $ed['level'];
+			$item_model->create_time = date("Y-m-d H:i:s", time() );
+				
+			//最顶层的知识点，直接save
+			if ( $item_model->level == 1 ) {
+				if ( $item_model->save() ){
+					//	将当前的id映射为db中的id
+					$edi_map[ $ed['id'] ]= $item_model->id;
+					++ $succ;
+				}
+			}
+			else if ( $item_model->save() ) {
+				++ $succ;
+				$edi_map[ $ed['id'] ]= $item_model->id;
+			}
+			if ( $ed['parent'] != -1 ) {
+				$ed['parent'] = $edi_map[ $ed['parent'] ] ;
+			}
+			$items[$index ]['id'] = $item_model->id;
+			$items[$index ++]['parent'] = $ed['parent'];
+		}
+		
+		foreach( $items as $ed )
+		{
+			$item_item_model = new ItemItem ;
+			if ( $ed['parent'] != -1 )
+			{
+				$item_item_model->parent = $ed['parent'];
+				$item_item_model->child = $ed['id'];
+				if ( !$item_item_model->save() ){
+					echo("save item_item model failed ");
+				}
+				$str = sprintf("parent = %d , child = %d<br>" , $ed['parent'],
+						$ed['id'] );
+				echo $str;
+			}
+		}	
 	}
+	private function saveEditionData( $edi_info )
+	{
+		$edition_model = new CourseEdition;
+		$edition_model->name = $edi_info['name'];
+		$edition_model->description = $edi_info['description'];
+		$edition_model->uploader = $edi_info['uploader'];
+		$edition_model->publisher = $edi_info['publisher'];
+		$edition_model->save();		
+		return $edition_model;
+	}
+	
 	public function actionWriteEdition()
 	{
+		if(!$_REQUEST['fname']){
+			$fname = null;
+		}else{
+			$fname = $_REQUEST['fname'];
+		}
+		
+		$edition_data = $this->getEditionFromExcelFile( $fname );
+		
+		$edition_model = $this->saveEditionData( $edition_data['edition_info'] );
+		$edition_id = $edition_model->id;
+		$succ = 0;
+		$edi_map = null;
+		$index = 0;
+		$items = $edition_data['edition_item'];
+		foreach( $items as $ed )
+		{
+			$item_model = new Item;
+			$item_model->edition = $edition_id ;
+			$item_model->edi_index = $ed['edi_index'];
+			$item_model->content = $ed['content'];
+			$item_model->level = $ed['level'];
+			$item_model->create_time = date("Y-m-d H:i:s", time() );
+				
+			//最顶层的知识点，直接save
+			if ( $item_model->level == 1 ) {
+				if ( $item_model->save() ){
+					//	将当前的id映射为db中的id
+					$edi_map[ $ed['id'] ]= $item_model->id;
+					++ $succ;
+				}
+			}
+			else if ( $item_model->save() ) {
+				++ $succ;
+				$edi_map[ $ed['id'] ]= $item_model->id;
+			}
+			if ( $ed['parent'] != -1 ) {
+				$ed['parent'] = $edi_map[ $ed['parent'] ] ;
+			}
+			$items[$index ]['id'] = $item_model->id;
+			$items[$index ++]['parent'] = $ed['parent'];
+		}
+		
+		foreach( $items as $ed )
+		{
+			$item_item_model = new ItemItem ;
+			if ( $ed['parent'] != -1 )
+			{
+				$item_item_model->parent = $ed['parent'];
+				$item_item_model->child = $ed['id'];
+				if ( !$item_item_model->save() ){
+					echo("save item_item model failed ");
+				}
+				/*$str = sprintf("parent = %d , child = %d<br>" , $ed['parent'],
+						$ed['id'] );
+				echo $str;*/
+			}
+		}	
+		echo '<h4>教材列表导入结果</h4><ul><li>成功导入 <strong>' . $succ . '</strong> 条记录</li>';
 	}
 	public function actionLoadEdition()
 	{
@@ -273,7 +419,7 @@ class EditionController extends Controller
 		}
 		$edition = $this->getEditionFromExcelFile( $fname );
 		
-		$dataProvider=new CArrayDataProvider( $edition , array(
+		$dataProvider=new CArrayDataProvider( $edition ['edition_item'], array(
 				'id'=>'loadededition',
 				'pagination'=>array(
 						'pageSize'=>15,

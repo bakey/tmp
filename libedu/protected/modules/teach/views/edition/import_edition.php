@@ -42,7 +42,7 @@ $this->widget('ext.EAjaxUpload.EAjaxUpload',
 ?>
 <?php echo CHtml::ajaxButton ("确认导入教材信息",
                               CController::createUrl('/teach/edition/writeedition'), 
-                              array('update' => '#loadkpinfo',
+                              array('update' => '#loadedition',
                               		'data'=>'js:{fname: $(this).attr(\'rel\')}',
                               		'beforeSend'=>'js:function(){$(\'#loadinghover\').trigger(\'click\');}',
                               		'complete'=>'js:function(){
