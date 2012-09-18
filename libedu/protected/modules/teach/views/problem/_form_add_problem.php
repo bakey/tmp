@@ -5,6 +5,14 @@
 		'enableAjaxValidation'=>true,
 		'action'=>'index.php?r=teach/problem/create',
 )); ?>
+<h1>关联知识点</h1>
+<?php
+		echo CHtml::activeCheckBoxList($model, 'id',
+			CHtml::listData(
+					KnowledgePoint::model()->findAll(), 'id',
+					'name'), array('template'=>'{input} {label}'));
+	
+	?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
@@ -36,6 +44,7 @@
 		<?php echo $form->textField($model,'source',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'source'); ?>
 	</div>
+		
    
     <div class="row">
 		<?php 
@@ -44,6 +53,7 @@
 		<?php echo $form->labelEx($model,'选项数: '); ?>
 		<?php echo $form->error($model,'content'); ?>
 	</div>
+
 
     <script type="text/javascript">
 	function addInput()

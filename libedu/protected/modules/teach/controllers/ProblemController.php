@@ -66,6 +66,16 @@ class ProblemController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+	private function savePrblemKnowledgePoint( /*array*/ $knowledgePoints )
+	{
+		foreach( $knowledgePoints as $kp )
+		{
+			$problem_kp_model = new ProblemKp ;
+			$problem_kp_model->knowledge_point = $kp	;
+				
+		}
+		
+	}
 
 	/**
 	 * Creates a new model.
@@ -82,7 +92,7 @@ class ProblemController extends Controller
 
 		if(isset($_POST['Problem']))
 		{
-			$model->course=$_POST['Problem']['course'];
+			/*$model->course=$_POST['Problem']['course'];
 			$model->type=$_POST['topic'];
 			$model->source=$_POST['Problem']['source'];
 			$model->difficulty=$_POST['Problem']['difficulty'];
@@ -101,20 +111,28 @@ class ProblemController extends Controller
 			}
 			$model->content=$_POST['Problem']['content'];
 			$num=$_POST['sel'];
-			if($num==1)
+			switch( $num )
 			{
-				$model->content=$model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
-					$_POST['C']."\n".$_POST['D'];
-			}
-			else if($num==2)
-				$model->content=$model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
-					$_POST['C']."\n".$_POST['D']."\n".$_POST['E'];
-			else if($num==3)
-                $model->content=$model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
-					$_POST['C']."\n".$_POST['D']."\n".$_POST['E']."\n".$_POST['F'];
+				case 1:
+					$model->content=$model->content."\n".$_POST['A']."\n".$_POST['B']."\n".$_POST['C']."\n".$_POST['D'];
+					break;
+				case 2:
+					$model->content=$model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
+							$_POST['C']."\n".$_POST['D']."\n".$_POST['E'];
+					break;
+				case 3:
+					$model->content=$model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
+							$_POST['C']."\n".$_POST['D']."\n".$_POST['E']."\n".$_POST['F'];
+					break;
+				default:
+					break;
+			}		                
 			$model->ans_explain=$_POST['Problem']['ans_explain'];
-			if($model->save())
+			if($model->save()){
 				$this->redirect(array('index','id'=>$model->id));
+			}*/
+			$this->savePrblemKnowledgePoint( $_POST['Problem']['id'] );
+			exit();
 		}
 
 		$this->render('create',array(
@@ -174,6 +192,8 @@ class ProblemController extends Controller
 	{
 		$model = new Problem();
 		$dataProvider=new CActiveDataProvider('Problem');
+		$kpDataProvider = new CActiveDataProvider('KnowledgePoint');
+		$kpData = $kpDataProvider->getData();
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 			'problem'=>$model,
@@ -203,8 +223,9 @@ class ProblemController extends Controller
 	public function loadModel($id)
 	{
 		$model=Problem::model()->findByPk((int)$id);
-		if($model===null)
+		if($model===null) {
 			throw new CHttpException(404,'The requested page does not exist.');
+		}
 		return $model;
 	}
 

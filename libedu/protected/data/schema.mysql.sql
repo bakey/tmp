@@ -177,7 +177,11 @@ create table if not exists tbl_news(
 	`create_time` datetime not null,
 	`school` int not null references tbl_school(id) on delete cascade
 )engine=innodb default charset=utf8;
-	
+
+create table if not exists tbl_problem_kp(
+	`problem_id` int not null references tbl_problem(id) on delete cascade,
+	`knowledge_point` int not null references tbl_knowledge_point(id) on delete cascade
+)engine=innodb default charset=utf8;
 	
 	
 	
