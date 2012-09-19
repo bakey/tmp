@@ -432,9 +432,9 @@ class EditionController extends Controller
 	public function actionAjaxFillTree()
 	{
 		// accept only AJAX request (comment this when debugging)
-		if (!Yii::app()->request->isAjaxRequest) {
+		/*if (!Yii::app()->request->isAjaxRequest) {
 			exit();
-		}
+		}*/
 		// parse the user input
 		$parentId = null ;
 		$editionId = null ;
@@ -447,14 +447,43 @@ class EditionController extends Controller
 			if ( $_GET['root'] !== 'source' ){
 				//深层查询,获取父亲id
 				$parentId = (int) $_GET['root'];
-				$levelCondition = " tbl_item.level > 1 " ;
+				$levelCondition = " level > 1 " ;
 			}else if( isset($_GET['edition_id']) ) {
 				//第一层查询
 				//$parentId = (int)$_GET['edition_id'];
-				$levelCondition = " tbl_item.level <=> 1 "; 
+				$levelCondition = " level <=> 1 "; 
 			}
 			else {
 				exit();
+			}
+		}
+		$condition = "edition=:edition ";
+		if ( $parentId != null ) {
+			$condition .= "and level > 1 ";
+		}
+		else {
+			$condition .= "and level = 1 ";
+		}
+		$children = array();
+		$items = Item::model()->findAll(
+					$condition,
+					 array(':edition'=>$editionId)
+				);
+		foreach( $items as $it )
+		{
+			$info = array() ;
+			$parent = $it->level_parent ;
+			if ( count($it->level_child) > 0 ) {
+				$info['hasChildren'] = 1;
+			}else {
+				$info['hasChildren'] = 0;
+			}
+			$info['text'] = $it->content;	
+			$info['id']	= $it->id;	
+			if ( $parentId == null ) {
+				$children[] = $info;
+			}else if ( count($parent) > 0 && $parent[0]->id == $parentId ) {
+				$children[] = $info;
 			}
 		}
 		
@@ -462,23 +491,14 @@ class EditionController extends Controller
 		 * 我们期望或得到类似" id content hasChildren"排列的数据，通过json方式返回给ajax调用，
 		 * 前端接收到后根据这个信息渲染出树状结构。
 		 */
-		$sql_cmd = sprintf("SELECT %s.id, %s.content AS text, max(%s.id<=>%s.parent) AS hasChildren FROM %s join %s where %s.edition <=> %s ",
-				self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , $editionId );
-		
+		//$sql_cmd = sprintf("SELECT %s.id, %s.content AS text, max(%s.id<=>%s.parent) AS hasChildren FROM %s join %s where %s.edition <=> %s ",
+			//	self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , $editionId );
 	
-		//$sql_cmd = "SELECT tbl_item.id, tbl_item.content AS text, max(tbl_item.id<=>tbl_item_item.parent) AS hasChildren "
-			//	."FROM tbl_item join tbl_item_item where tbl_item.edition <=> " . $editionId ;
-		
-		if ( $parentId != null) 
-		{
-			$sql_cmd .= " and tbl_item.id <=> tbl_item_item.child ";
-			$sql_cmd .= " and tbl_item_item.parent <=> " . $parentId ;
-		}
-		$sql_cmd .= " and " . $levelCondition . " group by tbl_item.id";
+	
 		
 		
 		// read the data (this could be in a model)
-		$children = Yii::app()->db->createCommand( $sql_cmd )->queryAll();
+		//$children = Yii::app()->db->createCommand( $sql_cmd )->queryAll();
 		
 		$treedata=array();
 		foreach($children as $child){
@@ -489,6 +509,8 @@ class EditionController extends Controller
 			$child['text'] = $nodeText;
 			$treedata[]=$child;
 		}
+		//var_dump( $treedata );
+		//exit();
 		
 		echo str_replace(
 			'"hasChildren":"0"',

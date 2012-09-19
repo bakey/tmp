@@ -70,6 +70,7 @@ class Problem extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+				'problem_kp'=>array(self::MANY_MANY , 'KnowledgePoint' , 'tbl_problem_kp(problem_id,knowledge_point)'),
 		);
 	}
 

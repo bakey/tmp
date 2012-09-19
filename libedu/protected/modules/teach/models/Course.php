@@ -58,7 +58,6 @@ class Course extends CActiveRecord
 				'edition'=>array(self::BELONGS_TO , 'CourseEdition','edition_id'),
 				//'user'=>array(self::MANY_MANY,'LibUser',
 					//	'tbl_user_course(course_id,user_id)'),
-				//'gg'=>array(self::HAS_ONE ,'Grade','grade_index'),
 		);
 	}
 

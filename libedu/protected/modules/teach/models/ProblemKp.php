@@ -1,21 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "tbl_item".
+ * This is the model class for table "tbl_problem_kp".
  *
- * The followings are the available columns in table 'tbl_item':
- * @property integer $id
- * @property string $content
- * @property integer $level
+ * The followings are the available columns in table 'tbl_problem_kp':
+ * @property integer $problem_id
+ * @property integer $knowledge_point
  */
-class Item extends CActiveRecord
+class ProblemKp extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Item the static model class
+	 * @return ProblemKp the static model class
 	 */
-	public $parent ;
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -26,7 +24,7 @@ class Item extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_item';
+		return 'tbl_problem_kp';
 	}
 
 	/**
@@ -37,13 +35,11 @@ class Item extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('level', 'numerical', 'integerOnly'=>true),
-			array('edi_index' , 'numerical' , 'integerOnly'=>true),
-			array('content', 'safe'),
+			array('problem_id, knowledge_point', 'required'),
+			array('problem_id, knowledge_point', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, content, level', 'safe', 'on'=>'search'),
-			array('parent' , 'numerical' , 'integerOnly'=>true),
+			array('problem_id, knowledge_point', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,11 +51,6 @@ class Item extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-				'editions' => array(self::BELONGS_TO , 'CourseEdition' , 'edition'),
-				//找到所有本item的儿子item
-				'level_child'=>array(self::MANY_MANY , 'Item' , 'tbl_item_item(parent,child)'),
-				//找到本item的所有父亲节点
-				'level_parent'=>array(self::MANY_MANY , 'Item' , 'tbl_item_item(child,parent)'),
 		);
 	}
 
@@ -69,11 +60,8 @@ class Item extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			//'id' => 'ID',
-			'edi_index' => '第几章/第几节',
-			'content' => '本章内容',
-			'level' => 'Level',
-			'parent' => '父章节的id',
+			'problem_id' => 'Problem',
+			'knowledge_point' => 'Knowledge Point',
 		);
 	}
 
@@ -88,9 +76,8 @@ class Item extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('content',$this->content,true);
-		$criteria->compare('level',$this->level);
+		$criteria->compare('problem_id',$this->problem_id);
+		$criteria->compare('knowledge_point',$this->knowledge_point);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

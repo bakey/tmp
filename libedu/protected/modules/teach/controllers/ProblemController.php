@@ -27,7 +27,7 @@ class ProblemController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','test'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -66,15 +66,23 @@ class ProblemController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
-	private function savePrblemKnowledgePoint( /*array*/ $knowledgePoints )
+	private function savePrblemKnowledgePoint( /*array*/ $knowledgePoints , $pid )
 	{
+		$succ_cnt = 0;
 		foreach( $knowledgePoints as $kp )
 		{
 			$problem_kp_model = new ProblemKp ;
-			$problem_kp_model->knowledge_point = $kp	;
-				
+			$problem_kp_model->problem_id = $pid ;
+			$problem_kp_model->knowledge_point = $kp;
+			if ( $problem_kp_model->save() ) {
+				++ $succ_cnt;
+			}				
 		}
-		
+		return $succ_cnt;		
+	}
+	public function actionTest()
+	{
+		print_r( CHtml::listData(KnowledgePoint::model()->findAll(), 'id', 'name') );
 	}
 
 	/**
@@ -83,60 +91,59 @@ class ProblemController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Problem;
-		$this->performAjaxValidation( $model );
-		$model->create_time=$model->update_time=date('Y-m-d H:i:s',time());
-	
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$problem_model=new Problem;
+		$this->performAjaxValidation( $problem_model );
+		$problem_model->create_time = $problem_model->update_time = date('Y-m-d H:i:s',time());
 
 		if(isset($_POST['Problem']))
 		{
-			/*$model->course=$_POST['Problem']['course'];
-			$model->type=$_POST['topic'];
-			$model->source=$_POST['Problem']['source'];
-			$model->difficulty=$_POST['Problem']['difficulty'];
-			$model->use_count = 0;
-			if($model->type==0)
+			$problem_model->course=$_POST['Problem']['course'];
+			$problem_model->type=$_POST['topic'];
+			$problem_model->source=$_POST['Problem']['source'];
+			$problem_model->difficulty=$_POST['Problem']['difficulty'];
+			$problem_model->use_count = 0;
+			if($problem_model->type==0)
 			{
-				$model->reference_ans=$_POST['same'];
+				$problem_model->reference_ans=$_POST['same'];
 			}
-			if($model->type==1)
+			if($problem_model->type==1)
 			{
 				$types=$_POST['same'];
 				for($i=0;$i<count($types);$i++)
 				{
-					$model->reference_ans=$model->reference_ans.$types[$i];
+					$problem_model->reference_ans=$problem_model->reference_ans.$types[$i];
 				}
 			}
-			$model->content=$_POST['Problem']['content'];
+			$problem_model->content=$_POST['Problem']['content'];
 			$num=$_POST['sel'];
 			switch( $num )
 			{
 				case 1:
-					$model->content=$model->content."\n".$_POST['A']."\n".$_POST['B']."\n".$_POST['C']."\n".$_POST['D'];
+					$problem_model->content=$problem_model->content."\n".$_POST['A']."\n".$_POST['B']."\n".$_POST['C']."\n".$_POST['D'];
 					break;
 				case 2:
-					$model->content=$model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
+					$problem_model->content=$problem_model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
 							$_POST['C']."\n".$_POST['D']."\n".$_POST['E'];
 					break;
 				case 3:
-					$model->content=$model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
+					$problem_model->content=$problem_model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
 							$_POST['C']."\n".$_POST['D']."\n".$_POST['E']."\n".$_POST['F'];
 					break;
 				default:
 					break;
 			}		                
-			$model->ans_explain=$_POST['Problem']['ans_explain'];
-			if($model->save()){
-				$this->redirect(array('index','id'=>$model->id));
-			}*/
-			$this->savePrblemKnowledgePoint( $_POST['Problem']['id'] );
-			exit();
+			$problem_model->ans_explain=$_POST['Problem']['ans_explain'];
+			if( !$problem_model->save()){
+				throw new CHttpException( 500 , "保存问题到数据库失败");
+				//$this->redirect(array('index','id'=>$problem_model->id));
+			}
+			$pid = $problem_model->id;
+			$this->savePrblemKnowledgePoint( $_POST['Problem']['problem_cb'] , $pid );
+			$this->redirect( array('index','id'=>$problem_model->id) );
 		}
 
 		$this->render('create',array(
-			'model'=>$model,
+			'model'=>$problem_model,
 		));
 
 	}
@@ -190,13 +197,19 @@ class ProblemController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$model = new Problem();
-		$dataProvider=new CActiveDataProvider('Problem');
-		$kpDataProvider = new CActiveDataProvider('KnowledgePoint');
-		$kpData = $kpDataProvider->getData();
+		$problem_model = new Problem();
+		$dataProvider=new CActiveDataProvider( 'Problem' );
+		
+		//$data_source = new CArrayDataProvider( $dataProvider->getData() );
+		/*foreach( $data_source as $ds )
+		{
+			var_dump( $ds );
+		}
+		exit();*/
+		//$data_source->setData(  );
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
-			'problem'=>$model,
+			'problem'=>$problem_model,
 		));
 	}
 

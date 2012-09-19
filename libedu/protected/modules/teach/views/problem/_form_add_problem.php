@@ -5,19 +5,25 @@
 		'enableAjaxValidation'=>true,
 		'action'=>'index.php?r=teach/problem/create',
 )); ?>
-<h1>关联知识点</h1>
+<h1><font color="#FF0000">关联相关知识点</font></h1>
+
+
 <?php
-		echo CHtml::activeCheckBoxList($model, 'id',
-			CHtml::listData(
-					KnowledgePoint::model()->findAll(), 'id',
-					'name'), array('template'=>'{input} {label}'));
+		$list_data = CHtml::listData( KnowledgePoint::model()->findAll(), 'id','name') ;
+		foreach( $list_data as $index=>$value )
+		{
+			echo('<input type="checkbox" name="Problem[problem_cb][]" value="' . $index . '">' . $value . "</input><br>");
+		}
+		/*echo CHtml::activeCheckBoxList( $model, 'id',
+						CHtml::listData( KnowledgePoint::model()->findAll(), 'id','name'),
+						array('checkAll'=>'全选' , 'checkAllLast'=>true ,  )
+					);*/
 	
 	?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
-	<?php echo $form->errorSummary($model); ?>
-    
+	<?php echo $form->errorSummary($model); ?>    
 	<?php echo $form->labelEx($model,'题型'); ?>
     <select name="topic" id="type" onchange="addInput()">
 	<option value="0">单项选择</option>
@@ -47,9 +53,6 @@
 		
    
     <div class="row">
-		<?php 
-		//echo $form->textArea($model,'content',array('rows'=>6, 'cols'=>50)); 
-		?>
 		<?php echo $form->labelEx($model,'选项数: '); ?>
 		<?php echo $form->error($model,'content'); ?>
 	</div>

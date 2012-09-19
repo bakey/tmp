@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-	'Problems',
+	'题库管理',
 );
 
 $this->menu=array(
@@ -9,11 +9,17 @@ $this->menu=array(
 );
 ?>
 
-<h1>Problems</h1>
+<h1>所有问题</h1>
 
 <?php 
 $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
-)); ?>
-<?php echo $this->renderPartial('_form_add_problem', array('model'=>$problem)); ?>
+	/*'viewData'=>array(
+		'problem'=>$problem,
+	),*/
+));
+ ?>
+<?php
+ echo $this->renderPartial('_form_add_problem', array('model'=>$problem)); 
+ ?>
