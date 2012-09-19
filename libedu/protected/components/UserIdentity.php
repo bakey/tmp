@@ -25,6 +25,10 @@ class UserIdentity extends CUserIdentity
 		else if(!$user->validatePassword($this->password,$user->salt))
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		else{
+			$usch=UserSchool::model()->findByPk($user->id);
+			if($usch){
+				$this->setState('urole',$usch->role);
+			}
 			$this->setState('ustatus',$user->status);
 			$this->setState('uemail',$user->email);
 			$this->setState('real_name',$user->user_profile->real_name );

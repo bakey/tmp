@@ -26,6 +26,59 @@ class LibUserController extends Controller
 		));
 	}
 
+
+	public function actionClassStuStatus(){
+		if(isset(Yii::app()->user->urole)){
+			if(Yii::app()->user->urole == 2){
+				$ccls = LibClass::model()->findByAttributes(array('classhead_id'=>Yii::app()->user->id));
+				if(!$ccls){
+					$this->render('_classstuinfo',array('notclasshead'=>true),false,true);
+				}else{
+					$cid = $ccls->id;
+					$notin = UserActive::model()->findAllByAttributes(array('class_id'=>$cid));
+					$alreadyin = LibUserClass::model()->findallbyattributes(array('class_id'=>$cid,'teacher_id'=>$ccls->classhead_id));
+					$ttl = 0;
+					$resarray = array();
+					foreach($notin as $singlenotin){
+						$ttl++;
+						$resarray[$ttl]['学号'] = $singlenotin->school_unique_id;
+						$resarray[$ttl]['姓名'] = $singlenotin->name;
+						$resarray[$ttl]['状态'] = '未注册';
+					}
+					foreach($alreadyin as $singlealreadyin){
+						$ttl++;
+						foreach($singlealreadyin->student_info->unique_id as $singleunique){
+							if($singleunique->school_id == Yii::app()->params['currentSchoolID']){
+								$resarray[$ttl]['学号'] = $singleunique->school_unique_id;
+							}
+							break;
+						}
+						$resarray[$ttl]['姓名'] = $singlealreadyin->student_info->user_profile->real_name;
+						if($singlealreadyin->student_info->status == 2){
+							$resarray[$ttl]['状态'] = '已加入并激活';		
+						}else{
+							$resarray[$ttl]['状态'] = '已加入未激活';
+						}
+					}
+					$dataProvider=new CArrayDataProvider($resarray, array(
+					    'id'=>'loadeduser',
+					    'keyField'=>'学号',
+					    'sort'=>array(		    	
+					        'attributes'=>array(
+					             '姓名','学号', '状态'
+					        ),
+					    ),
+					));
+					$this->render('_classstuinfo',array('dataProvider'=>$dataProvider,'classname'=>$ccls->name),false,true);
+				}
+			}else{
+				$this->render('_classstuinfo',array('notclasshead'=>true),false,true);	
+			}
+		}else{
+			$this->render('_classstuinfo',array('notclasshead'=>true),false,true);
+		}
+	}
+
 	public function actionNotActived(){
 		$this->render('noactive',array('uemail'=>Yii::app()->User->uemail));
 	}
