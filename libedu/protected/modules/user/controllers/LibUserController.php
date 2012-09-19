@@ -333,7 +333,6 @@ class LibUserController extends Controller
 	public function actionGenerateStudentInfoCard(){
 	    $criteria = new CDbCriteria();
 		$criteria->compare('create_time', '>'.(time()-300));
-		
 		$dataProvider=new CArrayDataProvider(Yii::app()->user->addedstu, array(
 		    'id'=>'loadeduser',
 		    'keyField'=>'序号',
@@ -344,8 +343,12 @@ class LibUserController extends Controller
 		        ),
 		    ),
 		));
-
-		$this->render('_uploadedStudentInfoCard', array('dataProvider'=>$dataProvider,'schoolname'=>Yii::app()->user->addedstu['schoolname'],'schoolid'=>Yii::app()->params['currentSchoolID']), false, true);
+		if(!isset(Yii::app()->user->addedstu[1])){
+			$this->render('_uploadedStudentInfoCard', array('dataProvider'=>$dataProvider,'schoolname'=>Yii::app()->user->addedstu['schoolname'],'schoolid'=>Yii::app()->params['currentSchoolID'],'norecord'=>true), false, true);
+		}else{
+			$this->render('_uploadedStudentInfoCard', array('dataProvider'=>$dataProvider,'schoolname'=>Yii::app()->user->addedstu['schoolname'],'schoolid'=>Yii::app()->params['currentSchoolID']), false, true);
+		}
+		
 	}
 
 	public function actionResendActivationCode($status = 2){

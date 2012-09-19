@@ -39,7 +39,7 @@ class Question extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('owner, item, details, create_time', 'required'),
+			array('item,details', 'required'),
 			array('owner, item, viewcount', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
@@ -94,5 +94,15 @@ class Question extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+
+	public function beforeSave(){
+		if ($this->isNewRecord){
+			$this->owner = Yii::app()->user->id;
+			$this->create_time = date("Y-m-d H:i:s");
+			$this->viewcount = 0;
+		}
+		return parent::beforeSave();
 	}
 }

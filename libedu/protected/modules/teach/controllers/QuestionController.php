@@ -6,6 +6,10 @@ class QuestionController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
+	const ITEM_LEVEL_TOP = 1;
+	const TBL_ITEM = "tbl_item";
+	const TBL_ITEM_LEVEL = "tbl_item_item";
+
 	public $layout='//layouts/column2';
 
 	/**
@@ -32,7 +36,7 @@ class QuestionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -67,6 +71,8 @@ class QuestionController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
+		//get current editon based on 
+
 		if(isset($_POST['Question']))
 		{
 			$model->attributes=$_POST['Question'];
@@ -74,9 +80,121 @@ class QuestionController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
+		$mycourse = LibUser::model()->findByPk(Yii::app()->user->id);
+		$mycourse = $mycourse->user_course;
+		foreach ($mycourse as $singlecourse) {
+			$res[$singlecourse->id ] = $singlecourse->name;
+		}
 		$this->render('create',array(
 			'model'=>$model,
+			'mycourse'=>$res,
 		));
+	}
+
+	public function actionAjaxFillTree()
+	{
+		// accept only AJAX request (comment this when debugging)
+		/*if (!Yii::app()->request->isAjaxRequest) {
+			exit();
+		}*/
+		// parse the user input
+		$parentId = null ;
+		$editionId = null ;
+		$levelCondition = "";
+		
+		if ( isset($_GET['edition_id']) ) {
+			$editionId = $_GET['edition_id'];
+		}
+		if ( isset($_GET['root']) ) {
+			if ( $_GET['root'] !== 'source' ){
+				//深层查询,获取父亲id
+				$parentId = (int) $_GET['root'];
+				$levelCondition = " level > 1 " ;
+			}else if( isset($_GET['edition_id']) ) {
+				//第一层查询
+				//$parentId = (int)$_GET['edition_id'];
+				$levelCondition = " level <=> 1 "; 
+			}
+			else {
+				exit();
+			}
+		}
+		$condition = "edition=:edition ";
+		if ( $parentId != null ) {
+			$condition .= "and level > 1 ";
+		}
+		else {
+			$condition .= "and level = 1 ";
+		}
+		$children = array();
+		$items = Item::model()->findAll(
+					$condition,
+					 array(':edition'=>$editionId)
+				);
+		foreach( $items as $it )
+		{
+			$info = array() ;
+			$parent = $it->level_parent ;
+			if ( count($it->level_child) > 0 ) {
+				$info['hasChildren'] = 1;
+			}else {
+				$info['hasChildren'] = 0;
+			}
+			$info['text'] = $it->content;	
+			$info['id']	= $it->id;	
+			if ( $parentId == null ) {
+				$children[] = $info;
+			}else if ( count($parent) > 0 && $parent[0]->id == $parentId ) {
+				$children[] = $info;
+			}
+		}
+		
+		/*
+		 * 我们期望或得到类似" id content hasChildren"排列的数据，通过json方式返回给ajax调用，
+		 * 前端接收到后根据这个信息渲染出树状结构。
+		 */
+		//$sql_cmd = sprintf("SELECT %s.id, %s.content AS text, max(%s.id<=>%s.parent) AS hasChildren FROM %s join %s where %s.edition <=> %s ",
+			//	self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , $editionId );
+	
+	
+		
+		
+		// read the data (this could be in a model)
+		//$children = Yii::app()->db->createCommand( $sql_cmd )->queryAll();
+		
+		$treedata=array();
+		
+		foreach($children as $child){
+			$options=array('href'=>'#','id'=>$child['id'],'class'=>'treenode');
+			$nodeText = CHtml::openTag('a', $options);
+			if(isset($_GET['root'])){
+				$res = ItemItem::model()->findByAttributes(array('parent'=>$child['id']));
+				if(!$res){
+					$nodeText = '<a id="child'.$child['id'].'" href="#" onclick="doselectchapter('.$child['id'].')">'.$child['text'].'</a>';
+				}else{
+					$nodeText = $child['text'];	
+				}
+			}
+			$nodeText.= CHtml::closeTag('a')."\n";
+			$child['text'] = $nodeText;
+			$treedata[]=$child;
+		}
+		echo str_replace(
+			'"hasChildren":"0"',
+			'"hasChildren":false',
+			CTreeView::saveDataAsJson($treedata)
+		 	//CTreeView::saveDataAsJson($children)
+		);
+	}
+
+	public function actionGetChapterFromCourse(){
+		if(isset($_POST['cid'])){
+			$edition = Course::model()->findByPk($_POST['cid']);
+			$edition = $edition->edition;
+			$this->renderPartial('_ajaxGetChapter',array('eid'=>$edition),false,true);
+		}else{
+			echo 'Bad Request';
+		}
 	}
 
 	/**

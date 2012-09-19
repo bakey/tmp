@@ -43,6 +43,7 @@
 				array('label'=>'题库管理', 'url'=>array('/teach/problem')),
 				array('label'=>'用户注册', 'url'=>array('/user/libuser/register')),
 				array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint')),
+				array('label'=>'提问', 'url'=>array('/teach/question/create')),
 				array('label'=>'导入知识点', 'url'=>array('/teach/knowledgepoint/importkp&course_id=1')),
 				array('label'=>'系统通知发送', 'url'=>array('/user/notification/create')),
 
