@@ -82,7 +82,8 @@ class QuestionController extends Controller
 
 		$mycourse = LibUser::model()->findByPk(Yii::app()->user->id);
 		$mycourse = $mycourse->user_course;
-		//$res = array();
+		
+		$res = array();
 		foreach ($mycourse as $singlecourse) {
 			$res[$singlecourse->id ] = $singlecourse->name;
 		}
