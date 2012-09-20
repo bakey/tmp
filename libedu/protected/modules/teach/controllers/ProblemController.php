@@ -209,11 +209,11 @@ class ProblemController extends Controller
 		$file_name .= $suffix[1];
 		$target_folder = $this->getOriginPath($uid);
 		$thumb_folder =  $this->getThumbPath($uid);
-		if ( !is_dir( $target_folder ) ) {
-			mkdir( $target_folder );
+		if ( !@is_dir( $target_folder ) ) {
+			@mkdir( $target_folder );
 		}
-		if ( !is_dir( $thumb_folder ) ) {
-			mkdir( $thumb_folder );
+		if ( !@is_dir( $thumb_folder ) ) {
+			@mkdir( $thumb_folder );
 		}
 		copy( $_FILES['file']['tmp_name'] , $target_folder.$file_name );
 		

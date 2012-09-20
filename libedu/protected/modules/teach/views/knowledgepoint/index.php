@@ -16,12 +16,6 @@ echo "科目: ";
 echo CHtml::dropDownList( 'list_course','', $list_course ,
 	array(
 		'empty'=>'请选择一门课程',
-		//'onchange' => 'js:alert( $("#list_course").val() )',
-		/*'ajax' => array(
-			'type'=>'POST',
-			'url'=>CController::createUrl('knowledgepoint/FilterKnowledgePoint'), 
-			'update'=>'#city_id', //selector to update
-			)*/
 	 )
 ); 
 echo " 年级:";
