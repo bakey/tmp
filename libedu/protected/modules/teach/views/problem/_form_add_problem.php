@@ -14,10 +14,6 @@
 		{
 			echo('<input type="checkbox" name="Problem[problem_cb][]" value="' . $index . '">' . $value . "</input><br>");
 		}
-		/*echo CHtml::activeCheckBoxList( $model, 'id',
-						CHtml::listData( KnowledgePoint::model()->findAll(), 'id','name'),
-						array('checkAll'=>'全选' , 'checkAllLast'=>true ,  )
-					);*/
 	
 	?>
 
@@ -60,19 +56,47 @@
 
     <script type="text/javascript">
 	function addInput()
-	{
-		if(document.getElementById("type").value==1 && document.getElementById("selectNum").value==1)
-			document.getElementById('tempID').innerHTML='<label id="options">选项内容设置</label><label id="A">A<input type="text" name="A" /></label> <label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="Answers">答案</label><label id="A">A<input type="checkbox" name="same[]" value="A"></label><label id="B">B<input type="checkbox" name="same[]" value="B"></label><label id="C">C<input type="checkbox" name="same[]" value="C"></label><label id="D">D<input type="checkbox" name="same[]" value="D"></label>';
-		else if(document.getElementById("type").value==1 && document.getElementById("selectNum").value==2)
-			document.getElementById('tempID').innerHTML='<label id="options">选项内容设置</label><label id="A">A<input type="text" name="A" /></label><label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="E">E<input type="text" name="E"/></label><label id="Answers">答案</label><label id="A">A<input type="checkbox" name="same[]" value="A"></label><label id="B">B<input type="checkbox" name="same[]" value="B"></label><label id="C">C<input type="checkbox" name="same[]" value="C"></label><label id="D">D<input type="checkbox" name="same[]" value="D"></label><label id="E">E<input type="checkbox" name="same[]" value="E"></label>';
-		else if(document.getElementById("type").value==1 && document.getElementById("selectNum").value==3)
-			document.getElementById('tempID').innerHTML='<label id="options">选项内容设置 </label><label id="A">A<input type="text" name="A" /></label><label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="E">E<input type="text" name="E"/></label><label id="F">F<input type="text" name="F"/></label><label id="Answers">答案</label><label id="A">A<input type="checkbox" name="same[]" value="A"></label><label id="B">B<input type="checkbox" name="same[]" value="B"></label><label id="C">C<input type="checkbox" name="same[]" value="C"></label><label id="D">D<input type="checkbox" name="same[]" value="D"></label><label id="E">E<input type="checkbox" name="same[]" value="E"></label><label id="F">F<input type="checkbox" name="same[]" value="F"></label>';
-		else if(document.getElementById("type").value==0 && document.getElementById("selectNum").value==1)
-            document.getElementById('tempID').innerHTML='<label id="options">选项内容设置 </label><label id="A">A<input type="text" name="A" /></label> <label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="Answers">答案</label><label id="A">A<input type="radio" name="same" value="A"></label><label id="B">B<input type="radio" name="same" value="B"></label><label id="C">C<input type="radio" name="same" value="C"></label><label id="D">D<input type="radio" name="same" value="D"></label>';
-		else if(document.getElementById("type").value==0 && document.getElementById("selectNum").value==2)
-            document.getElementById('tempID').innerHTML='<label id="options">选项内容设置 </label><label id="A">A<input type="text" name="A" /></label><label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="E">E<input type="text" name="E"/></label><label id="Answers">答案</label><label id="A">A<input type="radio" name="same" value="A"></label><label id="B">B<input type="radio" name="same" value="B"></label><label id="C">C<input type="radio" name="same" value="C"></label><label id="D">D<input type="radio" name="same" value="D"></label><label id="E">E<input type="radio" name="same" value="E"></label>';
-		else if(document.getElementById("type").value==0 && document.getElementById("selectNum").value==3)
-            document.getElementById('tempID').innerHTML='<label id="options">选项内容设置</label><label id="A">A<input type="text" name="A" /></label><label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="E">E<input type="text" name="E"/></label><label id="F">F<input type="text" name="F"/></label><label id="Answers">答案</label><label id="A">A<input type="radio" name="same" value="A"></label><label id="B">B<input type="radio" name="same" value="B"></label><label id="C">C<input type="radio" name="same" value="C"></label><label id="D">D<input type="radio" name="same" value="D"></label><label id="E">E<input type="radio" name="same" value="E"></label><label id="F">F<input type="radio" name="same" value="F"></label>';
+	{	
+		var newHTML = "";
+		if( $('#type').val()==1 && $('#selectNum').val() == 1) {
+			/*$('#tempID').innerHTML='<label id="options">选项内容设置</label><label id="A">A<input type="text" name="A" /> \
+				</label> <label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label> \
+				<label id="D">D<input type="text" name="D" /></label><label id="Answers">答案</label> \
+				<label id="A">A<input type="checkbox" name="same[]" value="A"></label><label id="B">B<input type="checkbox" name="same[]" value="B"></label>\
+				<label id="C">C<input type="checkbox" name="same[]" value="C"></label><label id="D">D<input type="checkbox" name="same[]" value="D"></label>';*/
+			newHTML='<label id="options">选项内容设置</label><label id="A">A<input type="text" name="A" /></label> <label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="Answers">答案</label><label id="A">A<input type="checkbox" name="same[]" value="A"></label><label id="B">B<input type="checkbox" name="same[]" value="B"></label><label id="C">C<input type="checkbox" name="same[]" value="C"></label><label id="D">D<input type="checkbox" name="same[]" value="D"></label>';
+		}
+		else if( $('#type').val() == 1 && $('#selectNum').val() == 2) {
+			newHTML='<label id="options">选项内容设置</label><label id="A">A<input type="text" name="A" /> \
+				</label><label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /> \
+				</label><label id="D">D<input type="text" name="D" /></label><label id="E">E<input type="text" name="E"/></label> \
+				<label id="Answers">答案</label><label id="A">A<input type="checkbox" name="same[]" value="A"></label><label id="B">B \
+				<input type="checkbox" name="same[]" value="B"></label><label id="C">C<input type="checkbox" name="same[]" value="C"></label> \
+				<label id="D">D<input type="checkbox" name="same[]" value="D"></label><label id="E">E<input type="checkbox" name="same[]" value="E"></label>';
+
+		}
+		else if( $('#type').val() == 1 && $('#selectNum').val() == 3) {
+			newHTML='<label id="options">选项内容设置 </label><label id="A">A<input type="text" name="A" /></label> \
+				<label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label> \
+				<label id="D">D<input type="text" name="D" /></label><label id="E">E<input type="text" name="E"/></label> \
+				<label id="F">F<input type="text" name="F"/> \
+				</label><label id="Answers">答案</label><label id="A">A<input type="checkbox" name="same[]" value="A"></label> \
+				<label id="B">B<input type="checkbox" name="same[]" value="B"></label><label id="C">C<input type="checkbox" name="same[]" value="C"></label> \
+				<label id="D">D<input type="checkbox" name="same[]" value="D"></label><label id="E">E<input type="checkbox" name="same[]" value="E"></label> \
+				<label id="F">F<input type="checkbox" name="same[]" value="F"></label>';
+
+		}
+		else if( $('#type').val() ==0 && $('#selectNum').val()==1) {
+            newHTML='<label id="options">选项内容设置 </label><label id="A">A<input type="text" name="A" /></label> <label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="Answers">答案</label><label id="A">A<input type="radio" name="same" value="A"></label><label id="B">B<input type="radio" name="same" value="B"></label><label id="C">C<input type="radio" name="same" value="C"></label><label id="D">D<input type="radio" name="same" value="D"></label>';
+
+		}
+		else if( $('#type').val() ==0 && $('#selectNum').val()==2) {
+			newHTML = '<label id="options">选项内容设置 </label><label id="A">A<input type="text" name="A" /></label><label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="E">E<input type="text" name="E"/></label><label id="Answers">答案</label><label id="A">A<input type="radio" name="same" value="A"></label><label id="B">B<input type="radio" name="same" value="B"></label><label id="C">C<input type="radio" name="same" value="C"></label><label id="D">D<input type="radio" name="same" value="D"></label><label id="E">E<input type="radio" name="same" value="E"></label>';
+		}
+		else if( $('#type').val() ==0 && $('#selectNum').val()==3) {
+			newHTML='<label id="options">选项内容设置</label><label id="A">A<input type="text" name="A" /></label><label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="E">E<input type="text" name="E"/></label><label id="F">F<input type="text" name="F"/></label><label id="Answers">答案</label><label id="A">A<input type="radio" name="same" value="A"></label><label id="B">B<input type="radio" name="same" value="B"></label><label id="C">C<input type="radio" name="same" value="C"></label><label id="D">D<input type="radio" name="same" value="D"></label><label id="E">E<input type="radio" name="same" value="E"></label><label id="F">F<input type="radio" name="same" value="F"></label>';
+		}
+		$('#tempID').html( newHTML );
 	}
 
 </script>
@@ -98,7 +122,7 @@
 		'model'=>$model,
 		'attribute'=>'content',
 		'editorOptions' => array(
-		//'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
+		'imageUpload' => Yii::app()->createAbsoluteUrl('teach/problem/upload'),
 		)
 	));
 ?>

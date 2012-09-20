@@ -55,17 +55,44 @@ class CoursePostController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+	private function getThumbPath( $uid ) {
+		if ( null == $uid ) {
+			return null;
+		}
+		return Yii::app()->params['uploadFolder'].'/temp_upload/' . $uid . '/thumb/';
+	}
+	private function getOriginPath( $uid ) {
+		if ( null == $uid ) {
+			return null;
+		}
+		return Yii::app()->params['uploadFolder'].'/temp_upload/' . $uid . '/origin/';
+	}
+	
+	private function getThumbImageUrl( $file_name , $uid ) {
+		if ( null == $file_name || null == $uid ) {
+			return null;
+		}
+		return Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" .
+				$this->getThumbPath($uid) . $file_name;
+	}
+	private function getOriginImageUrl( $file_name , $uid ) {
+		if ( null == $file_name || null == $uid ) {
+			return null;
+		}
+		return Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" .
+				$this->getOriginPath($uid) . $file_name;
+	}
 	/*
 	 * 处理用户上传二进制文件
 	 */
 	public function actionUpload()
 	{
 		$uid = Yii::app()->user->id;
-		$file_name = md5( $_FILES['file']['tmp_name'] ) . ".";
+		$file_name = md5( $uid . $_FILES['file']['tmp_name'] ) . ".";
 		$suffix = explode( '/' , $_FILES['file']['type'] );
 		$file_name .= $suffix[1];
-		$target_folder = "./" . Yii::app()->params['uploadFolder'].'/temp_upload/' . $uid . '/origin/';
-		$thumb_folder = './' . Yii::app()->params['uploadFolder'].'/temp_upload/' . $uid . '/thumb/';
+		$target_folder = $this->getOriginPath($uid);
+		$thumb_folder = $this->getThumbPath($uid);
 		if ( !is_dir( $target_folder ) ) {
 			mkdir( $target_folder );
 		} 
@@ -81,14 +108,11 @@ class CoursePostController extends Controller
 		->resize(1024,800)
 		->save( $thumb_folder . $file_name );
 		
-		$image_thumb_url = Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" .
-				Yii::app()->params['uploadFolder'].'/temp_upload/'. $uid . '/thumb/' . $file_name;
-		$image_origin_url = Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" .
-				Yii::app()->params['uploadFolder'].'/temp_upload/'. $uid . '/origin/' . $file_name;
+		$image_thumb_url = $this->getThumbImageUrl( $file_name , $uid );
+		$image_origin_url = $this->getOriginImageUrl($file_name, $uid);
 		
 		$image_code =  CHtml::image( $image_thumb_url );
-		echo CHtml::link( $image_code , $image_origin_url );
-				
+		echo CHtml::link( $image_code , $image_origin_url );	
 	
 		exit();	
 	}

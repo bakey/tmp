@@ -31,7 +31,7 @@ class ProblemController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','create','update','admin','delete'),
+				'actions'=>array('index','create','upload','update','admin','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -94,6 +94,7 @@ class ProblemController extends Controller
 		$problem_model=new Problem;
 		$this->performAjaxValidation( $problem_model );
 		$problem_model->create_time = $problem_model->update_time = date('Y-m-d H:i:s',time());
+	
 
 		if(isset($_POST['Problem']))
 		{
@@ -171,6 +172,68 @@ class ProblemController extends Controller
 			'model'=>$model,
 		));
 	}
+	private function getThumbPath( $uid ) {
+		if ( null == $uid ) {
+			return null;
+		}
+		return Yii::app()->params['uploadFolder'].'/temp_upload/' . $uid . '/thumb/';
+	}
+	private function getOriginPath( $uid ) {
+		if ( null == $uid ) {
+			return null;
+		}
+		return Yii::app()->params['uploadFolder'].'/temp_upload/' . $uid . '/origin/';
+	}
+	
+	private function getThumbImageUrl( $file_name , $uid ) {
+		if ( null == $file_name || null == $uid ) {
+			return null;
+		}
+		return Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" .
+				$this->getThumbPath($uid) . $file_name;
+	}
+	private function getOriginImageUrl( $file_name , $uid ) {
+		if ( null == $file_name || null == $uid ) {
+			return null;
+		}
+		return Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" .
+				$this->getOriginPath($uid) . $file_name;
+	}
+	public function actionUpload()
+	{
+		$uid = Yii::app()->user->id;
+		//用用户id+系统的临时文件名做hash来生成正式的文件名
+		$file_name = md5( $uid . $_FILES['file']['tmp_name'] ) . ".";
+		
+		$suffix = explode( '/' , $_FILES['file']['type'] );
+		$file_name .= $suffix[1];
+		$target_folder = $this->getOriginPath($uid);
+		$thumb_folder =  $this->getThumbPath($uid);
+		if ( !is_dir( $target_folder ) ) {
+			mkdir( $target_folder );
+		}
+		if ( !is_dir( $thumb_folder ) ) {
+			mkdir( $thumb_folder );
+		}
+		copy( $_FILES['file']['tmp_name'] , $target_folder.$file_name );
+		
+		Yii::import("ext.EPhpThumb.EPhpThumb");
+		$thumb=new EPhpThumb();
+		$thumb->init();
+		$thumb->create( $target_folder . $file_name )
+		->resize(1024,800)
+		->save( $thumb_folder . $file_name );
+		
+		$image_thumb_url = $this->getThumbImageUrl($file_name, $uid);
+		$image_origin_url = $this->getOriginImageUrl($file_name, $uid);
+		
+		$image_node =  CHtml::image( $image_thumb_url );
+		echo CHtml::link( $image_node , $image_origin_url );
+		
+		
+		exit();
+		
+	}
 
 	/**
 	 * Deletes a particular model.
@@ -200,13 +263,6 @@ class ProblemController extends Controller
 		$problem_model = new Problem();
 		$dataProvider=new CActiveDataProvider( 'Problem' );
 		
-		//$data_source = new CArrayDataProvider( $dataProvider->getData() );
-		/*foreach( $data_source as $ds )
-		{
-			var_dump( $ds );
-		}
-		exit();*/
-		//$data_source->setData(  );
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 			'problem'=>$problem_model,
