@@ -48,6 +48,7 @@
 				array('label'=>'系统通知发送', 'url'=>array('/user/notification/create')),
 
 				array('label'=>'用户相关功能','url'=>array('/user/libuser'),'items'=>array(
+					array('label'=>'创建班级', 'url'=>array('/user/libclass/create')),
 					array('label'=>'用户注册', 'url'=>array('/user/libuser/register')),
 					array('label'=>'从Excel文件导入学生','url'=>array('/user/libuser/importstudentlist')),
 					array('label'=>'从Excel文件导入教师','url'=>array('/user/libuser/importteacherlist')),

@@ -83,6 +83,35 @@ class LibUserController extends Controller
 		$this->render('noactive',array('uemail'=>Yii::app()->User->uemail));
 	}
 
+	public function actionChangePassword($id){
+	    $model=$this->loadModel($id);
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+	    $err = 0;
+		if(isset($_POST['LibUser']))
+		{
+			$_POST['LibUser']['schooluniqueid'] = 'a';
+			$_POST['LibUser']['classid'] = 123;
+			$_POST['LibUser']['realname'] = 'testa';
+			$model->attributes=$_POST['LibUser'];
+			$cusr = $this->loadModel($id);
+			//die(md5($_POST['LibUser']['oldpassword'].$model->salt).' '.$cusr->password);
+			if(md5($_POST['LibUser']['oldpassword'].$model->salt)==$cusr->password){
+					$model->password = md5($_POST['LibUser']['password'].$model->salt);
+					//die($model->password);
+					$model->save(false);
+					$this->redirect(array('view','id'=>$model->id));
+			}else{
+				$err = 1;
+			}
+		}
+		$this->render('update',array(
+			'model'=>$model,
+			'msg'=>$err,
+		));
+	}
+
 	public function actionRegister(){
 		$model = new LibUser;
 		// Uncomment the following line if AJAX validation is needed

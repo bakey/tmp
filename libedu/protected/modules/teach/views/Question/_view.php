@@ -18,7 +18,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('details')); ?>:</b>
-	<?php echo CHtml::encode($data->details); ?>
+	<?php echo $data->details; ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('create_time')); ?>:</b>
@@ -29,5 +29,5 @@
 	<?php echo CHtml::encode($data->viewcount); ?>
 	<br />
 
-
+	<h4><a href="">回答</a> | <a href="">显示回答及追问</a></h4>
 </div>

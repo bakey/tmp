@@ -91,6 +91,35 @@ class QuestionController extends Controller
 		));
 	}
 
+	public function actionAnswer($qid)
+	{
+		$model=new Question;
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		//get current editon based on 
+
+		if(isset($_POST['Question']))
+		{
+			$model->attributes=$_POST['Question'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
+		}
+
+		$mycourse = LibUser::model()->findByPk(Yii::app()->user->id);
+		$mycourse = $mycourse->user_course;
+		foreach ($mycourse as $singlecourse) {
+			$res[$singlecourse->id ] = $singlecourse->name;
+		}
+		$this->render('create',array(
+			'model'=>$model,
+			'mycourse'=>$res,
+			'ans'=>true,
+			'qid'=>$qid,
+		));
+	}
+
 	public function actionAjaxFillTree()
 	{
 		// accept only AJAX request (comment this when debugging)

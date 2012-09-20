@@ -39,8 +39,8 @@ class LibClass extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('school_id, name, classhead_id', 'required'),
-			array('school_id, grade, classhead_id', 'numerical', 'integerOnly'=>true),
+			array(' name, grade, classhead_id', 'required'),
+			array('school_id, classhead_id', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
 			array('description', 'safe'),
 			// The following rule is used by search().
@@ -69,11 +69,11 @@ class LibClass extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'school_id' => 'School',
-			'name' => 'Name',
-			'grade' => 'Grade',
-			'classhead_id' => 'Classhead',
-			'description' => 'Description',
+			'school_id' => '所属学校',
+			'name' => '班级名称',
+			'grade' => '年级',
+			'classhead_id' => '班主任',
+			'description' => '班级描述',
 		);
 	}
 
@@ -98,5 +98,22 @@ class LibClass extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function beforeSave(){
+		if($this->isNewRecord){
+			$this->school_id = Yii::app()->params['currentSchoolID'];
+			$cgrade = Grade::model()->findByAttributes(array('grade_name'=>$this->grade));
+			if(!$cgrade){
+				throw new CHttpException(403,'您输入的年级不存在');
+				exit();
+			}else{
+				$this->grade = $cgrade->grade_index;
+			}
+		}
+		if($this->classhead_id == -1){
+					$this->classhead_id = null;
+				}
+		return parent::beforeSave();
 	}
 }

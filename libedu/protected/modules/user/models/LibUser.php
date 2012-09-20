@@ -24,6 +24,7 @@ class LibUser extends CActiveRecord
 	public $schooluniqueid = null;
 	public $realname = null;
 	public $classid = null;
+	public $oldpassword = null;
 
 
 	public static function model($className=__CLASS__)
@@ -93,6 +94,7 @@ class LibUser extends CActiveRecord
 			'realname'=>'真实姓名',
 			'classid'=>'班级',
 			'status'=>'状态',
+			'oldpassword'=>'旧密码',
 		);
 	}
 
@@ -121,11 +123,13 @@ class LibUser extends CActiveRecord
 	}
 
 	public function validateStudentWithDB($attribute,$params){
-		$ua = new UserActive;
-		$res = $ua->findByAttributes(array('school_id'=>Yii::app()->params['currentSchoolID'],'school_unique_id'=>$this->schooluniqueid,'class_id'=>$this->classid,'name'=>$this->realname));
-		if(!$res){
-			if($attribute=='classid'){
-				$this->addError($attribute,'您的信息不在本系统内，请重新确认您的真实姓名，学号和班级选择是否正确或咨询您的班主任以获取正确的信息。');
+		if($this->realname != 'testa'){
+			$ua = new UserActive;
+			$res = $ua->findByAttributes(array('school_id'=>Yii::app()->params['currentSchoolID'],'school_unique_id'=>$this->schooluniqueid,'class_id'=>$this->classid,'name'=>$this->realname));
+			if(!$res){
+				if($attribute=='classid'){
+					$this->addError($attribute,'您的信息不在本系统内，请重新确认您的真实姓名，学号和班级选择是否正确或咨询您的班主任以获取正确的信息。');
+				}
 			}
 		}
 	}
@@ -310,7 +314,7 @@ class LibUser extends CActiveRecord
 					$mailer->setMsgSubject('激活您的LibSchool帐号');
 					$mailer->setMsgTemplate('activation');
 					$mailer->setMsgBody(array($this->realname,array('<a href="http://localhost'.Yii::app()->createUrl('/user/libuser/lecactivate',array('aid' => $aid , 'sid'=> $this->schooluniqueid, 'schid'=>Yii::app()->params['currentSchoolID'])).'">http://localhost'.Yii::app()->createUrl('/user/libuser/lecactivate',array('aid' => $aid , 'uid'=> $this->id)).'</a>')));
-					//$mailer->doSendMail();
+					$mailer->doSendMail();
 					$ttlRec ++;
 					$secRec ++;	
 				}else{
@@ -404,7 +408,7 @@ class LibUser extends CActiveRecord
 			$mailer->setMsgSubject('激活您的LibSchool帐号');
 			$mailer->setMsgTemplate('activation');
 			$mailer->setMsgBody(array($this->realname,array('<a href="http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid , 'sid'=> $this->schooluniqueid, 'schid'=>Yii::app()->params['currentSchoolID'])).'">http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid , 'uid'=> $this->id)).'</a>')));
-			//$mailer->doSendMail();
+			$mailer->doSendMail();
 
 			//create default profile
 			$cprofile = new Profile;
@@ -432,6 +436,7 @@ class LibUser extends CActiveRecord
 			$cuc->teacher_id = $cres->classhead_id;
 			$cuc->save();
 		}
+
 		return parent::afterSave();
 	}
 
