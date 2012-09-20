@@ -88,22 +88,22 @@ class LibUserController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-	    $err = 0;
+	    $err = -3;
 		if(isset($_POST['LibUser']))
-		{
-			$_POST['LibUser']['schooluniqueid'] = 'a';
-			$_POST['LibUser']['classid'] = 123;
-			$_POST['LibUser']['realname'] = 'testa';
-			$model->attributes=$_POST['LibUser'];
-			$cusr = $this->loadModel($id);
-			//die(md5($_POST['LibUser']['oldpassword'].$model->salt).' '.$cusr->password);
-			if(md5($_POST['LibUser']['oldpassword'].$model->salt)==$cusr->password){
-					$model->password = md5($_POST['LibUser']['password'].$model->salt);
-					//die($model->password);
-					$model->save(false);
-					$this->redirect(array('view','id'=>$model->id));
-			}else{
-				$err = 1;
+		{	
+			$cusr=LibUser::model()->findByPk($id);
+			if(md5($_POST['LibUser']['oldpassword'].$cusr->salt) == $cusr->password){
+				if($_POST['LibUser']['password']==$_POST['LibUser']['repeatpassword']){
+					if($_POST['LibUser']['password']!=''){
+						$cusr->password = md5($_POST['LibUser']['password'].$cusr->salt);
+						$cusr->save(false);
+						$err = 1;
+					}else{
+						$err = -1;
+					}
+				}else{
+					$err = -2;
+				}
 			}
 		}
 		$this->render('update',array(
