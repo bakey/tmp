@@ -416,10 +416,21 @@ class LibUserController extends Controller
 	}
 
 	public function actionLecActivate($aid){
-		if(LibUser::model()->validateLecActivationCode($aid,$uid)){
-			$this->render('active',array(
-				'msg'=>'账户激活成功！',
+		$newusr = new LibUser;
+		if(isset($_POST['LibUser'])){
+			if(LibUser::model()->validateLecActivationCode($aid)){
+				$newusr->user_name = uniqid();
+				$newusr->status = 1;
+				$newusr->salt = 'libedu'.time().$this->user_name;
+				$newusr->password = $this->hashPassword($this->password,$this->salt);
+			}			
+		}
+
+		if(LibUser::model()->validateLecActivationCode($aid)){
+			$this->render('lecactivesuccess',array(
+				'msg'=>'账户激活成功！请填写以下信息以完成帐户设置。',
 				'result' => 1,
+				'model' => new $newusr,
 			));
 		}else{
 			$this->render('active',array(
@@ -427,6 +438,7 @@ class LibUserController extends Controller
 				'result' => 0,
 			));
 		}
+
 	}
 
 	public function actionInviteTeacher(){

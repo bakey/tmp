@@ -26,7 +26,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('viewcount')); ?>:</b>
-	<?php echo CHtml::encode($data->viewcount); ?>
+	<?php echo CHtml::encode($data->view_count); ?>
 	<br />
 
 	<h4><a href="">回答</a> | <a href="">显示回答及追问</a></h4>
