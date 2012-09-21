@@ -1,22 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "tbl_answer".
+ * This is the model class for table "tbl_item_kp".
  *
- * The followings are the available columns in table 'tbl_answer':
- * @property integer $id
- * @property integer $owner
- * @property integer $question_id
- * @property integer $type
- * @property string $details
- * @property string $create_time
+ * The followings are the available columns in table 'tbl_item_kp':
+ * @property integer $item
+ * @property integer $knowledge_point
  */
-class Answer extends CActiveRecord
+class ItemKp extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Answer the static model class
+	 * @return ItemKp the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -28,7 +24,7 @@ class Answer extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_answer';
+		return 'tbl_item_kp';
 	}
 
 	/**
@@ -39,11 +35,11 @@ class Answer extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('type, details', 'required'),
-			array('owner, question_id, type', 'numerical', 'integerOnly'=>true),
+			array('item, knowledge_point', 'required'),
+			array('item, knowledge_point', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, owner, question_id, type, details, create_time', 'safe', 'on'=>'search'),
+			array('item, knowledge_point', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,12 +60,8 @@ class Answer extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'owner' => 'Owner',
-			'question_id' => 'Question',
-			'type' => 'Type',
-			'details' => 'Details',
-			'create_time' => 'Create Time',
+			'item' => 'Item',
+			'knowledge_point' => 'Knowledge Point',
 		);
 	}
 
@@ -84,12 +76,8 @@ class Answer extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('owner',$this->owner);
-		$criteria->compare('question_id',$this->question_id);
-		$criteria->compare('type',$this->type);
-		$criteria->compare('details',$this->details,true);
-		$criteria->compare('create_time',$this->create_time,true);
+		$criteria->compare('item',$this->item);
+		$criteria->compare('knowledge_point',$this->knowledge_point);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

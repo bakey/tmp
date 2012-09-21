@@ -205,6 +205,9 @@ class LibUser extends CActiveRecord
 			if($this->repeatpassword != null)
 				$this->repeatpassword = $this->password;
 		}
+		if($this->oldpassword == 'lectureractivation'){
+			$this->status = 2;
+		}
 		return parent::beforeSave();
 	}
 
@@ -389,18 +392,20 @@ class LibUser extends CActiveRecord
 
 	public function afterSave(){
 		if ($this->isNewRecord){
-			
-			$usractive = new UserActive;
-			$res = $usractive->findByAttributes(array('school_unique_id'=>$this->schooluniqueid,'name'=>$this->realname));
-			$aid = $res->active_id;
-			//send activation email
+			if($this->oldpassword!='lectureractivation'){
+				$usractive = new UserActive;
+				$res = $usractive->findByAttributes(array('school_unique_id'=>$this->schooluniqueid,'name'=>$this->realname));
+				$aid = $res->active_id;
+				//send activation email
 
-			
-			$mailer = new Emailer($this->email,$this->realname);
-			$mailer->setMsgSubject('激活您的LibSchool帐号');
-			$mailer->setMsgTemplate('activation');
-			$mailer->setMsgBody(array($this->realname,array('<a href="http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid , 'sid'=> $this->schooluniqueid, 'schid'=>Yii::app()->params['currentSchoolID'])).'">http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid , 'uid'=> $this->id)).'</a>')));
-			$mailer->doSendMail();
+				
+				$mailer = new Emailer($this->email,$this->realname);
+				$mailer->setMsgSubject('激活您的LibSchool帐号');
+				$mailer->setMsgTemplate('activation');
+				$mailer->setMsgBody(array($this->realname,array('<a href="http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid , 'sid'=> $this->schooluniqueid, 'schid'=>Yii::app()->params['currentSchoolID'])).'">http://localhost'.Yii::app()->createUrl('/user/libuser/activate',array('aid' => $aid , 'uid'=> $this->id)).'</a>')));
+				$mailer->doSendMail();
+			}
+
 
 			//create default profile
 			$cprofile = new Profile;
@@ -416,17 +421,23 @@ class LibUser extends CActiveRecord
 			$cus->user_id = $this->id;
 			$cus->school_id = Yii::app()->params['currentSchoolID'];
 			$cus->school_unique_id = $this->schooluniqueid;
-			$cus->role = 1;
+			if($this->oldpassword=='lectureractivation'){
+				$cus->role = 2;		
+			}else{
+				$cus->role = 1;
+			}
 			$cus->save();			
 
-			//create user class relation
-			$cuc = new LibUserClass;
-			$ccls = new LibClass;
-			$cres = $ccls->findByPk($this->classid);
-			$cuc->class_id = $this->classid;
-			$cuc->student_id = $this->id;
-			$cuc->teacher_id = $cres->classhead_id;
-			$cuc->save();
+			if($this->oldpassword!='lectureractivation'){
+				//create user class relation
+				$cuc = new LibUserClass;
+				$ccls = new LibClass;
+				$cres = $ccls->findByPk($this->classid);
+				$cuc->class_id = $this->classid;
+				$cuc->student_id = $this->id;
+				$cuc->teacher_id = $cres->classhead_id;
+				$cuc->save();
+			}
 		}
 
 		return parent::afterSave();

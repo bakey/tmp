@@ -29,5 +29,10 @@
 	<?php echo CHtml::encode($data->view_count); ?>
 	<br />
 
-	<h4><a href="">回答</a> | <a href="">显示回答及追问</a></h4>
+	<h4><a href="<?php echo Yii::app()->createUrl('/teach/question/answer',array('qid'=>$data->id)); ?>">回答</a> | <?php
+	echo CHtml::ajaxLink('显示回答及追问',Yii::app()->createUrl('/teach/question/getallsubelement',array('qid'=>$data->id)),array('update'=>'#answer'.$data->id,'success'=>'js:function(data){$("#answer'.$data->id.'").html(data);$("#answer'.$data->id.'").fadeIn();}')); 
+?></h4>
+
+<div id="answer<?php echo $data->id ?>" style="display:none;border:1px solid #f1523a;padding:10px; margin-left:100px;">
+	</div>
 </div>
