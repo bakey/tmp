@@ -87,6 +87,11 @@ level tinyint,
 create_time datetime not null
 )ENGINE=Innodb default charset=utf8;
 
+create table if not exists `tbl_item_kp`(
+`item` int not null references tbl_item(id) on delete cascade,
+`knowledge_point` int not null references tbl_knowledge_point(id) on delete cascade
+)engine=innodb default charset=utf8;
+
 
 create table tbl_item_item(
 parent int(11) not null references tbl_item(id) on delete cascade,
@@ -100,6 +105,20 @@ create table if not exists `tbl_question` (
 	`details` text not null,
 	`create_time` datetime not null,
 	`view_count` int default 0
+)engine=innodb default charset=utf8;
+
+create table if not exists `tbl_question_kp`(
+	`question` int not null references tbl_question(id) on delete cascade,
+	`knowledge_point` int not null references tbl_knowledge_point(id) on delete cascade
+)engine=innodb default charset=utf8;
+
+create table if not exists `tbl_answer` (
+	`id` int not null auto_increment primary key,
+	`owner` int not null references tbl_user(id) on delete cascade,
+	`question_id` int not null references tbl_question(id) on delete cascade,
+	`type` int not null,
+	`details` text,
+	`create_time` datetime
 )engine=innodb default charset=utf8;
 
 create table if not exists `tbl_news_feed`(
