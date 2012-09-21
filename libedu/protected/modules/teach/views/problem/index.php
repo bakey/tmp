@@ -12,14 +12,17 @@ $this->menu=array(
 <h1>所有问题</h1>
 
 <?php 
+
 $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
-	/*'viewData'=>array(
-		'problem'=>$problem,
-	),*/
 ));
+echo $this->renderPartial('_form_add_problem', array( 
+										'model'=>$problem ,
+										'subjectList'=>$subjectList,
+ 									)
+		);
  ?>
 <?php
- echo $this->renderPartial('_form_add_problem', array('model'=>$problem)); 
+//echo $this->renderPartial('_form_add_problem', array('model'=>$problem)); 
  ?>

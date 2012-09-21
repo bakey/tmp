@@ -52,13 +52,13 @@ class Problem extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('course', 'required'),
-			array('id, course, type, difficulty, use_count', 'numerical', 'integerOnly'=>true),
+			array('subject', 'required'),
+			array('id, subject, type, difficulty, use_count', 'numerical', 'integerOnly'=>true),
 			array('source', 'length', 'max'=>255),
 			array('content, create_time, reference_ans, ans_explain', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, course, type, content, source, difficulty, create_time, reference_ans, ans_explain, use_count', 'safe', 'on'=>'search'),
+			array('id, subject, type, content, source, difficulty, create_time, reference_ans, ans_explain, use_count', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,7 +81,7 @@ class Problem extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'course' => 'Course',
+			'subject' => 'Subject',
 			'type' => 'Type',
 			'content' => 'Content',
 			'source' => 'Source',
@@ -105,7 +105,7 @@ class Problem extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('course',$this->course);
+		$criteria->compare('subject',$this->subject);
 		$criteria->compare('type',$this->type);
 		$criteria->compare('content',$this->content,true);
 		$criteria->compare('source',$this->source,true);
@@ -141,13 +141,17 @@ class Problem extends CActiveRecord
 
 	public function getType($type)
 	{
-		if($type==0)
+		if($type==0) {
 			return '单项选择';
-		else if($type==1)
+		}
+		else if($type==1) {
 			return '多项选择';
-		else if($type==2)
+		}
+		else if($type==2) {
 			return '填空';
-		else if($type==3)
+		}
+		else if($type==3) {
 			return '问答题';
+		}
 	}
 }

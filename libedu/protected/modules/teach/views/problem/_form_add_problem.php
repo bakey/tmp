@@ -17,7 +17,6 @@
 	
 	?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>    
 	<?php echo $form->labelEx($model,'题型'); ?>
@@ -34,12 +33,13 @@
 		<?php echo $form->dropDownList($model,'difficulty',$model->getDifficultyLevel()); ?>
 		<?php echo $form->error($model,'difficulty'); ?>
 	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'课程'); ?>
-		<?php echo $form->textField($model,'course',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'course'); ?>
-	</div>
+<?php 
+		echo $form->labelEx($model,'科目'); 
+		echo $form->textField($model,'subject',array('size'=>60,'maxlength'=>255)); 
+		echo $form->error($model,'subject'); 
+		//echo("选择科目 <br>");
+		//echo CHtml::dropDownList( 'subject_list','', $subjectList , array() ); 
+?>
 
     <div class="row">
 		<?php echo $form->labelEx($model,'题目来源'); ?>
@@ -67,23 +67,11 @@
 			newHTML='<label id="options">选项内容设置</label><label id="A">A<input type="text" name="A" /></label> <label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="Answers">答案</label><label id="A">A<input type="checkbox" name="same[]" value="A"></label><label id="B">B<input type="checkbox" name="same[]" value="B"></label><label id="C">C<input type="checkbox" name="same[]" value="C"></label><label id="D">D<input type="checkbox" name="same[]" value="D"></label>';
 		}
 		else if( $('#type').val() == 1 && $('#selectNum').val() == 2) {
-			newHTML='<label id="options">选项内容设置</label><label id="A">A<input type="text" name="A" /> \
-				</label><label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /> \
-				</label><label id="D">D<input type="text" name="D" /></label><label id="E">E<input type="text" name="E"/></label> \
-				<label id="Answers">答案</label><label id="A">A<input type="checkbox" name="same[]" value="A"></label><label id="B">B \
-				<input type="checkbox" name="same[]" value="B"></label><label id="C">C<input type="checkbox" name="same[]" value="C"></label> \
-				<label id="D">D<input type="checkbox" name="same[]" value="D"></label><label id="E">E<input type="checkbox" name="same[]" value="E"></label>';
+			newHTML='<label id="options">选项内容设置</label><label id="A">A<input type="text" name="A" /></label><label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="E">E<input type="text" name="E"/></label><label id="Answers">答案</label><label id="A">A<input type="checkbox" name="same[]" value="A"></label><label id="B">B<input type="checkbox" name="same[]" value="B"></label><label id="C">C<input type="checkbox" name="same[]" value="C"></label><label id="D">D<input type="checkbox" name="same[]" value="D"></label><label id="E">E<input type="checkbox" name="same[]" value="E"></label>';
 
 		}
 		else if( $('#type').val() == 1 && $('#selectNum').val() == 3) {
-			newHTML='<label id="options">选项内容设置 </label><label id="A">A<input type="text" name="A" /></label> \
-				<label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label> \
-				<label id="D">D<input type="text" name="D" /></label><label id="E">E<input type="text" name="E"/></label> \
-				<label id="F">F<input type="text" name="F"/> \
-				</label><label id="Answers">答案</label><label id="A">A<input type="checkbox" name="same[]" value="A"></label> \
-				<label id="B">B<input type="checkbox" name="same[]" value="B"></label><label id="C">C<input type="checkbox" name="same[]" value="C"></label> \
-				<label id="D">D<input type="checkbox" name="same[]" value="D"></label><label id="E">E<input type="checkbox" name="same[]" value="E"></label> \
-				<label id="F">F<input type="checkbox" name="same[]" value="F"></label>';
+			newHTML='<label id="options">选项内容设置 </label><label id="A">A<input type="text" name="A" /></label><label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="E">E<input type="text" name="E"/></label><label id="F">F<input type="text" name="F"/></label><label id="Answers">答案</label><label id="A">A<input type="checkbox" name="same[]" value="A"></label><label id="B">B<input type="checkbox" name="same[]" value="B"></label><label id="C">C<input type="checkbox" name="same[]" value="C"></label><label id="D">D<input type="checkbox" name="same[]" value="D"></label><label id="E">E<input type="checkbox" name="same[]" value="E"></label><label id="F">F<input type="checkbox" name="same[]" value="F"></label>';
 
 		}
 		else if( $('#type').val() ==0 && $('#selectNum').val()==1) {
@@ -122,8 +110,9 @@
 		'model'=>$model,
 		'attribute'=>'content',
 		'editorOptions' => array(
-		'imageUpload' => Yii::app()->createAbsoluteUrl('teach/problem/upload'),
-		)
+			'imageUpload' => Yii::app()->createAbsoluteUrl('teach/problem/upload'),
+			'focus' => false,
+		),
 	));
 ?>
 <?php
@@ -132,6 +121,7 @@
 		'model'=>$model,
 		'attribute'=>'ans_explain',
 		'editorOptions' => array(
+			'focus' => false,
 		//'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
 		)
 	));

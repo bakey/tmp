@@ -91,7 +91,9 @@ return array(
 					'levels'=>'error, warning, trace, info,debug',
 					'categories'=>'application.*',
 					'logFile' => 'libedu.log',
-					'logPath' => 'logs/'
+					'logPath' => 'logs/',
+					'maxFileSize' => 50000,
+					'enabled' => true,
 				),
 				// uncomment the following to show log messages on web pages
 				

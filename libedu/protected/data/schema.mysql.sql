@@ -115,11 +115,13 @@ create table if not exists `tbl_news_feed`(
 create table if not exists `tbl_problem`(
  `id` int not null auto_increment primary key,
  `course` int not null references tbl_course(id) on delete cascade,
+ `school` int not null references tbl_school(id) on delete cascade,
  `type` int not null,
   `content` text not null,
   `source` varchar(255),
   `difficulty` tinyint,
   `create_time` datetime not null,
+  `update_time` datetime not null,
   `reference_ans` text,
   `ans_explain` text,
   `use_count` INTEGER
