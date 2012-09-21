@@ -26,6 +26,6 @@ $this->menu=array(
 		'item',
 		'details',
 		'create_time',
-		'viewcount',
+		'view_count',
 	),
 )); ?>
