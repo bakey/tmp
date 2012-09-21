@@ -9,7 +9,7 @@
  * @property integer $item
  * @property string $details
  * @property string $create_time
- * @property integer $viewcount
+ * @property integer $view_count
  */
 class Question extends CActiveRecord
 {
@@ -40,10 +40,10 @@ class Question extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('item,details', 'required'),
-			array('owner, item, viewcount', 'numerical', 'integerOnly'=>true),
+			array('owner, item, view_count', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, owner, item, details, create_time, viewcount', 'safe', 'on'=>'search'),
+			array('id, owner, item, details, create_time, view_count', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,7 +69,7 @@ class Question extends CActiveRecord
 			'item' => 'Item',
 			'details' => 'Details',
 			'create_time' => 'Create Time',
-			'viewcount' => 'Viewcount',
+			'view_count' => 'Viewcount',
 		);
 	}
 
@@ -89,7 +89,7 @@ class Question extends CActiveRecord
 		$criteria->compare('item',$this->item);
 		$criteria->compare('details',$this->details,true);
 		$criteria->compare('create_time',$this->create_time,true);
-		$criteria->compare('viewcount',$this->viewcount);
+		$criteria->compare('view_count',$this->view_count);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -101,7 +101,7 @@ class Question extends CActiveRecord
 		if ($this->isNewRecord){
 			$this->owner = Yii::app()->user->id;
 			$this->create_time = date("Y-m-d H:i:s");
-			$this->viewcount = 0;
+			$this->view_count = 0;
 		}
 		return parent::beforeSave();
 	}
