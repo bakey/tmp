@@ -36,7 +36,7 @@ class QuestionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree'),
+				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -96,31 +96,72 @@ class QuestionController extends Controller
 
 	public function actionAnswer($qid)
 	{
-		$model=new Question;
-
+		$model=new Answer;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		//get current editon based on 
-
-		if(isset($_POST['Question']))
-		{
-			$model->attributes=$_POST['Question'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
 
 		$mycourse = LibUser::model()->findByPk(Yii::app()->user->id);
 		$mycourse = $mycourse->user_course;
 		foreach ($mycourse as $singlecourse) {
 			$res[$singlecourse->id ] = $singlecourse->name;
 		}
-		$this->render('create',array(
-			'model'=>$model,
-			'mycourse'=>$res,
-			'ans'=>true,
-			'qid'=>$qid,
-		));
+		
+		$cq = Question::model()->findByPk($qid);
+
+		if(!$cq){
+			throw new CHttpException(403,'问题不存在');
+		}else{
+			if(isset($_POST['Answer']))
+			{
+				$model->attributes=$_POST['Answer'];
+				$model->question_id = $qid;
+				$model->owner = Yii::app()->user->id;
+				$model->create_time = date("Y-m-d H:i:s");
+				if($model->save()){
+					QuestionKp::model()->deleteAllByAttributes(array('question'=>$qid));
+					foreach ($_POST['kprelation'] as $singlekprealtion) {
+						$ckpr = new QuestionKp;
+						$ckpr->question = $qid;
+						$ckpr->knowledge_point = $singlekprealtion;
+						$ckpr->save();
+					}
+					$this->redirect(array('view','id'=>$qid));
+					exit();
+				}
+			}
+			//get kp by question kp relation
+			$ckp = ItemKp::model()->findAllByAttributes(array('item'=>$cq->item));
+			$reskp = array();
+			$selkp = array();
+			foreach ($ckp as $singleckp) {
+				$orikp = KnowledgePoint::model()->findByPk($singleckp->knowledge_point);
+				$reskp[$orikp->id] = $orikp->name;
+				if(QuestionKp::model()->findByAttributes(array('question'=>$qid,'knowledge_point'=>$orikp->id))){
+					array_push($selkp, $orikp->id);
+				}
+			}
+			$this->render('answer',array(
+				'model'=>$model,
+				'mycourse'=>$res,
+				'qid'=>$qid,
+				'cq'=>$cq,
+				'kp'=>$reskp,
+				'skp'=>$selkp,
+			));
+		}
+	}
+
+	public function actionGetAllSubElement($qid){
+		$res = Answer::model()->findAllByAttributes(array('question_id'=>$qid),array('order'=>'type DESC'));
+		if(!$res){
+			echo '没有回答及追问';
+		}else{
+			for($i=0;$i<count($res);$i++){
+				$this->renderPartial('_subAnswer',array('data'=>$res[$i]),false,true);
+			}
+		}
 	}
 
 	public function actionAjaxFillTree()

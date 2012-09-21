@@ -415,20 +415,39 @@ class LibUserController extends Controller
 		}
 	}
 
-	public function actionLecActivate($aid){
+	public function actionLecActivate($aid,$sid){
 		$newusr = new LibUser;
+		$msg = '';
 		if(isset($_POST['LibUser'])){
 			if(LibUser::model()->validateLecActivationCode($aid)){
-				$newusr->user_name = uniqid();
-				$newusr->status = 1;
-				$newusr->salt = 'libedu'.time().$this->user_name;
-				$newusr->password = $this->hashPassword($this->password,$this->salt);
+				if($_POST['LibUser']['password']!=$_POST['LibUser']['repeatpassword']){
+					$msg.= '请确保两次输入的密码一致。';
+				}else{
+					$cua = UserActive::model()->findByAttributes(array('active_id'=>$aid));
+					if($cua->name != $_POST['LibUser']['realname']){
+						$msg.= '您的姓名不在系统中。';
+					}else{
+						$newusr->password = $_POST['LibUser']['password'];
+						$newusr->email = $sid;
+						$newusr->status = 2;
+						$newusr->oldpassword = 'lectureractivation';
+						$newusr->schooluniqueid = $sid;
+						$newusr->realname = $_POST['LibUser']['realname'];
+						if($newusr->save(false)){
+							$this->render('active',array(
+								'msg'=>'帐户设置已完成！',
+								'result' => 1,
+							));
+							exit();		
+						}
+					}
+				}
 			}			
 		}
 
 		if(LibUser::model()->validateLecActivationCode($aid)){
 			$this->render('lecactivesuccess',array(
-				'msg'=>'账户激活成功！请填写以下信息以完成帐户设置。',
+				'msg'=>'账户激活成功！请填写以下信息以完成帐户设置。'.$msg,
 				'result' => 1,
 				'model' => new $newusr,
 			));

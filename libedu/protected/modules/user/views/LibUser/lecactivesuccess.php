@@ -8,7 +8,6 @@
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'libuser-form',
-	'enableAjaxValidation'=>true,
 )); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
@@ -21,8 +20,8 @@
 	</legend>	
 
 	<div class="row">
-		<?php echo CHtml::label('您的真实姓名','lecrealname',array('required'=>true)); ?>
-		<?php echo CHtml::textField('lecrealname','',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo CHtml::label('您的真实姓名','LibUser[realname]',array('required'=>true)); ?>
+		<?php echo CHtml::textField('LibUser[realname]','',array('size'=>60,'maxlength'=>255)); ?>
 	</div>
 	<div class="row">
 		<?php echo $form->labelEx($model,'password'); ?>
@@ -37,7 +36,7 @@
 	</fieldset>
 	
 	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? '注册' : '完成激活'); ?>
+		<?php echo CHtml::submitButton($model->isNewRecord ? '完成激活' : '完成激活'); ?>
 	</div>
 
 <?php $this->endWidget(); ?>

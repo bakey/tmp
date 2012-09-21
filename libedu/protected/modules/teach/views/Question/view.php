@@ -24,8 +24,15 @@ $this->menu=array(
 		'id',
 		'owner',
 		'item',
-		'details',
+		array('name'=>'details','type'=>'html'),
 		'create_time',
 		'view_count',
 	),
 )); ?>
+
+<h4><a href="<?php echo Yii::app()->createUrl('/teach/question/answer',array('qid'=>$model->id)); ?>">回答</a> | <?php
+	echo CHtml::ajaxLink('显示回答及追问',Yii::app()->createUrl('/teach/question/getallsubelement',array('qid'=>$model->id)),array('update'=>'#answer'.$model->id,'success'=>'js:function(data){$("#answer'.$model->id.'").html(data);$("#answer'.$model->id.'").fadeIn();}')); 
+?></h4>
+
+<div id="answer<?php echo $model->id ?>" style="display:none;border:1px solid #f1523a;padding:10px; margin-left:100px;">
+	</div>

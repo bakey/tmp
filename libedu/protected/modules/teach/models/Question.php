@@ -105,4 +105,14 @@ class Question extends CActiveRecord
 		}
 		return parent::beforeSave();
 	}
+
+	public function afterSave(){
+		$kpToSave = ItemKp::model()->findAllByAttributes(array('item'=>$this->item));
+		foreach($kpToSave as $singlekp){
+			$qkp = new QuestionKp;
+			$qkp->question = $this->id;
+			$qkp->knowledge_point = $singlekp->knowledge_point;
+			$qkp->save();	
+		}
+	}
 }
