@@ -94,10 +94,10 @@ class CoursePostController extends Controller
 		$target_folder = $this->getOriginPath($uid);
 		$thumb_folder = $this->getThumbPath($uid);
 		if ( !is_dir( $target_folder ) ) {
-			mkdir( $target_folder ,0777,true);
+			mkdir( $target_folder , 0777 , true );
 		} 
 		if ( !is_dir( $thumb_folder ) ) {
-			mkdir( $thumb_folder );
+			mkdir( $thumb_folder , 0777 , true );
 		}
 		copy( $_FILES['file']['tmp_name'] , $target_folder.$file_name );
 		

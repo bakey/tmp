@@ -27,9 +27,9 @@
 	</div>
 	
 		<div class="row">
-		<?php echo $form->labelEx($kp_model,'course_id'); ?>
-		<?php echo $form->textField($kp_model,'course_id',array('size'=>60,'maxlength'=>512)); ?>
-		<?php echo $form->error($kp_model,'course_id'); ?>
+		<?php echo $form->labelEx($kp_model,'subject'); ?>
+		<?php echo $form->textField($kp_model,'subject',array('size'=>60,'maxlength'=>512)); ?>
+		<?php echo $form->error($kp_model,'subject'); ?>
 	</div>
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Submit'); ?>

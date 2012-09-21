@@ -1,18 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "tbl_problem_kp".
+ * This is the model class for table "tbl_subject".
  *
- * The followings are the available columns in table 'tbl_problem_kp':
- * @property integer $problem_id
- * @property integer $knowledge_point
+ * The followings are the available columns in table 'tbl_subject':
+ * @property integer $id
+ * @property string $name
+ * @property string $description
  */
-class ProblemKp extends CActiveRecord
+class Subject extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return ProblemKp the static model class
+	 * @return Subject the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -24,7 +25,7 @@ class ProblemKp extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_problem_kp';
+		return 'tbl_subject';
 	}
 
 	/**
@@ -35,11 +36,12 @@ class ProblemKp extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('problem_id, knowledge_point', 'required'),
-			array('problem_id, knowledge_point', 'numerical', 'integerOnly'=>true),
+			array('name', 'required'),
+			array('name', 'length', 'max'=>255),
+			array('description', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('problem_id, knowledge_point', 'safe', 'on'=>'search'),
+			array('id, name, description', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,8 +62,9 @@ class ProblemKp extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'problem_id' => 'Problem',
-			'knowledge_point' => 'Knowledge Point',
+			'id' => 'ID',
+			'name' => 'Name',
+			'description' => 'Description',
 		);
 	}
 
@@ -76,8 +79,9 @@ class ProblemKp extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('problem_id',$this->problem_id);
-		$criteria->compare('knowledge_point',$this->knowledge_point);
+		$criteria->compare('id',$this->id);
+		$criteria->compare('name',$this->name,true);
+		$criteria->compare('description',$this->description,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

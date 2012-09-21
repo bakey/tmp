@@ -76,8 +76,9 @@ class QuestionController extends Controller
 		if(isset($_POST['Question']))
 		{
 			$model->attributes=$_POST['Question'];
-			if($model->save())
+			if($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$mycourse = LibUser::model()->findByPk(Yii::app()->user->id);

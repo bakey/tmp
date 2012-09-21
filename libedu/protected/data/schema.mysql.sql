@@ -44,10 +44,17 @@ create table if not exists tbl_grade(
    PRIMARY KEY(`id`)
 )engine=InnoDB default charset=utf8;
 
+create table if not exists tbl_subject(
+	`id` int not null auto_increment primary key,
+	`name` varchar(255) not null,
+	`description` text
+)engine=innodb default charset=utf8;
+
 create table if not exists tbl_course_edition(
 	`id` int(11) not null auto_increment primary key,
 	`name` varchar(255) not null,
 	`grade` int not null ,
+	`subject` int not null references tbl_subject(id) on delete cascade,
 	`description` text default null,
 	`publisher` int not null references tbl_publisher(id) on delete cascade,
 	`uploader` int references tbl_user(id) on delete cascade,
@@ -108,11 +115,13 @@ create table if not exists `tbl_news_feed`(
 create table if not exists `tbl_problem`(
  `id` int not null auto_increment primary key,
  `course` int not null references tbl_course(id) on delete cascade,
+ `school` int not null references tbl_school(id) on delete cascade,
  `type` int not null,
   `content` text not null,
   `source` varchar(255),
   `difficulty` tinyint,
   `create_time` datetime not null,
+  `update_time` datetime not null,
   `reference_ans` text,
   `ans_explain` text,
   `use_count` INTEGER

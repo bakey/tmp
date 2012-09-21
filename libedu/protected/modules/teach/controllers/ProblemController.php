@@ -7,6 +7,10 @@ class ProblemController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
+	private $SINGLE_CHOICE = 0;
+	private $MULTI_CHOICE = 1;
+	private $BLANK = 2;
+	private $QA = 3;
 
 	/**
 	 * @return array action filters
@@ -82,7 +86,9 @@ class ProblemController extends Controller
 	}
 	public function actionTest()
 	{
-		print_r( CHtml::listData(KnowledgePoint::model()->findAll(), 'id', 'name') );
+		//print_r( CHtml::listData(KnowledgePoint::model()->findAll(), 'id', 'name') );
+		$school_id = Yii::app()->params['currentSchoolID'];
+		echo($school_id);
 	}
 
 	/**
@@ -91,28 +97,31 @@ class ProblemController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$problem_model=new Problem;
+		$problem_model = new Problem;
+		$problem_model->school = Yii::app()->params['currentSchoolID'];
 		$this->performAjaxValidation( $problem_model );
 		$problem_model->create_time = $problem_model->update_time = date('Y-m-d H:i:s',time());
+		$subjects = Subject::model()->findAll();
+		$subjectList = CHtml::listData($subjects, 'id', 'name');
 	
 
 		if(isset($_POST['Problem']))
 		{
-			$problem_model->course=$_POST['Problem']['course'];
-			$problem_model->type=$_POST['topic'];
-			$problem_model->source=$_POST['Problem']['source'];
-			$problem_model->difficulty=$_POST['Problem']['difficulty'];
-			$problem_model->use_count = 0;
-			if($problem_model->type==0)
+			$problem_model->subject    = $_POST['Problem']['subject'];
+			$problem_model->type       = $_POST['topic'];
+			$problem_model->source     = $_POST['Problem']['source'];
+			$problem_model->difficulty = $_POST['Problem']['difficulty'];
+			$problem_model->use_count  = 0;
+			if($problem_model->type == $this->SINGLE_CHOICE )
 			{
-				$problem_model->reference_ans=$_POST['same'];
+				$problem_model->reference_ans = $_POST['same'];
 			}
-			if($problem_model->type==1)
+			if( $problem_model->type == $this->MULTI_CHOICE )
 			{
-				$types=$_POST['same'];
-				for($i=0;$i<count($types);$i++)
+				$types = $_POST['same'];
+				for( $i=0 ; $i<count($types) ; $i++ )
 				{
-					$problem_model->reference_ans=$problem_model->reference_ans.$types[$i];
+					$problem_model->reference_ans = $problem_model->reference_ans.$types[$i];
 				}
 			}
 			$problem_model->content=$_POST['Problem']['content'];
@@ -120,26 +129,33 @@ class ProblemController extends Controller
 			switch( $num )
 			{
 				case 1:
-					$problem_model->content=$problem_model->content."\n".$_POST['A']."\n".$_POST['B']."\n".$_POST['C']."\n".$_POST['D'];
+				{
+					$problem_model->select_ans=$_POST['A']."\r\n".$_POST['B']."\r\n".$_POST['C']."\r\n".$_POST['D'] ;
 					break;
+				}
 				case 2:
-					$problem_model->content=$problem_model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
-							$_POST['C']."\n".$_POST['D']."\n".$_POST['E'];
+				{
+					$problem_model->select_ans=$_POST['A']."\r\n".$_POST['B']."\r\n".$_POST['C']."\r\n".$_POST['D']."\r\n".$_POST['E'];
 					break;
+				}
 				case 3:
-					$problem_model->content=$problem_model->content."\n".$_POST['A']."\n".$_POST['B']."\n".
-							$_POST['C']."\n".$_POST['D']."\n".$_POST['E']."\n".$_POST['F'];
+				{
+					$problem_model->select_ans=$_POST['A']."\r\n".$_POST['B']."\r\n".$_POST['C']."\r\n".$_POST['D']."\r\n".$_POST['E']."\r\n".$_POST['F'] ;
 					break;
+				}
 				default:
 					break;
-			}		                
+			}		               
 			$problem_model->ans_explain=$_POST['Problem']['ans_explain'];
+			//Yii::log("ready save problem" , 'debug');
 			if( !$problem_model->save()){
 				throw new CHttpException( 500 , "保存问题到数据库失败");
 				//$this->redirect(array('index','id'=>$problem_model->id));
 			}
 			$pid = $problem_model->id;
-			$this->savePrblemKnowledgePoint( $_POST['Problem']['problem_cb'] , $pid );
+			if ( isset($_POST['Problem']['problem_cb']) ) {
+				$this->savePrblemKnowledgePoint( $_POST['Problem']['problem_cb'] , $pid );
+			}
 			$this->redirect( array('index','id'=>$problem_model->id) );
 		}
 
@@ -164,8 +180,9 @@ class ProblemController extends Controller
 		if(isset($_POST['Problem']))
 		{
 			$model->attributes=$_POST['Problem'];
-			if($model->save())
+			if($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('update',array(
@@ -209,11 +226,11 @@ class ProblemController extends Controller
 		$file_name .= $suffix[1];
 		$target_folder = $this->getOriginPath($uid);
 		$thumb_folder =  $this->getThumbPath($uid);
-		if ( !is_dir( $target_folder ) ) {
-			mkdir( $target_folder );
+		if ( !@is_dir( $target_folder ) ) {
+			@mkdir( $target_folder );
 		}
-		if ( !is_dir( $thumb_folder ) ) {
-			mkdir( $thumb_folder );
+		if ( !@is_dir( $thumb_folder ) ) {
+			@mkdir( $thumb_folder );
 		}
 		copy( $_FILES['file']['tmp_name'] , $target_folder.$file_name );
 		
@@ -221,7 +238,7 @@ class ProblemController extends Controller
 		$thumb=new EPhpThumb();
 		$thumb->init();
 		$thumb->create( $target_folder . $file_name )
-		->resize(1024,800)
+		->resize(800,640)
 		->save( $thumb_folder . $file_name );
 		
 		$image_thumb_url = $this->getThumbImageUrl($file_name, $uid);
@@ -248,8 +265,9 @@ class ProblemController extends Controller
 			$this->loadModel($id)->delete();
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-			if(!isset($_GET['ajax']))
+			if(!isset($_GET['ajax'])) {
 				$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			}
 		}
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
@@ -260,12 +278,26 @@ class ProblemController extends Controller
 	 */
 	public function actionIndex()
 	{
+		$school_id = Yii::app()->params['currentSchoolID'];
+		$subjects = Subject::model()->findAll();
+		$subjectList = CHtml::listData($subjects, 'id', 'name');
+		
 		$problem_model = new Problem();
-		$dataProvider=new CActiveDataProvider( 'Problem' );
+		$dataProvider=new CActiveDataProvider( 'Problem' ,
+				array(
+					'criteria'=>array(
+							'condition'=>('school='.$school_id ),
+					),
+					'pagination'=>array(
+							'pageSize'=>15,
+					),
+				)
+		);
 		
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 			'problem'=>$problem_model,
+			'subjectList' => $subjectList,
 		));
 	}
 

@@ -88,13 +88,18 @@ return array(
 			'routes'=>array(
 				array(
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning, trace, info',
-					'categories'=>'system.db.*',
+					'levels'=>'error, warning, trace, info,debug',
+					'categories'=>'application.*',
+					'logFile' => 'libedu.log',
+					'logPath' => 'logs/',
+					'maxFileSize' => 50000,
+					'enabled' => true,
 				),
 				// uncomment the following to show log messages on web pages
 				
 				array(
 					'class'=>'CWebLogRoute',
+					'levels'=>'error , warning , trace , info',
 				),
 				
 			),
