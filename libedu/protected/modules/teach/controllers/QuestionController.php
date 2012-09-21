@@ -121,12 +121,14 @@ class QuestionController extends Controller
 				$model->create_time = date("Y-m-d H:i:s");
 				if($model->save()){
 					QuestionKp::model()->deleteAllByAttributes(array('question'=>$qid));
-					if(count($_POST['kprelation'])!=0){
-						foreach ($_POST['kprelation'] as $singlekprealtion) {
-							$ckpr = new QuestionKp;
-							$ckpr->question = $qid;
-							$ckpr->knowledge_point = $singlekprealtion;
-							$ckpr->save();
+					if(isset($_POST['kprelation'])){
+						if(count($_POST['kprelation'])!=0){
+							foreach ($_POST['kprelation'] as $singlekprealtion) {
+								$ckpr = new QuestionKp;
+								$ckpr->question = $qid;
+								$ckpr->knowledge_point = $singlekprealtion;
+								$ckpr->save();
+							}
 						}
 					}
 					$this->redirect(array('view','id'=>$qid));
