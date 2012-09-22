@@ -59,11 +59,6 @@
 	{	
 		var newHTML = "";
 		if( $('#type').val()==1 && $('#selectNum').val() == 1) {
-			/*$('#tempID').innerHTML='<label id="options">选项内容设置</label><label id="A">A<input type="text" name="A" /> \
-				</label> <label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label> \
-				<label id="D">D<input type="text" name="D" /></label><label id="Answers">答案</label> \
-				<label id="A">A<input type="checkbox" name="same[]" value="A"></label><label id="B">B<input type="checkbox" name="same[]" value="B"></label>\
-				<label id="C">C<input type="checkbox" name="same[]" value="C"></label><label id="D">D<input type="checkbox" name="same[]" value="D"></label>';*/
 			newHTML='<label id="options">选项内容设置</label><label id="A">A<input type="text" name="A" /></label> <label id="B">B<input type="text" name="B" /></label><label id="C">C<input type="text" name="C" /></label><label id="D">D<input type="text" name="D" /></label><label id="Answers">答案</label><label id="A">A<input type="checkbox" name="same[]" value="A"></label><label id="B">B<input type="checkbox" name="same[]" value="B"></label><label id="C">C<input type="checkbox" name="same[]" value="C"></label><label id="D">D<input type="checkbox" name="same[]" value="D"></label>';
 		}
 		else if( $('#type').val() == 1 && $('#selectNum').val() == 2) {
@@ -112,6 +107,8 @@
 		'editorOptions' => array(
 			'imageUpload' => Yii::app()->createAbsoluteUrl('teach/problem/upload'),
 			'focus' => false,
+			/*'autosave'=> Yii::app()->createAbsoluteUrl('teach/problem/autosave'),
+			'interval' => 10,*/
 		),
 	));
 ?>

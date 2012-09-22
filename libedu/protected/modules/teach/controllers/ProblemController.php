@@ -35,7 +35,8 @@ class ProblemController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','create','upload','update','admin','delete'),
+				//'actions'=>array('index','create','upload','update','admin','delete'),
+				'actions'=>array('index','create','upload','autosave','update','admin','delete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -89,6 +90,11 @@ class ProblemController extends Controller
 		//print_r( CHtml::listData(KnowledgePoint::model()->findAll(), 'id', 'name') );
 		$school_id = Yii::app()->params['currentSchoolID'];
 		echo($school_id);
+	}
+	public function actionAutoSave()
+	{
+		var_dump( $_POST );
+		exit();
 	}
 
 	/**

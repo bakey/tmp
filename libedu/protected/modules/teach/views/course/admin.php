@@ -2,7 +2,7 @@
 /* @var $this CourseController */
 
 $this->breadcrumbs=array(
-	'Admin',
+	'课程管理',
 );
 ?>
 <?php
