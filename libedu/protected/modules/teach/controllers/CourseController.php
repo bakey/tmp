@@ -60,6 +60,7 @@ class CourseController extends Controller
 	public function actionUpdate( $id )
 	{
 		//取得此课程对应的教材，用以确定章节
+		$this->layout = 'main';
 		$edition_model = $this->loadEditionModel( $id );
 		$edition_id = $edition_model->id;
 		$user_id = Yii::app()->user->id;
