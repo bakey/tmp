@@ -17,5 +17,7 @@ $this->breadcrumbs=array(
 ?>
 
 <div class="form">
-<?php echo $form; ?>
+<?php 
+	echo $form; 
+	?>
 </div>

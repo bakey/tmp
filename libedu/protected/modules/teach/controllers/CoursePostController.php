@@ -88,14 +88,47 @@ class CoursePostController extends Controller
 		return Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" .
 				$this->getOriginPath($uid) . $file_name;
 	}
-	private function saveCoursePost( $course_post_model , $item_id , $status ) {
-		//存草稿
-		$course_post_model->attributes=$_POST['CoursePost'];
-		$course_post_model->create_time = $course_post_model->update_time = date("Y-m-d H:i:s", time() );
+	private function saveCoursePost( $course_post_model , $item_id , $status , $post_id ) {
+		
+		$course_post_model->post = $_POST['CoursePost']['post'];
 		$course_post_model->author = Yii::app()->user->id;
 		$course_post_model->item_id = $item_id ;
 		$course_post_model->status = $status ;
-		return $course_post_model->save();		
+		if ( null != $post_id ) {
+			$course_post_model->update_time = date("Y-m-d H:i:s", time() ); 
+			$save_res = $course_post_model->updateByPk( $post_id , array(
+					'post'=>$_POST['CoursePost']['post'],
+					'status'=>$status,
+					)) ;
+			if ( $save_res > 0 ) {
+				return $post_id;
+			}
+			else {
+				return -1;
+			}
+		}else {
+			$course_post_model->create_time = $course_post_model->update_time = date("Y-m-d H:i:s", time() );
+			$save_res = $course_post_model->save();
+			if ( $save_res ) {
+				return $course_post_model->id;
+			}		
+			else {
+				return -1;
+			}
+		}
+	}
+	private function updateCoursePostRecord( $item_id , $post_id )
+	{
+		$course_post_model = new CoursePost;
+		$status = CoursePost::STATUS_DRAFT;
+		$course_post_model->post = $_POST['data'];
+		$course_post_model->author = Yii::app()->user->id;
+		$course_post_model->item_id = $item_id;
+		$course_post_model->status = $status;
+		$course_post_model->update_time = date( "Y-m-d H:i:s", time() );
+		return $course_post_model->updateByPk( $post_id , array(
+					'post' => $_POST['data'],
+					) );
 	}
 	/*
 	 * 处理用户上传二进制文件
@@ -133,28 +166,42 @@ class CoursePostController extends Controller
 	}
 	public function actionAutoSave()
 	{
-		$course_post_model = new CoursePost;
-		$course_post_model->unsetAttributes();
 		$item_id = $_GET['item_id'];
+		$post_id = "";
+		$save_res = false;
+		$msg = "";
+		
 		if( isset($_POST['data']) )
 		{
-			$status = CoursePost::STATUS_DRAFT;
-			$course_post_model->post = $_POST['data'];
-			$course_post_model->author = Yii::app()->user->id;
-			$course_post_model->item_id = $item_id;
-			$course_post_model->status = $status;
-			$course_post_model->create_time = $course_post_model->update_time = date( "Y-m-d H:i:s", time() );
-			$msg = "auto save course post [ ";
-			$save_res = $course_post_model->save();
+			if ( isset($_GET['post_id']) )
+			{
+				//更新操作
+				$msg = "update post_id = " . $post_id ;
+				$post_id = $_GET['post_id'];
+				$save_res = $this->updateCoursePostRecord( $item_id , $post_id );			
+			}
+			else {
+				//第一次保存，直接创建
+				$msg = "create ";
+				$course_post_model = new CoursePost;
+				$status = CoursePost::STATUS_DRAFT;
+				$course_post_model->post = $_POST['data'];
+				$course_post_model->author = Yii::app()->user->id;
+				$course_post_model->item_id = $item_id;
+				$course_post_model->status = $status;
+				$course_post_model->create_time = $course_post_model->update_time = date( "Y-m-d H:i:s", time() );
+				$save_res = $course_post_model->save() > 0 ;	
+				$post_id = $course_post_model->id;		
+			}
+			$msg = " post record [ ";			
 			if ( $save_res ) {
 				$msg .= "success] ";
 			}
-			else
-			{
+			else {
 				$msg .= "failed]";
 			}
 			Yii::log( $msg , 'debug' );
-			echo( "post_id : " . $course_post_model->id );
+			echo( '({"post_id":"' . $post_id . '"})' );
 		}		
 		/*$uid = Yii::app()->user->id;
 		$dir_path = $this->getTempCoursePostPath( $uid );
@@ -187,13 +234,14 @@ class CoursePostController extends Controller
 		$course_post_model = new CoursePost;
 		$course_post_model->unsetAttributes();
 		$item_id = $_GET['item_id'];
-		$course_id = $_GET['course_id'];
 		$user_id = Yii::app()->user->id;
+		$post_id = null;
 		if ( $item_id == null ) {
 			throw new CHttpException(400 , "参数错误，没有item_id");
 		}
-		if ( $course_id == null ) {
-			throw new CHttpException( 400 , "参数错误，没有course_id");
+		if ( isset( $_GET['post_id'] ) )
+		{
+			$post_id = $_GET['post_id'];
 		}
 		
 		// Uncomment the following line if AJAX validation is needed
@@ -204,9 +252,10 @@ class CoursePostController extends Controller
 			if ( isset( $_POST['draft']) )
 			{
 				$status = CoursePost::STATUS_DRAFT;
-				if ( $this->saveCoursePost( $course_post_model , $item_id , $status ) ) 
+				$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
+				if ( $new_post_id > 0 ) 
 				{
-					$this->redirect(array('view','id'=>$course_post_model->id));					
+					$this->redirect(array('view','id'=>$new_post_id));					
 				}			
 			}
 			else if ( isset($_POST['cancel']) )
@@ -214,14 +263,15 @@ class CoursePostController extends Controller
 				$msg = sprintf("User cancel edit course post , user_id = %d" , $user_id );
 				Yii::log( $msg , 'debug' );
 				//取消，重定向				
-				$this->redirect(array('course/update','id'=>$course_id));
+				//$this->redirect(array('course/update','id'=>$course_id));
 			}
 			else
 			{
 				$status = CoursePost::STATUS_PUBLISH;
-				if( $this->saveCoursePost($course_post_model, $item_id, $status) )
+				$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
+				if( $new_post_id > 0 )
 				{
-					$this->redirect(array('view','id'=>$course_post_model->id));
+					$this->redirect(array('view','id'=>$new_post_id));
 				}
 			}
 		}
@@ -266,8 +316,9 @@ class CoursePostController extends Controller
 		$this->loadModel($id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
+		if(!isset($_GET['ajax'])) {
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		}
 	}
 
 	/**

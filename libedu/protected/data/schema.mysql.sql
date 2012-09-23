@@ -133,7 +133,7 @@ create table if not exists `tbl_news_feed`(
 
 create table if not exists `tbl_problem`(
  `id` int not null auto_increment primary key,
- `course` int not null references tbl_course(id) on delete cascade,
+ `subject` int not null references tbl_subject(id) on delete cascade,
  `school` int not null references tbl_school(id) on delete cascade,
  `type` int not null,
   `content` text not null,
@@ -143,7 +143,8 @@ create table if not exists `tbl_problem`(
   `update_time` datetime not null,
   `reference_ans` text,
   `ans_explain` text,
-  `use_count` INTEGER
+  `use_count` INTEGER,
+  `select_ans` text
   )engine=innodb default charset=utf8;
    
 
