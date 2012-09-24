@@ -52,7 +52,7 @@ class SiteController extends Controller
 		require_once( 'simple.php' );
 	}
 
-	public function actionTest(){
+	public function actionTimelineTest(){
 		$this->render('timeline');
 	}
 
