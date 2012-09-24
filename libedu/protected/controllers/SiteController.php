@@ -46,6 +46,10 @@ class SiteController extends Controller
 		}
 	}
 
+	public function actionTest(){
+		$this->render('timeline');
+	}
+
 	/**
 	 * Displays the contact page
 	 */
