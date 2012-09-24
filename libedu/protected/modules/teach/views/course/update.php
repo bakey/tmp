@@ -24,7 +24,7 @@ foreach( $item_post as $ip )
 ?>
 	
 <?php 
-$url = 'course/ajaxLoadItem&edition_id=' . $edition_id.'&course_id=' . $course_id;
+$url = 'course/ajaxLoadItem&edition_id=' . $edition_id ;
 $this->widget(
 	    'CTreeView',
 		array(

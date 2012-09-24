@@ -60,6 +60,7 @@ class CourseController extends Controller
 	public function actionUpdate( $id )
 	{
 		//取得此课程对应的教材，用以确定章节
+		$this->layout = 'main';
 		$edition_model = $this->loadEditionModel( $id );
 		$edition_id = $edition_model->id;
 		$user_id = Yii::app()->user->id;
@@ -78,7 +79,6 @@ class CourseController extends Controller
 		$this->render('update' , array(
 				'item_post'=>$item_post,
 				'edition_id'=>$edition_id,
-				'course_id'=>$id,
 		));			
 	}
 	public function actionAjaxLoadItem()
@@ -146,9 +146,9 @@ class CourseController extends Controller
 			}
 			$url = "";			
 			if ( !$status['post_exist'] ) {
-				$url = CController::createUrl('coursepost/create&item_id=' . $child['id'].'&course_id='.$course_id );
+				$url = CController::createUrl('coursepost/create&item_id=' . $child['id'] );
 			}else {
-				$url = CController::createUrl('coursepost/index&item_id=' .$child['id'].'&course_id='.$course_id);
+				$url = CController::createUrl('coursepost/index&item_id=' .$child['id'] );
 			}
 			$child['text'] = $content . $child['text'];
 			

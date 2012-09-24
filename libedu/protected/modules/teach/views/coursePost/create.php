@@ -7,14 +7,15 @@ $this->breadcrumbs=array(
 	'Create',
 );
 
-$this->menu=array(
-	array('label'=>'List CoursePost', 'url'=>array('index')),
-	array('label'=>'Manage CoursePost', 'url'=>array('admin')),
-);
 ?>
 
-<h1>Create CoursePost</h1>
+<h1>新建课程资料</h1>
 
-<?php echo $this->renderPartial('_edit_form', array('model'=>$model)); ?>
+<?php
+	 echo $this->renderPartial('_edit_form', array(
+					'model'   => $model,
+					'item_id' => $item_id,
+			)); 
+?>
 
 

@@ -58,6 +58,7 @@ var RTOOLBAR = {};
 			handler: false, // false or url
 			
 			autosave: false, // false or url
+			autosaveCallback: false, // function
 			interval: 60, // seconds
 	
 			imageGetJson: false, // url (ex. /folder/images.json ) or false
@@ -835,10 +836,41 @@ var RTOOLBAR = {};
 			if (this.opts.autosave === false) return false;
 	
 			setInterval($.proxy(function()
-			{
-				$.post(this.opts.autosave, { data: this.getCode() });
-
-			}, this), this.opts.interval*1000);
+					{
+						$.post( this.opts.autosave ,
+								{
+									data: this.getCode(), 
+								},
+								$.proxy(function(data)
+										{
+											// callback					
+											if (typeof this.opts.autosaveCallback === 'function')
+											{
+												//alert( 'auto save callback function');
+												this.opts.autosaveCallback(data, this , /*$('#course-post-form')*/document );
+											}
+											
+										}, this)
+						);
+						/*$.ajax({
+							url: this.opts.autosave,
+							type: 'POST',
+							data: this.$el.attr('name') + '=' + this.getCode(),
+							//data: this.getCode(),
+							success: $.proxy(function(data)
+							{
+								// callback					
+								if (typeof this.opts.autosaveCallback === 'function')
+								{
+									//alert( 'auto save callback function');
+									this.opts.autosaveCallback(data, this);
+								}
+								
+							}, this)
+						});*/
+			
+			
+					}, this), this.opts.interval*1000);
 		},
 
 		// TOOLBAR
