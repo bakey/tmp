@@ -33,4 +33,10 @@ class AnswerController extends Controller
 		);
 	}
 	*/
+
+	public function actionGenerateAnswerFeed(){
+		$cans = Answer::model()->findByPk($_GET['rid']);
+		$cusr = LibUser::model()->findByPk($_GET['uid']);
+		$this->renderPartial('answer_timeline',array('cans'=>$cans,'cusr'=>$cusr));
+	}
 }

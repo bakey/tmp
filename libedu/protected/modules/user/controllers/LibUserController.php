@@ -26,6 +26,22 @@ class LibUserController extends Controller
 		));
 	}
 
+    public function actionHome(){
+    	$this->layout = 'usercentertwocolumn';
+    	$this->render('userhome');
+    }
+
+	public function actionGetTimeline($uid){
+		$cnews = News::model()->findAllByAttributes(array('user'=>Yii::app()->user->id));
+		if($cnews){
+			foreach($cnews as $singlenews){
+				$_GET['id']=$singlenews->id;
+				$_GET['rid']=$singlenews->resource_id;
+				$_GET['uid']=$uid;
+				$this->forward('/user/news/getresource',false);
+			}
+		}
+	}
 
 	public function actionClassStuStatus(){
 		if(isset(Yii::app()->user->urole)){
