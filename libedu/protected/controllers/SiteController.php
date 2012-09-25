@@ -53,6 +53,10 @@ class SiteController extends Controller
 		//require_once( 'simple.php' );
 	}
 
+	public function actionTimelineTest(){
+		$this->render('timeline');
+	}
+
 	/**
 	 * Displays the contact page
 	 */
