@@ -12,13 +12,11 @@
 <?php echo $form->labelEx($model,'post'); ?>
 
 <?php
-
 	$baseAutoSaveUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/autosave&item_id=' . $item_id);
-	$baseCreateUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/create&item_id=' . $item_id . '&post_id=');
+	$baseCreateUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/create&item_id=' . $item_id . '&course_id='.$course_id . '&post_id=' );
 	$this->widget('application.extensions.redactorjs.Redactor',array(
 		'model'=>$model,
 		'attribute'=>'post',
-		'debugMode' => true,
 		'editorOptions' => array(
 				'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
 				'autosave'=> $baseAutoSaveUrl,
@@ -36,11 +34,12 @@
 
 <div class="row buttons">
 		<?php
-		 echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save');
-		 echo CHtml::submitButton('存草稿' ,array('name'=>'draft'));
-		 echo CHtml::submitButton('取消' ,array('name'=>'cancel'));
+		 echo CHtml::submitButton('发布' ,  array('name'=>'publish'));
+		 echo CHtml::submitButton('存草稿', array('name'=>'draft'));
+		 echo CHtml::submitButton('预览' ,  array('name'=>'draft'));
+		 echo CHtml::submitButton('取消' ,  array('name'=>'cancel'));
 		?>
-	</div>
+</div>
 	<?php $this->endWidget(); ?>
 
 </div><!-- form -->

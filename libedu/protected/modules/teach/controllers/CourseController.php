@@ -6,6 +6,7 @@ class CourseController extends Controller
 	const TBL_ITEM_LEVEL = "tbl_item_item";
 	public function actionAdmin()
 	{
+		$this->layout = 'main';
 		$user_model = LibUser::model()->findByPk( Yii::app()->user->id );
 		$courses = $user_model->user_course;
 		$userCourseData = new CActiveDataProvider('Course',array(
@@ -64,22 +65,32 @@ class CourseController extends Controller
 		$edition_model = $this->loadEditionModel( $id );
 		$edition_id = $edition_model->id;
 		$user_id = Yii::app()->user->id;
-		$item_post = array();
+		$user_model = LibUser::model()->findByPk( $user_id );
+		/*$item_post = array();
 		foreach( $edition_model->getItems() as $item )
 		{		
 			$exist = CoursePost::model()->exists(
 					'author=:author and item_id=:item_id',
-						array(
+					array(
 							':author'=>$user_id ,
 							':item_id'=>$item->id,
-						)
+					)
 				);
 			$item_post[] = array( 'item' => $item , 'post_exist'=>$exist );
+		}*/
+		$top_item_model = $user_model->trace_item;
+		$edition_first_level_items = Item::model()->findAll( 'edition=:edition and level=1', array(
+						':edition' => $edition_id, ) );
+	
+		if ( count($top_item_model) > 1 ) {
+			throw new CHttpException( 400 , "trace item data corruption");
 		}
+		/*$url = 'course/ajaxLoadItem&edition_id=' . $edition_id . '&course_id=' . $id ;*/
 		$this->render('update' , array(
-				'item_post'=>$item_post,
-				'edition_id'=>$edition_id,
-		));			
+				'top_item'        => $top_item_model[0],
+				'level_one_items' => $edition_first_level_items,
+				//'ajax_load_url' => $url ,
+		));
 	}
 	public function actionAjaxLoadItem()
 	{
@@ -146,9 +157,9 @@ class CourseController extends Controller
 			}
 			$url = "";			
 			if ( !$status['post_exist'] ) {
-				$url = CController::createUrl('coursepost/create&item_id=' . $child['id'] );
+				$url = CController::createUrl('coursepost/create&item_id=' . $child['id'] . '&course_id=' . $course_id );
 			}else {
-				$url = CController::createUrl('coursepost/index&item_id=' .$child['id'] );
+				$url = CController::createUrl('coursepost/index&item_id=' .$child['id'] . '&course_id=' . $course_id );
 			}
 			$child['text'] = $content . $child['text'];
 			

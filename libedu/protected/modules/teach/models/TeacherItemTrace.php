@@ -1,31 +1,30 @@
 <?php
 
 /**
- * This is the model class for table "tbl_course_edition".
+ * This is the model class for table "tbl_teacher_item_trace".
  *
- * The followings are the available columns in table 'tbl_course_edition':
- * @property integer $id
- * @property string $name
- * @property string $description
+ * The followings are the available columns in table 'tbl_teacher_item_trace':
+ * @property integer $teacher
+ * @property integer $item
  */
-class CourseEdition extends CActiveRecord
+class TeacherItemTrace extends CActiveRecord
 {
-	private $items = null ;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return CourseEdition the static model class
+	 * @return TeacherItemTrace the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
+
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_course_edition';
+		return 'tbl_teacher_item_trace';
 	}
 
 	/**
@@ -36,11 +35,11 @@ class CourseEdition extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name', 'required'),
-			array('name, description', 'length', 'max'=>255),
+			array('teacher, item', 'required'),
+			array('teacher, item', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, description', 'safe', 'on'=>'search'),
+			array('teacher, item', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,10 +60,11 @@ class CourseEdition extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'name' => '教材名称',
-			'description' => '教材描述',
+			'teacher' => 'Teacher',
+			'item' => 'Item',
 		);
 	}
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -76,33 +76,11 @@ class CourseEdition extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('description',$this->description,true);
+		$criteria->compare('teacher',$this->teacher);
+		$criteria->compare('item',$this->item);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
-	}
-	public function getItems()
-	{
-		if ( $this->items == null )
-		{
-			$critieria = new CDbCriteria;
-			$critieria->condition = 'edition=:edition and level = 1';
-			$critieria->params = array(
-					':edition' => $this->id );
-			$this->items = Item::model()->findAll( $critieria );		
-		}
-		return $this->items;
-		
-	}
-	protected function beforeSave()
-	{
-		return parent::beforeSave();
-	}
-	protected function afterSave()
-	{
-		return parent::afterSave();
 	}
 }

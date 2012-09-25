@@ -6,7 +6,7 @@
 <div class="view">
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
+	<?php echo CHtml::link(CHtml::encode($data->id), array('viewbyid', 'id'=>$data->id , 'course_id'=>$course_id)); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('post')); ?>:</b>
@@ -22,7 +22,27 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
-	<?php echo CHtml::encode($data->status); ?>
+	<?php
+		switch( $data->status )
+		{
+			case 0:
+				{
+					echo"草稿";
+					break;
+				}
+			case 1:
+				{
+					echo"已发布";
+					break;
+				}
+			default:
+				{
+					echo"未知状态";
+					break;
+				}
+		}
+	 //echo CHtml::encode($data->status); 
+	?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('create_time')); ?>:</b>

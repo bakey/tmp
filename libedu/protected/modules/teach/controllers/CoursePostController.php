@@ -32,7 +32,7 @@ class CoursePostController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','autosave','delete','create','update','upload'),
+				'actions'=>array('admin','test','reedit','autosave','viewbyid','drafttopublished','delete','create','update','upload'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -49,11 +49,65 @@ class CoursePostController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionViewDraft()
 	{
+	}
+	public function actionViewPublished()
+	{
+		
+	}
+	public function actionViewById()
+	{
+		$post_id = $_GET['id'];
+		$course_id = $_GET['course_id'];
+		$draft_to_publish_url = Yii::app()->createUrl("teach/coursepost/drafttopublished&post_id=$post_id&course_id=$course_id");
+		$reedit_url = Yii::app()->createUrl("teach/coursepost/reedit&post_id=$post_id&course_id=$course_id");
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+				'model'                => $this->loadModel($post_id),
+				'draft_to_publish_url' => $draft_to_publish_url,
+				'reedit_url'           => $reedit_url,				
+		));		
+	}
+	public function actionTest()
+	{
+		echo CHtml::button('发布', array(
+				'onClick'=>"window.location.href='www.baidu.com'",
+				'',
 		));
+	}
+	public function actionReEdit()
+	{
+		$post_id = $_GET['post_id'];
+		$course_id = $_GET['course_id'];
+		$post_model = CoursePost::model()->findByPk( $post_id );
+		if ( null == $post_model ) {
+			throw new CHttpException( 400 , "no this post ");
+		}
+		$baseCreateUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/create&item_id=' . 
+								$post_model->item_id . '&post_id='.$post_id.'&course_id='.$course_id);
+		$baseAutoSaveUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/autosave&item_id=' . 
+								$post_model->item_id . '&post_id=' . $post_id );
+		$this->render('re_edit' , array(
+				'post_model'      => $post_model,
+				'baseCreateUrl'   => $baseCreateUrl,
+				'baseAutoSaveUrl' => $baseAutoSaveUrl,
+				) );
+		
+	}
+	public function actionDraftToPublished( $post_id )
+	{
+		$course_id = $_GET['course_id'];
+		$post_model = CoursePost::model()->findByPk( $post_id );
+		if ( null == $post_model ) {
+			throw new CHttpException(404 , "no this post ");
+		}
+		$post_model->status = Yii::app()->params['course_post_status_published'];
+		if ( $post_model->save() ){
+			$this->redirect( array('viewbyid','id'=>$post_id , 'course_id'=>$course_id) );
+		}	
+		else {
+			throw new CHttpException( 500 , "internal server error ");
+		}
 	}
 	private function getTempCoursePostPath( $uid ) {
 		if ( null == $uid ) {
@@ -88,6 +142,10 @@ class CoursePostController extends Controller
 		return Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" .
 				$this->getOriginPath($uid) . $file_name;
 	}
+	/*
+	 * 为用户保存发布的课程资料。
+	 * 课程资料的状态可以从草稿变成已发布，也可以从已发布变成草稿
+	 */
 	private function saveCoursePost( $course_post_model , $item_id , $status , $post_id ) {
 		
 		$course_post_model->post = $_POST['CoursePost']['post'];
@@ -125,10 +183,59 @@ class CoursePostController extends Controller
 		$course_post_model->author = Yii::app()->user->id;
 		$course_post_model->item_id = $item_id;
 		$course_post_model->status = $status;
-		$course_post_model->update_time = date( "Y-m-d H:i:s", time() );
+		//$course_post_model->update_time = date( "Y-m-d H:i:s", time() );
 		return $course_post_model->updateByPk( $post_id , array(
 					'post' => $_POST['data'],
+					'update_time' => date( "Y-m-d H:i:s", time() ),
 					) );
+	}
+	private function process_course_post_submit( $course_post_model , $item_id , $course_id )
+	{
+		$user_id = Yii::app()->user->id;
+		$post_id = isset($_GET['post_id']) ? $_GET['post_id'] : null ;
+
+		if ( isset( $_POST['draft']) )
+		{
+			$status = CoursePost::STATUS_DRAFT;
+			$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
+			if ( $new_post_id > 0 ) {
+				$this->redirect(array('viewbyid','id'=>$new_post_id , 'course_id'=>$course_id));
+			}else {
+				throw new CHttpException( 400 , "更新数据库错误，该课程资料已经被删除");
+			}
+			
+		}
+		else if ( isset($_POST['cancel']) )
+		{
+			$msg = sprintf("User cancel edit course post , user_id = %d , " , $user_id );
+			
+			if ( null == $course_id ) {
+				$msg .= "no course_id ";
+				Yii::log( $msg , 'debug' );
+				$this->redirect( array('course/admin') );
+			}else {
+				$msg .= "get course id = " . $course_id ;
+				Yii::log( $msg , 'debug' );
+				$this->redirect( array('course/update&id=' . $course_id) );
+			}
+		}
+		else if ( isset($_POST['publish']) )
+		{
+			$msg = sprintf("publish the post ");
+			Yii::log( $msg , 'debug' );
+			$status = CoursePost::STATUS_PUBLISH;
+			$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
+			if( $new_post_id > 0 ) {
+				$this->redirect(array('viewbyid','id'=>$new_post_id , 'course_id'=>$course_id ));
+			}else {
+				throw new CHttpException( 400 , "更新数据库错误，该课程资料已经被删除");
+			}
+		}
+		else {
+			$msg = sprintf("user submit unknown data ");
+			Yii::log( $msg , 'debug' );
+			return;
+		}		
 	}
 	/*
 	 * 处理用户上传二进制文件
@@ -200,7 +307,7 @@ class CoursePostController extends Controller
 			else {
 				$msg .= "failed]";
 			}
-			Yii::log( $msg , 'debug' );
+			//Yii::log( $msg , 'debug' );
 			echo( '({"post_id":"' . $post_id . '"})' );
 		}		
 		/*$uid = Yii::app()->user->id;
@@ -233,52 +340,24 @@ class CoursePostController extends Controller
 	{
 		$course_post_model = new CoursePost;
 		$course_post_model->unsetAttributes();
-		$item_id = $_GET['item_id'];
 		$user_id = Yii::app()->user->id;
-		$post_id = null;
-		if ( $item_id == null ) {
+		$course_id = isset($_GET['course_id']) ? $_GET['course_id']: null ;
+		
+
+		if ( !isset($_GET['item_id']) ) {
 			throw new CHttpException(400 , "参数错误，没有item_id");
 		}
-		if ( isset( $_GET['post_id'] ) )
-		{
-			$post_id = $_GET['post_id'];
-		}
-		
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$item_id = $_GET['item_id'];
 
 		if( isset($_POST['CoursePost']) )
 		{
-			if ( isset( $_POST['draft']) )
-			{
-				$status = CoursePost::STATUS_DRAFT;
-				$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
-				if ( $new_post_id > 0 ) 
-				{
-					$this->redirect(array('view','id'=>$new_post_id));					
-				}			
-			}
-			else if ( isset($_POST['cancel']) )
-			{
-				$msg = sprintf("User cancel edit course post , user_id = %d" , $user_id );
-				Yii::log( $msg , 'debug' );
-				//取消，重定向				
-				//$this->redirect(array('course/update','id'=>$course_id));
-			}
-			else
-			{
-				$status = CoursePost::STATUS_PUBLISH;
-				$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
-				if( $new_post_id > 0 )
-				{
-					$this->redirect(array('view','id'=>$new_post_id));
-				}
-			}
+			$this->process_course_post_submit( $course_post_model , $item_id , $course_id );
 		}
 
 		$this->render('create',array(
 			'model'=>$course_post_model,
 			'item_id'=>$item_id,
+			'course_id'=>$course_id,
 		));
 	}
 
@@ -327,6 +406,10 @@ class CoursePostController extends Controller
 	public function actionIndex()
 	{
 		$cur_user = Yii::app()->user->id;
+		$course = isset( $_GET['course_id'] ) ? $_GET['course_id'] : null;
+		if ( null == $course ) {
+			throw new CHttpException( 400 , "没有couse_id");
+		} 
 		$item_id = -1;
 		if ( isset($_GET['item_id']) ){
 			$item_id = $_GET['item_id'];
@@ -341,8 +424,11 @@ class CoursePostController extends Controller
 						'pageSize'=>15,
 				)
 		));
+		
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+			'dataProvider'=> $dataProvider,
+			'item_id'     => $item_id,
+			'course_id'   => $course,
 		));
 	}
 

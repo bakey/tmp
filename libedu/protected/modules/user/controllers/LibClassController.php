@@ -6,7 +6,7 @@ class LibClassController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/online';
 
 	/**
 	 * @return array action filters
@@ -32,11 +32,11 @@ class LibClassController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','admin','viewstudent'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('delete'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -142,19 +142,54 @@ class LibClassController extends Controller
 			'dataProvider'=>$dataProvider,
 		));
 	}
+	public function actionViewStudent( $class_id )
+	{
+		$class_model = $this->loadModel( $class_id );
+		$students = $class_model->class_student;
+		$student_info = array();
+		foreach( $students as $student )
+		{
+			$info = array();
+			$profile = $student->user_profile;
+			$info['id'] = $student->id;
+			$info['name'] = $profile->real_name;
+			//TODO add school unique id;
+			$info['school_unique_id'] = '0x333';
+			$student_info[] = $info;			
+		}
+		$dataProvider = new CArrayDataProvider( $student_info );
+		$this->render( 'view_student' , array(
+				'dataProvider'=>$dataProvider,
+				));		
+	}
 
 	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin()
 	{
-		$model=new LibClass('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['LibClass']))
-			$model->attributes=$_GET['LibClass'];
+		//$this->layout = '//layouts/column1';		
+		$uid = Yii::app()->user->id;		
+		$user_model = LibUser::model()->findByPk( $uid );
+		$classes = $user_model->teacher_class;
+		$class_data = array();
+		
+		foreach( $classes as $lib_class )
+		{
+			$item = array();
+			$item['name'] = $lib_class->name;
+			$item['id'] = $lib_class->id;
+			$class_data[] = $item;			
+		}
+		$dataProvider=new CArrayDataProvider( $class_data , array(
+				'pagination'=>array(
+						'pageSize'=>15,
+					),
+				));
+	
 
 		$this->render('admin',array(
-			'model'=>$model,
+			'dataProvider'=>$dataProvider,
 		));
 	}
 
@@ -166,8 +201,9 @@ class LibClassController extends Controller
 	public function loadModel($id)
 	{
 		$model=LibClass::model()->findByPk($id);
-		if($model===null)
+		if($model===null) {
 			throw new CHttpException(404,'The requested page does not exist.');
+		}
 		return $model;
 	}
 

@@ -15,6 +15,7 @@ $this->breadcrumbs=array(
 	 echo $this->renderPartial('_edit_form', array(
 					'model'   => $model,
 					'item_id' => $item_id,
+					'course_id' => $course_id,
 			)); 
 ?>
 

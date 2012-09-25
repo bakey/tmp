@@ -54,7 +54,7 @@ class LibUserClass extends CActiveRecord
 		return array(
 			'student_info'=>array(self::BELONGS_TO,'LibUser','student_id'),
 			'teacher_info'=>array(self::BELONGS_TO,'LibUser','teacher_id'),
-			'class_info'=>array(self::BELONGS_TO,'LibClass','class_id'),
+			//'class_info'=>array(self::BELONGS_TO,'LibClass','class_id'),
 		);
 	}
 
@@ -89,4 +89,5 @@ class LibUserClass extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
 }

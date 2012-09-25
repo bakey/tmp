@@ -2,3 +2,7 @@ span.checkbox-columns {
     float:left;
     width: 20%;
 }
+#stitle
+{
+	background:white url(pbg.jpg) repeat-x left top;
+}

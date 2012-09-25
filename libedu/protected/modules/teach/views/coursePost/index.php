@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create CoursePost', 'url'=>array('create')),
+	array('label'=>'Create CoursePost', 'url'=>array('create&item_id='.$item_id)),
 	array('label'=>'Manage CoursePost', 'url'=>array('admin')),
 );
 ?>
@@ -20,4 +20,5 @@ echo(Yii::app()->user->real_name . "你好 , 你发布的课程如下:");
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
+	'viewData' => array('course_id'=>$course_id),
 )); ?>

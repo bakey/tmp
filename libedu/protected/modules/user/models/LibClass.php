@@ -59,6 +59,7 @@ class LibClass extends CActiveRecord
 		return array(
 			'school_info'=>array(self::BELONGS_TO,'School','school_id'),
 			'grade_info'=>array(self::BELONGS_TO,'Grade','grade'),
+			'class_student'=>array(self::MANY_MANY,'LibUser','tbl_user_class(class_id,student_id)'),
 		);
 	}
 
