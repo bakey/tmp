@@ -22,7 +22,7 @@ class UserIdentity extends CUserIdentity
 	 * 1代表学生，2代表老师
 	 */
 	
-	private function getUserRole( $uid )
+	/*private function getUserRole( $uid )
 	{
 		$msg = sprintf("user[%d] role = ", $uid );
 		$ret = $this->ROLE_UNKNOWN_ROLE;
@@ -53,7 +53,7 @@ class UserIdentity extends CUserIdentity
 		}
 		Yii::log( $msg , 'notice' );
 		return $ret;		
-	}
+	}*/
 	
 	public function authenticate(){
 		$username=strtolower($this->username);
@@ -71,7 +71,6 @@ class UserIdentity extends CUserIdentity
 			$this->setState('uemail',$user->email);
 			$this->setState('real_name',$user->user_profile->real_name );
 			$this->_id = $user->id;
-			$this->setState( 'user_role', $this->getUserRole($this->_id) );
 			$this->errorCode=self::ERROR_NONE;
 		}
 		return $this->errorCode==self::ERROR_NONE;

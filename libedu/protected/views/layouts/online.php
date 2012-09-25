@@ -40,7 +40,7 @@
 				array('label'=>'测试', 'url'=>array('/teach/course/admin')),
 				array('label'=>'问答', 'url'=>array('/teach/edition/admin')),
 				array('label'=>'学生', 'url'=>array('/user/libclass/admin') , 
-						'visible'=>(Yii::app()->user->user_role === Yii::app()->params['user_role_teacher']) ),				
+						'visible'=>((int)Yii::app()->user->urole === Yii::app()->params['user_role_teacher']) ),				
 				array('label'=>'统计', 'url'=>array('/teach/problem')),
 				array('label'=>'添加应用', 'url'=>array('/user/libuser/register')),
 				array('label'=>'退出系统 ('.$uname.')', 'url'=>array('/site/logout')),

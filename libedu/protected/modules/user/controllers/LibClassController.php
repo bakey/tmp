@@ -32,7 +32,7 @@ class LibClassController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','admin','viewstudent'),
+				'actions'=>array('create','getclassstudent','update','admin','viewstudent'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -43,6 +43,41 @@ class LibClassController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+	
+	public function actionGetClassStudent()
+	{
+		if ( isset( $_POST['class']) )
+		{
+			$class_id = $_POST['class'];
+			$class_model = $this->loadModel( $class_id );
+			$students = $class_model->class_student;
+			$student_info = array();
+			foreach( $students as $student )
+			{
+				$profile = $student->user_profile;
+				$info = array(
+						'id' => $student->id,
+						'name' => $profile->real_name,
+				);
+				
+				$user_school_set = $student->unique_id;
+				foreach( $user_school_set as $us )
+				{
+					if ( $us->school_id == Yii::app()->params['currentSchoolID'] )
+					{
+						$info['school_unique_id'] = $us->school_unique_id;
+						break;
+					}
+				}				
+				$student_info[] = $info;				
+			}
+			$dataProvider = new CArrayDataProvider( $student_info );
+			$this->renderPartial( 'view_student' , array(
+					'dataProvider' => $dataProvider,
+					) );
+		}
+		//$this->render( 'view_student' , array() );		
 	}
 
 	/**
@@ -151,10 +186,20 @@ class LibClassController extends Controller
 		{
 			$info = array();
 			$profile = $student->user_profile;
+			if ( null == $profile ) {
+				throw new CHttpException( 400 , "user : " . $student->id . " no profile ");
+			}
 			$info['id'] = $student->id;
 			$info['name'] = $profile->real_name;
-			//TODO add school unique id;
-			$info['school_unique_id'] = '0x333';
+			$user_school_set = $student->unique_id;
+			foreach( $user_school_set as $us )
+			{
+				if ( $us->school_id == Yii::app()->params['currentSchoolID'] )
+				{
+					$info['school_unique_id'] = $us->school_unique_id;
+					break;					
+				}				
+			}
 			$student_info[] = $info;			
 		}
 		$dataProvider = new CArrayDataProvider( $student_info );

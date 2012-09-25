@@ -81,8 +81,9 @@ class CourseController extends Controller
 		$top_item_model = $user_model->trace_item;
 		$edition_first_level_items = Item::model()->findAll( 'edition=:edition and level=1', array(
 						':edition' => $edition_id, ) );
+		
 	
-		if ( count($top_item_model) > 1 ) {
+		if ( null == $edition_first_level_items || count($top_item_model) > 1 ) {
 			throw new CHttpException( 400 , "trace item data corruption");
 		}
 		/*$url = 'course/ajaxLoadItem&edition_id=' . $edition_id . '&course_id=' . $id ;*/
