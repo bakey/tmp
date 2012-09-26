@@ -7,6 +7,7 @@
  */
 class UserIdentity extends CUserIdentity
 {
+	const ERROR_USER_NOTIN_OUR_SCHOOL = 3;
 	/**
 	 * Authenticates a user.
 	 * The example implementation makes sure if the username and password
@@ -58,20 +59,25 @@ class UserIdentity extends CUserIdentity
 	public function authenticate(){
 		$username=strtolower($this->username);
 		$user=LibUser::model()->findByAttributes(array('email'=>$username));
-		if($user===null)
+		if($user===null) {
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
-		else if(!$user->validatePassword($this->password,$user->salt))
+		}
+		else if(!$user->validatePassword($this->password,$user->salt)) {
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
+		}
 		else{
 			$usch=UserSchool::model()->findByPk($user->id);
+			
 			if($usch){
 				$this->setState('urole',$usch->role);
-			}
-			$this->setState('ustatus',$user->status);
-			$this->setState('uemail',$user->email);
-			$this->setState('real_name',$user->user_profile->real_name );
-			$this->_id = $user->id;
-			$this->errorCode=self::ERROR_NONE;
+				$this->setState('ustatus',$user->status);
+				$this->setState('uemail',$user->email);
+				$this->setState('real_name',$user->user_profile->real_name );
+				$this->_id = $user->id;
+				$this->errorCode=self::ERROR_NONE;
+			}else {
+				$this->errorCode = self::ERROR_USER_NOTIN_OUR_SCHOOL;
+			}		
 		}
 		return $this->errorCode==self::ERROR_NONE;
 	}

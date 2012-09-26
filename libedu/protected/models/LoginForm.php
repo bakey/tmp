@@ -49,8 +49,31 @@ class LoginForm extends CFormModel
 		if(!$this->hasErrors())
 		{
 			$this->_identity=new UserIdentity($this->username,$this->password);
-			if(!$this->_identity->authenticate())
-				$this->addError('password','Incorrect username or password.');
+			if(!$this->_identity->authenticate()) {
+				switch ( $this->_identity->errorCode )
+				{
+					case CBaseUserIdentity::ERROR_USERNAME_INVALID :
+						{
+							$this->addError('username','用户名输入错误');
+							break;
+						}
+					case CBaseUserIdentity::ERROR_PASSWORD_INVALID:
+						{
+							$this->addError('password','密码输入错误');
+							break;
+						}
+					case UserIdentity::ERROR_USER_NOTIN_OUR_SCHOOL:
+						{
+							$this->addError('password','此用户目前不在我们系统的学校中，请联系管理员');
+							break;							
+						}
+					default:
+						{
+							$this->addError('password','未知错误，请联系管理员');
+							break;
+						}
+				}				
+			}
 		}
 	}
 
