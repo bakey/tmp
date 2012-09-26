@@ -172,6 +172,15 @@ class LibUser extends CActiveRecord
 		}
 	}
 
+	public function validateResetPassword($aid,$uid){
+		$res = TempActive::model()->findByAttributes(array('active_id'=>$aid,'user_id'=>$uid));
+		if(!$res){
+			return false;
+		}else{
+			return true;
+		}
+	}
+
 	public function resendActivationCode($uemail){
 		$res = $this->findByAttributes(array('email' => $uemail));
 		if(!$res){
@@ -192,6 +201,29 @@ class LibUser extends CActiveRecord
 			$res1->active_id = $aid;
 			$res1->create_time = date('Y-m-d H:i:s');
 			$res1->save();
+			return true;
+		}
+	}
+
+	public function sendResetPasswordEmail($uemail){
+		$res = $this->findByAttributes(array('email' => $uemail));
+		if(!$res){
+			return false;
+		}else{
+			$aid = md5($res->user_profile->real_name.$res->email.Yii::app()->params['currentSchoolID'].time());
+
+			$mailer = new Emailer($uemail, $res->user_profile->real_name);
+			$mailer->setMsgSubject('LibSchool帐号 - 重置密码');
+			$mailer->setMsgTemplate('resetpassword');
+			$mailer->setMsgBody(array($res->user_profile->real_name,array('<a href="http://localhost'.Yii::app()->createUrl('/user/libuser/resetpassword',array('aid' => $aid, 'uid'=>$res->id )).'">http://localhost'.Yii::app()->createUrl('/user/libuser/resetpassword',array('aid' => $aid , 'uid'=> $res->id )).'</a>')));
+			$mailer->doSendMail();
+
+			$tac = new TempActive;
+			$tac->user_id = $res->id;
+			$tac->type = 1;
+			$tac->active_id = $aid;
+			$tac->create_time = date("Y-m-d H:i:s");
+			$tac->save(false);
 			return true;
 		}
 	}

@@ -36,6 +36,7 @@ $this->breadcrumbs=array(
 		<?php echo $form->checkBox($model,'rememberMe'); ?>
 		<?php echo CHtml::label('自动登陆','LoginForm[rememberMe]'); ?>
 		<?php echo $form->error($model,'rememberMe'); ?>
+		<a href="<?php echo Yii::app()->createUrl('/user/libuser/iforgot') ?>">忘记密码？</a>
 	</div>
 
 	<div class="row buttons">

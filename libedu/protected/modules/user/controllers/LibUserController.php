@@ -43,6 +43,26 @@ class LibUserController extends Controller
 		}
 	}
 
+	public function actionIForgot($status = 2){
+		$model = new LibUser;
+		$form = new CForm('application.modules.user.views.LibUser.iForgotForm', $model);
+		if($form->submitted('resendBtn')){
+			if(LibUser::model()->sendResetPasswordEmail($_POST['LibUser']['email'])){
+				$this->redirect(array('/user/libuser/iforgot','status'=>1));
+			}else{
+				$this->redirect(array('/user/libuser/iforgot','status'=>0));
+			}
+		}else{
+			if($status == 1){
+				$this->render('iforgotresult',array('msg' => '系统已经重新给您发送了一封电子邮件，请您检查您的邮箱，点击邮件中的链接以重置密码。'));
+			}else if($status == 0){
+				$this->render('iforgot',array('msg' => '系统中没有您的电子邮箱地址，请您再次确认您输入的是您注册时填写的电子邮件地址','form'=>$form));
+			}else if($status == 2){
+				$this->render('iforgot', array('form'=>$form));
+			}
+		}
+	}
+
 	public function actionClassStuStatus(){
 		if(isset(Yii::app()->user->urole)){
 			if(Yii::app()->user->urole == 2){
@@ -126,6 +146,44 @@ class LibUserController extends Controller
 			'model'=>$model,
 			'msg'=>$err,
 		));
+	}
+
+	public function actionResetPassword($aid,$uid){
+	     $model=$this->loadModel($uid);
+	    if(LibUser::model()->validateResetPassword($aid,$uid)){
+	    	$err = -3;
+			if(isset($_POST['LibUser']))
+			{	
+				$cusr=LibUser::model()->findByPk($uid);
+				if($_POST['LibUser']['password']==$_POST['LibUser']['repeatpassword']){
+					if($_POST['LibUser']['password']!=''){
+						$cusr->password = md5($_POST['LibUser']['password'].$cusr->salt);
+						$cusr->save(false);
+						$err = 1;
+						TempActive::model()->deleteAllByAttributes(array('active_id'=>$aid));
+						$this->render('iforgotresult',array('msg' => '密码重置成功，请用您新设置的密码登陆系统！'));
+						exit();
+					}else{
+						$err = -1;
+						$this->render('resetpwd',array(
+						'model'=>$model,
+						'msg'=>$err,
+						));
+					}
+				}else{
+					$this->render('resetpwd',array(
+					'model'=>$model,
+					'msg'=>$err,
+					));
+				}
+			}
+			$this->render('resetpwd',array(
+					'model'=>$model,
+					'msg'=>$err,
+					));
+	    }else{
+	    	$this->render('iforgotresult',array('msg' => '验证码错误或已过期！'));
+	    }
 	}
 
 	public function actionRegister(){
