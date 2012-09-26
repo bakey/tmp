@@ -14,7 +14,10 @@ return array(
 	'name'=>'励博教育',
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload'=>array(
+		'log',
+		'bootstrap',
+	),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -32,6 +35,9 @@ return array(
 			'password'=>'libedu',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
+			'generatorPaths'=>array(
+            	'bootstrap.gii',
+       		 ),
 		),
 		'user' => array() ,
 		'teach' => array() ,		
@@ -47,6 +53,10 @@ return array(
 			'class'=>'CDbAuthManager',
 			'connectionID'=>'db',
 		),
+		'bootstrap'=>array(
+	        'class'=>'ext.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
+	         'responsiveCss'=>false,
+	    ),
 
 		 'clientScript' => array(
     'class' => 'application.components.NLSClientScript',
