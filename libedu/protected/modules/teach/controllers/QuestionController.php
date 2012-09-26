@@ -36,7 +36,7 @@ class QuestionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement'),
+				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement','generatequestionfeed'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -92,6 +92,12 @@ class QuestionController extends Controller
 			'model'=>$model,
 			'mycourse'=>$res,
 		));
+	}
+
+	public function actionGenerateQuestionFeed(){
+		$cquestion = Question::model()->findByPk($_GET['rid']);
+		$cusr = LibUser::model()->findByPk($_GET['uid']);
+		$this->renderPartial('question_timeline',array('cquestion'=>$cquestion,'cusr'=>$cusr));
 	}
 
 	public function actionAnswer($qid)

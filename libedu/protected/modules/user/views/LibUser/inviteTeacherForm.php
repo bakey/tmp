@@ -1,6 +1,6 @@
 <?php
 
-	/*return array(
+	return array(
 		'elements'=>array(
 			'name'=>array(
 				'type'=>'text',
@@ -20,5 +20,5 @@
 				'label'=>'邀请教师',
 			),
 		)
-	);*/
+	);
 ?>

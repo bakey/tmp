@@ -90,7 +90,7 @@
 			if($(obj).find('.timeline_corner').offset().top>previousPos){
 				previousPos = $(obj).find('.timeline_corner').offset().top;
 			}else{
-				finalpos=10;
+				finalpos=50;
 				while($(obj).find('.timeline_corner').offset().top+finalpos<previousPos){
 				   finalpos +=50;	
 				}

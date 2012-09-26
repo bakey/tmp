@@ -1,6 +1,6 @@
 <?php
 
-class ProfileController extends Controller
+class NewsController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -32,7 +32,7 @@ class ProfileController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','uploadavatar','cropavatar','generateavatarfeed'),
+				'actions'=>array('create','update','getresource'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -62,68 +62,21 @@ class ProfileController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Profile;
+		$model=new News;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Profile']))
+		if(isset($_POST['News']))
 		{
-			$model->attributes=$_POST['Profile'];
+			$model->attributes=$_POST['News'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->uid));
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
 		));
-	}
-
-	public function actionUploadAvatar()
-	{
-        Yii::import("ext.EAjaxUpload.qqFileUploader");
-
-        $folder='./'.Yii::app()->params['uploadFolder'].'/temp_upload/';// folder for uploaded files
-        $allowedExtensions = array("jpg","png","gif");//array("jpg","jpeg","gif","exe","mov" and etc...
-        $sizeLimit = 10 * 1024 * 1024;// maximum file size in bytes
-
-        $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
-        $result = $uploader->handleUpload($folder);
-        $return = htmlspecialchars(json_encode($result), ENT_NOQUOTES);
-
-        //resize and rename uploaded image
-        Yii::import("ext.EPhpThumb.EPhpThumb");
-		$thumb=new EPhpThumb();
-		$thumb->init(); 
-		$thumb->create('./'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$result['filename'])
-		      ->resize(400,400)
-		      ->save('./'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$result['filename']);
- 
-        echo $return;// it's array
-	}
-
-
-	public function actionCropAvatar(){
-		Yii::import("ext.EPhpThumb.EPhpThumb");
-		$thumb=new EPhpThumb();
-		$thumb->init(); 
-		$newFileName = './'.Yii::app()->params['uploadFolder'].'/temp_upload/'.time().$_POST['fname'];
-		$thumb->create('./'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$_POST['fname'])
-			  ->crop($_POST['cx'], $_POST['cy'], $_POST['cw'], $_POST['ch'])
-			  ->resize(64,64)
-			  ->save($newFileName);
-	    if(file_exists($newFileName)){
-	    	unlink('./'.Yii::app()->params['uploadFolder'].'/temp_upload/'.$_POST['fname']);
-	    	echo Yii::app()->request->baseUrl.substr($newFileName,1);
-	    }else{
-	    	echo 'fail';
-	    }
-	}
-
-	public function actionGenerateAvatarFeed(){
-		$cnews = News::model()->findByPk($_GET['id']);
-		$cusr = LibUser::model()->findByPk($_GET['uid']);
-		$this->renderPartial('avatar_timeline',array('cnews'=>$cnews,'cusr'=>$cusr));
 	}
 
 	/**
@@ -138,16 +91,27 @@ class ProfileController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Profile']))
+		if(isset($_POST['News']))
 		{
-			$model->attributes=$_POST['Profile'];
+			$model->attributes=$_POST['News'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->uid));
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('update',array(
 			'model'=>$model,
 		));
+	}
+
+	public function actionGetResource($id){
+		$cnews = $this->loadModel($id);
+		if($cnews->type == 3){
+			$this->forward('/teach/answer/generateanswerfeed',false);
+		}else if($cnews->type == 6){
+			$this->forward('/user/profile/generateavatarfeed',false);
+		}else if($cnews->type == 5){
+			$this->forward('/teach/question/generatequestionfeed',false);
+		}
 	}
 
 	/**
@@ -169,7 +133,7 @@ class ProfileController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Profile');
+		$dataProvider=new CActiveDataProvider('News');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -180,10 +144,10 @@ class ProfileController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Profile('search');
+		$model=new News('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Profile']))
-			$model->attributes=$_GET['Profile'];
+		if(isset($_GET['News']))
+			$model->attributes=$_GET['News'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -197,7 +161,7 @@ class ProfileController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=Profile::model()->with('user_info')->findByPk($id);
+		$model=News::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -209,7 +173,7 @@ class ProfileController extends Controller
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='profile-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='news-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
