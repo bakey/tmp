@@ -56,6 +56,7 @@ class Answer extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'question_info'=>array(self::BELONGS_TO,'Question','question_id'),
+			'owner_info'=>array(self::BELONGS_TO,'LibUser','owner'),
 		);
 	}
 

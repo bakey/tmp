@@ -8,17 +8,15 @@ $this->menu=array(
 );
 ?>
 
-<h1>回答问题</h1>
+<h3>回答问题</h3>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php $this->widget('bootstrap.widgets.TbDetailView', array(
 	'data'=>$cq,
 	'attributes'=>array(
-		'id',
-		'owner',
-		'item',
+		array('name'=>'owner','value'=>$cq->owner_info->user_profile->real_name),
+		array('name'=>'item','value'=>$cq->item_info->content),
 		array('type'=>'html','name'=>'details'),
 		'create_time',
-		'view_count',
 	),
 )); ?>
 

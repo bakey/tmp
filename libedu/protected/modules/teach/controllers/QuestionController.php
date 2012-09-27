@@ -10,7 +10,7 @@ class QuestionController extends Controller
 	const TBL_ITEM = "tbl_item";
 	const TBL_ITEM_LEVEL = "tbl_item_item";
 
-	public $layout='//layouts/online_column';
+	public $layout='//layouts/questiontwocolumn';
 
 	/**
 	 * @return array action filters
@@ -36,7 +36,7 @@ class QuestionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement','generatequestionfeed'),
+				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement','generatequestionfeed','myquestion','getquestionbyitem'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -255,7 +255,7 @@ class QuestionController extends Controller
 			if(isset($_GET['root'])){
 				$res = ItemItem::model()->findByAttributes(array('parent'=>$child['id']));
 				if(!$res){
-					$nodeText = '<a id="child'.$child['id'].'" href="#" onclick="doselectchapter('.$child['id'].')">'.$child['text'].'</a>';
+					$nodeText = '<a id="child'.$child['id'].'" href="javascript:void(0);" onclick="doselectchapter('.$child['id'].')">'.$child['text'].'</a>';
 				}else{
 					$nodeText = $child['text'];	
 				}
@@ -327,6 +327,37 @@ class QuestionController extends Controller
 	{
 		$dataProvider=new CActiveDataProvider('Question');
 		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	public function actionMyQuestion()
+	{
+		$ccourse = null;
+		$eid = null;
+		if(isset(Yii::app()->user->course)){
+			$ccourse = Yii::app()->user->course;
+			$edition = Course::model()->findByPk($ccourse);
+			$edition = $edition->edition;
+		}
+		$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
+        'condition'=>'owner='.Yii::app()->user->id,
+        'order'=>'create_time DESC',
+    ),));
+		$this->render('myquestion',array(
+			'dataProvider'=>$dataProvider,
+			'ccourse' =>$ccourse,
+			'eid'=>$edition->id,
+		));
+	}
+
+	public function actionGetQuestionByItem()
+	{
+		$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
+        'condition'=>'item='.$_POST['chid'],
+        'order'=>'create_time DESC',
+    ),));
+		$this->renderPartial('index',array(
 			'dataProvider'=>$dataProvider,
 		));
 	}

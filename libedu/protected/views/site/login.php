@@ -1,47 +1,36 @@
-<?php
-/* @var $this SiteController */
-/* @var $model LoginForm */
-/* @var $form CActiveForm  */
-
-$this->pageTitle=Yii::app()->name . ' - 登陆';
-$this->breadcrumbs=array(
-	'Login',
-);
-?>
 
 <h1>用户登录</h1>
 
-<div class="form">
-<?php $form=$this->beginWidget('CActiveForm', array(
+<div class="form span9 offset1">
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'login-form',
 	'enableClientValidation'=>true,
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
 	),
+	'type'=>'inline',
+	'htmlOptions'=>array('class'=>'well'),
 )); ?>
 
-	<div class="row">
-		<?php echo CHtml::label('电子邮箱','LoginForm[username]',array('required'=>true)); ?>
-		<?php echo $form->textField($model,'username'); ?>
+
+		<?php echo $form->textFieldRow($model,'username'); ?>
 		<?php echo $form->error($model,'username'); ?>
-	</div>
 
-	<div class="row">
-		<?php echo CHtml::label('密码','LoginForm[password]',array('required'=>true)); ?>
-		<?php echo $form->passwordField($model,'password'); ?>
+
+
+		<?php echo $form->passwordFieldRow($model,'password'); ?>
 		<?php echo $form->error($model,'password'); ?>
-	</div>
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'登陆')); ?>
 
-	<div class="row rememberMe">
+		
 		<?php echo $form->checkBox($model,'rememberMe'); ?>
 		<?php echo CHtml::label('自动登陆','LoginForm[rememberMe]'); ?>
-		<?php echo $form->error($model,'rememberMe'); ?>
-		<a href="<?php echo Yii::app()->createUrl('/user/libuser/iforgot') ?>">忘记密码？</a>
-	</div>
+	
+		<p>
+			<a href="<?php echo Yii::app()->createUrl('/user/libuser/iforgot') ?>">忘记密码？</a>
+		</p>
 
-	<div class="row buttons">
-		<?php echo CHtml::submitButton('登陆'); ?>
-	</div>
+		
 
 <?php $this->endWidget(); ?>
 </div><!-- form -->
@@ -63,9 +52,6 @@ $this->breadcrumbs=array(
 </div>
 
 <style>
-	.form {border:1px solid #16a9f7; overflow: auto; padding: 20px; width:500px; margin-left: 200px;}
-	.form .row{float:left;}
-	.form .row.buttons{clear:both;}
 
 	#registerArea, #mobileClientArea {border:1px solid #16a9f7; overflow: auto; padding: 20px; width:340px; margin-left: 50px; margin-top: 60px; float:left;}
 </style>
