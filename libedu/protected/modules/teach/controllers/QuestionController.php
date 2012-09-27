@@ -10,7 +10,7 @@ class QuestionController extends Controller
 	const TBL_ITEM = "tbl_item";
 	const TBL_ITEM_LEVEL = "tbl_item_item";
 
-	public $layout='//layouts/online_column';
+	public $layout='//layouts/column2';
 
 	/**
 	 * @return array action filters
@@ -36,7 +36,7 @@ class QuestionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement','generatequestionfeed'),
+				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement','generatequestionfeed','myquestion'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -75,8 +75,6 @@ class QuestionController extends Controller
 
 		if(isset($_POST['Question']))
 		{
-			var_dump( $_POST );
-			exit();
 			$model->attributes=$_POST['Question'];
 			if($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));
@@ -119,7 +117,7 @@ class QuestionController extends Controller
 		$cq = Question::model()->findByPk($qid);
 
 		if(!$cq){
-			throw new CHttpException(403,'问题不存在');
+			throw new CHttpException(403,'问题不存�?);
 		}else{
 			if(isset($_POST['Answer']))
 			{
@@ -168,7 +166,7 @@ class QuestionController extends Controller
 	public function actionGetAllSubElement($qid){
 		$res = Answer::model()->findAllByAttributes(array('question_id'=>$qid),array('order'=>'type DESC'));
 		if(!$res){
-			echo '没有回答及追问';
+			echo '没有回答及追�?;
 		}else{
 			for($i=0;$i<count($res);$i++){
 				$this->renderPartial('_subAnswer',array('data'=>$res[$i]),false,true);
@@ -196,8 +194,7 @@ class QuestionController extends Controller
 				$parentId = (int) $_GET['root'];
 				$levelCondition = " level > 1 " ;
 			}else if( isset($_GET['edition_id']) ) {
-				//第一层查询
-				//$parentId = (int)$_GET['edition_id'];
+				//第一层查�?				//$parentId = (int)$_GET['edition_id'];
 				$levelCondition = " level <=> 1 "; 
 			}
 			else {
@@ -235,8 +232,7 @@ class QuestionController extends Controller
 		}
 		
 		/*
-		 * 我们期望或得到类似" id content hasChildren"排列的数据，通过json方式返回给ajax调用，
-		 * 前端接收到后根据这个信息渲染出树状结构。
+		 * 我们期望或得到类�? id content hasChildren"排列的数据，通过json方式返回给ajax调用�?		 * 前端接收到后根据这个信息渲染出树状结构�?
 		 */
 		//$sql_cmd = sprintf("SELECT %s.id, %s.content AS text, max(%s.id<=>%s.parent) AS hasChildren FROM %s join %s where %s.edition <=> %s ",
 			//	self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , $editionId );
@@ -327,6 +323,19 @@ class QuestionController extends Controller
 	{
 		$dataProvider=new CActiveDataProvider('Question');
 		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	public function actionMyQuestion()
+	{
+		$dataProvider=new CActiveDataProvider('Question',array(
+			'criteria'=>array(
+		        'condition'=>'owner='.Yii::app()->user->id,
+		        'order'=>'create_time DESC',
+		    )
+	    ));
+		$this->render('myquestion',array(
 			'dataProvider'=>$dataProvider,
 		));
 	}
