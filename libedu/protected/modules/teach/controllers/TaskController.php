@@ -33,7 +33,7 @@ class TaskController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','sortproblem','viewtopics','ajaxloaditem','create','update','add','topics','createTaskProblem','addExaminee','examinee','addTaskRecord','participateTask','createTaskRecord'),
+				'actions'=>array('admin','previewtask','sortproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','add','topics','createTaskProblem','addExaminee','examinee','addTaskRecord','participateTask','createTaskRecord'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -44,6 +44,18 @@ class TaskController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+	private function create_task_problem( $task_model )
+	{
+		$selected_kp = $_POST['Task']['kp'];
+		foreach( $selected_kp as $kp )
+		{
+			$task_kp_model = new TaskKp;
+			$task_kp_model->task = $task_model->id;
+			$task_kp_model->kp = $kp;
+			$task_kp_model->save();
+		}
+		return true;
 	}
 	private function publish_task( $task_model )
 	{
@@ -61,8 +73,7 @@ class TaskController extends Controller
 			$task_problem_model->problem_score = $_POST['problem_score'][ $selected  ];
 			$task_problem_model->save();
 		}
-		return true;
-		
+		return $this->create_task_problem( $task_model );		
 	}
 	private function preview_task()
 	{
@@ -79,6 +90,26 @@ class TaskController extends Controller
 			'model'=>$this->loadModel($id),
 		));
 	}
+	public function actionPreviewTask( $task_id )
+	{
+		$task_model = Task::model()->findByPk( $task_id );
+		if ( null == $task_model ) {
+			throw new CHttpException( 404 , "no this task ");
+		}
+		$problems = $task_model->problems;
+		$problem_data = array();
+		foreach( $problems as $problem )
+		{
+			$problem_data[] = array( 'id' => $problem->id , 
+									  'content'=>$problem->content
+					);
+		}
+		$dataProvider = new CArrayDataProvider( $problem_data );
+		$this->render( 'preview',array(
+					'problem_data' => $dataProvider ,
+				) );
+		
+	}
 
 	/**
 	 * Creates a new model.
@@ -92,9 +123,10 @@ class TaskController extends Controller
 
 		if( isset($_POST['Task']) )
 		{
+			
 			if ( isset( $_POST['publish']) ) {
 				if ( $this->publish_task( $task_model ) ) {
-					$this->redirect( array("addexaminee" , 'id'=>$task_model->id) ) ;
+					//$this->redirect( array("addexaminee" , 'id'=>$task_model->id) ) ;
 				}
 			}
 			else if ( isset($_POST['preview']) ) {
@@ -212,43 +244,6 @@ class TaskController extends Controller
 			'id'=>$id,
 		));
 	}
-
-	public function actionCreateTaskProblem()
-{
-		if(isset($_POST['same']))
-			$check=$_POST['same'];
-		var_dump($_POST['scores']);
-		if(isset($_POST['scores']))
-			$score=$_POST['scores'];
-	
-		for($j=0;$j<count($score);$j++)
-		{
-			if($score[$j]!=="")
-				$flag[$j]=1;
-			else
-				$flag[$j]=0;
-		}
-	
-		$i=0;
-		while($i<count($check))
-		{
-			$taskProblem=new TaskProblem();
-			$taskProblem->task_id=$_POST['taskid'];
-			$taskProblem->problem_id=(int)$check[$i]+1;
-			for($j=0;$j<count($score);$j++)
-			{
-				if($score[$j]!=="" && $flag[$j]==1)
-				{
-					$taskProblem->problem_score=$score[$j];
-					$flag[$j]=0;
-					break;
-				}
-			}
-            $taskProblem->save();
-			$i++;	
-		}
-		$this->redirect(array('task/viewTopics','id'=>$_POST['taskid']));
-	}
 	
     
 	 /*添加题目
@@ -320,25 +315,6 @@ class TaskController extends Controller
 							'problem_data'=>$dataProvider,));
 	}
 
-    /*添加考生
-	 */
-	public function actionAddExaminee($id)
-	{
-		$dataProvider=new CActiveDataProvider('LibUserClass',array(
-			'pagination'=>array(
-				'pagesize'=>10),
-			'criteria'=>array(
-				'condition'=>'teacher_id=:teacher_id',
-				'params'=>array(':teacher_id'=>Yii::app()->user->id),
-			),
-		 )); 
-		
-		$data=$dataProvider->getData();
-		$this->render('addExaminee',array(
-			'data'=>$data,
-			'id'=>$id
-			));
-	}
 
 	public function actionExaminee($taskid)
 	{
@@ -507,6 +483,65 @@ class TaskController extends Controller
 			'data'=>$problems,
 			'id'=>$id
 			));
+	}
+	public function actionAjaxLoadkp()
+	{
+		$level_cond = "";
+		$parent_id = null;
+		if ( isset($_GET['root']) ) {
+			if ( $_GET['root'] !== 'source' ){
+				//深层查询,获取父亲id
+				$parent_id = (int) $_GET['root'];
+				$level_cond = " level > 1 " ;
+			}else {
+				//第一层查询
+				$level_cond = " level <=> 1 ";
+			}
+		}
+		$children = array();
+		$kps = KnowledgePoint::model()->findAll(
+				$level_cond
+		);
+		foreach( $kps as $it )
+		{
+			$info = array() ;
+			$parent = $it->kp_parent ;
+			if ( count($it->kp_child) > 0 ) {
+				$info['hasChildren'] = 1;
+			}else {
+				$info['hasChildren'] = 0;
+			}
+			$info['text'] = $it->name;
+			$info['id']	= $it->id;
+			if ( null == $parent_id ) {
+				$children[] = $info;
+			}else if ( count($parent) > 0 && $parent[0]->id == $parent_id ) {
+				$children[] = $info;
+			}
+		}
+		
+		$treedata=array();
+		foreach($children as $child){
+			$select_kp_js = sprintf('select_kp(%d);',$child['id']);
+			$options=array(
+					'href'=>'javascript:void(0)',
+					'id'=>"kp_".$child['id'],
+					'class'=>'treenode',
+					'onclick' => $select_kp_js ,
+			);
+			$nodeText = CHtml::openTag('a', $options);
+			$nodeText .= $child['text'];
+			$nodeText .= CHtml::closeTag('a')."\n";
+			$child['text'] = $nodeText;
+			$treedata[]=$child;
+		}
+		
+		echo str_replace(
+				'"hasChildren":"0"',
+				'"hasChildren":false',
+				CTreeView::saveDataAsJson($treedata)
+		);
+		
 	}
 	public function actionAjaxLoadItem()
 	{

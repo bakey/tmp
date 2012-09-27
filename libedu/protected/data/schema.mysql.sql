@@ -176,6 +176,11 @@ create table if not exists tbl_task_record(
 `status` tinyint not null default 0
 )engine=innodb default charset=utf8;
 
+create table if not exists tbl_task_kp(
+	`task` int not null references tbl_task(id) on delete cascade,
+	`kp` int not null references tbl_knowledge_point(id) on delete cascade
+)engine=innodb default charset=utf8;
+
 create table if not exists tbl_school(
 	`id` int(11) not null auto_increment primary key,
 	`name` varchar(255) not null ,

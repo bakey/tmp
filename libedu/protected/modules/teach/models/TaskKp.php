@@ -1,21 +1,18 @@
 <?php
 
 /**
- * This is the model class for table "tbl_knowledge_point".
+ * This is the model class for table "tbl_task_kp".
  *
- * The followings are the available columns in table 'tbl_knowledge_point':
- * @property integer $id
- * @property integer $course_id
- * @property string $name
- * @property integer $level
- * @property string $description
+ * The followings are the available columns in table 'tbl_task_kp':
+ * @property integer $task
+ * @property integer $kp
  */
-class KnowledgePoint extends CActiveRecord
+class TaskKp extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return KnowledgePoint the static model class
+	 * @return TaskKp the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -27,7 +24,7 @@ class KnowledgePoint extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_knowledge_point';
+		return 'tbl_task_kp';
 	}
 
 	/**
@@ -38,13 +35,11 @@ class KnowledgePoint extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, level,description,level', 'required'),
-			array('course_id, level', 'numerical', 'integerOnly'=>true),
-			array('name', 'length', 'max'=>255),
-			array('description', 'safe'),
+			array('task, kp', 'required'),
+			array('task, kp', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, course_id, name, level, description', 'safe', 'on'=>'search'),
+			array('task, kp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,9 +51,6 @@ class KnowledgePoint extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-				//获取本知识点所有的儿子节点
-				'kp_child'=>array(self::MANY_MANY , 'KnowledgePoint' , 'tbl_kp_level(parent,child)'),
-				'kp_parent'=>array(self::MANY_MANY , 'KnowledgePoint' , 'tbl_kp_level(child,parent)'),
 		);
 	}
 
@@ -68,11 +60,8 @@ class KnowledgePoint extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'course_id' => 'Course',
-			'name' => '知识点名',
-			'level' => 'Level',
-			'description' => '知识点描述',
+			'task' => 'Task',
+			'kp' => 'Kp',
 		);
 	}
 
@@ -87,11 +76,8 @@ class KnowledgePoint extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('course_id',$this->course_id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('level',$this->level);
-		$criteria->compare('description',$this->description,true);
+		$criteria->compare('task',$this->task);
+		$criteria->compare('kp',$this->kp);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

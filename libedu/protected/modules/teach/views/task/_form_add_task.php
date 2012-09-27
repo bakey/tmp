@@ -24,8 +24,8 @@
             'collapsed' => false,
             'url' => array( $url ), 
 		)
-);
-?>
+	);
+	?>
 	</div>
 	
 	<h4 id="hint_text" style="display:none">您已选择关联的章节：
@@ -33,11 +33,31 @@
 	</span>
 	</h4>
 		
+	<h3>
+	关联以下知识点
+	</h3>
+	<?php
+	$url = 'task/ajaxloadkp';
+	$this->widget(
+			'CTreeView',
+			array(
+					'animated'=>'fast', //quick animation
+					'collapsed' => false,
+					'url' => array( $url ),
+			)
+	);		 
+	?>
+	<h3 id="hint_select_kp" style="display:none">您已选择关联的知识点:
+	</h3>
+		
 
 	<div class="row"  style="display:none">
 		<?php echo $form->labelEx($task_model,'item'); ?>
 		<?php echo $form->textField($task_model,'item',array('id'=>'selected_item')); ?>
 		<?php echo $form->error($task_model,'item'); ?>
+	</div>
+	
+	<div id="wrap_kp" class="row"  style="display:none">
 	</div>
 	
 	<?php
@@ -66,8 +86,14 @@
 <script type="text/javascript">
 	function select_item( cid ){	
 		$('#selected_item').val(cid);	
-		$('#hint_text').fadeIn(100);
-		$('#item_tree').fadeOut(100);
+		$('#hint_text').fadeIn(300);
+		$('#item_tree').fadeOut(300);
 		$('#relation_item').text( $('#'+cid).text() );
 	}
+	function select_kp( kpid ) {
+		$('#hint_select_kp').fadeIn(300);
+		$('#hint_select_kp').append('<span syle=\'color:blue\'>' + $('#kp_'+kpid).text() +'</span>,');
+		$('#wrap_kp').append('<input name="Task[kp][]" type="text" value="'+kpid+'" />');		
+	}
+		
 </script>
