@@ -36,7 +36,7 @@ class QuestionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement','generatequestionfeed'),
+				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement','generatequestionfeed','myquestion'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -325,6 +325,19 @@ class QuestionController extends Controller
 	{
 		$dataProvider=new CActiveDataProvider('Question');
 		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	public function actionMyQuestion()
+	{
+		$dataProvider=new CActiveDataProvider('Question',array(
+			'criteria'=>array(
+		        'condition'=>'owner='.Yii::app()->user->id,
+		        'order'=>'create_time DESC',
+		    )
+	    ));
+		$this->render('myquestion',array(
 			'dataProvider'=>$dataProvider,
 		));
 	}
