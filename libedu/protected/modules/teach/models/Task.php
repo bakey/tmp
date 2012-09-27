@@ -5,19 +5,21 @@
  *
  * The followings are the available columns in table 'tbl_task':
  * @property integer $id
- * @property integer $course_item_id
+ * @property integer $item
  * @property string $name
  * @property string $create_time
+ * @property string $update_time
  * @property string $last_time
- * @property integer $creator
+ * @property integer $author
  * @property string $description
- * @property integer $state
+ * @property integer $status
  */
 class Task extends CActiveRecord
 {
+	const STATUS_DRAFT=1;
+	const STATUS_PUBLISHED=2;
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
 	 * @return Task the static model class
 	 */
 	public static function model($className=__CLASS__)
@@ -41,13 +43,12 @@ class Task extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('course_item_id, create_time, last_time', 'required'),
-			array('course_item_id, creator, state', 'numerical', 'integerOnly'=>true),
+			array('item, author, status', 'numerical', 'integerOnly'=>true),
 			array('name', 'length', 'max'=>255),
-			array('description', 'safe'),
+			array('create_time, update_time, last_time, description', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, course_item_id, name, create_time, last_time, creator, description, state', 'safe', 'on'=>'search'),
+			array('id, item, name, create_time, update_time, last_time, author, description, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,6 +60,7 @@ class Task extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'problems'=>array(self::MANY_MANY,'Problem','tbl_task_problem(task_id,problem_id)'),
 		);
 	}
 
@@ -69,13 +71,14 @@ class Task extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'course_item_id' => 'Course Item',
+			'item' => 'Item',
 			'name' => 'Name',
 			'create_time' => 'Create Time',
+			'update_time' => 'Update Time',
 			'last_time' => 'Last Time',
-			'creator' => 'Creator',
+			'author' => 'Author',
 			'description' => 'Description',
-			'state' => 'State',
+			'status' => 'Status',
 		);
 	}
 
@@ -91,16 +94,43 @@ class Task extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('course_item_id',$this->course_item_id);
+		$criteria->compare('item',$this->item);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('create_time',$this->create_time,true);
+		$criteria->compare('update_time',$this->update_time,true);
 		$criteria->compare('last_time',$this->last_time,true);
-		$criteria->compare('creator',$this->creator);
+		$criteria->compare('author',$this->author);
 		$criteria->compare('description',$this->description,true);
-		$criteria->compare('state',$this->state);
+		$criteria->compare('status',$this->status);
 
-		return new CActiveDataProvider($this, array(
+		return new CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	protected function beforeSave()
+	{
+		if(parent::beforeSave())
+		{
+			if($this->isNewRecord)
+			{
+				$this->status=$_POST['topic'];
+				$this->create_time=$this->update_time=date('Y-m-d H:i:s',time());
+				$this->author=Yii::app()->user->id;
+			}
+			else
+				$this->update_time=time();
+			return true;
+		}
+		else
+			return false;
+	}
+
+	public function getTypeOptions()
+	{
+		return array(
+			self::STATUS_DRAFT=>'�ݸ�',
+			self::STATUS_PUBLISHED=>'����',
+			);
 	}
 }

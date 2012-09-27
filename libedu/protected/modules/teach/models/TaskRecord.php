@@ -1,19 +1,23 @@
 <?php
 
 /**
- * This is the model class for table "tbl_subject".
+ * This is the model class for table "tbl_task_record".
  *
- * The followings are the available columns in table 'tbl_subject':
- * @property integer $id
- * @property string $name
- * @property string $description
+ * The followings are the available columns in table 'tbl_task_record':
+ * @property integer $task
+ * @property integer $accepter
+ * @property string $start_time
+ * @property string $end_time
+ * @property integer $score
+ * @property integer $status
  */
-class Subject extends CActiveRecord
+class TaskRecord extends CActiveRecord
 {
+	const TASK_STATUS_UNFINISHED = 0;
+	const TASK_STATUS_FINISHED   = 1;
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @param string $className active record class name.
-	 * @return Subject the static model class
+	 * @return TaskRecord the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -25,7 +29,7 @@ class Subject extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_subject';
+		return 'tbl_task_record';
 	}
 
 	/**
@@ -36,12 +40,11 @@ class Subject extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name', 'required'),
-			array('name', 'length', 'max'=>255),
-			array('description', 'safe'),
+			array('task, accepter, score, status', 'numerical', 'integerOnly'=>true),
+			array('start_time, end_time', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, description', 'safe', 'on'=>'search'),
+			array('task, accepter, start_time, end_time, score, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -62,9 +65,12 @@ class Subject extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'name' => 'Name',
-			'description' => 'Description',
+			'task' => 'Task',
+			'accepter' => 'Accepter',
+			'start_time' => 'Start Time',
+			'end_time' => 'End Time',
+			'score' => 'Score',
+			'status' => 'Status',
 		);
 	}
 
@@ -79,11 +85,14 @@ class Subject extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('description',$this->description,true);
+		$criteria->compare('task',$this->task);
+		$criteria->compare('accepter',$this->accepter);
+		$criteria->compare('start_time',$this->start_time,true);
+		$criteria->compare('end_time',$this->end_time,true);
+		$criteria->compare('score',$this->score);
+		$criteria->compare('status',$this->status);
 
-		return new CActiveDataProvider($this, array(
+		return new CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,
 		));
 	}

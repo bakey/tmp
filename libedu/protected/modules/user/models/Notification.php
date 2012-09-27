@@ -14,10 +14,10 @@
  */
 class Notification extends CActiveRecord
 {
-	const SYSTEM=0;
-	const AUDIT=1;
-	const QA=2;
-	const TEST=3;
+	const SYSTEM = 0;
+	const AUDIT  = 1;
+	const QA     = 2;
+	const TEST   = 3;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Notification the static model class

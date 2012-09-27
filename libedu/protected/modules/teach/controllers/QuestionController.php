@@ -10,7 +10,7 @@ class QuestionController extends Controller
 	const TBL_ITEM = "tbl_item";
 	const TBL_ITEM_LEVEL = "tbl_item_item";
 
-	public $layout='//layouts/column2';
+	public $layout='//layouts/online_column';
 
 	/**
 	 * @return array action filters
@@ -75,6 +75,8 @@ class QuestionController extends Controller
 
 		if(isset($_POST['Question']))
 		{
+			var_dump( $_POST );
+			exit();
 			$model->attributes=$_POST['Question'];
 			if($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));
