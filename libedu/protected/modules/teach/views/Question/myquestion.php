@@ -12,8 +12,16 @@
     'links'=>array('问答'=>array('/teach/question/myquestion'),'我的问答' ),
 )); ?>
 
-<h3>最近的问答</h3>
-<?php $this->widget('zii.widgets.CListView', array(
+<h3><?php
+	if(Yii::app()->user->urole == 1){
+		echo '最近的问答';
+	}else if(Yii::app()->user->urole == 2){
+		echo '未回答的问题';
+	}
+?></h3>
+
+<?php 
+$this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 )); ?>

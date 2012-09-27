@@ -340,10 +340,21 @@ class QuestionController extends Controller
 			$edition = Course::model()->findByPk($ccourse);
 			$edition = $edition->edition;
 		}
-		$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
+		if(Yii::app()->user->urole == 1){
+			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
         'condition'=>'owner='.Yii::app()->user->id,
         'order'=>'create_time DESC',
-    ),));
+    	),));
+		}else if(Yii::app()->user->urole == 2){
+			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
+			'select'=>'t.id,t.owner,t.item,t.details,t.create_time,t.view_count,tbl_answer.question_id',
+	        'join'=>'LEFT JOIN tbl_answer ON t.id = tbl_answer.question_id',
+	        'having'=>'COUNT( tbl_answer.id ) <1',
+	        'group'=>'t.id',
+	        'condition'=>'t.owner='.Yii::app()->user->id,
+	        'order'=>'create_time DESC',
+	    	),));
+		}
 		$this->render('myquestion',array(
 			'dataProvider'=>$dataProvider,
 			'ccourse' =>$ccourse,
@@ -354,7 +365,7 @@ class QuestionController extends Controller
 	public function actionGetQuestionByItem()
 	{
 		$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
-        'condition'=>'item='.$_POST['chid'],
+        'condition'=>'item='.$_POST['chid'].' AND owner = '.$_POST['uid'],
         'order'=>'create_time DESC',
     ),));
 		$this->renderPartial('index',array(
