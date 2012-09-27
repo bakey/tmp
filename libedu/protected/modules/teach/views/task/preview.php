@@ -14,6 +14,6 @@
 		),
 ));
  echo CHtml::button('发布测试', array(
- 		'onClick'=>'window.location.href="www.baidu.com"' 
+ 		'onClick'=>'window.location.href=""' 
  		) ) ;
 ?>

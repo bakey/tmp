@@ -33,7 +33,7 @@ class TaskController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','previewtask','sortproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','add','topics','createTaskProblem','addExaminee','examinee','addTaskRecord','participateTask','createTaskRecord'),
+				'actions'=>array('admin','publishtask','previewtask','sortproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','add','topics','createTaskProblem','addExaminee','examinee','addTaskRecord','participateTask','createTaskRecord'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -57,7 +57,7 @@ class TaskController extends Controller
 		}
 		return true;
 	}
-	private function publish_task( $task_model )
+	private function create_new_task( $task_model )
 	{
 		$task_model->status = task::STATUS_DRAFT ;
 		$task_model->attributes = $_POST['Task'];
@@ -107,7 +107,17 @@ class TaskController extends Controller
 		$dataProvider = new CArrayDataProvider( $problem_data );
 		$this->render( 'preview',array(
 					'problem_data' => $dataProvider ,
-				) );
+				) );	
+	}
+	public function actionPublishTask()
+	{
+		$course = Yii::app()->user->course;
+		$criteria=new CDbCriteria;
+		$criteria->select='user_id'; 
+		$criteria->condition='course_id=:course_id';
+		$criteria->params=array(':course_id'=>$course);
+		$user_course_model = UserCourse::model()->find( $criteria );
+		
 		
 	}
 
@@ -125,8 +135,10 @@ class TaskController extends Controller
 		{
 			
 			if ( isset( $_POST['publish']) ) {
-				if ( $this->publish_task( $task_model ) ) {
-					//$this->redirect( array("addexaminee" , 'id'=>$task_model->id) ) ;
+				if ( $this->create_new_task( $task_model ) ) {
+					$this->redirect( array("previewtask" , 'id'=>$task_model->id) ) ;
+				}else {
+					throw new CHttpException(500 , "发布测验失败");
 				}
 			}
 			else if ( isset($_POST['preview']) ) {

@@ -56,8 +56,6 @@ class Course extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 				'edition'=>array(self::BELONGS_TO , 'CourseEdition','edition_id'),
-				//'user'=>array(self::MANY_MANY,'LibUser',
-					//	'tbl_user_course(course_id,user_id)'),
 		);
 	}
 

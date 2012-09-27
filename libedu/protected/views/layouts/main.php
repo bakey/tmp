@@ -32,6 +32,7 @@
 						array('label'=>'教材导入', 'url'=>array('/teach/edition/importedition')),				
 						array('label'=>'题库管理', 'url'=>array('/teach/problem')),
 						array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint')),
+						array('label'=>'测验管理' , 'url'=>array('teach/task/')),
 						array('label'=>'提问', 'url'=>array('/teach/question/create')),
 						array('label'=>'导入知识点', 'url'=>array('/teach/knowledgepoint/importkp&course_id=1')),
 						)),
