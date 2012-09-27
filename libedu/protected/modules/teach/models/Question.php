@@ -55,6 +55,8 @@ class Question extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'owner_info'=>array(self::BELONGS_TO,'LibUser','owner'),
+			'item_info'=>array(self::BELONGS_TO,'Item','item'),
 		);
 	}
 
@@ -65,10 +67,10 @@ class Question extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'owner' => 'Owner',
-			'item' => 'Item',
-			'details' => 'Details',
-			'create_time' => 'Create Time',
+			'owner' => '提问者',
+			'item' => '关联课程',
+			'details' => '问题内容',
+			'create_time' => '提问时间',
 			'view_count' => 'Viewcount',
 		);
 	}

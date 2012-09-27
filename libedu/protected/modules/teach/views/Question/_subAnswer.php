@@ -1,22 +1,31 @@
+<div class="row-fluid">
+	<div class="span1">
+		<img src="<?php echo Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$data->owner_info->id.'/avatar/'.$data->owner_info->user_profile->avatar; ?>" class="img-polaroid">
+	</div>
+	<div class="span10 offset1">
+		<div class="well">
+				<p>
+					<?php 
+					   $anstype = ''; 
+						if($data->type == 1){
+							$anstype= '追问';
+						}else if($data->type == 2){
+							$anstype= '回答';
+						}else if($data->type == 0){
+							$anstype = '评论';
+						}
+					$this->widget('bootstrap.widgets.TbLabel', array(
+						'type'=>'success', // 'success', 'warning', 'important', 'info' or 'inverse'
+						'label'=>$anstype,
+					)); ?></p>
+				<p><?php echo CHtml::encode($data->owner_info->user_profile->real_name); ?> 于 <?php echo CHtml::encode($data->create_time); ?> 写道：
+				</p>	
+				<blockquote><?php echo $data->details; ?></blockquote>  
 
-<div class="view">
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::encode($data->id); ?>
-	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('type')); ?>:</b>
-	<?php echo CHtml::encode($data->type); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('owner')); ?>:</b>
-	<?php echo CHtml::encode($data->owner); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('details')); ?>:</b>
-	<?php echo $data->details; ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('create_time')); ?>:</b>
-	<?php echo CHtml::encode($data->create_time); ?>
-	<br />
+			<div class="well" id="answer<?php echo $data->id ?>" style="display:none;margin-left:40px;">
+				</div>
+		</div>
+	</div>
+	
 </div>

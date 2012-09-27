@@ -1,18 +1,7 @@
-<?php
-/* @var $this QuestionController */
-/* @var $model Question */
+<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+    'links'=>array('问答'=>array('/teach/question/myquestion'),'提问' ),
+)); ?>
 
-$this->breadcrumbs=array(
-	'Questions'=>array('index'),
-	'Create',
-);
-
-$this->menu=array(
-	array('label'=>'List Question', 'url'=>array('index')),
-	array('label'=>'Manage Question', 'url'=>array('admin')),
-);
-?>
-
-<h1>Create Question</h1>
+<h3>提问</h3>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model,'mycourse'=>$mycourse)); ?>

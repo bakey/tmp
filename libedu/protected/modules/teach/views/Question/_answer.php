@@ -8,21 +8,22 @@
 
 <div class="form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'question-form',
 	'enableAjaxValidation'=>false,
+	'htmlOptions'=>array('class'=>'well'),
 )); ?>
 
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 	<?php echo $form->errorSummary($model); ?>
 	<h4>知识点关联</h4>
 	<?php echo CHtml::checkBoxList('kprelation',$skp,$kp);?>
-	<div class="row">
+
 		<?php echo CHtml::label('请选择回答类型','Answer[type]',array('required'=>true));?>
 		<?php echo CHtml::dropDownList('Answer[type]',2,array('0'=>'评论','1'=>'追问','2'=>'回答'));?>
-	</div>
 
-	<div class="row">
+
+	<div>
 		<?php echo $form->labelEx($model,'details'); ?>
 		<?php
 	$this->widget('application.extensions.redactorjs.Redactor',array(
@@ -36,8 +37,8 @@
 		<?php echo $form->error($model,'details'); ?>
 	</div>
 
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? '提交' : '保存'); ?>
+	<div class="buttons">
+		<?php echo CHtml::submitButton($model->isNewRecord ? '提交' : '保存',array('class'=>'btn')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
