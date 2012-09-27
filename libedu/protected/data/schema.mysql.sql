@@ -150,13 +150,15 @@ create table if not exists `tbl_problem`(
 
 create table if not exists `tbl_task` (
 	`id` int(11) NOT NULL AUTO_INCREMENT primary key,
-	`course_item_id` int(11) not null references tbl_item(id) on delete cascade,
+	`item_id` int(11) not null references tbl_item(id) on delete cascade,
 	`name` varchar(255) ,
 	`create_time` datetime not null,
+	`update_time` datetime not null,
 	`last_time` time not null,
-	`creator` int references tbl_user(id) on delete cascade,
+	`author` int references tbl_user(id) on delete cascade,
 	`description` text,
-	`state` tinyint 
+	`status` tinyint ,
+	`course` int 
 )engine=innodb default charset=utf8;
 
 create table if not exists tbl_task_problem(
@@ -165,7 +167,15 @@ create table if not exists tbl_task_problem(
  `problem_score` int not null 
  )engine=innodb default charset=utf8;
 	
-	
+create table if not exists tbl_task_record(
+`task` int not null references tbl_task(id) on delete cascade,
+`accepter` int not null references tbl_user(id) on delete cascade,
+`start_time` datetime not null ,
+`end_time` datetime not null,
+`score` int not null default 0,
+`status` tinyint not null default 0
+)engine=innodb default charset=utf8;
+
 create table if not exists tbl_school(
 	`id` int(11) not null auto_increment primary key,
 	`name` varchar(255) not null ,

@@ -4,9 +4,9 @@ class CourseController extends Controller
 {
 	const TBL_ITEM = "tbl_item";
 	const TBL_ITEM_LEVEL = "tbl_item_item";
+	public $layout='//layouts/online_column';
 	public function actionAdmin()
 	{
-		$this->layout = 'main';
 		$user_model = LibUser::model()->findByPk( Yii::app()->user->id );
 		$courses = $user_model->user_course;
 		$userCourseData = new CActiveDataProvider('Course',array(
@@ -41,6 +41,14 @@ class CourseController extends Controller
 			return $course_model->edition;
 		}
 	}
+	public function loadCourseModel( $course_id )
+	{
+		$course_model = Course::model()->findByPk( $course_id );
+		if ( $course_model == null ) {
+			throw new CHttpException(404 , "此课程对应的教材id有误");
+		}
+		return $course_model;
+	}
 	/*
 	 * @获取当前用户的在当前item的post存在与否的判断
 	 */
@@ -62,10 +70,11 @@ class CourseController extends Controller
 	{
 		//取得此课程对应的教材，用以确定章节
 		$this->layout = 'main';
-		$edition_model = $this->loadEditionModel( $id );
+		$course_model = $this->loadCourseModel( $id );
+		$edition_model = $course_model->edition;
 		$edition_id = $edition_model->id;
-		$user_id = Yii::app()->user->id;
-		$user_model = LibUser::model()->findByPk( $user_id );
+		$user_model = LibUser::model()->findByPk( Yii::app()->user->id );
+		Yii::app()->user->setState( "course" , $id );
 		/*$item_post = array();
 		foreach( $edition_model->getItems() as $item )
 		{		
@@ -79,11 +88,13 @@ class CourseController extends Controller
 			$item_post[] = array( 'item' => $item , 'post_exist'=>$exist );
 		}*/
 		$top_item_model = $user_model->trace_item;
+		//var_dump( $top_item_model );
+		//exit();
 		$edition_first_level_items = Item::model()->findAll( 'edition=:edition and level=1', array(
 						':edition' => $edition_id, ) );
 		
 	
-		if ( null == $edition_first_level_items || count($top_item_model) > 1 ) {
+		if ( null == $edition_first_level_items || count($top_item_model) != 1 ) {
 			throw new CHttpException( 400 , "trace item data corruption");
 		}
 		/*$url = 'course/ajaxLoadItem&edition_id=' . $edition_id . '&course_id=' . $id ;*/

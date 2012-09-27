@@ -6,7 +6,7 @@
 				array(
 						'name'=>'name',
 						'type'=>'raw',
-						//'value'=>'CHtml::link(CHtml::encode($data->name), $data->url)'
+						//'value'=>'CHtml::link(CHtml::encode($data->name), array("update"))'
 				),
 				array(
 						'name'=>'description',
@@ -19,6 +19,16 @@
 				),
 				array(
 						'class'=>'CButtonColumn',
+						'template'=>'{view}{update}{delete}',
+						/*'buttons'=>array
+						(
+								'down' => array
+								(
+										'label'=>'[+]',
+										//'url'=>'"#"',
+										//'click'=>'function(){alert("Going down!");}',
+								),
+						),*/
 				),
 		),
 )); ?>
