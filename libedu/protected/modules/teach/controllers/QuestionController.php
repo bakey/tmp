@@ -117,7 +117,7 @@ class QuestionController extends Controller
 		$cq = Question::model()->findByPk($qid);
 
 		if(!$cq){
-			throw new CHttpException(403,'问题不存�?);
+			throw new CHttpException(403,'问题不存在);
 		}else{
 			if(isset($_POST['Answer']))
 			{
@@ -166,7 +166,7 @@ class QuestionController extends Controller
 	public function actionGetAllSubElement($qid){
 		$res = Answer::model()->findAllByAttributes(array('question_id'=>$qid),array('order'=>'type DESC'));
 		if(!$res){
-			echo '没有回答及追�?;
+			echo '没有回答及追�?;
 		}else{
 			for($i=0;$i<count($res);$i++){
 				$this->renderPartial('_subAnswer',array('data'=>$res[$i]),false,true);
@@ -194,7 +194,7 @@ class QuestionController extends Controller
 				$parentId = (int) $_GET['root'];
 				$levelCondition = " level > 1 " ;
 			}else if( isset($_GET['edition_id']) ) {
-				//第一层查�?				//$parentId = (int)$_GET['edition_id'];
+				//第一层查�?				//$parentId = (int)$_GET['edition_id'];
 				$levelCondition = " level <=> 1 "; 
 			}
 			else {
@@ -232,7 +232,7 @@ class QuestionController extends Controller
 		}
 		
 		/*
-		 * 我们期望或得到类�? id content hasChildren"排列的数据，通过json方式返回给ajax调用�?		 * 前端接收到后根据这个信息渲染出树状结构�?
+		 * 我们期望或得到类�? id content hasChildren"排列的数据，通过json方式返回给ajax调用�?		 * 前端接收到后根据这个信息渲染出树状结构�?
 		 */
 		//$sql_cmd = sprintf("SELECT %s.id, %s.content AS text, max(%s.id<=>%s.parent) AS hasChildren FROM %s join %s where %s.edition <=> %s ",
 			//	self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , $editionId );

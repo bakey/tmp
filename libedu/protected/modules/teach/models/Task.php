@@ -16,8 +16,8 @@
  */
 class Task extends CActiveRecord
 {
-	const STATUS_DRAFT=1;
-	const STATUS_PUBLISHED=2;
+	const STATUS_DRAFT=0;
+	const STATUS_PUBLISHED=1;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Task the static model class
@@ -114,23 +114,24 @@ class Task extends CActiveRecord
 		{
 			if($this->isNewRecord)
 			{
-				$this->status=$_POST['topic'];
 				$this->create_time=$this->update_time=date('Y-m-d H:i:s',time());
 				$this->author=Yii::app()->user->id;
 			}
-			else
+			else {
 				$this->update_time=time();
+			}
 			return true;
 		}
-		else
+		else {
 			return false;
+		}
 	}
 
 	public function getTypeOptions()
 	{
 		return array(
-			self::STATUS_DRAFT=>'�ݸ�',
-			self::STATUS_PUBLISHED=>'����',
-			);
+			self::STATUS_DRAFT=>'草稿',
+			self::STATUS_PUBLISHED=>'发布',
+		);
 	}
 }

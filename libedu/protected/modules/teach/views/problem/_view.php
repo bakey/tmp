@@ -25,7 +25,7 @@
 		for( $i = 0 ; $i < $ans_cnt ; $i++ )
 		{
 			echo ( chr( 65 + $i) . ':' ) ;
-			echo CHtml::label('   ',false);
+			//echo CHtml::label('   ',false);
 			echo $select_ans[$i];
 			echo "<br>";
 			echo CHtml::label('      ',false);
@@ -35,11 +35,10 @@
 	<br/>
 	</b>
 
-	<b><?php
-	echo CHtml::label('标准答案:    ',false);
-	echo CHtml::label($data->reference_ans,false);
-	echo CHtml::label('&nbsp;&nbsp;<br>题目类型:&nbsp;&nbsp;',false);
-	echo CHtml::label($data->getType($data->type),false);
+	<b>
+	<?php
+		echo CHtml::label('标准答案: ' . $data->reference_ans , false);
+		echo CHtml::label('题目类型: ' . $data->getType($data->type) ,false);
 	?>
 	<br/>
 	</b>

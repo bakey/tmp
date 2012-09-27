@@ -2,6 +2,8 @@
 
 class TaskController extends Controller
 {
+	const TASK_STATUS_DRAFT = 0;
+	const TASK_STATUS_PUBLISH = 1;
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -31,7 +33,7 @@ class TaskController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','viewtopics','ajaxloaditem','create','update','add','topics','createTaskProblem','addExaminee','examinee','addTaskRecord','participateTask','createTaskRecord'),
+				'actions'=>array('admin','sortproblem','viewtopics','ajaxloaditem','create','update','add','topics','createTaskProblem','addExaminee','examinee','addTaskRecord','participateTask','createTaskRecord'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -42,6 +44,29 @@ class TaskController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+	private function publish_task( $task_model )
+	{
+		$task_model->status = task::STATUS_DRAFT ;
+		$task_model->attributes = $_POST['Task'];
+		if ( !$task_model->save() ) {
+			throw new CHttpException( 500 , "创建测试记录失败");
+		}
+		$problem_selected = $_POST['problem_selected'];
+		foreach( $problem_selected as $selected )
+		{
+			$task_problem_model = new TaskProblem;
+			$task_problem_model->task_id = $task_model->id ;
+			$task_problem_model->problem_id = (int) $selected ;
+			$task_problem_model->problem_score = $_POST['problem_score'][ $selected  ];
+			$task_problem_model->save();
+		}
+		return true;
+		
+	}
+	private function preview_task()
+	{
+		
 	}
 
 	/**
@@ -61,22 +86,25 @@ class TaskController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$taskmodel=new Task;
+		$task_model    = new Task;
+		$dataProvider = new CActiveDataProvider('Problem');
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Task']))
+		if( isset($_POST['Task']) )
 		{
-			$taskmodel->attributes=$_POST['Task'];
-		
-			if($taskmodel->save()) {
-				$this->redirect(array('add','id'=>$taskmodel->id));
+			if ( isset( $_POST['publish']) ) {
+				if ( $this->publish_task( $task_model ) ) {
+					$this->redirect( array("addexaminee" , 'id'=>$task_model->id) ) ;
+				}
+			}
+			else if ( isset($_POST['preview']) ) {
+				$this->preview_task();
 			}
 		}
 
 		$this->render('create',array(
-			'model'=>$taskmodel,
+			'task_model'=>$task_model,
+			'problem_data' => $dataProvider,
 		));
 	}
 	public function actionViewTopics($id)
@@ -225,7 +253,7 @@ class TaskController extends Controller
     
 	 /*添加题目
 	   */
-    public function actionTopics()
+    public function actionSortProblem()
 	{
 		if(isset($_POST['typeid']) && isset($_POST['levelid']))
 		{
@@ -255,35 +283,41 @@ class TaskController extends Controller
 			$criteria->compare('type',$type);
 			$criteria->compare('difficulty',$level);
 		}
-		$sort = 0;
-		if(isset($_POST['sortid']))
-		{
-			$sort=$_POST['sortid'];
-		}
+		$sort_type = isset( $_POST['sort_type']) ? $_POST['sort_type'] : null;
+		
+		$dataProvider = null;
   
-        if($sort==0)
+        if( null != $sort_type && $sort_type == 0 )
 		{
 			$dataProvider=new CActiveDataProvider('Problem',array(
 				'criteria'=>$criteria,
 			    'sort'=>array(
 					'defaultOrder'=>'t.create_time DESC',),
-				'pagination'=>array(
+					'pagination'=>array(
 					'pageSize'=>5),
 				));
 		}
-		else if($sort==1)
+		else if( null != $sort_type && $sort_type == 1 )
 		{
             $dataProvider=new CActiveDataProvider('Problem',array(
 				'criteria'=>$criteria,
 			    'sort'=>array(
 					'defaultOrder'=>'t.use_count DESC',),
-				'pagination'=>array(
-					'pageSize'=>5),
+					'pagination'=>array(
+						'pageSize'=>5),
 				));
 		}
-		$data=$dataProvider->getData();
-		$this->renderPartial('topics',array(
-			'data'=>$data,));
+		else {
+			$dataProvider=new CActiveDataProvider('Problem',array(
+					'criteria'=>$criteria,
+					'pagination'=>array(
+							'pageSize'=>5),
+			));
+			
+		}
+		$this->renderPartial('problem_list',
+					array(
+							'problem_data'=>$dataProvider,));
 	}
 
     /*添加考生

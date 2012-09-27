@@ -5,11 +5,11 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<?php echo $form->errorSummary($model); ?>
+	<?php echo $form->errorSummary($task_model); ?>
 	<div class="row">
-		<?php echo $form->labelEx($model,'测验名'); ?>
-		<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'name'); ?>
+		<?php echo $form->labelEx($task_model,'测验名'); ?>
+		<?php echo $form->textField($task_model,'name',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($task_model,'name'); ?>
 	</div>
 	
 	<div class="row" id="item_tree">
@@ -35,15 +35,22 @@
 		
 
 	<div class="row"  style="display:none">
-		<?php echo $form->labelEx($model,'item'); ?>
-		<?php echo $form->textField($model,'item',array('id'=>'selected_item')); ?>
-		<?php echo $form->error($model,'item'); ?>
+		<?php echo $form->labelEx($task_model,'item'); ?>
+		<?php echo $form->textField($task_model,'item',array('id'=>'selected_item')); ?>
+		<?php echo $form->error($task_model,'item'); ?>
 	</div>
+	
+	<?php
+	$this->renderPartial( 'select_problem' , array(
+			'problem_data' => $problem_data,
+		) );
+	 
+	?>
 
 		<div class="row">
-			<?php echo $form->labelEx($model,'测试描述'); ?>
-			<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
-			<?php echo $form->error($model,'description'); ?>
+			<?php echo $form->labelEx($task_model,'测试描述'); ?>
+			<?php echo $form->textArea($task_model,'description',array('rows'=>6, 'cols'=>50)); ?>
+			<?php echo $form->error($task_model,'description'); ?>
 		</div>
 
 	<div id="statusID"></div>

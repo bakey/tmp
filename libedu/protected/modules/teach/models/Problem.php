@@ -28,7 +28,7 @@ class Problem extends CActiveRecord
 	const D=3;
 	const E=4;
 	
-	private $difficulty_level_map = array(
+	static public $difficulty_level_map = array(
 				0 => "易",
 				1 => "较易",
 				2 => "中",
@@ -148,7 +148,7 @@ class Problem extends CActiveRecord
 	}
 	public function getDifficulty($level)
 	{
-		return $this->difficulty_level_map[ $level ];
+		return Problem::$difficulty_level_map[ $level ];
 	}
 
 	public function getType($type)
