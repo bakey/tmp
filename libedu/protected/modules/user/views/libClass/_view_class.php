@@ -20,12 +20,14 @@
 					CController::createUrl('libclass/getclassstudent'), 
 					array(
 						'type' => 'post',
-						'data' => array('class'=>'1',),
+						'data' => array('class'=>$data['id'],),
 						'update'=>'#student-view-id',
 					)); 
 	?>
 	<br />
-<div id='student-view-id'>
+	<div class="well">
+		<div id='student-view-id'>
+	</div>
 </div>
 
 

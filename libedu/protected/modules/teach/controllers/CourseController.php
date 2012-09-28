@@ -4,7 +4,7 @@ class CourseController extends Controller
 {
 	const TBL_ITEM = "tbl_item";
 	const TBL_ITEM_LEVEL = "tbl_item_item";
-	public $layout='//layouts/online_column';
+	//public $layout='//layouts/online_column';
 	public function actionAdmin()
 	{
 		$user_model = LibUser::model()->findByPk( Yii::app()->user->id );
@@ -69,7 +69,6 @@ class CourseController extends Controller
 	public function actionUpdate( $id )
 	{
 		//取得此课程对应的教材，用以确定章节
-		$this->layout = 'main';
 		$course_model = $this->loadCourseModel( $id );
 		$edition_model = $course_model->edition;
 		$edition_id = $edition_model->id;

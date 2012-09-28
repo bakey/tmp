@@ -1,3 +1,4 @@
+<div class="well">
 <?php
 
 $this->widget('zii.widgets.grid.CGridView',
@@ -8,5 +9,4 @@ $this->widget('zii.widgets.grid.CGridView',
 );
 
 ?>
-		
-	
+</div>

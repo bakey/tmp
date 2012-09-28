@@ -56,6 +56,7 @@ class TaskRecord extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+				'rel_task'=>array(self::BELONGS_TO,'Task','task'),
 		);
 	}
 

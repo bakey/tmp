@@ -3,7 +3,7 @@
 /* @var $model LibClass */
 
 $this->breadcrumbs=array(
-	'Lib Classes'=>array('index'),
+	'管理班级'=>array('admin'),
 	'Create',
 );
 ?>

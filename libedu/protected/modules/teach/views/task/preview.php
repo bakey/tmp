@@ -13,7 +13,8 @@
 				),
 		),
 ));
+ $url = Yii::app()->request->hostInfo . Yii::app()->createUrl('teach/task/publishtask&task_id=' . $task_id );
  echo CHtml::button('发布测试', array(
- 		'onClick'=>'window.location.href=""' 
+ 		'onClick'=>'window.location.href="' . $url . '"', 
  		) ) ;
 ?>

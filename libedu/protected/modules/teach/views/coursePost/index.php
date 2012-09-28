@@ -8,17 +8,18 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create CoursePost', 'url'=>array('create&item_id='.$item_id)),
-	array('label'=>'Manage CoursePost', 'url'=>array('admin')),
+	array('label'=>'新建课程资料', 'url'=>array('create&item_id='.$item_id)),
+	array('label'=>'管理课程', 'url'=>array('admin')),
 );
 ?>
 
 <h1><?php 
 echo(Yii::app()->user->real_name . "你好 , 你发布的课程如下:");
  ?></h1>
-
-<?php $this->widget('zii.widgets.CListView', array(
+<div class="well">
+<?php $this->widget('bootstrap.widgets.TbListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 	'viewData' => array('course_id'=>$course_id),
 )); ?>
+</div>

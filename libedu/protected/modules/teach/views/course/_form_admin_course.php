@@ -1,5 +1,6 @@
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+<?php $this->widget('bootstrap.widgets.TbGridView', array(
+		'type'=>'striped bordered condensed',
 		'dataProvider'=>$dataProvider,
 	//	'filter'=>$model,
 		'columns'=>array(

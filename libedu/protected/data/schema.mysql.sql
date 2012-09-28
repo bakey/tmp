@@ -168,12 +168,21 @@ create table if not exists tbl_task_problem(
  )engine=innodb default charset=utf8;
 	
 create table if not exists tbl_task_record(
+`id` int not null auto_increment primary key,
 `task` int not null references tbl_task(id) on delete cascade,
 `accepter` int not null references tbl_user(id) on delete cascade,
-`start_time` datetime not null ,
-`end_time` datetime not null,
+`start_time` datetime default null ,
+`end_time` datetime default null,
 `score` int not null default 0,
 `status` tinyint not null default 0
+)engine=innodb default charset=utf8;
+
+create table if not exists tbl_user_task_problem_record(
+	`record_id` int not null references tbl_task_record(id) on delete cascade,
+	`user` int not null references tbl_user(id) on delete cascade,
+	`task` int not null references tbl_task(id) on delete cascade,
+	`problem` int not null ,
+	`ans` text not null
 )engine=innodb default charset=utf8;
 
 create table if not exists tbl_task_kp(

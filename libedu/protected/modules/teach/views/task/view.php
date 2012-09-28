@@ -17,8 +17,9 @@ $this->menu=array(
 
 <h1>View Task #<?php echo $model->id; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php $this->widget('bootstrap.widgets.TbDetailView', array(
 	'data'=>$model,
+	'type'=>'striped',
 	'attributes'=>array(
 		'id',
 		'item',
@@ -31,3 +32,13 @@ $this->menu=array(
 		'status',
 	),
 )); ?>
+<?php
+ if ( Yii::app()->user->urole == Yii::app()->params['user_role_teacher'] ) {
+//只有老师才展示试卷分发情况
+		$this->renderPartial('publish_task' , array(
+							'task_record_model' => $task_record_model,
+							'new_record'=>1,
+							)
+	 	);
+	} 
+?>

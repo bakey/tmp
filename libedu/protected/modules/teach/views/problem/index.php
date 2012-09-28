@@ -10,19 +10,23 @@ $this->menu=array(
 ?>
 
 <h1>所有问题</h1>
-
+<div class="well">
 <?php 
 
-$this->widget('zii.widgets.CListView', array(
+$this->widget('bootstrap.widgets.TbListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 ));
+?>
+</div>
+<?php 
 echo $this->renderPartial('_form_add_problem', array( 
 										'model'=>$problem ,
 										'subjectList'=>$subjectList,
  									)
 		);
  ?>
+
 <?php
 //echo $this->renderPartial('_form_add_problem', array('model'=>$problem)); 
  ?>

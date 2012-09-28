@@ -1,10 +1,13 @@
 <div class="view">
 	<?php
 	echo '题目难度: ' . $data->getDifficulty($data->difficulty) . " | ";
-	echo '使用次数:' . $data->use_count . "<br>";	
+	echo '使用次数:' . $data->use_count . "|";	
+	?>
+	选择本题<input type="checkbox" name="problem_selected[]" value="<?php echo $data->id ?>"/>
+	<?php 
+	echo "<br>";
 	echo '入库时间:' . $data->create_time . "<br>";
 	echo '来源: ' . $data->source;
-	echo('<br>----------------------------------------------<br>');
 	$content = $data->content;  
 	?>
 
@@ -39,10 +42,6 @@
 	?>
 	<br/>
 	</b>
-	本题分值<input type="text" name="problem_score[<?php echo $data->id?>]" />
-	选择本题<input type="checkbox" name="problem_selected[]" value="<?php echo $data->id ?>"/>	
-
-
 	<pre>
 	<?php
 	$knowledgePoints = $data->problem_kp;

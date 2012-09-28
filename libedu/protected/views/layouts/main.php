@@ -27,14 +27,15 @@
 			    	'class'=>'bootstrap.widgets.TbMenu',
 			    	'items'=>array(
 				    	array('label'=>'首页', 'url'=>array('/site/index')),
-						array('label'=>'课程管理', 'url'=>array('/teach/course/admin'),'items'=>array(
+						array('label'=>'课程管理','items'=>array(
+							array('label'=>'课程首页','url'=>array('/teach/course/admin')),
 							array('label'=>'教材管理', 'url'=>array('/teach/edition/admin')),
-						array('label'=>'教材导入', 'url'=>array('/teach/edition/importedition')),				
-						array('label'=>'题库管理', 'url'=>array('/teach/problem')),
-						array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint')),
-						array('label'=>'测验管理' , 'url'=>array('teach/task/')),
-						array('label'=>'提问', 'url'=>array('/teach/question/create')),
-						array('label'=>'导入知识点', 'url'=>array('/teach/knowledgepoint/importkp&course_id=1')),
+							array('label'=>'教材导入', 'url'=>array('/teach/edition/importedition')),				
+							array('label'=>'题库管理', 'url'=>array('/teach/problem')),
+							array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint')),
+							array('label'=>'测验管理' , 'url'=>array('/teach/task/')),
+							array('label'=>'提问', 'url'=>array('/teach/question/create')),
+							array('label'=>'导入知识点', 'url'=>array('/teach/knowledgepoint/importkp&course_id=1')),
 						)),
 						array('label'=>'系统通知发送', 'url'=>array('/user/notification/create')),
 

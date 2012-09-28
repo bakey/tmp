@@ -33,7 +33,7 @@ class TaskController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','publishtask','previewtask','sortproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','add','topics','createTaskProblem','addExaminee','examinee','addTaskRecord','participateTask','createTaskRecord'),
+				'actions'=>array('admin','ajaxcheckanswer','test','publishtask','previewtask','sortproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','examinee','addTaskRecord','participateTask','createTaskRecord'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -70,7 +70,7 @@ class TaskController extends Controller
 			$task_problem_model = new TaskProblem;
 			$task_problem_model->task_id = $task_model->id ;
 			$task_problem_model->problem_id = (int) $selected ;
-			$task_problem_model->problem_score = $_POST['problem_score'][ $selected  ];
+			$task_problem_model->problem_score = 0 ;
 			$task_problem_model->save();
 		}
 		return $this->create_task_problem( $task_model );		
@@ -79,6 +79,27 @@ class TaskController extends Controller
 	{
 		
 	}
+	private function check_task_exist( $task_id )
+	{
+		return Task::model()->exists('id=' . $task_id );
+	}
+	private function check_task_record_exist( $task_id )
+	{
+		return TaskRecord::model()->exists('task=' . $task_id );
+	}
+	
+	public function actionTest()
+	{
+		/*$dataProvider = new CActiveDataProvider( 'Problem' );
+		if ( isset( $_POST['select_ans']) )
+		{
+			var_dump( $_POST );
+			exit();
+		}
+		$this->render('test' , array(
+						'problem_data'=>$dataProvider ,
+						));*/
+	}
 
 	/**
 	 * Displays a particular model.
@@ -86,8 +107,14 @@ class TaskController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$task_record_data = new CActiveDataProvider( 'TaskRecord' , array(
+				'criteria'=>array(
+						'condition'=>'task=' . $id ,
+				),				
+		));
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+			'task_record_model' => $task_record_data,
 		));
 	}
 	public function actionPreviewTask( $task_id )
@@ -107,18 +134,57 @@ class TaskController extends Controller
 		$dataProvider = new CArrayDataProvider( $problem_data );
 		$this->render( 'preview',array(
 					'problem_data' => $dataProvider ,
+					'task_id' => $task_id,
 				) );	
 	}
-	public function actionPublishTask()
+	public function actionPublishTask( $task_id )
 	{
 		$course = Yii::app()->user->course;
+		
+		if ( !$this->check_task_exist( $task_id ) ){
+			throw new CHttpException( 404 , "没有这个测验");
+		}
+		if ( $this->check_task_record_exist( $task_id) ) {
+			$task_record_data = new CActiveDataProvider( 'TaskRecord' , array(
+					'criteria'=>array(
+							'condition'=>'task=:task_id',
+							'params'=>array(':task_id'=>$task_id),
+					),
+			));
+			$this->render('publish_task' , array(
+					'task_record_model'=>$task_record_data,
+					'new_record'=>0,
+					) );
+			return ;
+		}
+		
 		$criteria=new CDbCriteria;
 		$criteria->select='user_id'; 
-		$criteria->condition='course_id=:course_id';
+		$criteria->condition='course_id=:course_id and role='.Yii::app()->params['user_role_teacher'];
 		$criteria->params=array(':course_id'=>$course);
-		$user_course_model = UserCourse::model()->find( $criteria );
 		
+		$user_course_model = UserCourse::model()->findAll( $criteria );
 		
+		$task_record_set = array();
+		foreach( $user_course_model as $one_model )
+		{
+			$task_record_model = new TaskRecord;
+			$task_record_model->task = $task_id;
+			$task_record_model->accepter = $one_model->user_id;
+			$task_record_model->status = TaskRecord::TASK_STATUS_UNFINISHED;
+			$task_record_model->save();
+			$task_record_set[] = $task_record_model;
+		}	
+		$task_record_data = new CActiveDataProvider( 'TaskRecord' , array(
+				'criteria'=>array(
+						'condition'=>'task=:task_id',
+						'params'=>array(':task_id'=>$task_id),
+					), 
+				));
+		$this->render('publish_task' , array(
+						'task_record_model'=>$task_record_data,
+						'new_record'=>1,
+				) );
 	}
 
 	/**
@@ -129,14 +195,13 @@ class TaskController extends Controller
 	{
 		$task_model    = new Task;
 		$dataProvider = new CActiveDataProvider('Problem');
-
-
+		
 		if( isset($_POST['Task']) )
 		{
 			
 			if ( isset( $_POST['publish']) ) {
 				if ( $this->create_new_task( $task_model ) ) {
-					$this->redirect( array("previewtask" , 'id'=>$task_model->id) ) ;
+					$this->redirect( array("previewtask" , 'task_id'=>$task_model->id) ) ;
 				}else {
 					throw new CHttpException(500 , "发布测验失败");
 				}
@@ -225,9 +290,32 @@ class TaskController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider( 'Task' );
+		$dataProvider = null;
+		$condition = "";
+		$user_model = LibUser::model()->findByPk( Yii::app()->user->id );
+		if ( null == $user_model ) {
+			throw new CHttpException(500 , "获取用户失败");
+		}
+		if ( Yii::app()->user->urole == Yii::app()->params['user_role_teacher'] ) 
+		{
+			$tasks = $user_model->task_as_teacher;
+			$dataProvider = new CArrayDataProvider( $tasks , array(
+					'sort'=>array(
+							'attributes'=>array(
+									'item DESC',
+							),
+							'defaultOrder' => 'create_time DESC',
+						),
+					)
+			);
+		}
+		else if ( Yii::app()->user->urole == Yii::app()->params['user_role_student'] )
+		{
+			$tasks = $user_model->task_as_student;
+			$dataProvider = new CArrayDataProvider( $tasks );
+		}
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+				'dataProvider'=>$dataProvider,
 		));
 	}
 
@@ -243,17 +331,6 @@ class TaskController extends Controller
 
 		$this->render('admin',array(
 			'model'=>$model,
-		));
-	}
-
-	public function actionAdd($id)
-	{
-        $dataProvider=new CActiveDataProvider('Problem');
-		$data=$dataProvider->getData();
-	    
-		$this->render('add',array(
-			'data'=>$data,
-			'id'=>$id,
 		));
 	}
 	
@@ -462,39 +539,34 @@ class TaskController extends Controller
 			'model'=>$notificationModel,));		
 	}
 
-    public function actionParticipateTask()
+    public function actionParticipateTask( $task_id )
 	{
-		$id=$_POST['id'];
-		$dataProvider=new CActiveDataProvider('TaskProblem',array(
-			'pagination'=>array(
-				'pagesize'=>10),
-			'criteria'=>array(
-				'condition'=>'task_id=:task_id',
-				'params'=>array(':task_id'=>$id),
-			),
-		 ));
-		$data=$dataProvider->getData();
-        $problems=array();
-        for($i=0;$i<count($data);$i++)
+		$task_model = Task::model()->findByPk( $task_id );
+		$problem_models = $task_model->problems;
+		$dataProvider = new CArrayDataProvider( $problem_models );
+		$this->render('participatetask' , array(
+				'problem_data'=>$dataProvider ,
+		));
+	}
+	public function actionAjaxCheckAnswer()
+	{
+		if ( isset( $_POST['select_ans']) )
 		{
-			$criteria=new CDbCriteria;
-		    $criteria->compare('id',$data[$i]->problem_id);
-			$problems[$i]=Problem::model()->findAll($criteria);
-		}
-		$criteria=new CDbCriteria;
-		$criteria->compare('receiver',Yii::app()->user->id);
-		$criteria->compare('type',Notification::TEST);
-		$criteria->compare('resource_id',$id);
-		$notificationModel=Notification::model()->find($criteria);
-		if($notificationModel!==NULL)
-		{
-			$notificationModel->delete();
-		}
-			
-		$this->render('participateTask',array(
-			'data'=>$problems,
-			'id'=>$id
-			));
+			$check_ret = array();
+			foreach( $_POST['select_ans'] as $problem_id=>$user_ans )
+			{
+				$problem_model = Problem::model()->findByPk( $problem_id );
+				$ans = chr( $user_ans+ord('A') );
+				$ref_ans = $problem_model->reference_ans;
+		
+				if ( $ans == $ref_ans ) {
+					$check_ret[] = array( $problem_id => 1 );
+				}else {
+					$check_ret[] = array( $problem_id => 0 );
+				}
+			}
+			echo json_encode( $check_ret );
+		}		
 	}
 	public function actionAjaxLoadkp()
 	{

@@ -1,6 +1,6 @@
-<?php
-	$this->widget('zii.widgets.CListView', array(
-		'dataProvider'=>$problem_data,
-		'itemView'=>'_view_problem',
-	));
-?>
+	<?php 
+    		$this->widget('bootstrap.widgets.TbListView', array(
+    				'dataProvider'=>$problem_data,
+    				'itemView'=>'_view_problem',
+    		));
+    	?>

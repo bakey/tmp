@@ -1,22 +1,23 @@
 <?php /* @var $this Controller */ ?>
-<?php $this->beginContent('//layouts/online_main'); ?>
-<div class="span-17">
+<?php $this->beginContent('//layouts/main'); ?>
+<div class="span8">
 	<div id="content">
 		<?php echo $content; ?>
 	</div><!-- content -->
 </div>
-<div class="span-5 last">
+<div class="span3">
 	<div id="sidebar">
-	<?php
-		$this->beginWidget('zii.widgets.CPortlet', array(
-			'title'=>'Operations',
+		<?php 
+		
+		$this->widget('bootstrap.widgets.TbMenu', array(
+				'type'=>'pills', // '', 'tabs', 'pills' (or 'list')
+				'stacked'=>true, // whether this is a stacked menu
+				'items'=>$this->menu,
+				'htmlOptions'=>array(
+					'style' => 'margin-top:100px'
+				),
 		));
-		$this->widget('zii.widgets.CMenu', array(
-			'items'=>$this->menu,
-			'htmlOptions'=>array('class'=>'operations'),
-		));
-		$this->endWidget();
-	?>
-	</div><!-- sidebar -->
+		?>
+	</div>
 </div>
 <?php $this->endContent(); ?>
