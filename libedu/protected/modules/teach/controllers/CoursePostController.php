@@ -6,7 +6,7 @@ class CoursePostController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/online_column';
+	//public $layout='//layouts/online_column';
 
 	/**
 	 * @return array action filters
@@ -403,19 +403,9 @@ class CoursePostController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
+	public function actionIndex( $item_id )
 	{
 		$cur_user = Yii::app()->user->id;
-		$course = isset( $_GET['course_id'] ) ? $_GET['course_id'] : null;
-		if ( null == $course ) {
-			throw new CHttpException( 400 , "没有couse_id");
-		} 
-		$item_id = -1;
-		if ( isset($_GET['item_id']) ){
-			$item_id = $_GET['item_id'];
-		}else {
-			throw new CHttpException( 500 , "缺少item_id参数");
-		}
 		$dataProvider=new CActiveDataProvider('CoursePost',array(
 				'criteria'=>array(
 						'condition'=>('author='.$cur_user.' and item_id='.$item_id ),						
@@ -428,7 +418,7 @@ class CoursePostController extends Controller
 		$this->render('index',array(
 			'dataProvider'=> $dataProvider,
 			'item_id'     => $item_id,
-			'course_id'   => $course,
+			'course_id'   => Yii::app()->user->course,
 		));
 	}
 

@@ -6,13 +6,15 @@
 				array(
 					'ajax'=>array(
 						'type'=>'POST',
-						'url'=>array('topics'),
+						'url'=>array('sortproblem'),
 						'update'=>'#param_id',
 					),
 			)
 	); ?>	
 	<?php  echo '难度: ' ;
-			echo CHtml::dropDownList('difficulty_level','',
+			echo CHtml::dropDownList(
+				'difficulty_level',
+				'',
 				Problem::$difficulty_level_map ,
 				array(
 					'ajax'=>array(

@@ -1,7 +1,7 @@
 <div class="well">
 
 	<b><?php
-		 $item_model = Item::model()->findByPk( $data['item_id'] );
+		 $item_model = Item::model()->findByPk( $data['item'] );
 		 echo CHtml::encode('关联章节') . ":"; 
 		 echo CHtml::encode($item_model->content);
 	?></b>
@@ -30,7 +30,7 @@
 
 	<b><?php echo CHtml::encode('发布者'); ?>:</b>
 	<?php
-		$user_model = LibUser::model()->findByPk( $data['author_id']); 
+		$user_model = LibUser::model()->findByPk( $data['author']); 
 		$author_name = $user_model->user_profile->real_name;
 		echo CHtml::encode($author_name); 
 	?>

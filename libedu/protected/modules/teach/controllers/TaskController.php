@@ -220,7 +220,7 @@ class TaskController extends Controller
 	public function actionCreate()
 	{
 		$task_model    = new Task;
-		$dataProvider = new CActiveDataProvider('Problem');
+		$dataProvider  = new CActiveDataProvider('Problem');
 		
 		if( isset($_POST['Task']) )
 		{
@@ -320,7 +320,7 @@ class TaskController extends Controller
 		$condition = "";
 		$user_model = LibUser::model()->findByPk( Yii::app()->user->id );
 		if ( null == $user_model ) {
-			throw new CHttpException(500 , "获取用户失败");
+			throw new CHttpException(404 , "没有这个用户");
 		}
 		if ( Yii::app()->user->urole == Yii::app()->params['user_role_teacher'] ) 
 		{
@@ -353,10 +353,10 @@ class TaskController extends Controller
 							  )
 						);
 				$info = array(
-						'item_id' => $task->item,
+						'item' => $task->item,
 						'name'    => $task->name,
 						'id'      => $task->id,
-						'author_id' => $task->author,
+						'author' => $task->author,
 						'create_time' => $task->create_time,
 						);
 				if ( null == $task_rec ) {
@@ -398,24 +398,24 @@ class TaskController extends Controller
 	   */
     public function actionSortProblem()
 	{
-		if(isset($_POST['typeid']) && isset($_POST['levelid']))
+		if(isset($_POST['problem_type']) && isset($_POST['difficulty_level']))
 		{
-			$type=$_POST['typeid'];
-			$level=$_POST['levelid'];
+			$type=$_POST['problem_type'];
+			$level=$_POST['difficulty_level'];
 			$criteria=new CDbCriteria;
 			$criteria->compare('type',$type);
 			$criteria->compare('difficulty',$level);
 		}
-		else if(isset($_POST['typeid']) && !isset($_POST['levelid']))
+		else if(isset($_POST['problem_type']) && !isset($_POST['difficulty_level']))
 		{
-			$type=$_POST['typeid'];
+			$type=$_POST['problem_type'];
 			$criteria=new CDbCriteria;
 			$criteria->compare('type',$type);
 		}
-		else if(!isset($_POST['typeid']) && isset($_POST['levelid']))
+		else if(!isset($_POST['problem_type']) && isset($_POST['difficulty_level']))
 		{
-			$level=$_POST['levelid'];
-			$criteria=new CDbCriteria;
+			$level = $_POST['difficulty_level'];
+			$criteria = new CDbCriteria;
 			$criteria->compare('difficulty',$level);
 		}
 		else

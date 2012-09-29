@@ -35,6 +35,20 @@ class Problem extends CActiveRecord
 				3 => "较难",
 				4 => "难",
 	);
+	public function getDifficultyLevel()
+	{
+		return array(
+				self::A=>'易',
+				self::B=>'较易',
+				self::C=>'中',
+				self::D=>'较难',
+				self::E=>'难',);
+	}
+
+	public function getDifficulty($level)
+	{
+		return Problem::$difficulty_level_map[ $level ];
+	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Problem the static model class
@@ -137,19 +151,7 @@ class Problem extends CActiveRecord
 			self::QuAn=>'问答',);
 	}
 
-	public function getDifficultyLevel()
-	{
-		return array(
-			self::A=>'简单',
-			self::B=>'相对简单',
-			self::C=>'中等难度',
-			self::D=>'难',
-			self::E=>'非常难',);
-	}
-	public function getDifficulty($level)
-	{
-		return Problem::$difficulty_level_map[ $level ];
-	}
+
 
 	public function getType($type)
 	{
