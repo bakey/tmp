@@ -64,12 +64,11 @@
 
 	<?php echo $content; ?>
 
-	<div class="clear"></div>
+	
+	<div id="sitefooter" class="footer" style="border-top:1px solid #eee; padding-top:10px;text-align:center;">
+			<h6>Copyright &copy; <?php echo date('Y'); ?> by My Company. All Rights Reserved.</h6>
+		    <p><?php echo Yii::powered(); ?></p>
 
-	<div id="footer" class="span12">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
 	</div><!-- footer -->
 </div><!-- page -->
 

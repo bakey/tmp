@@ -1,17 +1,21 @@
 <?php
 
 	return array(
-		'title'=>'请填写您注册时使用的电子邮件地址：',
+		'attributes'=>array(
+			'class'=>'well',
+		),
 		'elements'=>array(
 			'email'=>array(
 				'type'=>'email',
 				'maxlength'=>255,
+				'attributes'=>array('class'=>'span5'),
 			),
 		),
 		'buttons'=>array(
 			'resendBtn'=>array(
 				'type'=>'submit',
 				'label'=>'重新发送激活邮件',
+				'attributes'=>array('class'=>'btn'),
 			),
 		)
 	);

@@ -1,18 +1,16 @@
-<?php
-/* @var $this LibController */
-/* @var $dataProvider CActiveDataProvider */
+<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+    'links'=>array('首页'=>'#', '行政管理'=>'#','教师管理'=>'#','邀请教师加入'),
+)); ?>
 
-$this->breadcrumbs=array(
-	'用户中心',
-);
+<div class="page-header">
+  <h2>教师管理 <small>邀请教师加入</small></h2>
+</div>
 
-?>
-
-<h1>添加教师</h1>
 
 <?php 
 	if(isset($msg)){
-		echo '<h3>'.$msg.'</h3>';
+		echo '<div class="alert alert-info">
+  <button type="button" class="close" data-dismiss="alert">×</button><h5>'.$msg.'</h5></div>';
 	}
 ?>
 

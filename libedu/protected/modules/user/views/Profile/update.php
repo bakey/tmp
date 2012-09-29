@@ -1,15 +1,4 @@
-<?php
-/* @var $this ProfileController */
-/* @var $model Profile */
 
-$this->breadcrumbs=array(
-	'Profiles'=>array('index'),
-	$model->uid=>array('view','id'=>$model->uid),
-	'Update',
-);
-
-?>
-
-<h1>Update Profile <?php echo $model->uid; ?></h1>
+<h3>个人设置</h3>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

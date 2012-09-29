@@ -19,22 +19,29 @@ if($model->avatar != 'default_avatar.jpg'){
 }else{
 	$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->avatar,'alt',array('width'=>64,'height'=>64)));
 }
+
+$coursestring = '';
+foreach($usc as $singlecls){
+	$coursestring.=' '.$singlecls->name;
+}
+
+$clsstring = '';
+foreach($ucls as $singlecls){
+	$clsstring.=' '.$singlecls->name;
+}
+
 $this->widget('bootstrap.widgets.TbDetailView', array(
 	'data'=>$model,
 	'type'=>'striped bordered',
 	'attributes'=>array(
 		'real_name',
 		array(
-			'label'=>'学号',
-			'value'=>$usc->school_unique_id,
+			'label'=>'课程',
+			'value'=>$coursestring,
 		),
 		array(
-			'label'=>'班级',
-			'value'=>$ucls->name,
-		),
-		array(
-			'label'=>'年级',
-			'value'=>$ucls->grade_info->grade_name,
+			'label'=>'授课班级',
+			'value'=>$clsstring,
 		),
 		'user_info.email',
 		'user_info.mobile',

@@ -1,17 +1,14 @@
-<?php
-/* @var $this LibController */
-/* @var $dataProvider CActiveDataProvider */
+<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+    'links'=>array('用户中心'=>'#', '用户激活'=>'#','重新发送激活邮件'),
+)); ?>
 
-$this->breadcrumbs=array(
-	'用户中心',
-);
+<div class="page-header">
+  <h2>激活 <small>重新发送激活邮件成功</small></h2>
+</div>
 
-?>
-
-<h1>重新发送激活邮件</h1>
 
 <?php 
 	if(isset($msg)){
-		echo '<h3>'.$msg.'</h3>';
+		echo '<div class="well"><p>'.$msg.'</p></div>';
 	}
 ?>

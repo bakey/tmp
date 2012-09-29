@@ -2,6 +2,8 @@
 
 class LibUserController extends Controller
 {
+	public $layout='//layouts/column2';
+	
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('LibUser',array(
@@ -536,8 +538,10 @@ class LibUserController extends Controller
 
 	public function actionInviteTeacher(){
 		$model = new UserActive;
+
+		//todo email address validation
 		$form = new CForm('application.modules.user.views.LibUser.inviteTeacherForm', $model);
-		if($form->submitted('resendBtn')){
+		if($form->submitted('resendBtn') && ($_POST['UserActive']['school_unique_id']!='')){
 			$stuinfo = array('schoolid'=>Yii::app()->params['currentSchoolID'],'stuinfo'=>array(array('姓名'=>$_POST['UserActive']['name'],'邮箱'=>$_POST['UserActive']['school_unique_id'])));
 			$res = LibUser::model()->addTeacherFromArray($stuinfo['stuinfo'],Yii::app()->params['currentSchoolID']);
 			if($res['success'] < 1){

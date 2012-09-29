@@ -3,40 +3,49 @@
 /* @var $model User */
 /* @var $form CActiveForm */
 ?>
-<h1><?php echo $msg; ?></h1>
+
+<div class="page-header">
+  <h2>激活 <small>激活结果</small></h2>
+</div>
+<?php echo '<div class="alert alert-info">
+  <button type="button" class="close" data-dismiss="alert">×</button><h5>'.$msg.'</h5></div>'; ?>
+<p class="note">Fields with <span class="required">*</span> are required.</p>
 <div class="form" id="form-container">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'libuser-form',
+	'htmlOptions'=>array('class'=>'well'),
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
 	
 	<fieldset>
 	<legend>
-		用户激活	
+		账号设置	
 	</legend>	
 
-	<div class="row">
+	<div class="control-group">
+			<div class="controls">
 		<?php echo CHtml::label('您的真实姓名','LibUser[realname]',array('required'=>true)); ?>
 		<?php echo CHtml::textField('LibUser[realname]','',array('size'=>60,'maxlength'=>255)); ?>
 	</div>
-	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'password'); ?>
+		</div>
+	<div class="control-group">
+			<div class="controls">
+		<?php echo $form->passwordFieldRow($model,'password',array('size'=>60,'maxlength'=>255)); ?>
+		
 	</div>
-	<div class="row">
-		<?php echo $form->labelEx($model,'repeatpassword'); ?>
-		<?php echo $form->passwordField($model,'repeatpassword',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'repeatpassword'); ?>
+		</div>
+	<div class="control-group">
+			<div class="controls">
+		<?php echo $form->passwordFieldRow($model,'repeatpassword',array('size'=>60,'maxlength'=>255)); ?>
 	</div>
+		</div>
 	</fieldset>
 	
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? '完成激活' : '完成激活'); ?>
+	<div class="controls">
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'完成激活')); ?>
 	</div>
 
 <?php $this->endWidget(); ?>
