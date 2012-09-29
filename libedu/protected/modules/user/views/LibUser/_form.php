@@ -4,11 +4,13 @@
 /* @var $form CActiveForm */
 ?>
 
+
 <div class="form" id="form-container">
 
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'libuser-form',
 	'enableAjaxValidation'=>true,
+	'inlineErrors'=>true,
 	'htmlOptions'=>array('class'=>'well'),
 )); ?>
 
@@ -21,27 +23,26 @@
 		账户资料	
 	</legend>	
 
-	
-		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>255,'class'=>'span5')); ?>
-		<?php echo $form->error($model,'email'); ?>
-	
-
-	
-		<?php echo $form->labelEx($model,'mobile'); ?>
-		<?php echo $form->textField($model,'mobile',array('size'=>60,'maxlength'=>255,'class'=>'span5')); ?>
-		<?php echo $form->error($model,'mobile'); ?>
-	
-
-	
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>255,'class'=>'span5')); ?>
-		<?php echo $form->error($model,'password'); ?>
-	
-	
-		<?php echo $form->labelEx($model,'repeatpassword'); ?>
-		<?php echo $form->passwordField($model,'repeatpassword',array('size'=>60,'maxlength'=>255,'class'=>'span5')); ?>
-		<?php echo $form->error($model,'repeatpassword'); ?>
+		<div class="control-group">
+			<div class="controls">
+				<?php echo $form->textFieldRow($model,'email',array('size'=>60,'maxlength'=>255,'class'=>'span5')); ?>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<?php echo $form->textFieldRow($model,'mobile',array('size'=>60,'maxlength'=>255,'class'=>'span5')); ?>	
+			</div>
+		</div>	
+		<div class="control-group">
+			<div class="controls">
+				<?php echo $form->passwordFieldRow($model,'password',array('size'=>60,'maxlength'=>255,'class'=>'span5')); ?>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<?php echo $form->passwordFieldRow($model,'repeatpassword',array('size'=>60,'maxlength'=>255,'class'=>'span5'))?>
+			</div>
+		</div>
 	
 	</fieldset>
 
@@ -49,26 +50,28 @@
 		<legend>
 			用户详细资料
 		</legend>
-	
-		<?php echo $form->labelEx($model,'realname'); ?>
-		<?php echo $form->textField($model,'realname',array('size'=>60,'maxlength'=>255,'class'=>'span3')); ?>
-		<?php echo $form->error($model,'realname'); ?>
-	
-	
-		<?php echo $form->labelEx($model,'schooluniqueid'); ?>
-		<?php echo $form->textField($model,'schooluniqueid',array('size'=>60,'maxlength'=>255,'class'=>'span5')); ?>
-		<?php echo $form->error($model,'schooluniqueid'); ?>
-	
-	
-	
-		<?php echo $form->labelEx($model,'classid'); ?>
-		<?php echo $form->dropDownList($model,'classid', $classlist,array());?>
-		<?php echo $form->error($model,'classid'); ?>
-	
+		<div class="control-group">
+			<div class="controls">
+				<?php echo $form->textFieldRow($model,'realname',array('size'=>60,'maxlength'=>255,'class'=>'span3')); ?>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">
+				<?php echo $form->textFieldRow($model,'schooluniqueid',array('size'=>60,'maxlength'=>255,'class'=>'span5')); ?>
+			</div>
+		</div>
+		<div class="control-group">
+			<div class="controls">	
+				<?php echo $form->labelEx($model,'classid'); ?>
+				<?php echo $form->dropDownList($model,'classid', $classlist,array());?>
+				<?php echo $form->error($model,'classid'); ?>
+			</div>
+		</div>
 	
 	</fieldset>
+	<div class="controls">
 		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'注册')); ?>
-
+	</div>
 
 <?php $this->endWidget(); ?>
 </div><!-- form -->

@@ -51,9 +51,30 @@ class ProfileController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+		if(Yii::app()->user->urole == 1){
+			$usc = UserSchool::model()->findByAttributes(array('user_id'=>Yii::app()->user->id,'school_id'=>Yii::app()->params['currentSchoolID']));
+			$ucls = LibUserClass::model()->findByAttributes(array('student_id'=>Yii::app()->user->id));
+			$ucls = LibClass::model()->findByPk($ucls->class_id);
+			$this->render('view',array(
+				'model'=>$this->loadModel($id),
+				'usc'=>$usc,
+				'ucls'=>$ucls,
+			));
+		}else if(Yii::app()->user->urole == 2){
+			$usc = UserCourse::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->id,'role'=>'2'));
+			for($i=0;$i<count($usc);$i++){
+				$usc[$i] = Course::model()->findByPk($usc[$i]->course_id);
+			}
+			$ucls = LibUserClass::model()->findAllByAttributes(array('teacher_id'=>Yii::app()->user->id),array('group'=>'class_id','select'=>'class_id,teacher_id'));
+			for($i=0;$i<count($ucls);$i++){
+				$ucls[$i] = LibClass::model()->findByPk($ucls[$i]->class_id);
+			}
+				$this->render('lecview',array(
+				'model'=>$this->loadModel($id),
+				'usc'=>$usc,
+				'ucls'=>$ucls,
+			));
+		}
 	}
 
 	/**

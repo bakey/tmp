@@ -4,9 +4,10 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
+<p class="note">Fields with <span class="required">*</span> are required.</p>
+<div class="form well row">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'profile-form',
 	'enableAjaxValidation'=>false,
 )); 
@@ -19,22 +20,21 @@
  
 ?>
 
-
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
 	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
+		
 		<?php echo $form->labelEx($model,'avatar'); ?>
+		<div class="span1" id="currentavatardiv">
 		<?php 
 		$avatarCode = ''; 
 		if($model->avatar != 'default_avatar.jpg'){
-			$avatarCode = CHtml::image(Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$model->user_info->id.'/avatar/'.$model->avatar,'alt',array('width'=>64,'height'=>64,'id'=>'currentAvatar'));
+			$avatarCode = CHtml::image(Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$model->user_info->id.'/avatar/'.$model->avatar,'alt',array('width'=>64,'height'=>64,'id'=>'currentAvatar','class'=>'img-polaroid'));
 		}else{
-			$avatarCode = CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->avatar,'alt',array('width'=>64,'height'=>64,'id'=>'currentAvatar'));
+			$avatarCode = CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->avatar,'alt',array('width'=>64,'height'=>64,'id'=>'currentAvatar','class'=>'img-polaroid'));
 		}
 		echo $avatarCode; ?>
-
+		</div>
+		<div class="span7 div-bordered" id="uploadavatardiv">
+			<h5>上传新头像</h5>
 		<?php
 			$this->widget('ext.EAjaxUpload.EAjaxUpload',
 			array(
@@ -58,7 +58,6 @@
 													marginTop: '-' + Math.round(ry * coords.y) + 'px'
 												});
 											}
-			               					$('#currentAvatar').fadeOut();
 			               					$('.qq-uploader').fadeOut(300);
 			               					$('#uploaded_avatar').html('<img id=\"currentAvatarImg\" src=\"".Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/temp_upload/'."'+responseJSON.filename+'\" width=\"400px\"/><h4>头像预览</h4><div style=\"width:80px; height:80px; overflow:hidden;\"><img id=\"preview\" src=\"".Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/temp_upload/'."'+responseJSON.filename+'\"/></div>');
 			               					$('#uploaded_avatar').fadeIn(1000);
@@ -70,7 +69,7 @@
 																if(data != 'fail'){
 																	$('#uploaded_avatar').fadeOut(500);
 																	$('#currentAvatar').attr('src',data);
-																	$('#currentAvatar').fadeIn(500);
+																	$('.qq-uploader').fadeIn(300);
 																	var fnamestr = data.toString();
 																	var fnamearray = new Array();
 																	fnamearray = fnamestr.split('/');
@@ -101,21 +100,18 @@
 			              )
 			));
 		?>
-		<?php echo $form->hiddenField($model,'avatar',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'avatar'); ?>
 		<div id="uploaded_avatar" style="display:none">
 		</div>
-	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50)); ?>
+		</div>
+		<div style="clear:both">&nbsp;</div>
+		<?php echo $form->hiddenField($model,'avatar',array('size'=>60,'maxlength'=>255)); ?>
+		<?php echo $form->error($model,'avatar'); ?>
+		
+		<?php echo $form->textAreaRow($model,'description',array('rows'=>6, 'cols'=>50,'class'=>'span8')); ?>
 		<?php echo $form->error($model,'description'); ?>
-	</div>
 
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
+		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'保存')); ?>
 
 <?php $this->endWidget(); ?>
 
