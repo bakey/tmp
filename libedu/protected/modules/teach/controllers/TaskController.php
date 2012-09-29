@@ -29,11 +29,11 @@ class TaskController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','topics'),
+				'actions'=>array('view','topics'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','ajaxcheckanswer','test','publishtask','previewtask','sortproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','examinee','addTaskRecord','participateTask','createTaskRecord'),
+				'actions'=>array('admin','index','showfinishtask','ajaxcheckanswer','test','publishtask','previewtask','sortproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -86,6 +86,32 @@ class TaskController extends Controller
 	private function check_task_record_exist( $task_id )
 	{
 		return TaskRecord::model()->exists('task=' . $task_id );
+	}
+	private function updateTaskRecord( $task_id , $task_accepter )
+	{
+		$task_rec_model = TaskRecord::model()->find( 'task=:tid and accepter=:uid' , 
+					array( ':tid'=>$task_id , 
+							':uid' => $task_accepter ) );
+		if ( null != $task_rec_model ) {
+			$task_rec_model->status = TaskRecord::TASK_STATUS_FINISHED;
+			$task_rec_model->save();
+			return $task_rec_model;
+		}
+		return null ;		
+	}
+	private function recordTaskProblemStatus( $rec_id , $problem_info , $task , $user )
+	{
+		foreach ( $problem_info as $info )
+		{
+			$task_problem_rec = new UserTaskProblemRecord;
+			$task_problem_rec->record_id = $rec_id;
+			$task_problem_rec->user      = $user;
+			$task_problem_rec->task      = $task;
+			$task_problem_rec->problem   = $info['id'];
+			$task_problem_rec->ans       = $info['user_ans'];
+			$task_problem_rec->check_ans = $info['check_ans'];
+			$task_problem_rec->save();
+		}		
 	}
 	
 	public function actionTest()
@@ -308,15 +334,48 @@ class TaskController extends Controller
 						),
 					)
 			);
+			$this->render('index',array(
+					'dataProvider'=>$dataProvider,
+			));
 		}
 		else if ( Yii::app()->user->urole == Yii::app()->params['user_role_student'] )
 		{
 			$tasks = $user_model->task_as_student;
-			$dataProvider = new CArrayDataProvider( $tasks );
+			$finished_tasks = $unfinished_tasks = array();
+			foreach( $tasks as $task )
+			{
+				$task_rec = TaskRecord::model()->find(
+						'task=:tid and accepter=:uid and status=:status',
+						array(
+							':tid' => $task->id,
+							':uid' => $user_model->id,
+							':status' => TaskRecord::TASK_STATUS_UNFINISHED , 
+							  )
+						);
+				$info = array(
+						'item_id' => $task->item,
+						'name'    => $task->name,
+						'id'      => $task->id,
+						'author_id' => $task->author,
+						'create_time' => $task->create_time,
+						);
+				if ( null == $task_rec ) {
+					$info['status'] = TaskRecord::TASK_STATUS_FINISHED;
+					$finished_tasks[] = $info ;
+				} else {
+					$info['status'] = TaskRecord::TASK_STATUS_UNFINISHED ;
+					$unfinished_tasks[] = $info ;
+				}
+			}
+			$finished_task_data = new CArrayDataProvider( $finished_tasks );
+			$unfinished_tasks = new CArrayDataProvider( $unfinished_tasks );
+			$this->render('index',array(
+					'finished_task_data'   => $finished_task_data,
+					'unfinished_task_data' => $unfinished_tasks,
+					//'dataProvider'=>$dataProvider,
+			));
 		}
-		$this->render('index',array(
-				'dataProvider'=>$dataProvider,
-		));
+		
 	}
 
 	/**
@@ -402,51 +461,6 @@ class TaskController extends Controller
 		$this->renderPartial('problem_list',
 					array(
 							'problem_data'=>$dataProvider,));
-	}
-
-
-	public function actionExaminee($taskid)
-	{
-		$select=$_POST['sel'];
-
-        $criteria=new CDbCriteria;
-		$criteria->compare('id',$taskid);
-		$task=Task::model()->findAll($criteria);
-
-		$i=0;
-		while($i<count($select))
-		{
-			$notification=new Notification();
-			$taskRecord=new TaskRecord();
-			$taskRecord->accepter=intval($select[$i]);
-			$taskRecord->start_time=date('Y-m-d H:i:s',time());
-			$lasttime=explode(":",$task[0]->last_time);
-			$time=0;
-			if(strncasecmp($lasttime[0],"00",2))
-			{
-				$time=$time+intval($lasttime[0]*60*60);
-			}
-			if(strncasecmp($lasttime[1],"00",2))
-			{
-				$time=$time+intval($lasttime[1]*60);
-			}
-			if(strncasecmp($lasttime[2],"00",2))
-			{
-				$time=$time+intval($lasttime[2]);
-			}
-			$taskRecord->end_time=date('Y-m-d H:i:s',time()+$time);
-			$taskRecord->task = $taskid;
-			$taskRecord->status = TaskRecord::TASK_STATUS_UNFINISHED ;
-			$taskRecord->save();
-			$notification->publisher=Yii::app()->user->id;
-			$notification->receiver=intval($select[$i]);
-			$notification->type= Notification::TEST ;
-			$notification->resource_id=intval($taskid);
-			$notification->create_time=date('Y-m-d H:i:s',time());
-			$notification->content=$_POST['content'];
-			$i++;
-			$notification->save();
-		}
 	}
 
     /*创建一条测试记录
@@ -546,25 +560,73 @@ class TaskController extends Controller
 		$dataProvider = new CArrayDataProvider( $problem_models );
 		$this->render('participatetask' , array(
 				'problem_data'=>$dataProvider ,
+				'task_id' => $task_id,
 		));
 	}
-	public function actionAjaxCheckAnswer()
+	public function actionShowFinishTask( $task_id )
 	{
+		$uid = Yii::app()->user->id;
+		$task_problem_record_model = UserTaskProblemRecord::model()->findAll(
+					'task=:tid and user=:uid',
+					array(	
+							':tid' => $task_id ,
+							':uid' => $uid, 
+						  )
+				);
+		$problem_data = array();
+		foreach( $task_problem_record_model as $single_item )
+		{
+			$pid = $single_item->problem;
+			$problem_model = Problem::model()->findByPk( $pid );
+			$problem_data[] =  array(
+					'check_ans' => $single_item->check_ans,
+					'id'        => $problem_model->id,
+					'source'    => $problem_model->source,
+					'content'   => $problem_model->content,
+					'select_ans'=> $problem_model->select_ans,
+					'user_ans'	=> $single_item->ans,					
+					);			
+		}
+		$dataProvider = new CArrayDataProvider( $problem_data );
+		$this->render( 'viewfinishedtask' , array(
+				'problem_data' => $dataProvider,
+				) );
+		
+	}
+	public function actionAjaxCheckAnswer( $task_id )
+	{
+		$uid = Yii::app()->user->id;
+		if ( TaskRecord::model()->exists( 'task=:tid and accepter=:uid and status=1' , array( ':tid'=>$task_id , ':uid'=>$uid )) )
+		{
+			echo("task finished!!");
+			return ;			
+		}
 		if ( isset( $_POST['select_ans']) )
 		{
 			$check_ret = array();
+			$problem_info = array();
 			foreach( $_POST['select_ans'] as $problem_id=>$user_ans )
 			{
 				$problem_model = Problem::model()->findByPk( $problem_id );
 				$ans = chr( $user_ans+ord('A') );
 				$ref_ans = $problem_model->reference_ans;
+				$check_ans = 0;
 		
 				if ( $ans == $ref_ans ) {
 					$check_ret[] = array( $problem_id => 1 );
+					$check_ans = 1;
 				}else {
 					$check_ret[] = array( $problem_id => 0 );
+					$check_ans = 0;
 				}
+				$problem_info[] = array(
+						'id' => $problem_id,
+						'user_ans' => $ans,
+						'check_ans' => $check_ans, 
+						);
 			}
+			$rec = $this->updateTaskRecord( $task_id , $uid );
+			$this->recordTaskProblemStatus( $rec->id , $problem_info , $task_id , $uid ); 
 			echo json_encode( $check_ret );
 		}		
 	}

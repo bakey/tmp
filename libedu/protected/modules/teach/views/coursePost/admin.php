@@ -12,18 +12,6 @@ $this->menu=array(
 	array('label'=>'Create CoursePost', 'url'=>array('create')),
 );
 
-Yii::app()->clientScript->registerScript('search', "
-$('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
-});
-$('.search-form form').submit(function(){
-	$.fn.yiiGridView.update('course-post-grid', {
-		data: $(this).serialize()
-	});
-	return false;
-});
-");
 ?>
 
 <h1>Manage Course Posts</h1>
@@ -51,9 +39,6 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'item_id',
 		'status',
 		'create_time',
-		/*
-		'update_time',
-		*/
 		array(
 			'class'=>'CButtonColumn',
 		),

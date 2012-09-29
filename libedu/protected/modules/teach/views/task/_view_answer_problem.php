@@ -1,10 +1,14 @@
 <div class="well">
 
-<div id="problem_id_<?php echo $data->id?>">
+<div id="problem_id_<?php echo $data->id?>_right" style="color:red;display:none">
+本题正确	 
+</div>
+<div id="problem_id_<?php echo $data->id?>_wrong" style="color:red;display:none">
+本题错误
+</div>
 <?php 
 echo '来源: ' . $data->source;
 ?>
-</div>
 
 <?php 
 	
