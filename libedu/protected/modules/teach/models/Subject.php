@@ -19,6 +19,17 @@ class Subject extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+	
+	public static function getIDSubjectMap()
+	{
+		$all_subjects = Subject::model()->findAll();
+		$ret = array();
+		foreach( $all_subjects as $subject )
+		{
+			$ret[ $subject->id ] = $subject->name;			
+		}
+		return $ret;		
+	}
 
 	/**
 	 * @return string the associated database table name

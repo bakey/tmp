@@ -7,10 +7,7 @@ class KnowledgePointController extends Controller
 	{
 		$school_id = Yii::app()->params['currentSchoolID'];
 		
-		/*
-		 * 1: get school model   [done]
-		 * 2: from school model get all the course belong to the school;
-		 */
+	
 		$school = School::model()->findByPk( $school_id );
 		if ( $school == null ){
 			throw new CHttpException( 500 , "No this school id : " . $school_id );
@@ -41,7 +38,7 @@ class KnowledgePointController extends Controller
 					),
 					'pagination'=>array('pageSize'=>15),
 			));	
-			$this->renderPartial( '_form_showkp' , array(
+			$this->renderPartial( '_form_show_kp' , array(
 					'dataProvider' => $dataProvider,
 					));
 		}

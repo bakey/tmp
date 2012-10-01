@@ -23,8 +23,11 @@ echo CHtml::dropDownList( 'list_subject','', $list_subject ,array(
 				),
 	)	);
 ?> 
-
+<div class="well">
 <?php
-$this->renderPartial( '_form_showkp' , array('dataProvider' => $dataProvider) );
+$this->renderPartial('_form_show_kp' , array('dataProvider' => $dataProvider) ); 
+?>
+</div>
+<?php 
 $this->renderPartial( '_form_addkp' , array('kp_model' => $kp_model) ); 
 ?>

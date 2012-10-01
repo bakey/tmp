@@ -142,7 +142,7 @@ class Problem extends CActiveRecord
 		));
 	}
 
-	public function getTypeOptions()
+	static public function getTypeOptions()
 	{
 		return array(
 			self::SINGLE_CHOICE=>'单项选择',

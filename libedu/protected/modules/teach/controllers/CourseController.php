@@ -74,21 +74,9 @@ class CourseController extends Controller
 		$edition_id = $edition_model->id;
 		$user_model = LibUser::model()->findByPk( Yii::app()->user->id );
 		Yii::app()->user->setState( "course" , $id );
-		/*$item_post = array();
-		foreach( $edition_model->getItems() as $item )
-		{		
-			$exist = CoursePost::model()->exists(
-					'author=:author and item_id=:item_id',
-					array(
-							':author'=>$user_id ,
-							':item_id'=>$item->id,
-					)
-				);
-			$item_post[] = array( 'item' => $item , 'post_exist'=>$exist );
-		}*/
+
 		$top_item_model = $user_model->trace_item;
-		//var_dump( $top_item_model );
-		//exit();
+		
 		$edition_first_level_items = Item::model()->findAll( 'edition=:edition and level=1', array(
 						':edition' => $edition_id, ) );
 		

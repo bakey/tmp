@@ -123,6 +123,7 @@ return array(
 		'adminEmail'=>'chengchao@libedu.com',
 		'uploadFolder'=>'bin_data',
 		'currentSchoolID'=>$currntschoolid,
+		'user_role_school_admin' > 0,
 		'user_role_student' => 1,
 		'user_role_teacher' => 2,
 		'course_post_status_draft' => 0,

@@ -1,28 +1,18 @@
-<?php  echo '题型: ';
-			echo CHtml::dropDownList(
-				'problem_type',
-				'',
-				array(''=>'请选择题型:',0=>'单项选择',1=>'多项选择',2=>'填空题',3=>'问答题'),
-				array(
-					'ajax'=>array(
-						'type'=>'POST',
-						'url'=>array('sortproblem'),
-						'update'=>'#param_id',
-					),
-			)
-	); ?>	
-	<?php  echo '难度: ' ;
-			echo CHtml::dropDownList(
-				'difficulty_level',
-				'',
-				Problem::$difficulty_level_map ,
-				array(
-					'ajax'=>array(
-						'type'=>'POST',
-						'url'=>array('sortproblem'),
-						'update'=>'#param_id',),
-					)
-		);?>  
+<?php
+
+	$html_options = array( 'ajax' => array(
+							'type' => 'POST',
+							'url'  => array('filterproblem'),
+							'update' => '#param_id',
+							),
+						  );  
+	        echo '题型: ';
+			echo CHtml::dropDownList('problem_type','',	Problem::getTypeOptions(),$html_options );	
+	 		echo '<br>难度: ' ;
+			echo CHtml::dropDownList('difficulty_level','',Problem::$difficulty_level_map , $html_options);
+         	echo '<br>科目: ';
+         	echo CHtml::dropDownList( 'subject', '', Subject::getIDSubjectMap() , $html_options );
+?>  
 	<br><br>   
 	<?php	
 	 echo CHtml::radioButtonList(
@@ -31,7 +21,7 @@
 				array(
 						'onChange'=>CHtml::ajax(
 							array('type'=>'POST',
-								'url'=>array('sortproblem'),
+								'url'=>array('filterproblem'),
 								'update'=>'#param_id',)
 					)));
 			
