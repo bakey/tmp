@@ -178,17 +178,37 @@ class CourseController extends Controller
 	 */
 	public function actionLoadChildItemAsTable()
 	{
-		//if ( isset($_POST['item']) )
 		if ( isset($_GET['item']) )
 		{
-			//$item_id = $_POST['item'];
 			$item_id = $_GET['item'];
+			$course_id = Yii::app()->user->id;
 			$parent_items = Item::model()->findByPk( $item_id );
 			$children_items = $parent_items->level_child;
-			$item_data = new CArrayDataProvider( $children_items );
-			//var_dump( $item_data->getData() );
+			$first_level_item = LibUser::model()->findByPk( Yii::app()->user->id )->trace_item;
+			
+			$before_tracing = true;
+			if ( $item_id > $first_level_item[0]->id ) {
+				$before_tracing = false;				
+			}
+			$item_data = array();
+			foreach( $children_items as $item )
+			{
+				$url = "";
+				$op = "";
+				if ( $before_tracing ) {
+					$url = CController::createUrl("/teach/coursepost/index&item_id=") . $item->id;
+					$op  = '浏览课程';					
+				}
+				else {
+					$url = CController::createUrl("/teach/coursepost/create&item_id=") . $item->id . "&course_id=" . $course_id ;
+					$op = '创建课程';				
+				}
+				$info = array( 'id'=>$item->id , 'url'=>$url , 'operate'=>$op , 'edi_index'=>$item->edi_index,
+						'content'=>$item->content );
+				$item_data[] = $info;
+			}	
 			$this->renderPartial( '_show_item' , array(
-					'dataProvider' => $item_data ,
+					'dataProvider' =>  new CArrayDataProvider( $item_data ) ,
 					) );
 		}
 	}

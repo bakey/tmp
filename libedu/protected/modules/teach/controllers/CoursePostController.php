@@ -262,6 +262,18 @@ class CoursePostController extends Controller
 			return;
 		}		
 	}
+	private function getCoursePostAsStudent( $item_id )
+	{
+		$course_id = Yii::app()->user->course;
+		$user_course_model = UserCourse::model()->find( 'course_id=:cid and role=:teacher_role' , 
+											array( ':cid'=>$course_id , 
+											':teacher_role' => Yii::app()->params['user_role_teacher']) );
+		$course_post_models = CoursePost::model()->findAll( 'author=:author and item_id=:item_id' , array(
+					':author' => $user_course_model->user_id,
+					':item_id' => $item_id,
+				));
+		return new CArrayDataProvider( $course_post_models  );
+	}
 	/*
 	 * 处理用户上传二进制文件
 	 */
@@ -431,7 +443,7 @@ class CoursePostController extends Controller
 	public function actionIndex( $item_id )
 	{
 		$cur_user = Yii::app()->user->id;
-		$dataProvider=new CActiveDataProvider('CoursePost',array(
+		$teacher_course_post_data =new CActiveDataProvider('CoursePost',array(
 				'criteria'=>array(
 						'condition'=>('author='.$cur_user.' and item_id='.$item_id ),						
 				),
@@ -440,11 +452,24 @@ class CoursePostController extends Controller
 				)
 		));
 		
-		$this->render('index',array(
-			'dataProvider'=> $dataProvider,
-			'item_id'     => $item_id,
-			'course_id'   => Yii::app()->user->course,
-		));
+		if ( Yii::app()->user->urole == Yii::app()->params['user_role_student'])
+		{
+		
+			$this->render('index_student_coursepost',array(
+				'dataProvider'=> $this->getCoursePostAsStudent( $item_id ),
+				'item_id'     => $item_id,
+				'course_id'   => Yii::app()->user->course,
+			));
+		}
+		else if ( Yii::app()->user->urole == Yii::app()->params['user_role_teacher'] )
+		{
+			$this->render('index_teacher_coursepost',array(
+					'dataProvider'=> $teacher_course_post_data ,
+					'item_id'     => $item_id,
+					'course_id'   => Yii::app()->user->course,
+			));
+			
+		}
 	}
 
 	/**
