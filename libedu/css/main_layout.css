@@ -12,3 +12,18 @@ border: 1px solid #dddddd;
 .row.field_email, .row.buttons,.row.field_name,.row.field_school_unique_id{
 	padding-left:20px;
 }
+
+.thumbnail.linkthumbnail:hover{
+	background-color:#ececec;
+	text-decoration: none;
+}
+
+.thumbnail.linkthumbnail:hover a:hover{
+	text-decoration: none;
+}
+
+.darkhr{
+	border-color: #e0e0e0;
+	margin-top:10px;
+	margin-bottom: 25px;
+}

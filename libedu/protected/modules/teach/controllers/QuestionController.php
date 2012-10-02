@@ -75,8 +75,6 @@ class QuestionController extends Controller
 
 		if(isset($_POST['Question']))
 		{
-			var_dump( $_POST );
-			exit();
 			$model->attributes=$_POST['Question'];
 			if($model->save()) {
 				$this->redirect(array('view','id'=>$model->id));

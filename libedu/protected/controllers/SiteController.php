@@ -29,7 +29,24 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+
+		$cschool = School::model()->findByPk(Yii::app()->params['currentSchoolID']);
+
+		if(Yii::app()->user->isGuest) {
+			$this->render('index',array('cschool'=>$cschool));
+		}else{
+
+			$res = array();
+			$mycourselist = UserCourse::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->id));
+			foreach($mycourselist as $singlecourse){
+				array_push($res, Course::model()->findByPk($singlecourse->course_id));	
+			}
+			if(Yii::app()->user->urole == 1){
+				$this->render('stuindex',array('cschool'=>$cschool,'courselist'=>$res));
+			}else if(Yii::app()->user->urole == 2){
+				$this->render('lecindex',array('cschool'=>$cschool,'courselist'=>$res));
+			}
+		}
 	}
 
 	/**
