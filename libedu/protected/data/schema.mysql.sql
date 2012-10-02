@@ -264,11 +264,9 @@ create table if not exists tbl_user_class (
 	
 create table if not exists tbl_teacher_item_trace (
 	`teacher` int not null references tbl_user(id) on delete cascade,
-	`item` int not null references tbl_item(id) on delete cascade
+	`item` int not null references tbl_item(id) on delete cascade,
+	`sub_item` int not null references tbl_item(id) on delete cascade,
+	PRIMARY KEY (`teacher`)
 )engine=innodb default charset=utf8;
 
-create table if not exists tbl_item_trace(
-	`item` int not null references tbl_item(id) on delete cascade,
-	`sub_item` int not null references tbl_item(id) on delete cascade
-)engine=innodb default charset=utf8;
 	

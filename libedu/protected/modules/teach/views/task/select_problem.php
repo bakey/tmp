@@ -1,10 +1,10 @@
 <?php
 
 	$html_options = array( 'ajax' => array(
-							'type' => 'POST',
-							'url'  => array('filterproblem'),
-							'update' => '#param_id',
-							),
+										'type' => 'POST',
+										'url'  => array('filterproblem'),
+										'update' => '#param_id',
+									),
 						  );  
 	        echo '题型: ';
 			echo CHtml::dropDownList('problem_type','',	Problem::getTypeOptions(),$html_options );	

@@ -41,7 +41,7 @@
 						
 						array('label'=>'测试','items'=>array(
 							array('label'=>'题库管理', 'url'=>array('/teach/problem')),
-							array('label'=>'测验管理' , 'url'=>array('/teach/task/')),
+							array('label'=>'我的测验' , 'url'=>array('/teach/task/')),
 						),'active'=>((Yii::app()->controller->id == 'problem') || (Yii::app()->controller->id == 'task')),'visible'=>!Yii::app()->user->isGuest),
 
 						array('label'=>'问答','items'=>array(

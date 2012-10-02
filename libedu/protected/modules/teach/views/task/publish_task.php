@@ -1,6 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 		'测验管理'=>array('index'),
+		'测验具体情况'
 );
 
 if ( count($task_record_model->getData()) > 0 ){
@@ -18,7 +19,13 @@ if ( count($task_record_model->getData()) > 0 ){
 							'type'=>'raw',
 					),
 					array(
-							'name'=>'accepter',
+							'name'=>'测试学生',
+							'value'=>'$data->accepter',
+							'type'=>'raw',
+					),
+					array(
+							'name'=>'是否完成',
+							'value'=>'$data->status',
 							'type'=>'raw',
 					),
 			),

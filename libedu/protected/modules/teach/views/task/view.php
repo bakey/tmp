@@ -20,14 +20,11 @@ $this->menu=array(
 	'type'=>'striped',
 	'attributes'=>array(
 		'id',
-		'item',
 		'name',
 		'create_time',
 		'update_time',
 		'last_time',
-		'author',
 		'description',
-		'status',
 	),
 )); ?>
 <?php

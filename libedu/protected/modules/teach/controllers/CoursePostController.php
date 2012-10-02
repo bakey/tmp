@@ -188,6 +188,31 @@ class CoursePostController extends Controller
 					'update_time' => date( "Y-m-d H:i:s", time() ),
 					) );
 	}
+	private function moveTracingItem( $save_item_id )
+	{
+		$save_item = Item::model()->findByPk( $save_item_id );
+		//当前跟踪的model
+		$tracing_info = TeacherItemTrace::model()->findByPk( Yii::app()->user->id );
+		
+		$first_level_item = Item::model()->findByPk( $tracing_info->item );
+		$sub_items = $first_level_item->level_child;
+		
+		for( $i = 0 ; $i < count($sub_items) ; ++ $i )
+		{
+			if ( $sub_items[$i]->id == $save_item->id ) {
+				if ( $i == count($sub_items)-1 ) {
+					//如果已经到了最后一个item，那么tracing item变为小于0
+					$tracing_info->sub_item = -1;
+					$tracing_info->save();
+				}else {
+					//否则，跟踪到下一个item
+					$tracing_info->sub_item = $sub_items[ $i + 1 ]->id;
+					$tracing_info->save();
+				}
+			}
+		}
+		
+	}
 	private function process_course_post_submit( $course_post_model , $item_id , $course_id )
 	{
 		$user_id = Yii::app()->user->id;
@@ -198,7 +223,7 @@ class CoursePostController extends Controller
 			$status = CoursePost::STATUS_DRAFT;
 			$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
 			if ( $new_post_id > 0 ) {
-				$this->redirect(array('viewbyid','id'=>$new_post_id , 'course_id'=>$course_id));
+				$this->redirect(array('viewbyid','post_id'=>$new_post_id , 'course_id'=>$course_id));
 			}else {
 				throw new CHttpException( 400 , "更新数据库错误，该课程资料已经被删除");
 			}
@@ -225,7 +250,8 @@ class CoursePostController extends Controller
 			$status = CoursePost::STATUS_PUBLISH;
 			$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
 			if( $new_post_id > 0 ) {
-				$this->redirect(array('viewbyid','id'=>$new_post_id , 'course_id'=>$course_id ));
+				$this->moveTracingItem( $item_id );
+				$this->redirect(array('viewbyid','post_id'=>$new_post_id , 'course_id'=>$course_id ));
 			}else {
 				throw new CHttpException( 400 , "更新数据库错误，该课程资料已经被删除");
 			}

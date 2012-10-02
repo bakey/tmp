@@ -16,6 +16,9 @@
 							$("#" + show_wrong_id ).show();	
 						}							 
 					} )
+					$("#taskSubmitBtn").hide();
+					$("#taskResetBtn").hide();
+					$("#returnLink").show();
        			});
 			}';
 		$alert_js = 'function( xhr ){
@@ -37,9 +40,11 @@
     				 array(
     				 	'beforeSend' => $alert_js,
     				 	'success' => $ajax_callback_js , 
-    				 )
+    				 ),
+    				array('id'=>'taskSubmitBtn')
     			);
-    	echo CHtml::resetButton('清除答案');
+    	echo CHtml::resetButton('清除答案' , array('id' => 'taskResetBtn') );
+    	echo CHtml::link('返回我的测验',   CController::createUrl('/teach/task'), array('id'=>'returnLink','style'=>'display:none'));
     	echo CHtml::endForm();
     	?>
 </div>
