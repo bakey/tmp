@@ -21,15 +21,21 @@
 				array(
 						'class'=>'CButtonColumn',
 						'template'=>'{view}{update}{delete}',
-						/*'buttons'=>array
+						'updateButtonUrl' => 'Yii::app()->controller->createUrl("course/update&course_id=").$data->id',
+						'buttons'=>array
 						(
-								'down' => array
+								
+								/*'update' => array
+								(
+										//'url' => '$data->id',
+								),*/
+								/*'down' => array
 								(
 										'label'=>'[+]',
 										//'url'=>'"#"',
 										//'click'=>'function(){alert("Going down!");}',
-								),
-						),*/
+								),*/
+						),
 				),
 		),
 )); ?>

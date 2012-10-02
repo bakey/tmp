@@ -56,10 +56,9 @@ class CoursePostController extends Controller
 	{
 		
 	}
-	public function actionViewById()
+	public function actionViewById( $post_id , $course_id )
 	{
-		$post_id = $_GET['id'];
-		$course_id = $_GET['course_id'];
+		//$course_id = $_GET['course_id'];
 		$draft_to_publish_url = Yii::app()->createUrl("teach/coursepost/drafttopublished&post_id=$post_id&course_id=$course_id");
 		$reedit_url = Yii::app()->createUrl("teach/coursepost/reedit&post_id=$post_id&course_id=$course_id");
 		$this->render('view',array(

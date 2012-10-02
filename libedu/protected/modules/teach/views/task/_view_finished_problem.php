@@ -29,6 +29,5 @@ if ( $data['check_ans'] ) {
 			echo "<br>";
 		}
 	}
-	//echo CHtml::label('题目类型: ' . $data->getType($data->type),false);
 ?>
 </div>

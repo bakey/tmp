@@ -38,7 +38,7 @@
 	<b>
 	<?php
 		echo CHtml::label('标准答案: ' . $data->reference_ans , false);
-		echo CHtml::label('题目类型: ' . $data->getType($data->type) ,false);
+		echo CHtml::label('题目类型: ' . $data->getType() ,false);
 	?>
 	<br/>
 	</b>

@@ -35,19 +35,24 @@ class Problem extends CActiveRecord
 				3 => "较难",
 				4 => "难",
 	);
+	static public $problem_type_map = array(
+			self::SINGLE_CHOICE=>'单项选择',
+			self::MULTIPLE_CHOICE=>'多项选择',
+			self::BLANK=>'填空',
+			self::QuAn=>'问答',);
 	public function getDifficultyLevel()
 	{
-		return array(
-				self::A=>'易',
-				self::B=>'较易',
-				self::C=>'中',
-				self::D=>'较难',
-				self::E=>'难',);
+		return Problem::$difficulty_level_map;
 	}
 
-	public function getDifficulty($level)
+	public function getDifficulty()
 	{
-		return Problem::$difficulty_level_map[ $level ];
+		if ( isset($this->difficulty) && isset(Problem::$difficulty_level_map[ $this->difficulty ]) ) {
+			return Problem::$difficulty_level_map[ $this->difficulty ];
+		}
+		else {
+			return "未知难度";
+		}
 	}
 	/**
 	 * Returns the static model of the specified AR class.
@@ -144,28 +149,13 @@ class Problem extends CActiveRecord
 
 	static public function getTypeOptions()
 	{
-		return array(
-			self::SINGLE_CHOICE=>'单项选择',
-			self::MULTIPLE_CHOICE=>'多项选择',
-			self::BLANK=>'填空',
-			self::QuAn=>'问答',);
+		return Problem::$problem_type_map;
 	}
-
-
-
-	public function getType($type)
+	public function getType()
 	{
-		if($type==0) {
-			return '单项选择';
+		if ( isset($this->type) && isset(Problem::$problem_type_map[ $this->type ]) ) {
+			return Problem::$problem_type_map[ $this->type ];
 		}
-		else if($type==1) {
-			return '多项选择';
-		}
-		else if($type==2) {
-			return '填空';
-		}
-		else if($type==3) {
-			return '问答题';
-		}
+		return "未知题目类型";
 	}
 }

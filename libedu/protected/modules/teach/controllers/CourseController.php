@@ -9,10 +9,9 @@ class CourseController extends Controller
 	{
 		$user_model = LibUser::model()->findByPk( Yii::app()->user->id );
 		$courses = $user_model->user_course;
-		$userCourseData = new CActiveDataProvider('Course',array(
+		$userCourseData = new CArrayDataProvider( $courses , array(
 				'pagination'=>array('pageSize'=>15),
 		));
-		$userCourseData->setData( $courses );
 		$this->render('admin' , array(
 				'dataProvider'=>$userCourseData,
 				));
@@ -66,14 +65,14 @@ class CourseController extends Controller
 				'post_exist' => $exist,
 		);
 	}
-	public function actionUpdate( $id )
+	public function actionUpdate( $course_id )
 	{
 		//取得此课程对应的教材，用以确定章节
-		$course_model = $this->loadCourseModel( $id );
+		$course_model = $this->loadCourseModel( $course_id );
 		$edition_model = $course_model->edition;
 		$edition_id = $edition_model->id;
 		$user_model = LibUser::model()->findByPk( Yii::app()->user->id );
-		Yii::app()->user->setState( "course" , $id );
+		Yii::app()->user->setState( "course" , $course_id );
 
 		$top_item_model = $user_model->trace_item;
 		

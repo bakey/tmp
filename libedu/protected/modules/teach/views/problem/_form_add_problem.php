@@ -1,6 +1,6 @@
 
-<div class="form">
-<?php $form=$this->beginWidget('CActiveForm', array(
+<div class="form well row" >
+<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 		'id'=>'problem-form',
 		'enableAjaxValidation'=>true,
 		'action'=>'index.php?r=teach/problem/create',
@@ -28,11 +28,10 @@
 	</select>
 	<div id="typeID"></div>
 
-    <div class="row">
+
 		<?php echo $form->labelEx($model,'难度'); ?>
 		<?php echo $form->dropDownList($model,'difficulty',$model->getDifficultyLevel()); ?>
 		<?php echo $form->error($model,'difficulty'); ?>
-	</div>
 <?php 
 		echo $form->labelEx($model,'科目'); 
 		echo $form->textField($model,'subject',array('size'=>60,'maxlength'=>255)); 
@@ -40,18 +39,11 @@
 		//echo("选择科目 <br>");
 		//echo CHtml::dropDownList( 'subject_list','', $subjectList , array() ); 
 ?>
-
-    <div class="row">
 		<?php echo $form->labelEx($model,'题目来源'); ?>
 		<?php echo $form->textField($model,'source',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'source'); ?>
-	</div>
-		
-   
-    <div class="row">
 		<?php echo $form->labelEx($model,'选项数: '); ?>
 		<?php echo $form->error($model,'content'); ?>
-	</div>
 
 
     <script type="text/javascript">

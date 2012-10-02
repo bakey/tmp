@@ -123,9 +123,17 @@ class TaskController extends Controller
 			return false;
 		}
 	}
+	private function getFinishTaskStuCnt( $task_id )
+	{
+		return TaskRecord::model()->count( 'task=:tid and status=:status', array( ':tid' => $task_id , ':status' => TaskRecord::TASK_STATUS_FINISHED ) );		
+	}
+	private  function getTotalAcceptTaskStuCnt( $task_id )
+	{
+		return TaskRecord::model()->count( 'task=:tid', array( ':tid' => $task_id ) );	
+	}
 	private function getTaskInfoData( $teacher )
 	{
-		$tasks = $user_model->task_as_teacher;
+		$tasks = $teacher->task_as_teacher;
 		$dataProvider = new CArrayDataProvider( $tasks , array(
 				'sort'=>array(
 						'attributes'=>array(
@@ -141,12 +149,20 @@ class TaskController extends Controller
 			$task_info = array();
 			//如果测验已经发布，那么获取完成测试的学生数量
 			if ( $data->status == Task::STATUS_PUBLISHED ) {
-				$task_info['finish_task_stu_cnt'] = $this->getFinishTaskStuCnt( $data->id );				
+				$task_info['finish_task_stu_cnt'] = $this->getFinishTaskStuCnt( $data->id );
+				$task_info['total_accept_task_stu_cnt'] = $this->getTotalAcceptTaskStuCnt( $data->id );	
 			}
+			$task_info['id']   = $data->id;
+			$task_info['item'] = $data->item;
+			$task_info['name'] = $data->name;
+			$task_info['author'] = $data->author;
+			$task_info['create_time'] = $data->create_time;
+			$task_info['status'] = $data->status;
 			//获取task其他数据
 			$task_data[] = $task_info;
 		} 
-		return $task_data;		
+		$array_task_data = new CArrayDataProvider( $task_data );
+		return $array_task_data ;		
 	}
 	
 	public function actionTest()
@@ -184,6 +200,7 @@ class TaskController extends Controller
 		if ( null == $task_model ) {
 			throw new CHttpException( 404 , "no this task ");
 		}
+		//获取该老师当前课程的所有学生
 		$user_course_model = UserCourse::model()->findAll( 'role=:role and course_id=:course_id',
 					array(
 						':role'      =>Yii::app()->params['user_role_student'],
@@ -200,15 +217,17 @@ class TaskController extends Controller
 		$problem_data = array();
 		foreach( $problems as $problem )
 		{
-			$problem_data[] = array( 'id' => $problem->id , 
-									  'content'=>$problem->content
+			$problem_data[] = array( 'id'         => $problem->id , 
+									  'content'    =>$problem->content,
+									  'difficulty' => $problem->getDifficulty(),
+									  'type'       => $problem->getType(),
 					);
 		}
-		$dataProvider = new CArrayDataProvider( $problem_data );
+		$problemDataProvider = new CArrayDataProvider( $problem_data );
 		$this->render( 'preview',array(
-									'problem_data'    => $dataProvider ,
+									'problem_data'    => $problemDataProvider ,
 									'task_id' 	      => $task_id,
-									'student_data'  => $student_data,
+									'student_data'    => $student_data,
 				) );	
 	}
 	public function actionPublishTask( $task_id )
@@ -238,15 +257,14 @@ class TaskController extends Controller
 		}
 		$student_id_arr = $_POST['publish-student-form_c2'];
 		
-		//$task_record_set = array();
 		foreach( $student_id_arr as $sid )
 		{
+			//建立task record的关联
 			$task_record_model = new TaskRecord;
 			$task_record_model->task = $task_id;
 			$task_record_model->accepter = $sid;
 			$task_record_model->status = TaskRecord::TASK_STATUS_UNFINISHED;
 			$task_record_model->save();
-			//$task_record_set[] = $task_record_model;
 		}	
 		$task_record_data = new CActiveDataProvider( 'TaskRecord' , array(
 				'criteria'=>array(
@@ -273,6 +291,7 @@ class TaskController extends Controller
 		if( isset($_POST['Task']) )
 		{			
 			if ( isset( $_POST['publish']) || isset($_POST['preview']) ) {
+				//把task model存好，并把task_problem,task_knowledge_point都关联好
 				if ( $this->create_new_task( $task_model ) ) {
 					$this->redirect( array("previewtask" , 'task_id'=>$task_model->id) ) ;
 				}else {

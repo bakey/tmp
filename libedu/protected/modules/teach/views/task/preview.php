@@ -6,12 +6,25 @@
  		'type' =>'bordered striped',
 		'columns'=>array(
 				array(
-						'name'=>'id',
+						'name'=>'题目id',
+						'value' => '$data["id"]',
 						'type'=>'raw',
 				),
 				array(
-						'name'=>'content',
+						//'name'=>'content',
+						'name'=>'题目内容',
+						'value' => '$data["content"]',
+						'type'=>'html',
+				),
+				array(
+						'name'=>'题目难度',
+						'value' => '$data["difficulty"]',
 						'type'=>'raw',
+				),
+				array(
+						'name' => '题目类型',
+						'value' => '$data["type"]',
+						'type' => 'raw',
 				),
 		),
 ));
@@ -28,7 +41,6 @@
  
  echo CHtml::submitButton('确认发布测试', array(
 		'name'=>'confirm_publish',
- 		//'onClick'=>'window.location.href="' . $url . '"', 
  		) ) ;
  echo CHtml::endForm();
 ?>

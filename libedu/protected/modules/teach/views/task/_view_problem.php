@@ -1,6 +1,6 @@
 <div class="view">
 	<?php
-	echo '题目难度: ' . $data->getDifficulty($data->difficulty) . " | ";
+	echo '题目难度: ' . $data->getDifficulty() . " | ";
 	echo '使用次数:' . $data->use_count . "|";	
 	?>
 	选择本题<input type="checkbox" name="problem_selected[]" value="<?php echo $data->id ?>"/>
@@ -37,7 +37,7 @@
 	<b>
 	<?php
 		echo CHtml::label('标准答案:    '. $data->reference_ans ,false);
-		echo CHtml::label('题目类型: ' . $data->getType($data->type),false);
+		echo CHtml::label('题目类型: ' . $data->getType(),false);
 		
 	?>
 	<br/>

@@ -34,6 +34,6 @@ echo '来源: ' . $data->source;
 			echo "<br>";
 		}
 	}
-	echo CHtml::label('题目类型: ' . $data->getType($data->type),false);
+	echo CHtml::label('题目类型: ' . $data->getType(),false);
 ?>
 </div>
