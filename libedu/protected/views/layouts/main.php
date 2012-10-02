@@ -23,12 +23,12 @@
 			}
 			$is_school_admin = 0 ;//Yii::app()->user->urole == Yii::app()->params['user_role_school_admin'];
 			$this->widget('bootstrap.widgets.TbNavbar',array(
-		    'items'=>array(
+			'items'=>array(
 		    	array(
-			    	'class'=>'bootstrap.widgets.TbMenu',
+		    		'class'=>'bootstrap.widgets.TbMenu',
 			    	'items'=>array(
 				    	array('label'=>'首页', 'url'=>array('/site/index')),
-						array('label'=>'课程管理','items'=>array(
+						array('label'=>'课程','items'=>array(
 							array('label'=>'课程首页','url'=>array('/teach/course/admin')),
 							array('label'=>'教材管理', 'url'=>array('/teach/edition/admin')),
 							array('label'=>'教材导入', 'url'=>array('/teach/edition/importedition')),				
@@ -37,9 +37,24 @@
 							array('label'=>'我的测验' , 'url'=>array('/teach/task/')),
 							array('label'=>'我的问答', 'url'=>array('/teach/question/myquestion')),
 							array('label'=>'导入知识点', 'url'=>array('/teach/knowledgepoint/importkp&course_id=1')),
-						)),
-						array('label'=>'系统通知发送', 'url'=>array('/user/notification/create')),
+						),'active'=>((Yii::app()->controller->id == 'course')||(Yii::app()->controller->id == 'edition')),'visible'=>!Yii::app()->user->isGuest),
+						
+						array('label'=>'测试','items'=>array(
+							array('label'=>'题库管理', 'url'=>array('/teach/problem')),
+							array('label'=>'测验管理' , 'url'=>array('/teach/task/')),
+						),'active'=>((Yii::app()->controller->id == 'problem') || (Yii::app()->controller->id == 'task')),'visible'=>!Yii::app()->user->isGuest),
 
+						array('label'=>'问答','items'=>array(
+							array('label'=>'提问', 'url'=>array('/teach/question/create')),
+						),'active'=>((Yii::app()->controller->id == 'question')||(Yii::app()->controller->id == 'answer')),'visible'=>!Yii::app()->user->isGuest),
+						array('label'=>'统计','url'=>'/','active'=>(Yii::app()->controller->id == 'statistics'),'visible'=>!Yii::app()->user->isGuest),
+					),
+				),
+
+				array(
+		    		'class'=>'bootstrap.widgets.TbMenu',
+	                'htmlOptions'=>array('class'=>'pull-right'),
+			    	'items'=>array(
 						array('label'=>'用户相关功能','url'=>array('/user/libuser'),'items'=>array(
 							array('label'=>'创建班级', 'url'=>array('/user/libclass/create')),
 							array('label'=>'用户注册', 'url'=>array('/user/libuser/register')),
@@ -56,9 +71,10 @@
 							array('label'=>'添加学生','url'=>array('/user/libuser/invitestudent'),
 									'visible' => $is_school_admin ),
 							array('label'=>'学生状态','url'=>array('/user/libuser/classstustatus')),
-							array('label'=>'登陆', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
+							array('label'=>'系统通知发送', 'url'=>array('/user/notification/create')),
+						),'visible'=>!Yii::app()->user->isGuest),
+						array('label'=>'登陆', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 						array('label'=>'退出系统 ('.$uname.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-						)),
 					),
 				),	
 			),
