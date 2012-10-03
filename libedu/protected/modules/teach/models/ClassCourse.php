@@ -1,20 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "tbl_user_school".
+ * This is the model class for table "tbl_class_course".
  *
- * The followings are the available columns in table 'tbl_user_school':
- * @property integer $user_id
- * @property integer $school_id
- * @property string $school_unique_id
- * @property integer $role
+ * The followings are the available columns in table 'tbl_class_course':
+ * @property integer $class_id
+ * @property integer $course_id
+ * @property string $start_time
  */
-class UserSchool extends CActiveRecord
+class ClassCourse extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return UserSchool the static model class
+	 * @return ClassCourse the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -26,7 +25,7 @@ class UserSchool extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'tbl_user_school';
+		return 'tbl_class_course';
 	}
 
 	/**
@@ -37,12 +36,11 @@ class UserSchool extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('user_id, school_id, school_unique_id, role', 'required'),
-			array('user_id, school_id, role', 'numerical', 'integerOnly'=>true),
-			array('school_unique_id', 'length', 'max'=>255),
+			array('class_id, course_id, start_time', 'required'),
+			array('class_id, course_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('user_id, school_id, school_unique_id, role', 'safe', 'on'=>'search'),
+			array('class_id, course_id, start_time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +52,8 @@ class UserSchool extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user_info'=>array(self::BELONGS_TO,'LibUser','user_id'),
+			'course_info'=>array(self::BELONGS_TO,'Course','course_id'),
+			'class_info'=>array(self::BELONGS_TO,'LibClass','class_id'),
 		);
 	}
 
@@ -64,12 +63,9 @@ class UserSchool extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'user_id' => 'User',
-			'school_id' => 'School',
-			'school_unique_id' => 'School Unique',
-			'role' => 'Role',
-			'join_time' => '加入时间',
-			'leave_time' => '离开时间',
+			'class_id' => 'Class',
+			'course_id' => 'Course',
+			'start_time' => 'Start Time',
 		);
 	}
 
@@ -84,10 +80,9 @@ class UserSchool extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('school_id',$this->school_id);
-		$criteria->compare('school_unique_id',$this->school_unique_id,true);
-		$criteria->compare('role',$this->role);
+		$criteria->compare('class_id',$this->class_id);
+		$criteria->compare('course_id',$this->course_id);
+		$criteria->compare('start_time',$this->start_time,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

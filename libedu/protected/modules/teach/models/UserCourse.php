@@ -53,6 +53,8 @@ class UserCourse extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'user_info'=>array(self::BELONGS_TO,'LibUser','user_id'),
+			'course_info'=>array(self::BELONGS_TO,'Course','course_id'),
 		);
 	}
 

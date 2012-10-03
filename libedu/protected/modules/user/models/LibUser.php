@@ -241,7 +241,7 @@ class LibUser extends CActiveRecord
 			if($this->repeatpassword != null)
 				$this->repeatpassword = $this->password;
 		}
-		if($this->oldpassword == 'lectureractivation'){
+		if(($this->oldpassword == 'lectureractivation')||($this->oldpassword == 'addadmin')){
 			$this->status = 2;
 		}
 		return parent::beforeSave();
@@ -428,7 +428,7 @@ class LibUser extends CActiveRecord
 
 	public function afterSave(){
 		if ($this->isNewRecord){
-			if($this->oldpassword!='lectureractivation'){
+			if(($this->oldpassword!='lectureractivation')&&($this->oldpassword!='addadmin')){
 				$usractive = new UserActive;
 				$res = $usractive->findByAttributes(array('school_unique_id'=>$this->schooluniqueid,'name'=>$this->realname));
 				$aid = $res->active_id;
@@ -457,14 +457,17 @@ class LibUser extends CActiveRecord
 			$cus->user_id = $this->id;
 			$cus->school_id = Yii::app()->params['currentSchoolID'];
 			$cus->school_unique_id = $this->schooluniqueid;
+			$cus->join_time = date("Y-m-d H:i:s");
 			if($this->oldpassword=='lectureractivation'){
 				$cus->role = 2;		
+			}else if($this->oldpassword=='addadmin'){
+				$cus->role = 0;
 			}else{
 				$cus->role = 1;
 			}
 			$cus->save();			
 
-			if($this->oldpassword!='lectureractivation'){
+			if(($this->oldpassword!='lectureractivation')&&($this->oldpassword!='addadmin')){
 				//create user class relation
 				$cuc = new LibUserClass;
 				$ccls = new LibClass;

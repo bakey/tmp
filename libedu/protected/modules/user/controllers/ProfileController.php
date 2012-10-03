@@ -32,7 +32,7 @@ class ProfileController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','uploadavatar','cropavatar','generateavatarfeed'),
+				'actions'=>array('create','update','uploadavatar','cropavatar','generateavatarfeed','viewprofile'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -74,6 +74,39 @@ class ProfileController extends Controller
 				'usc'=>$usc,
 				'ucls'=>$ucls,
 			));
+		}
+	}
+
+	public function actionViewProfile($id)
+	{
+		$cusch = UserSchool::model()->findByAttributes(array('user_id'=>$id));
+		if(!$cusch){
+			throw new CHttpException(404,'用户不存在！');
+		}else{
+			if($cusch->role == 1){
+				$usc = UserSchool::model()->findByAttributes(array('user_id'=>$cusch->user_info->id,'school_id'=>Yii::app()->params['currentSchoolID']));
+				$ucls = LibUserClass::model()->findByAttributes(array('student_id'=>$cusch->user_info->id));
+				$ucls = LibClass::model()->findByPk($ucls->class_id);
+				$this->render('otherview',array(
+					'model'=>$this->loadModel($id),
+					'usc'=>$usc,
+					'ucls'=>$ucls,
+				));
+			}else if($cusch->role == 2){
+				$usc = UserCourse::model()->findAllByAttributes(array('user_id'=>$cusch->user_info->id,'role'=>'2'));
+				for($i=0;$i<count($usc);$i++){
+					$usc[$i] = Course::model()->findByPk($usc[$i]->course_id);
+				}
+				$ucls = LibUserClass::model()->findAllByAttributes(array('teacher_id'=>$cusch->user_info->id),array('group'=>'class_id','select'=>'class_id,teacher_id'));
+				for($i=0;$i<count($ucls);$i++){
+					$ucls[$i] = LibClass::model()->findByPk($ucls[$i]->class_id);
+				}
+					$this->render('otherlecview',array(
+					'model'=>$this->loadModel($id),
+					'usc'=>$usc,
+					'ucls'=>$ucls,
+				));
+			}
 		}
 	}
 

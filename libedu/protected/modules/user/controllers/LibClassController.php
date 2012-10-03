@@ -32,7 +32,7 @@ class LibClassController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','getclassstudent','update','admin','viewstudent'),
+				'actions'=>array('create','getclassstudent','update','admin','viewstudent','classadmin','loadclassinfo'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -43,6 +43,35 @@ class LibClassController extends Controller
 				'users'=>array('*'),
 			),
 		);
+	}
+
+	public function actionClassAdmin(){
+		$dataProvider=new CActiveDataProvider('LibClass');
+		$this->render('classadmin',array(
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	public function actionLoadClassInfo($cid = null){
+		if($cid == null){
+			throw new CHttpException(403,'Bad Request~~~~~~~');
+		}else{
+			$ccls = LibClass::model()->findByPk($cid);
+			if(!$ccls){
+				throw new CHttpException(404,'Class Not Found!');
+			}else{
+				$classcourseProvider=new CActiveDataProvider('UserCourse',array(
+					'criteria'=>array(
+						'select'=>'tbl_class_course.course_id,t.user_id',
+						'join'=>'RIGHT JOIN tbl_class_course ON t.course_id = tbl_class_course.course_id',
+						'condition'=>'tbl_class_course.class_id = '.$cid.' AND t.role = 2',
+						'order'=>'t.start_time DESC',
+					),
+					'pagination'=>array('pageSize'=>10),
+				));
+				$this->renderPartial('_classcourseinfo',array('classcourse'=>$classcourseProvider),false,true);
+			}
+		}
 	}
 	
 	public function actionGetClassStudent()

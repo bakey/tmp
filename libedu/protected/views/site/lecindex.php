@@ -28,7 +28,7 @@ $this->pageTitle=Yii::app()->name;
 	foreach($courselist as $singlecourse){
 		echo '<li class="span3">
     <div class="thumbnail linkthumbnail">
-      <a href="'.Yii::app()->createUrl('/teach/course/update',array('id'=>$singlecourse->id)).'"><div class="caption">
+      <a href="'.Yii::app()->createUrl('/teach/course/update',array('course_id'=>$singlecourse->id)).'"><div class="caption">
         <h3>'.$singlecourse->name.'</h3>
         <p>'.$singlecourse->description.'</p>
       </div></a>

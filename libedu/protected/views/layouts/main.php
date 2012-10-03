@@ -44,9 +44,7 @@
 							array('label'=>'测验管理' , 'url'=>array('/teach/task/')),
 						),'active'=>((Yii::app()->controller->id == 'problem') || (Yii::app()->controller->id == 'task')),'visible'=>!Yii::app()->user->isGuest),
 
-						array('label'=>'问答','items'=>array(
-							array('label'=>'提问', 'url'=>array('/teach/question/create')),
-						),'active'=>((Yii::app()->controller->id == 'question')||(Yii::app()->controller->id == 'answer')),'visible'=>!Yii::app()->user->isGuest),
+						array('label'=>'问答','url'=>array('/teach/question/myquestion'),'active'=>((Yii::app()->controller->id == 'question')||(Yii::app()->controller->id == 'answer')),'visible'=>!Yii::app()->user->isGuest),
 						array('label'=>'统计','url'=>'/','active'=>(Yii::app()->controller->id == 'statistics'),'visible'=>!Yii::app()->user->isGuest),
 					),
 				),
