@@ -47,6 +47,7 @@
 							array('label'=>'我的问答', 'url'=>array('/teach/question/myquestion')),)*/
 								'active'=>((Yii::app()->controller->id == 'question')||(Yii::app()->controller->id == 'answer')),
 								'visible'=>!Yii::app()->user->isGuest),
+
 						array('label'=>'统计','url'=>'/','active'=>(Yii::app()->controller->id == 'statistics'),'visible'=>!Yii::app()->user->isGuest),
 					),
 				),

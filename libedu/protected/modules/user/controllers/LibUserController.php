@@ -33,6 +33,33 @@ class LibUserController extends Controller
     	$this->render('userhome');
     }
 
+    public function actionTeacherAdmin(){
+    	$nocourseProvider=new CActiveDataProvider('LibUser',array(
+			'criteria'=>array(
+				'select'=>'t.id,tbl_profile.real_name,t.email,tbl_user_school.role',
+				'join'=>'LEFT JOIN tbl_user_course ON t.id = tbl_user_course.user_id INNER JOIN tbl_profile ON t.id = tbl_profile.uid INNER JOIN tbl_user_school ON t.id = tbl_user_school.user_id',
+				'condition'=>'tbl_user_school.role = 2 AND tbl_user_school.leave_time IS NULL AND tbl_user_school.school_id = '.Yii::app()->params['currentSchoolID'],
+				'having'=>'COUNT(tbl_user_course.course_id) < 1',
+				'group'=>'t.id',
+				'order'=>'tbl_user_school.join_time DESC'
+			),
+			'pagination'=>array('pageSize'=>5),
+		));
+
+		$nojoinProvider=new CActiveDataProvider('UserActive',array(
+			'criteria'=>array(
+				'condition'=>'t.class_id IS NULL AND t.school_id = '.Yii::app()->params['currentSchoolID'],
+				'order'=>'create_time DESC',
+			),
+			'pagination'=>array('pageSize'=>5),
+		));
+
+		$joined = UserSchool::model()->findAllByAttributes(array('school_id'=>Yii::app()->params['currentSchoolID'],'role'=>2));
+		
+
+    	$this->render('teacheradmin',array('nocourseProvider'=>$nocourseProvider,'nojoinProvider'=>$nojoinProvider,'joined'=>$joined));	
+    }
+
 	public function actionGetTimeline($uid){
 		$cnews = News::model()->findAllByAttributes(array('user'=>Yii::app()->user->id));
 		if($cnews){
@@ -533,7 +560,58 @@ class LibUserController extends Controller
 				'result' => 0,
 			));
 		}
+	}
 
+	public function actionAddAdmin(){
+		$newusr = new LibUser;
+		$msg = '';
+		$csc = School::model()->findByPk(Yii::app()->params['currentSchoolID']);
+
+		if(isset($_POST['LibUser'])){
+			if($_POST['LibUser']['password']!=$_POST['LibUser']['repeatpassword']){
+				$msg.= '请确保两次输入的密码一致。';
+			}else if(($_POST['LibUser']['email']=='')||($_POST['LibUser']['password']=='')||($_POST['LibUser']['repeatpassword']=='')||($_POST['LibUser']['realname']=='')){
+				$msg.= '请确认填写全部项目';
+			}
+			else{
+				//todo valid email format
+				$res1= LibUser::model()->findByAttributes(array('email'=>$_POST['LibUser']['email']));
+				if($res1){
+					$msg.= '该邮箱地址已在系统中存在！';	
+				}else{
+					$newusr->password = $_POST['LibUser']['password'];
+					$newusr->email = $_POST['LibUser']['email'];
+					$newusr->status = 2;
+					$newusr->oldpassword = 'addadmin';
+					$newusr->schooluniqueid = $_POST['LibUser']['email'];
+					$newusr->realname = $_POST['LibUser']['realname'];
+					if($newusr->save(false)){
+						$this->render('addadmin',array(
+							'msg'=>'添加行政人员成功！',
+							'result' => 1,
+							'model' => new LibUser,
+							'csc'=>$csc,
+						));
+						exit();		
+					}
+				}
+			}
+		}
+
+		if($msg!=''){
+			$this->render('addadmin',array(
+				'result' => 1,
+				'model' => new $newusr,
+				'csc'=>$csc,
+				'msg'=>$msg,
+			));
+		}else{
+			$this->render('addadmin',array(
+			'result' => 1,
+			'model' => new $newusr,
+			'csc'=>$csc,
+		));
+		}
 	}
 
 	public function actionInviteTeacher(){

@@ -45,6 +45,8 @@ class SiteController extends Controller
 				$this->render('stuindex',array('cschool'=>$cschool,'courselist'=>$res));
 			}else if(Yii::app()->user->urole == 2){
 				$this->render('lecindex',array('cschool'=>$cschool,'courselist'=>$res));
+			}else if(Yii::app()->user->urole == 0){
+				$this->render('adminindex',array('cschool'=>$cschool));
 			}
 		}
 	}
