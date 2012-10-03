@@ -28,7 +28,7 @@ class Redactor extends CInputWidget {
 	 * Debug mode
 	 * Used to publish full js file instead of min version
 	 */
-	public $debugMode = false;
+	public $debugMode = true;
 	/**
 	 * Editor width
 	 */

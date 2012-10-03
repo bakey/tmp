@@ -21,9 +21,9 @@ $this->breadcrumbs=array(
 
 <?php
 	 echo $this->renderPartial('_edit_form', array(
-					'model'     => $model,
-					'item_id'   => $item_model->id,
-					'course_id' => $course_model->id,
+					'model'     		 => $model,
+					'item_id'  			 => $item_model->id,
+					'course_id' 		 => $course_model->id,
 					'base_auto_save_url' => $base_auto_save_url,
 					'base_create_url'    => $base_create_url,
 			)); 

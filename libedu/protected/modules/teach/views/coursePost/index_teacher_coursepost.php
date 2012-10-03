@@ -4,7 +4,8 @@
 
 $this->breadcrumbs=array(
 	'课程管理'=>array('course/admin'),
-	'课程资料',
+	'课程资料'=>array('course/update&course_id='.$course_id),
+	'课程浏览',
 );
 
 $this->menu=array(

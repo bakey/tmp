@@ -4,6 +4,7 @@
 
 $this->breadcrumbs=array(
 	'课程管理'=>array('course/admin'),
+	'课程浏览'=>array('coursepost/index&item_id='.$model->item_id),
 	$model->id,
 );
 /*

@@ -66,6 +66,7 @@ var RTOOLBAR = {};
 			imageUpload: false, // url
 			linkFileUpload: false, // url
 			fileUpload: false, // url
+			fileUploadCallback: false,
 
 			visual: true,
 			fullscreen: false,
@@ -1820,6 +1821,12 @@ var RTOOLBAR = {};
 				this.syncCode();
 			}
 			else this.execCommand('inserthtml', data);
+			
+			// file upload callback
+			if (typeof this.opts.fileUploadCallback === 'function') 
+			{
+				this.opts.fileUploadCallback(this, data);
+			}			
 
 			this.modalClose();
 		},	

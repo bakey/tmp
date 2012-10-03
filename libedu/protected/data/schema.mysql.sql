@@ -44,6 +44,16 @@ create table if not exists tbl_grade(
    PRIMARY KEY(`id`)
 )engine=InnoDB default charset=utf8;
 
+create table if not exists `tbl_multimedia` (
+	`id` int not null auto_increment primary key,
+	`type` int not null,
+	`name` varchar(255) not null,
+	`uploader` int references tbl_user(id) on delete cascade,
+	`status` int default 0,
+	`convert_name` varchar(255) ,
+	`item` int references tbl_item(id) on delete cascade
+)engine=Innodb default charset=utf8;
+
 create table if not exists tbl_subject(
 	`id` int not null auto_increment primary key,
 	`name` varchar(255) not null,

@@ -58,7 +58,6 @@ class CoursePostController extends Controller
 	}
 	public function actionViewById( $post_id , $course_id )
 	{
-		//$course_id = $_GET['course_id'];
 		$draft_to_publish_url = Yii::app()->createUrl("teach/coursepost/drafttopublished&post_id=$post_id&course_id=$course_id");
 		$reedit_url = Yii::app()->createUrl("teach/coursepost/reedit&post_id=$post_id&course_id=$course_id");
 		$this->render('view',array(
@@ -122,13 +121,13 @@ class CoursePostController extends Controller
 	}
 	private function if_image_file_suffix( $suffix )
 	{
-		$image_file_suffix_set = array( "jpg" , "png" , "gif" , "bmp" );
+		$image_file_suffix_set = array( "jpg" , "png" , "gif" , "bmp" , "jpeg");
 		return in_array( strtolower($suffix) , $image_file_suffix_set );		
 	}
 	private function if_document( $suffix )
 	{
 		$str = strtolower( $suffix );
-		return $str == "vnd.ms-powerpoint";		
+		return $str == "vnd.ms-powerpoint" || $str == "vnd.openxmlformats-officedocument.presentationml.presentation";		
 	}
 
 	private function getOriginPath( $uid ) {
@@ -303,7 +302,7 @@ class CoursePostController extends Controller
 			}else {
 				$msg .= "get course id = " . $course_id ;
 				Yii::log( $msg , 'debug' );
-				$this->redirect( array('course/update&id=' . $course_id) );
+				$this->redirect( array('course/update&course_id=' . $course_id) );
 			}
 		}
 		else if ( isset($_POST['publish']) )
@@ -341,19 +340,33 @@ class CoursePostController extends Controller
 	{
 		$relate_kp_models = ItemKp::model()->findAll( 'item=:iid' , array(':iid'=>$item_id) );
 	}
+	private function process_document( $former_name , $save_name , $doc_folder , $item_id )
+	{
+		copy( $_FILES['file']['tmp_name'] , $doc_folder . $save_name );
+		$multimedia = new Multimedia;
+		$multimedia->type = Multimedia::TYPE_PPT;
+		$multimedia->former_name = $former_name;
+		$multimedia->save_name = $save_name;
+		$multimedia->uploader = Yii::app()->user->id;
+		$multimedia->status = Multimedia::STATUS_PROCESSING; //默认所有文档的初始状态都是处理中
+		$multimedia->item = $item_id;
+		$multimedia->save();		
+	}
 	/*
 	 * 处理用户上传二进制文件
 	 */
-	public function actionUpload()
+	public function actionUpload( $item_id )
 	{
 		$uid = Yii::app()->user->id;
 		
 		if ( !isset($_FILES['file']['tmp_name']) ) {
 			throw new CHttpException( 500 , "上传文件大小超过限制");
 		}
+		$former_file_name = $_FILES['file']['name'];
 		$file_name = md5( $uid . $_FILES['file']['tmp_name'] ) . ".";
 		$suffix = explode( '/' , $_FILES['file']['type'] );
 		$file_name .= $suffix[1];
+		
 		$target_folder = $this->getOriginPath( $uid );
 		$thumb_folder = $this->getThumbPath( $uid );
 		$doc_folder = $this->getDocumentPath( $uid );
@@ -382,12 +395,13 @@ class CoursePostController extends Controller
 			$image_thumb_url = $this->getThumbImageUrl( $file_name , $uid );
 			$image_origin_url = $this->getOriginImageUrl($file_name, $uid);
 		
-			echo CHtml::link( CHtml::image( $image_thumb_url ) , $image_origin_url );
+			echo CHtml::link( CHtml::image( $image_thumb_url,'', array('class'=>'img-rounded') ) , 
+						$image_origin_url );
 		}
 		else if ( $this->if_document($suffix[1]) )
 		{		
-			copy( $_FILES['file']['tmp_name'] , $doc_folder.$file_name );
-			echo CHtml::link("上传文档" , $this->getDocumentUrl($file_name, $uid) );
+			$this->process_document( $former_file_name , $file_name , $doc_folder , $item_id );
+			echo CHtml::link( $former_file_name , $this->getDocumentUrl($file_name, $uid)  );
 		}	
 	
 		exit();	
@@ -528,7 +542,7 @@ class CoursePostController extends Controller
 	public function actionIndex( $item_id )
 	{
 		$cur_user = Yii::app()->user->id;
-		$teacher_course_post_data =new CActiveDataProvider('CoursePost',array(
+		$teacher_course_post_data = new CActiveDataProvider('CoursePost',array(
 				'criteria'=>array(
 						'condition'=>('author='.$cur_user.' and item_id='.$item_id ),						
 				),
