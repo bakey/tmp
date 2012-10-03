@@ -6,55 +6,49 @@ class CourseController extends Controller
 	const TBL_ITEM_LEVEL = "tbl_item_item";
 	//public $layout='//layouts/online_column';
 	
-	private function get_tracing_item( $user_model , $top_item_model , $course_id , $is_student )
+	private function is_teacher() 
 	{
-		$tracing_item_model = TeacherItemTrace::model()->findByPk( $user_model->id );
-		$sub_item_id = $tracing_item_model->sub_item;  
-		
+		return Yii::app()->user->urole == Yii::app()->params['user_role_teacher'];
+	}
+	
+	private function get_current_item_info( $user_model , $top_item_model , $course_id )
+	{		
 		$children_item = $top_item_model->level_child;
-		$tracing_info = array();
+		$item_info = array();
 	
 		foreach( $children_item as $item )
 		{
 			$url = "";
 			$operate = "";
-			if ( $sub_item_id < 0 ) 
-			{
-				$url = CController::createUrl("/teach/coursepost/index&item_id=" . $item->id );
-				$operate = "浏览课程";				
-			}
-			else
-			{
-				if ( $item->id  >= $sub_item_id ) 
-				{
-					//大于等于当前tracing的item章节，都是显示新建课程。
-					if ( $is_student ) 
-					{
-						//如果是学生看的话，那么后面还没建的章节就不显示了
-						continue;
-					}
-					else 
-					{ 
-						$url = CController::createUrl("/teach/coursepost/create&item_id=" . $item->id . "&course_id=" . $course_id );
-						$operate = "新建课程";				
-					}
-				}
-				else 
-				{
-					$url = CController::createUrl("/teach/coursepost/index&item_id=" . $item->id );
-					$operate = "浏览课程";				
-				}
-			}
+			
+			$post_model = CoursePost::model()->findAll('item_id=:iid order by update_time desc',
+					array(':iid' => $item->id) );
+			
+			$new_url = CController::createUrl("/teach/coursepost/create&item_id=" . $item->id . "&course_id=" . $course_id );
+			$new_op = "新建课程";				
+
+			$view_url = CController::createUrl("/teach/coursepost/index&item_id=" . $item->id );
+			$view_op = "浏览课程";				
+			
 			$info = array(
 					'id'         => $item->id,
-					'url'        => $url,
+					'new_url'    => $new_url,
+					'view_url'   => $view_url,
 					'item_index' => $item->edi_index,
 					'content'    => $item->content,
+					'new_post'   => $new_op,
+					'view_post'  => $view_op,
 					'operate'    => $operate,
 			);
-			$tracing_info[] = $info;
+			if ( count($post_model) <= 0 ) {
+				$info['update_time'] = '没数据';
+			}
+			else {
+				$info['update_time'] = $post_model[0]->update_time;
+			}
+			$item_info[] = $info;
 		} 
-		return new CArrayDataProvider( $tracing_info );
+		return new CArrayDataProvider( $item_info );
 	}
 	private function renderTeacherCoursePost( $user_model , $course_id , $edition_id )
 	{
@@ -63,7 +57,7 @@ class CourseController extends Controller
 			throw new CHttpException( 400 , "trace item data corruption");
 		}
 		//获取当前章节下面的各个子章节的信息.
-		$tracing_item_info = $this->get_tracing_item( $user_model , $top_item_model[0] , $course_id , false );
+		$current_item_info = $this->get_current_item_info( $user_model , $top_item_model[0] , $course_id );
 		$edition_first_level_items = Item::model()->findAll( 'edition=:edition and level=1', array(
 				':edition' => $edition_id, ) );
 		
@@ -71,9 +65,9 @@ class CourseController extends Controller
 			throw new CHttpException( 400 , "trace item data corruption");
 		}
 		/*$url = 'course/ajaxLoadItem&edition_id=' . $edition_id . '&course_id=' . $id ;*/
-		$this->render('update' , array(
+		$this->render('update_teacher_course' , array(
 				'top_item'        => $top_item_model[0],
-				'tracing_item'    => $tracing_item_info,
+				'tracing_item'    => $current_item_info ,
 				'level_one_items' => $edition_first_level_items,
 		
 				//'ajax_load_url' => $url ,
@@ -88,11 +82,11 @@ class CourseController extends Controller
 		}		
 		$teacher_model = LibUser::model()->findByPk( $user_course_model->user_id );
 		$top_item_model = $teacher_model->trace_item ;
-		$is_student = true;
-		$tracing_item_info = $this->get_tracing_item( $teacher_model , $top_item_model[0] , $course_id , $is_student );
+
+		$tracing_item_info = $this->get_current_item_info( $teacher_model , $top_item_model[0] , $course_id );
 		$edition_first_level_items = Item::model()->findAll( 'edition=:edition and level=1', array(
 				':edition' => $edition_id, ) );		
-		$this->render('update' , array(
+		$this->render('update_student_course' , array(
 				'top_item'        => $top_item_model[0],
 				'tracing_item'    => $tracing_item_info,
 				'level_one_items' => $edition_first_level_items,
@@ -167,7 +161,7 @@ class CourseController extends Controller
 		$edition_id = $this->loadCourseModel( $course_id )->edition->id;
 		$user_model = LibUser::model()->findByPk( Yii::app()->user->id );
 
-		if ( Yii::app()->user->urole == Yii::app()->params['user_role_teacher'] ) {
+		if ( $this->is_teacher() ) {
 			$this->renderTeacherCoursePost( $user_model , $course_id , $edition_id );
 		}else {
 			$this->renderStudentCoursePost( $user_model , $course_id , $edition_id );
@@ -181,14 +175,41 @@ class CourseController extends Controller
 		if ( isset($_GET['item']) )
 		{
 			$item_id = $_GET['item'];
-			$course_id = Yii::app()->user->id;
-			$parent_items = Item::model()->findByPk( $item_id );
-			$children_items = $parent_items->level_child;
-			$first_level_item = LibUser::model()->findByPk( Yii::app()->user->id )->trace_item;
+			$course_id = Yii::app()->user->course;
+			$user_id = Yii::app()->user->id;
 			
-			$before_tracing = true;
-			if ( $item_id > $first_level_item[0]->id ) {
-				$before_tracing = false;				
+			$user_model = LibUser::model()->findByPk( $user_id );
+			//当前要展开的那个item model
+			$query_item = Item::model()->findByPk( $item_id );
+			//获取要展开的那个item的所有子item
+			//$children_items = $query_item->level_child;
+			//当前此用户正在跟踪的第一层item
+		//	$tracing_item = LibUser::model()->findByPk( Yii::app()->user->id )->trace_item[0];
+			
+			$item_info = $this->get_current_item_info($user_model, $query_item, $course_id);
+			
+			if ( $this->is_teacher() ) {
+				$this->renderPartial( '_show_teacher_item' , array(
+						'dataProvider' =>  $item_info ,
+				) );
+			}else {
+				$this->renderPartial( '_show_student_item' , array( 'dataProvider' => $item_info ) );
+			}
+			
+			/*//通过item的edi_index来判断谁先谁后
+			$before_tracing = false;
+			$sub_item_model = null;
+			if ( $query_item->edi_index < $tracing_item->edi_index ) {
+				$before_tracing = true;				
+			}else if ( $query_item->edi_index == $tracing_item->edi_index ) {
+				//如果要展开的item正好是当前tracing的item,那么需要判断tracing的第二层item.
+				$tracing_model = TeacherItemTrace::model()->findByPk( $user_id );
+				if ( $tracing_model->sub_item < 0 ) {
+					//如果当前的一层章节已经tracing到末尾了，那么此item下item全部都是浏览课程
+					$before_tracing = true ;
+				}else {
+					$sub_item_model = Item::model()->findByPk( $tracing_model->sub_item );					
+				}
 			}
 			$item_data = array();
 			foreach( $children_items as $item )
@@ -200,16 +221,19 @@ class CourseController extends Controller
 					$op  = '浏览课程';					
 				}
 				else {
-					$url = CController::createUrl("/teach/coursepost/create&item_id=") . $item->id . "&course_id=" . $course_id ;
-					$op = '创建课程';				
+					if ( null != $sub_item_model && $item->edi_index < $sub_item_model->edi_index ) {
+						$url = CController::createUrl("/teach/coursepost/index&item_id=") . $item->id;
+						$op  = '浏览课程';						
+					}else { 
+						$url = CController::createUrl("/teach/coursepost/create&item_id=") . $item->id . "&course_id=" . $course_id ;
+						$op = '新建课程';
+					}				
 				}
 				$info = array( 'id'=>$item->id , 'url'=>$url , 'operate'=>$op , 'edi_index'=>$item->edi_index,
 						'content'=>$item->content );
 				$item_data[] = $info;
-			}	
-			$this->renderPartial( '_show_item' , array(
-					'dataProvider' =>  new CArrayDataProvider( $item_data ) ,
-					) );
+			}	*/
+		
 		}
 	}
 	public function actionAjaxLoadItem()

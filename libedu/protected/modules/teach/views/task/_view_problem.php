@@ -1,4 +1,4 @@
-<div class="view">
+<div class="well">
 	<?php
 	echo '题目难度: ' . $data->getDifficulty() . " | ";
 	echo '使用次数:' . $data->use_count . "|";	

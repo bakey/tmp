@@ -2,9 +2,7 @@
 /* @var $this CoursePostController */
 /* @var $data CoursePost */
 ?>
-
-<div class="view">
-
+<div class="well" >
 	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
 	<?php echo CHtml::link(CHtml::encode($data->id), array('viewbyid', 'post_id'=>$data->id , 'course_id'=>$course_id)); ?>
 	<br />
@@ -12,7 +10,7 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('post')); ?>:</b>
 	<?php echo CHtml::encode($data->post); ?>
 	<br />
-
+	
 	<b><?php echo CHtml::encode($data->getAttributeLabel('author')); ?>:</b>
 	<?php echo CHtml::encode($data->author); ?>
 	<br />
@@ -41,7 +39,6 @@
 					break;
 				}
 		}
-	 //echo CHtml::encode($data->status); 
 	?>
 	<br />
 
@@ -52,6 +49,4 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('update_time')); ?>:</b>
 	<?php echo CHtml::encode($data->update_time); ?>
 	<br />
-
-
-</div>
+	</div>

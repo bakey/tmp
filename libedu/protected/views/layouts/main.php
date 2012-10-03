@@ -30,23 +30,23 @@
 				    	array('label'=>'首页', 'url'=>array('/site/index')),
 						array('label'=>'课程','items'=>array(
 							array('label'=>'课程首页','url'=>array('/teach/course/admin')),
-							array('label'=>'教材管理', 'url'=>array('/teach/edition/admin')),
-							array('label'=>'教材导入', 'url'=>array('/teach/edition/importedition')),				
-							array('label'=>'题库管理', 'url'=>array('/teach/problem')),
-							array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint')),
-							array('label'=>'我的测验' , 'url'=>array('/teach/task/')),
-							array('label'=>'我的问答', 'url'=>array('/teach/question/myquestion')),
-							array('label'=>'导入知识点', 'url'=>array('/teach/knowledgepoint/importkp&course_id=1')),
+							array('label'=>'教材管理', 'url'=>array('/teach/edition/admin') , 'visible'=>$is_school_admin),
+							array('label'=>'教材导入', 'url'=>array('/teach/edition/importedition') , 'visible'=>$is_school_admin),				
+							array('label'=>'题库管理', 'url'=>array('/teach/problem') , 'visible'=>$is_school_admin),
+							array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint') , 'visible'=>$is_school_admin),
+							array('label'=>'导入知识点', 'url'=>array('/teach/knowledgepoint/importkp&course_id=1'),'visible'=>$is_school_admin),
 						),'active'=>((Yii::app()->controller->id == 'course')||(Yii::app()->controller->id == 'edition')),'visible'=>!Yii::app()->user->isGuest),
 						
-						array('label'=>'测试','items'=>array(
+						array('label'=>'测试', 'url'=>array('/teach/task') ,/*'items'=>array(
 							array('label'=>'题库管理', 'url'=>array('/teach/problem')),
 							array('label'=>'我的测验' , 'url'=>array('/teach/task/')),
-						),'active'=>((Yii::app()->controller->id == 'problem') || (Yii::app()->controller->id == 'task')),'visible'=>!Yii::app()->user->isGuest),
+						),*/'active'=>((Yii::app()->controller->id == 'problem') || (Yii::app()->controller->id == 'task')),'visible'=>!Yii::app()->user->isGuest),
 
-						array('label'=>'问答','items'=>array(
-							array('label'=>'提问', 'url'=>array('/teach/question/create')),
-						),'active'=>((Yii::app()->controller->id == 'question')||(Yii::app()->controller->id == 'answer')),'visible'=>!Yii::app()->user->isGuest),
+						array( 'label'=>'问答',
+								'url' => array('/teach/question/myquestion'),/*'items'=>array(
+							array('label'=>'我的问答', 'url'=>array('/teach/question/myquestion')),)*/
+								'active'=>((Yii::app()->controller->id == 'question')||(Yii::app()->controller->id == 'answer')),
+								'visible'=>!Yii::app()->user->isGuest),
 						array('label'=>'统计','url'=>'/','active'=>(Yii::app()->controller->id == 'statistics'),'visible'=>!Yii::app()->user->isGuest),
 					),
 				),

@@ -1,4 +1,9 @@
-
+<?php 
+$this->breadcrumbs=array(
+	'课程资料'=>array('/teach/course/update&course_id='.$course_id),
+	'重新编辑',
+);
+?>
 <div class="form">
 <?php 
 $form=$this->beginWidget('CActiveForm', array(
@@ -14,6 +19,7 @@ echo $form->labelEx($post_model,'post');
 		'attribute'=>'post',
 		'editorOptions' => array(
 				'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
+				'fileUpload'  => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
 				'autosave'=> $baseAutoSaveUrl,
 				'interval' => 5,
 				'autosaveCallback'=>"js:function(data,redactor_ins,doc){

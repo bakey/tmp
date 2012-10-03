@@ -9,22 +9,24 @@
 	'id'=>'course-post-form',
 	'enableAjaxValidation'=>false,
 )); ?>
-<?php echo $form->labelEx($model,'post'); ?>
+<?php
+	 echo $form->labelEx($model,'post');
+	 echo $form->error($model,'post');
+?>
 
 <?php
-	$baseAutoSaveUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/autosave&item_id=' . $item_id);
-	$baseCreateUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/create&item_id=' . $item_id . '&course_id='.$course_id . '&post_id=' );
 	$this->widget('application.extensions.redactorjs.Redactor',array(
 		'model'=>$model,
 		'attribute'=>'post',
 		'editorOptions' => array(
 				'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
-				'autosave'=> $baseAutoSaveUrl,
+				'fileUpload'  => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
+				'autosave'=> $base_auto_save_url ,
 				'interval' => 5,
 				'autosaveCallback'=>"js:function(data,redactor_ins,doc){
 					var json_obj = eval( data );
-					redactor_ins.opts.autosave = '" . $baseAutoSaveUrl . "'+ '&post_id=' + json_obj.post_id ;".
-					"var createUrl = '" . $baseCreateUrl . "' + json_obj.post_id;" .  
+					redactor_ins.opts.autosave = '" . $base_auto_save_url . "'+ '&post_id=' + json_obj.post_id ;".
+					"var createUrl = '" . $base_create_url . "' + json_obj.post_id;" .  
 					"doc.getElementById('course-post-form').setAttribute('action' , createUrl );				 
 				}",
 				'focus' => false,

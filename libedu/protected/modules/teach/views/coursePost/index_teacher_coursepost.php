@@ -16,10 +16,10 @@ $this->menu=array(
 <h1><?php 
 echo(Yii::app()->user->real_name . "你好 , 你发布的课程如下:");
  ?></h1>
-<div class="well">
+<div class="well" >
 <?php $this->widget('bootstrap.widgets.TbListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
-	'viewData' => array('course_id'=>$course_id),
+	'dataProvider' => $dataProvider,
+	'itemView'     => '_view',
+	'viewData'     => array('course_id'=>$course_id),
 )); ?>
 </div>

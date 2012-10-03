@@ -9,7 +9,8 @@ $this->breadcrumbs=array(
 <link rel="stylesheet" type="text/css" href="/dev/libedu/css/my.css" />
 <?php
 echo"<div id=\"stitle\"><h3>第" . $top_item->edi_index . "章:" . $top_item->content . "<h3></div><br>";
-$this->widget('bootstrap.widgets.TbGridView', array(
+$this->renderPartial( '_show_student_item' , array('dataProvider' => $tracing_item) );
+/*$this->widget('bootstrap.widgets.TbGridView', array(
 		'dataProvider' => $tracing_item,
 		'type' => 'bordered striped',
 		'columns'=>array(
@@ -21,16 +22,20 @@ $this->widget('bootstrap.widgets.TbGridView', array(
 				array(
 						'name'=>'内容',
 						'value'=>'$data["content"]',
-						//'value' => 'CHtml::link($data["content"] , $data["url"])',
 						'type'=>'raw',
 				),
 				array(
-						'name'=>'操作',
-						'value'=>'CHtml::link($data["operate"] , $data["url"])',
+						'name'=>'新建',
+						'value'=>'CHtml::link($data["new_post"] , $data["new_url"])',
+						'type' => 'raw',
+				),
+				array(	
+						'name' => '浏览',
+						'value' => 'CHtml::link($data["view_post"] , $data["view_url"])',
 						'type' => 'raw',
 				),
 		),
-));
+));*/
 /*
 foreach( $tracing_item as $item )
 {

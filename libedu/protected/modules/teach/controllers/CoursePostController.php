@@ -69,15 +69,14 @@ class CoursePostController extends Controller
 	}
 	public function actionTest()
 	{
-		echo CHtml::button('发布', array(
+		/*echo CHtml::button('发布', array(
 				'onClick'=>"window.location.href='www.baidu.com'",
 				'',
-		));
+		));*/
+		var_dump( $this->if_image_file_suffix("Png"));
 	}
-	public function actionReEdit()
+	public function actionReEdit( $post_id , $course_id )
 	{
-		$post_id = $_GET['post_id'];
-		$course_id = $_GET['course_id'];
 		$post_model = CoursePost::model()->findByPk( $post_id );
 		if ( null == $post_model ) {
 			throw new CHttpException( 400 , "no this post ");
@@ -88,6 +87,7 @@ class CoursePostController extends Controller
 								$post_model->item_id . '&post_id=' . $post_id );
 		$this->render('re_edit' , array(
 				'post_model'      => $post_model,
+				'course_id'       => $course_id,
 				'baseCreateUrl'   => $baseCreateUrl,
 				'baseAutoSaveUrl' => $baseAutoSaveUrl,
 				) );
@@ -120,13 +120,27 @@ class CoursePostController extends Controller
 		}
 		return Yii::app()->params['uploadFolder'].'/temp_upload/' . $uid . '/thumb/';
 	}
+	private function if_image_file_suffix( $suffix )
+	{
+		$image_file_suffix_set = array( "jpg" , "png" , "gif" , "bmp" );
+		return in_array( strtolower($suffix) , $image_file_suffix_set );		
+	}
+	private function if_document( $suffix )
+	{
+		$str = strtolower( $suffix );
+		return $str == "vnd.ms-powerpoint";		
+	}
+
 	private function getOriginPath( $uid ) {
 		if ( null == $uid ) {
 			return null;
 		}
 		return Yii::app()->params['uploadFolder'].'/temp_upload/' . $uid . '/origin/';
 	}
-	
+	private function getDocumentPath( $uid ) 
+	{
+		return Yii::app()->params['uploadFolder'] . "/" . $uid . "/document/";
+	} 
 	private function getThumbImageUrl( $file_name , $uid ) {
 		if ( null == $file_name || null == $uid ) {
 			return null;
@@ -140,6 +154,11 @@ class CoursePostController extends Controller
 		}
 		return Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" .
 				$this->getOriginPath($uid) . $file_name;
+	}
+	private function getDocumentUrl( $file_name , $uid ) 
+	{
+		return Yii::app()->request->hostInfo . Yii::app()->getBaseUrl(). "/" . $this->getDocumentPath($uid) . $file_name ;
+		
 	}
 	/*
 	 * 为用户保存发布的课程资料。
@@ -188,26 +207,70 @@ class CoursePostController extends Controller
 					'update_time' => date( "Y-m-d H:i:s", time() ),
 					) );
 	}
+	private function get_next_top_level_item( $current_item_id )
+	{
+		$item_model = Item::model()->findByPk( $current_item_id );
+		$edition_id = $item_model->edition;
+		$this_level_items = Item::model()->findAll( 'edition=:eid and level = 1 order by edi_index ' , array( ':eid' => $edition_id ) );
+		$n = count($this_level_items);
+		for( $i = 0 ; $i < $n ; ++ $i )
+		{
+			if ( $item_model->edi_index == $this_level_items[$i]->edi_index )
+			{
+				if ( $i < $n-1 ) {
+					//如果第一层的item后面还有更多，那么返回下一个item的id
+					return $this_level_items[ $i+1 ]->id;
+				}
+				else {
+					//否则就返回当前这个item id就行了
+					return $current_item_id;
+				}
+			}
+		}		
+	}
+	private function get_first_sub_item( $current_item_id )
+	{
+		$current_item_model = Item::model()->findByPk( $current_item_id );
+		$sub_items_data = new CArrayDataProvider( $current_item_model->level_child , array(
+				'sort'=>array(
+						'defaultOrder' => 'edi_index',
+				)
+		));
+		$sub_items = $sub_items_data->getData();
+		$n = count( $sub_items );
+		if ( $n == 0 ) {
+			return -1 ;
+		}
+		else {
+			return $sub_items[0]->id;
+		}
+		
+	}
 	private function moveTracingItem( $save_item_id )
 	{
 		$save_item = Item::model()->findByPk( $save_item_id );
 		//当前跟踪的model
-		$tracing_info = TeacherItemTrace::model()->findByPk( Yii::app()->user->id );
+		$tracing_info_model = TeacherItemTrace::model()->findByPk( Yii::app()->user->id );
 		
-		$first_level_item = Item::model()->findByPk( $tracing_info->item );
-		$sub_items = $first_level_item->level_child;
-		
-		for( $i = 0 ; $i < count($sub_items) ; ++ $i )
+		//当前tracing的一层item和它的所有子item，并把所有子item按照edi_index排列.
+		$tracing_item = Item::model()->findByPk( $tracing_info_model->item );
+		$sub_items_data = new CArrayDataProvider( $tracing_item->level_child , array(
+				'sort'=>array(
+						'defaultOrder' => 'edi_index',
+					  )					
+				));
+		$sub_items = $sub_items_data->getData();
+		$n = count( $sub_items );		
+		for( $i = 0 ; $i < $n ; ++ $i )
 		{
 			if ( $sub_items[$i]->id == $save_item->id ) {
-				if ( $i == count($sub_items)-1 ) {
-					//如果已经到了最后一个item，那么tracing item变为小于0
-					$tracing_info->sub_item = -1;
-					$tracing_info->save();
-				}else {
-					//否则，跟踪到下一个item
-					$tracing_info->sub_item = $sub_items[ $i + 1 ]->id;
-					$tracing_info->save();
+				if ( $i == $n-1 ) {
+					/*
+					 * 如果已经到了最后一个item，则跳到后面一个大item，否则就不需要变
+					*/
+					$current_item = $tracing_info_model->item ;
+					$tracing_info_model->item = $this->get_next_top_level_item( $current_item );
+					$tracing_info_model->save();
 				}
 			}
 		}
@@ -274,37 +337,58 @@ class CoursePostController extends Controller
 				));
 		return new CArrayDataProvider( $course_post_models  );
 	}
+	private function get_relate_kp( $item_id )
+	{
+		$relate_kp_models = ItemKp::model()->findAll( 'item=:iid' , array(':iid'=>$item_id) );
+	}
 	/*
 	 * 处理用户上传二进制文件
 	 */
 	public function actionUpload()
 	{
 		$uid = Yii::app()->user->id;
+		
+		if ( !isset($_FILES['file']['tmp_name']) ) {
+			throw new CHttpException( 500 , "上传文件大小超过限制");
+		}
 		$file_name = md5( $uid . $_FILES['file']['tmp_name'] ) . ".";
 		$suffix = explode( '/' , $_FILES['file']['type'] );
 		$file_name .= $suffix[1];
-		$target_folder = $this->getOriginPath($uid);
-		$thumb_folder = $this->getThumbPath($uid);
+		$target_folder = $this->getOriginPath( $uid );
+		$thumb_folder = $this->getThumbPath( $uid );
+		$doc_folder = $this->getDocumentPath( $uid );
 		if ( !is_dir( $target_folder ) ) {
 			mkdir( $target_folder , 0777 , true );
 		} 
 		if ( !is_dir( $thumb_folder ) ) {
 			mkdir( $thumb_folder , 0777 , true );
 		}
-		copy( $_FILES['file']['tmp_name'] , $target_folder.$file_name );
+		if ( !is_dir( $doc_folder ) ) 
+		{
+			mkdir( $doc_folder , 0777 , true );
+		}
 		
-		Yii::import("ext.EPhpThumb.EPhpThumb");
-		$thumb=new EPhpThumb();
-		$thumb->init();
-		$thumb->create( $target_folder . $file_name )
-		->resize(1024,800)
-		->save( $thumb_folder . $file_name );
+		if ( $this->if_image_file_suffix($suffix[1]) )
+		{
+			copy( $_FILES['file']['tmp_name'] , $target_folder.$file_name );
+			//如果为图片，需要进行处理		
+			Yii::import("ext.EPhpThumb.EPhpThumb");
+			$thumb=new EPhpThumb();
+			$thumb->init();
+			$thumb->create( $target_folder . $file_name )
+				->resize(1024,800)
+				->save( $thumb_folder . $file_name );
 		
-		$image_thumb_url = $this->getThumbImageUrl( $file_name , $uid );
-		$image_origin_url = $this->getOriginImageUrl($file_name, $uid);
+			$image_thumb_url = $this->getThumbImageUrl( $file_name , $uid );
+			$image_origin_url = $this->getOriginImageUrl($file_name, $uid);
 		
-		$image_code =  CHtml::image( $image_thumb_url );
-		echo CHtml::link( $image_code , $image_origin_url );	
+			echo CHtml::link( CHtml::image( $image_thumb_url ) , $image_origin_url );
+		}
+		else if ( $this->if_document($suffix[1]) )
+		{		
+			copy( $_FILES['file']['tmp_name'] , $doc_folder.$file_name );
+			echo CHtml::link("上传文档" , $this->getDocumentUrl($file_name, $uid) );
+		}	
 	
 		exit();	
 	}
@@ -373,28 +457,29 @@ class CoursePostController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate( $item_id , $course_id )
 	{
 		$course_post_model = new CoursePost;
 		$course_post_model->unsetAttributes();
 		$user_id = Yii::app()->user->id;
-		$course_id = isset($_GET['course_id']) ? $_GET['course_id']: null ;
-		
-
-		if ( !isset($_GET['item_id']) ) {
-			throw new CHttpException(400 , "参数错误，没有item_id");
-		}
-		$item_id = $_GET['item_id'];
 
 		if( isset($_POST['CoursePost']) )
 		{
 			$this->process_course_post_submit( $course_post_model , $item_id , $course_id );
 		}
+		$item_model = Item::model()->findByPk( $item_id ); 
+		$course_model = Course::model()->findByPk( $course_id );
+		$relate_kps = $item_model->relate_kps; 
+		$baseAutoSaveUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/autosave&item_id=' . $item_id);
+		$base_create_url = Yii::app()->createAbsoluteUrl('teach/coursepost/create&item_id=' . $item_id . '&course_id='.$course_id . '&post_id=' );
 
 		$this->render('create',array(
-			'model'=>$course_post_model,
-			'item_id'=>$item_id,
-			'course_id'=>$course_id,
+			'model'			   => $course_post_model,
+			'item_model'	   => $item_model,
+			'course_model'	   => $course_model,
+			'relate_kp_models' => $relate_kps,
+			'base_auto_save_url' => $baseAutoSaveUrl,
+			'base_create_url'    => $base_create_url,
 		));
 	}
 
