@@ -60,7 +60,7 @@ class CoursePostController extends Controller
 	{
 		$draft_to_publish_url = Yii::app()->createUrl("teach/coursepost/drafttopublished&post_id=$post_id&course_id=$course_id");
 		$reedit_url = Yii::app()->createUrl("teach/coursepost/reedit&post_id=$post_id&course_id=$course_id");
-		$this->render('view',array(
+		$this->render('view_post',array(
 				'model'                => $this->loadModel($post_id),
 				'draft_to_publish_url' => $draft_to_publish_url,
 				'reedit_url'           => $reedit_url,				
@@ -78,7 +78,7 @@ class CoursePostController extends Controller
 	{
 		$post_model = CoursePost::model()->findByPk( $post_id );
 		if ( null == $post_model ) {
-			throw new CHttpException( 400 , "no this post ");
+			throw new CHttpException( 404 , "找不到这个post");
 		}
 		$baseCreateUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/create&item_id=' . 
 								$post_model->item_id . '&post_id='.$post_id.'&course_id='.$course_id);
@@ -89,6 +89,7 @@ class CoursePostController extends Controller
 				'course_id'       => $course_id,
 				'baseCreateUrl'   => $baseCreateUrl,
 				'baseAutoSaveUrl' => $baseAutoSaveUrl,
+				'item_id'         => $post_model->item_id,
 				) );
 		
 	}
@@ -350,6 +351,7 @@ class CoursePostController extends Controller
 		$multimedia->uploader = Yii::app()->user->id;
 		$multimedia->status = Multimedia::STATUS_PROCESSING; //默认所有文档的初始状态都是处理中
 		$multimedia->item = $item_id;
+		$multimedia->upload_time = date( "Y-m-d H:i:s", time() );
 		$multimedia->save();		
 	}
 	/*

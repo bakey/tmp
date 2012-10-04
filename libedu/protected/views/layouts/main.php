@@ -48,7 +48,7 @@
 								'active'=>((Yii::app()->controller->id == 'question')||(Yii::app()->controller->id == 'answer')),
 								'visible'=>!Yii::app()->user->isGuest),
 
-						array('label'=>'统计','url'=>'/','active'=>(Yii::app()->controller->id == 'statistics'),'visible'=>!Yii::app()->user->isGuest),
+						array('label'=>'统计','url'=>array('/teach/statistics/'),'active'=>(Yii::app()->controller->id == 'statistics'),'visible'=>!Yii::app()->user->isGuest),
 					),
 				),
 

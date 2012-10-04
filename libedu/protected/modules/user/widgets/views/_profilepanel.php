@@ -2,7 +2,7 @@
 
 	<?php 
 	if($cusr->user_profile->avatar != 'default_avatar.jpg'){
-	$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$model->user_info->id.'/avatar/'.$cusr->user_profile->avatar,'alt',array('width'=>64,'height'=>64,'style'=>'border:2px solid #16a9f7;float:left;')));
+	$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$cusr->user_profile->user_info->id.'/avatar/'.$cusr->user_profile->avatar,'alt',array('width'=>64,'height'=>64,'style'=>'border:2px solid #16a9f7;float:left;')));
 }else{
 	$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/images/'.$cusr->user_profile->avatar,'alt',array('width'=>64,'height'=>64,'style'=>'border:2px solid #16a9f7;float:left;')));
 }

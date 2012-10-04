@@ -39,6 +39,17 @@ class LibUser extends CActiveRecord
 	{
 		return 'tbl_user';
 	}
+	/*
+	 * 判断当前用户是否老师
+	 */
+	public static function is_teacher()
+	{
+		return Yii::app()->user->urole == Yii::app()->params['user_role_teacher'];		
+	}
+	public static function is_student()
+	{
+		return Yii::app()->user->urole == Yii::app()->params['user_role_student'];
+	}
 
 	/**
 	 * @return array validation rules for model attributes.

@@ -10,20 +10,20 @@
 
 	set_time_limit(0);
 	
-	echo getcwd() . "\n";
+	echo getcwd() . "<br>";
 	//exit();
 
-	$PPT_FILE = "./quicktour.ppt";
+	$PPT_FILE = "E:\wamp\www\dev\libedu\bin_data\quicktour.ppt";
 
 	$fs = new COM("iSpringAS3SDK.PresentationConverter.6");
 
-	echo "Opening presentation\n";
+	echo "Opening presentation<br>";
 	$fs->OpenPresentation($PPT_FILE);
 
 	echo "Generating flash...\n";
-	$fs->GenerateSolidPresentation();
+	/*$fs->GenerateSolidPresentation();
 
-	echo "Done\n";
+	echo "Done\n";*/
 
 
 	// Warning! When you don't need iSpring object it is necessary to set it to null

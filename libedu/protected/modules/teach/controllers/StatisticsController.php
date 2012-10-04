@@ -31,12 +31,14 @@ class StatisticsController extends Controller
 		);
 		if ( null == $user_task_problem_record )
 		{
-			throw new CHttpException( 404 , "目前还没有考试记录");
+			return null;
 		}
 		$ans_wrong = $user_task_problem_record->check_ans;
-		return !$ans_wrong;
-		
+		return !$ans_wrong;		
 	}
+	/*
+	 * 获取该班所有的学生在这个task中的考试记录。
+	 */
 	private function getStudentSeries( $class_model , $task_id , $problems )
 	{
 		$students = $class_model->class_student;
@@ -47,10 +49,15 @@ class StatisticsController extends Controller
 		foreach ( $problems as $problem )
 		{
 			$pid = $problem->id;
+			//求出对于某个问题这个班的学生的错误数量
+			$wrong_cnt = 0;
 			foreach( $students as $student )
 			{
-				$wrong_cnt = 0;
-				if ( $this->is_wrong( $student->id , $pid , $task_id ) )
+				$task_ret = $this->is_wrong( $student->id , $pid , $task_id );
+				if ( null == $task_ret ) {
+					continue;
+				}
+				if ( $task_ret )
 				{
 					++ $wrong_cnt;					
 				}
@@ -90,7 +97,9 @@ class StatisticsController extends Controller
 				'series' => array(),
 			);
 		$problems = $task_model->problems;
+		//横轴坐标是这个任务的所有问题
 		$options['xAxis'] = $this->getXAxis( $problems );
+		//纵轴可以根据实际数据调整，在这里是错题的人数
 		$options['yAxis'] = $this->getYAxis();
 		foreach( $class_ids as $class_id ) 
 		{
@@ -115,11 +124,29 @@ class StatisticsController extends Controller
 	}
 	public function actionIndex()
 	{
-		$this->render('index');
+		if ( LibUser::is_teacher() ) 
+		{
+			/*$criteria=new CDbCriteria(
+					'condition' => 'tbl_task.id=:tid',
+					'join'      => 'join tbl_task_record on tbl_task.id = tbl_task_record.task',
+					'params'    => array(':tid' => ),
+					);
+			
+			$join_task_number =*/ 
+			/*$task_data = new CActiveDataProvider( 'Task' , array(
+						'criteria' => array( 'condition' => 'author=:uid and status=:stat_publish' , 
+											  'join'     => '',
+											  'params'   => array(':uid'=>Yii::app()->user->id , ':stat_publish' => Task::STATUS_PUBLISHED ) ),) );*/
+			$this->render('teacher_stat_index' , array( 'task_data' => $task_data ) );
+		}
+		else 
+		{
+			$this->render('student_stat_index' );
+		}
 	}
 	public function actionGetTaskStat( $task_id )
 	{	
-		if ( Yii::app()->user->urole == Yii::app()->params['user_role_teacher'] )
+		if ( LibUser::is_teacher() )
 		{
 			$this->renderTeacherStat( $task_id );
 		}

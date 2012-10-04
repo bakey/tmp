@@ -18,8 +18,8 @@ echo $form->labelEx($post_model,'post');
 		'model'=>$post_model,
 		'attribute'=>'post',
 		'editorOptions' => array(
-				'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
-				'fileUpload'  => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
+				'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload&item_id='.$item_id),
+				'fileUpload'  => Yii::app()->createAbsoluteUrl('teach/coursepost/upload&item_id='.$item_id),
 				'autosave'=> $baseAutoSaveUrl,
 				'interval' => 5,
 				'autosaveCallback'=>"js:function(data,redactor_ins,doc){
