@@ -15,7 +15,7 @@ class CoursePostController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			//'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -36,7 +36,7 @@ class CoursePostController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -56,14 +56,15 @@ class CoursePostController extends Controller
 	{
 		
 	}
-	public function actionViewById( $post_id , $course_id )
+	public function actionViewById( $post_id , $course_id , $item_id )
 	{
 		$draft_to_publish_url = Yii::app()->createUrl("teach/coursepost/drafttopublished&post_id=$post_id&course_id=$course_id");
 		$reedit_url = Yii::app()->createUrl("teach/coursepost/reedit&post_id=$post_id&course_id=$course_id");
 		$this->render('view_post',array(
 				'model'                => $this->loadModel($post_id),
 				'draft_to_publish_url' => $draft_to_publish_url,
-				'reedit_url'           => $reedit_url,				
+				'reedit_url'           => $reedit_url,
+				'item_id'			   => $item_id,				
 		));		
 	}
 	public function actionTest()
@@ -528,13 +529,13 @@ class CoursePostController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($id)
+	public function actionDelete($post_id , $item_id)
 	{
-		$this->loadModel($id)->delete();
+		$this->loadModel($post_id)->delete();
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax'])) {
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index&item_id='.$item_id));
 		}
 	}
 
@@ -543,6 +544,7 @@ class CoursePostController extends Controller
 	 */
 	public function actionIndex( $item_id )
 	{
+		//$this->layout = 'usercentertwocolumn';
 		$cur_user = Yii::app()->user->id;
 		$teacher_course_post_data = new CActiveDataProvider('CoursePost',array(
 				'criteria'=>array(

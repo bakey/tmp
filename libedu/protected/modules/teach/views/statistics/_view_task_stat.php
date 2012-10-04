@@ -30,8 +30,7 @@
 			if ( $data['status'] == Task::STATUS_DRAFT ) {
 				echo "试卷未发布";
 			} else {
-				//$msg = sprintf("试卷已经发布给(%d)名学生 , 已经有(%d)名学生完成" , $data['total_accept_task_stu_cnt'] , $data['finish_task_stu_cnt']);
-				$msg = "试卷已经发布";
+				$msg = sprintf("试卷已经发布给(%d)名学生 , 已经有(%d)名学生完成" , $data['total_join_task_cnt'] , $data['finish_task_cnt']);
 				echo $msg;
 			}
 	?></b>

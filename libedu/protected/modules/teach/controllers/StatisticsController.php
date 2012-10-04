@@ -125,19 +125,38 @@ class StatisticsController extends Controller
 	public function actionIndex()
 	{
 		if ( LibUser::is_teacher() ) 
-		{
-			/*$criteria=new CDbCriteria(
-					'condition' => 'tbl_task.id=:tid',
-					'join'      => 'join tbl_task_record on tbl_task.id = tbl_task_record.task',
-					'params'    => array(':tid' => ),
-					);
+		{			 
+			$tasks = Task::model()->findAll( 'author=:uid and status=:stat_publish' , array(
+											  			':uid'=>Yii::app()->user->id , 
+											  			':stat_publish' => Task::STATUS_PUBLISHED )  );
+			$show_data = array();
+			foreach( $tasks as $task )
+			{
+				$total_records = TaskRecord::model()->findAll( 'task=:tid ' , array(':tid'=>$task->id) );
+				$total_join_task_cnt = count($total_records );
+				$finish_task_cnt = 0;
+				foreach( $total_records as $record )
+				{
+					if ( $record->status == TaskRecord::TASK_STATUS_FINISHED )
+					{
+						++ $finish_task_cnt;
+					}
+				}
+				$show_data[] = array(
+						'total_join_task_cnt' => $total_join_task_cnt,
+						'finish_task_cnt'     => $finish_task_cnt,
+						'create_time'         => $task->create_time,
+						'author'              => $task->author,
+						'name'                => $task->name,
+						'status'			  => $task->status,
+						'item'                => $task->item,
+						'id'				  => $task->id,
+						);			
+				
+			}
 			
-			$join_task_number =*/ 
-			/*$task_data = new CActiveDataProvider( 'Task' , array(
-						'criteria' => array( 'condition' => 'author=:uid and status=:stat_publish' , 
-											  'join'     => '',
-											  'params'   => array(':uid'=>Yii::app()->user->id , ':stat_publish' => Task::STATUS_PUBLISHED ) ),) );*/
-			$this->render('teacher_stat_index' , array( 'task_data' => $task_data ) );
+			$this->render('teacher_stat_index' , 
+					array( 'teacher_index_data' => new CArrayDataProvider($show_data) ) );
 		}
 		else 
 		{

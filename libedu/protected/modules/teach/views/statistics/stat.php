@@ -2,7 +2,7 @@
 /* @var $this StatisticsController */
 
 $this->breadcrumbs=array(
-	'Statistics',
+	'我的统计'=>array('index'),
 );
 ?>
 <h1>统计页面</h1>
