@@ -1,4 +1,5 @@
 <?php
+
 /*$this->widget('bootstrap.widgets.TbGridView', array(
 		'dataProvider' => $dataProvider,
 		'type' => 'bordered striped',
@@ -49,13 +50,15 @@
     	return ;
     }
 foreach( $dataProvider->getData() as $data )
-{?>
-<li class="span3">
+{
+	$date = explode(' ' , $data['update_time']);
+?>
+<li class="span4">
 <div class="thumbnail linkthumbnail">
 	<div class="caption">
 <?php 
 	echo "第" . $data['item_index'] . "节: " . $data['content'] . "<br>";
-	echo "更新日期: " . $data['update_time'] . "<br>";
+	echo "更新日期: " . $date[0] . "<br>";
 	echo CHtml::link($data["view_post"] , $data["view_url"]) . "<br>";
 	echo CHtml::link($data["new_post"] , $data["new_url"]);
 }

@@ -1,5 +1,5 @@
 <?php
-$this->Widget('ext.highcharts.HighchartsWidget', array(
+/*$this->Widget('ext.highcharts.HighchartsWidget', array(
 		'options'=>array(
 				'title' => array('text' => 'Fruit Consumption'),
 				'xAxis' => array(
@@ -13,5 +13,21 @@ $this->Widget('ext.highcharts.HighchartsWidget', array(
 						array('name' => 'John', 'data' => array(5, 7, 3))
 				)
 		)
-));
+));*/
 ?>
+	<li class="span3">
+			<div class="thumbnail linkthumbnail">
+				<div class="caption">
+						此章下面没有数据			
+				</div>
+			</div>
+	</li>
+	<ul class="thumbnails">
+	<li class="span3">
+	<div class="thumbnail linkthumbnail">
+	<div class="caption">
+		<a href="www.baidu.com">详细</a>
+		</div>
+	</div>
+	</li>
+	</ul>
