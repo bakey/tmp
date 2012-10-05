@@ -36,7 +36,7 @@
 							array('label'=>'知识点管理', 'url'=>array('/teach/knowledgepoint') , 'visible'=>$is_school_admin),
 							array('label'=>'导入知识点', 'url'=>array('/teach/knowledgepoint/importkp&course_id=1'),'visible'=>$is_school_admin),
 						),'active'=>((Yii::app()->controller->id == 'course')||(Yii::app()->controller->id == 'edition')),'visible'=>!Yii::app()->user->isGuest),
-						
+						array('label'=>'班级' , 'url'=>array('/user/libclass/admin')),
 						array('label'=>'测试', 'url'=>array('/teach/task') ,/*'items'=>array(
 							array('label'=>'题库管理', 'url'=>array('/teach/problem')),
 							array('label'=>'我的测验' , 'url'=>array('/teach/task/')),

@@ -7,10 +7,6 @@ $this->breadcrumbs=array(
 	'课程资料',
 );
 
-$this->menu=array(
-	array('label'=>'新建课程资料', 'url'=>array('create&item_id='.$item_id)),
-	array('label'=>'管理课程', 'url'=>array('admin')),
-);
 ?>
 
 <h1><?php 

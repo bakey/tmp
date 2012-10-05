@@ -7,18 +7,19 @@
 	<?php echo CHtml::link(CHtml::encode($data->id), array('viewbyid', 'post_id'=>$data->id , 'course_id'=>$course_id , 'item_id'=>$data->item_id)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('post')); ?>:</b>
-	<?php echo CHtml::encode($data->post); ?>
+	<div class="well">
+		<b>
+			<?php echo CHtml::encode($data->getAttributeLabel('post')); ?>:
+		</b>
+			<?php echo CHtml::decode($data->post); ?>
+	</div>
 	<br />
 	
 	<b><?php echo CHtml::encode($data->getAttributeLabel('author')); ?>:</b>
-	<?php echo CHtml::encode($data->author); ?>
+	<?php  
+		echo CHtml::encode( Yii::app()->user->real_name ); 
+	?>
 	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('item_id')); ?>:</b>
-	<?php echo CHtml::encode($data->item_id); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('status')); ?>:</b>
 	<?php
 		switch( $data->status )

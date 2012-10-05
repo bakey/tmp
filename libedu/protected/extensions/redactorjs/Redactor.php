@@ -57,6 +57,8 @@ class Redactor extends CInputWidget {
 		$cs->registerCssFile($assets.'/css/redactor.css');
 
         $this->htmlOptions['id'] = $id;
+        
+            
 
         if (!array_key_exists('style', $this->htmlOptions)) {
             $this->htmlOptions['style'] = "width:{$this->width};height:{$this->height};";

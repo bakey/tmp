@@ -54,6 +54,8 @@ foreach( $tracing_item as $item )
 );
 */
 ?>
+
+
 <div id="stitle"><h3>全部课程</h3></div>
 <h3>
 <?php
@@ -61,19 +63,22 @@ foreach( $level_one_items as $single_item )
 {
 	echo "第" . $single_item->edi_index . "章   " . $single_item->content ;
 	$item_table_id = "item-table-" . $single_item->id;	
-	/*echo CHtml::image('images/show_item.jpg' , '' , array('href'=>'#' , 'ajax'=>array(
-						'type'=>'POST',
-						'url' => array('update'),
-						//'data' => array('item'=>$single_item->id),
-						'update' => '#item-table-' . $single_item->id ,
-				) ) );*/
-$html_options = array( 'onclick' => 'javascript:$.ajax( {
+	$html_options = array( 'onclick' => 'javascript:$.ajax( {
 			url:"index.php?r=teach/course/loadchilditemastable&item=' . $single_item->id . '",
 			success:function(response){
-				$(\'#item-table-' . $single_item->id . '\').append( response );		  		
+				var item_id = "#item-table-' . $single_item->id . '";
+				$(item_id).html( response );
+				$(item_id).toggle();
+				//$(\'#item-table-' . $single_item->id . '\').html( response );	
+					  		
 		  	},
 		})' );
-echo CHtml::image('images/show_item.jpg' , '' , $html_options );
+?>
+<?php 
+	echo CHtml::image('images/show_item.jpg' , '' , $html_options );
+?>
+
+<?php 
 echo '<h5><div id="' . $item_table_id . '"></div></h5>';
 	echo "<br>";
 } 

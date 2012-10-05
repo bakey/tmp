@@ -9,13 +9,13 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'新建课程资料', 'url'=>array('create&item_id='.$item_id)),
-	array('label'=>'管理课程', 'url'=>array('admin')),
+	array('label'=>'新建课程资料', 'url'=>array('create&item_id='.$item_id.'&course_id='.$course_id)),
 );
 ?>
 
 <h1><?php 
-echo(Yii::app()->user->real_name . "你好 , 你发布的课程如下:");
+$msg = sprintf("%s , 你好，你在[%s]下发布的课程如下" , Yii::app()->user->real_name , $item_model->content );
+echo $msg;
  ?></h1>
 <div class="well" >
 <?php $this->widget('bootstrap.widgets.TbListView', array(

@@ -30,11 +30,13 @@ function file_upload_callback( obj , json ){
 				'fileUploadCallback' => "js:file_upload_callback",
 				'autosave'=> $base_auto_save_url ,
 				'interval' => 5,
-				'autosaveCallback'=>"js:function(data,redactor_ins,doc){
-					var json_obj = eval( data );
-					redactor_ins.opts.autosave = '" . $base_auto_save_url . "'+ '&post_id=' + json_obj.post_id ;".
-					"var createUrl = '" . $base_create_url . "' + json_obj.post_id;" .  
-					"doc.getElementById('course-post-form').setAttribute('action' , createUrl );				 
+				'autosaveCallback'=>"js:function( response,redactor_ins,doc){
+					var json_obj = eval( response );
+					if ( json_obj.post_id != '' ) {
+						redactor_ins.opts.autosave = '" . $base_auto_save_url . "'+ '&post_id=' + json_obj.post_id ;".
+						"var createUrl = '" . $base_create_url . "' + json_obj.post_id;" .  
+						"doc.getElementById('course-post-form').setAttribute('action' , createUrl );
+					}
 				}",
 				'focus' => false,
 		  ),

@@ -170,10 +170,8 @@ class CourseController extends Controller
 	/*
 	 * 获取某个item的所有子item，并以表格的方式渲染回去
 	 */
-	public function actionLoadChildItemAsTable()
+	public function actionLoadChildItemAsTable( $item )
 	{
-		if ( isset($_GET['item']) )
-		{
 			$item_id = $_GET['item'];
 			$course_id = Yii::app()->user->course;
 			$user_id = Yii::app()->user->id;
@@ -233,8 +231,6 @@ class CourseController extends Controller
 						'content'=>$item->content );
 				$item_data[] = $info;
 			}	*/
-		
-		}
 	}
 	public function actionAjaxLoadItem()
 	{

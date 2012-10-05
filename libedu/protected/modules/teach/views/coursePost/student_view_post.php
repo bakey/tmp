@@ -26,16 +26,7 @@ $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		'post:html',
-		'status',
 	),
 ));
-echo CHtml::button('重新编辑' , array(
-		'onClick'=>"window.location.href='$reedit_url'",
-) );
-echo CHtml::button('删除资料' , array('onClick'=>'if ( confirm("是否确认删除") ) { window.location.href="teach/coursepost/delete&post_id="} else {} ') );
-if ( $model->status == Yii::app()->params['course_post_status_draft'] ) {
-	echo CHtml::button('发布课程资料', array( 
-		'onClick'=>"window.location.href='$draft_to_publish_url'", 
-	));
-}
+
 ?>

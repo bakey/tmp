@@ -9,15 +9,20 @@ $this->breadcrumbs=array(
 );
 
 ?>
-<h2>课程： <?php echo($course_model->name); ?></h2>
+<h2>课程名称： <?php echo($course_model->name); ?></h2>
 <h2>章节 : <?php echo($item_model->content) ; ?> </h2>
-<h2>关联的知识点： <?php
+<div class="row">
+<div class="span4">
+<h2>关联的知识点： 
+<?php
 		foreach( $relate_kp_models as $kp )
 		{
 			echo $kp->name . ",";
 		}
 		echo "<br>"; 
 ?></h2>
+</div>
+</div>
 
 <?php
 	 echo $this->renderPartial('_edit_form', array(

@@ -838,6 +838,7 @@ var RTOOLBAR = {};
 	
 			setInterval($.proxy(function()
 					{
+						if ( this.$editor.text().length <= 1 ) return ;						
 						$.post( this.opts.autosave ,
 								{
 									data: this.getCode(), 
@@ -2095,6 +2096,11 @@ var RTOOLBAR = {};
 	{
 		this.data('redactor').setCode(html);
 	};
+	
+	$.fn.getText = function() 
+	{
+		return this.data('redactor').$editor.text();
+	};	
 	
 	$.fn.insertHtml = function(html)
 	{

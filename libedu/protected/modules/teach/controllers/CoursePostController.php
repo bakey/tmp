@@ -6,7 +6,7 @@ class CoursePostController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	//public $layout='//layouts/online_column';
+	public $layout='//layouts/column2';
 
 	/**
 	 * @return array action filters
@@ -60,12 +60,25 @@ class CoursePostController extends Controller
 	{
 		$draft_to_publish_url = Yii::app()->createUrl("teach/coursepost/drafttopublished&post_id=$post_id&course_id=$course_id");
 		$reedit_url = Yii::app()->createUrl("teach/coursepost/reedit&post_id=$post_id&course_id=$course_id");
-		$this->render('view_post',array(
+		
+		if ( LibUser::is_teacher() )
+		{
+			$this->render('teacher_view_post',array(
 				'model'                => $this->loadModel($post_id),
 				'draft_to_publish_url' => $draft_to_publish_url,
 				'reedit_url'           => $reedit_url,
 				'item_id'			   => $item_id,				
-		));		
+			));
+		}
+		else if ( LibUser::is_student() ) 
+		{
+			$this->render('student_view_post',array(
+					'model'                => $this->loadModel($post_id),
+					'draft_to_publish_url' => $draft_to_publish_url,
+					'reedit_url'           => $reedit_url,
+					'item_id'			   => $item_id,
+			));			
+		}		
 	}
 	public function actionTest()
 	{
@@ -315,7 +328,7 @@ class CoursePostController extends Controller
 			$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
 			if( $new_post_id > 0 ) {
 				$this->moveTracingItem( $item_id );
-				$this->redirect(array('viewbyid','post_id'=>$new_post_id , 'course_id'=>$course_id ));
+				$this->redirect(array('viewbyid','post_id'=>$new_post_id , 'course_id'=>$course_id , 'item_id'=>$item_id));
 			}else {
 				throw new CHttpException( 400 , "更新数据库错误，该课程资料已经被删除");
 			}
@@ -330,13 +343,23 @@ class CoursePostController extends Controller
 	{
 		$course_id = Yii::app()->user->course;
 		$user_course_model = UserCourse::model()->find( 'course_id=:cid and role=:teacher_role' , 
-											array( ':cid'=>$course_id , 
-											':teacher_role' => Yii::app()->params['user_role_teacher']) );
-		$course_post_models = CoursePost::model()->findAll( 'author=:author and item_id=:item_id' , array(
+															array( ':cid'=>$course_id , 
+																	':teacher_role' => Yii::app()->params['user_role_teacher']) );
+		
+		$stu_post_data = new CActiveDataProvider( 'CoursePost' , array(
+					'criteria' => array(
+							'condition' => ( 'author=1'/*sprintf('author=%d and item_id=%d' , $user_course_model->user_id , $item_id)*/ ),
+							'order'     => 'update_time DESC'
+							),
+					'pagination'=>array(
+							'pageSize'=>15,
+					)
+				) );
+		/*$course_post_models = CoursePost::model()->findAll( 'author=:author and item_id=:item_id' , array(
 					':author' => $user_course_model->user_id,
 					':item_id' => $item_id,
-				));
-		return new CArrayDataProvider( $course_post_models  );
+				));*/
+		return $stu_post_data ;
 	}
 	private function get_relate_kp( $item_id )
 	{
@@ -409,23 +432,24 @@ class CoursePostController extends Controller
 	
 		exit();	
 	}
-	public function actionAutoSave()
+	public function actionAutoSave( $item_id )
 	{
-		$item_id = $_GET['item_id'];
 		$post_id = "";
 		$save_res = false;
 		$msg = "";
+	
 		
-		if( isset($_POST['data']) )
+		if( isset($_POST['data']) && strlen(strip_tags($_POST['data'])) > 0)
 		{
 			if ( isset($_GET['post_id']) )
 			{
-				//更新操作
-				$msg = "update post_id = " . $post_id ;
+				//更新操作,只有实质内容的才update
 				$post_id = $_GET['post_id'];
-				$save_res = $this->updateCoursePostRecord( $item_id , $post_id );			
+				$save_res = $this->updateCoursePostRecord( $item_id , $post_id );
+				$msg = "update post_id = " . $post_id ;
 			}
-			else {
+			else
+			 {
 				//第一次保存，直接创建
 				$msg = "create ";
 				$course_post_model = new CoursePost;
@@ -436,7 +460,7 @@ class CoursePostController extends Controller
 				$course_post_model->status = $status;
 				$course_post_model->create_time = $course_post_model->update_time = date( "Y-m-d H:i:s", time() );
 				$save_res = $course_post_model->save() > 0 ;	
-				$post_id = $course_post_model->id;		
+				$post_id = $course_post_model->id;
 			}
 			$msg = " post record [ ";			
 			if ( $save_res ) {
@@ -445,29 +469,8 @@ class CoursePostController extends Controller
 			else {
 				$msg .= "failed]";
 			}
-			//Yii::log( $msg , 'debug' );
 			echo( '({"post_id":"' . $post_id . '"})' );
-		}		
-		/*$uid = Yii::app()->user->id;
-		$dir_path = $this->getTempCoursePostPath( $uid );
-		if ( null == $dir_path ) {
-			return false;
-		}
-		if ( !@is_dir( $dir_path) ) {
-			$create_recursive = true;
-			@mkdir( $dir_path , 0777 , $create_recursive );
-		}
-		$temp_file_name = $dir_path . "autosave";
-		$fs = fopen( $temp_file_name , "w" );
-		if ( !$fs ) {
-			$msg = sprintf("open file %s for write failed " , $temp_file_name );
-			Yii::log( $msg , "warn" );
-			return false;
-		}
-		$write_cnt = fwrite( $fs , $_POST['data'] , @strlen($_POST['data']) );
-		$msg = sprintf("total write %d bytes data" , $write_cnt );
-		Yii::log( $msg , 'debug' );
-		fclose( $fs );*/		
+		}				
 	}
 
 	/**
@@ -546,16 +549,10 @@ class CoursePostController extends Controller
 	{
 		//$this->layout = 'usercentertwocolumn';
 		$cur_user = Yii::app()->user->id;
-		$teacher_course_post_data = new CActiveDataProvider('CoursePost',array(
-				'criteria'=>array(
-						'condition'=>('author='.$cur_user.' and item_id='.$item_id ),						
-				),
-				'pagination'=>array(
-						'pageSize'=>15,
-				)
-		));
+
+		$item_model = Item::model()->findByPk( $item_id );
 		
-		if ( Yii::app()->user->urole == Yii::app()->params['user_role_student'])
+		if ( LibUser::is_student() )
 		{
 		
 			$this->render('index_student_coursepost',array(
@@ -564,11 +561,21 @@ class CoursePostController extends Controller
 				'course_id'   => Yii::app()->user->course,
 			));
 		}
-		else if ( Yii::app()->user->urole == Yii::app()->params['user_role_teacher'] )
+		else if ( LibUser::is_teacher() )
 		{
+			$teacher_course_post_data = new CActiveDataProvider('CoursePost',array(
+					'criteria'=>array(
+							'condition'=>('author='.$cur_user.' and item_id='.$item_id ),
+							'order'    => 'update_time DESC',
+					),
+					'pagination'=>array(
+							'pageSize'=>15,
+					)
+			));
 			$this->render('index_teacher_coursepost',array(
 					'dataProvider'=> $teacher_course_post_data ,
 					'item_id'     => $item_id,
+					'item_model'  => $item_model,
 					'course_id'   => Yii::app()->user->course,
 			));
 			

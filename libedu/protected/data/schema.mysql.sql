@@ -9,6 +9,12 @@ CREATE TABLE `tbl_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
+create table if not exists tbl_user_favorite(
+	`user` int not null references tbl_user(id) on delete cascade,
+	`resource` int not null,
+	`create_time` datetime not null
+)engine=innodb default charset=utf8
+
 create table IF NOT EXISTS tbl_user_active(
 uid int(11) references tbl_user(id) on delete cascade,
 active_id varchar(255) not null,
