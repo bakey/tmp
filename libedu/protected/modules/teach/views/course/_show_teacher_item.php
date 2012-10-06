@@ -1,4 +1,5 @@
 <?php
+
 /*$this->widget('bootstrap.widgets.TbGridView', array(
 		'dataProvider' => $dataProvider,
 		'type' => 'bordered striped',
@@ -58,6 +59,7 @@ foreach( $dataProvider->getData() as $data )
 <?php 
 	echo "第" . $data['item_index'] . "节: " . $data['content'] . "<br>";
 	echo "更新日期: " . $update_time[0] . "<br>";
+
 	echo CHtml::link($data["view_post"] , $data["view_url"]) . "<br>";
 	echo CHtml::link($data["new_post"] , $data["new_url"]);
 }

@@ -14,6 +14,7 @@
 				)
 		)
 ));*/
+
 $this->widget('application.extensions.redactorjs.Redactor',array(
 		'model'=>$model,
 		'attribute'=>'post',
@@ -27,3 +28,4 @@ $this->widget('application.extensions.redactorjs.Redactor',array(
 <div style="border-width:thin;border-style:solid;border-color:gray;margin-left:840px ;margin-top:20px;float:right;position:absolute;top:50px;left:350px">
 附件上传
 </div>
+

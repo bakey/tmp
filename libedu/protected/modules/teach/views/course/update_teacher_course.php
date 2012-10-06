@@ -9,33 +9,9 @@ $this->breadcrumbs=array(
 <link rel="stylesheet" type="text/css" href="/dev/libedu/css/my.css" />
 <?php
 echo"<div id=\"stitle\"><h3>第" . $top_item->edi_index . "章:" . $top_item->content . "<h3></div><br>";
+
 $this->renderPartial( '_show_teacher_item' , array('dataProvider' => $tracing_item) );
-/*$this->widget('bootstrap.widgets.TbGridView', array(
-		'dataProvider' => $tracing_item,
-		'type' => 'bordered striped',
-		'columns'=>array(
-				array(
-						'name'=>'第几节',
-						'value'=>'$data["item_index"]',
-						'type'=>'raw',
-				),
-				array(
-						'name'=>'内容',
-						'value'=>'$data["content"]',
-						'type'=>'raw',
-				),
-				array(
-						'name'=>'新建',
-						'value'=>'CHtml::link($data["new_post"] , $data["new_url"])',
-						'type' => 'raw',
-				),
-				array(	
-						'name' => '浏览',
-						'value' => 'CHtml::link($data["view_post"] , $data["view_url"])',
-						'type' => 'raw',
-				),
-		),
-));*/
+
 /*
 foreach( $tracing_item as $item )
 {
@@ -74,10 +50,11 @@ foreach( $level_one_items as $single_item )
 		  	},
 		})' );
 ?>
+<a href="#">
 <?php 
 	echo CHtml::image('images/show_item.jpg' , '' , $html_options );
 ?>
-
+</a>
 <?php 
 echo '<h5><div id="' . $item_table_id . '"></div></h5>';
 	echo "<br>";

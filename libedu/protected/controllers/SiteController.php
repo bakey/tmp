@@ -72,8 +72,7 @@ class SiteController extends Controller
 		//require_once( 'simple.php' );
 		//$str = "<p><br></p>";
 		//$str2 = "abcdedg";
-		//echo strlen( strip_tags($str) );
-		//$model=new ContactForm;
+		$this->render('test');
 		$model = new CoursePost;
 		$this->render('test' , array('model'=>$model));
 	}
