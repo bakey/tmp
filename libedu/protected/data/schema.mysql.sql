@@ -59,8 +59,14 @@ create table if not exists `tbl_multimedia` (
 	`status` int default 0,
 	`convert_name` varchar(255) ,
 	`item` int references tbl_item(id) on delete cascade,
-	`upload_time` datetime not null
+	`upload_time` datetime not null,
+	`post` int not null references tbl_course_post(id) on delete cascade
 )engine=Innodb default charset=utf8;
+
+create table if not exists `tbl_post_media`(
+	`post` int not null references tbl_course_post(id) on delete cascade,
+	`mid`  int not null references tbl_multimedia(id) on delete cascade
+)engine=innodb default charset=utf8;
 
 create table if not exists tbl_subject(
 	`id` int not null auto_increment primary key,

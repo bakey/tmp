@@ -14,10 +14,15 @@
 	 echo $form->error($model,'post');
 ?>
 <div id="file-upload-notification" style="display:none;color:red">上传成功!!</div>
+<div id="upload-file-name" style="border-width:thin;border-style:solid;border-color:gray;color:red;display:none"></div>
 <script type="text/javascript">
 function file_upload_callback( obj , json ){
 	$('#file-upload-notification').fadeIn(100);
-	$('#file-upload-notification').fadeOut(3000);	
+	$('#file-upload-notification').fadeOut(3000);
+	var upload_ret = eval( '(' + json + ')');
+	$('#upload-file-name').append("<p>上传文档:[ " +upload_ret.file_name +"] 成功,文档状态：正在转换中</p>");
+	$('#upload-file-name').show();	
+	$('#course-post-form').append("<input name='mid[]" + upload_ret.mid + "' value='" + upload_ret.mid + "' style='display:none'></input>");
 }
 </script>
 <?php

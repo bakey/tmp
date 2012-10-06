@@ -1821,14 +1821,17 @@ var RTOOLBAR = {};
 				$(this.doc.getElementById('span' + this.spanid)).after(data).remove();
 				this.syncCode();
 			}
-			else this.execCommand('inserthtml', data);
+			else 
+			{
+				//this.execCommand('inserthtml', data);
+			}
 			
 			// file upload callback
 			if (typeof this.opts.fileUploadCallback === 'function') 
 			{
 				this.opts.fileUploadCallback(this, data);
-			}			
-
+			}		
+		
 			this.modalClose();
 		},	
 	

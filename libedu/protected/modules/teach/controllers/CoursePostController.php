@@ -178,13 +178,14 @@ class CoursePostController extends Controller
 	 * 为用户保存发布的课程资料。
 	 * 课程资料的状态可以从草稿变成已发布，也可以从已发布变成草稿
 	 */
-	private function saveCoursePost( $course_post_model , $item_id , $status , $post_id ) {
-		
+	private function saveCoursePost( $course_post_model , $item_id , $status , $post_id ) 
+	{		
 		$course_post_model->post = $_POST['CoursePost']['post'];
 		$course_post_model->author = Yii::app()->user->id;
 		$course_post_model->item_id = $item_id ;
 		$course_post_model->status = $status ;
-		if ( null != $post_id ) {
+		if ( null != $post_id )
+		{
 			$course_post_model->update_time = date("Y-m-d H:i:s", time() ); 
 			$save_res = $course_post_model->updateByPk( $post_id , array(
 					'post'=>$_POST['CoursePost']['post'],
@@ -205,6 +206,20 @@ class CoursePostController extends Controller
 			else {
 				return -1;
 			}
+		}
+	}
+	private function savePostMediaRelation( $post_id )
+	{
+		if ( !isset($_POST['mid']) ) {
+			return ;
+		}
+		$mids = $_POST['mid'];
+		foreach( $mids as $mid )
+		{
+			$post_media = new PostMedia;
+			$post_media->post = $post_id;
+			$post_media->mid = $mid;
+			$post_media->save();
 		}
 	}
 	private function updateCoursePostRecord( $item_id , $post_id )
@@ -299,9 +314,14 @@ class CoursePostController extends Controller
 		{
 			$status = CoursePost::STATUS_DRAFT;
 			$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
-			if ( $new_post_id > 0 ) {
+			if ( $new_post_id > 0 )
+			{
+				$this->savePostMediaRelation( $new_post_id );
+				$this->moveTracingItem( $item_id );
 				$this->redirect(array('viewbyid','post_id'=>$new_post_id , 'course_id'=>$course_id));
-			}else {
+			}
+			else 
+			{
 				throw new CHttpException( 400 , "更新数据库错误，该课程资料已经被删除");
 			}
 			
@@ -326,10 +346,14 @@ class CoursePostController extends Controller
 			Yii::log( $msg , 'debug' );
 			$status = CoursePost::STATUS_PUBLISH;
 			$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
-			if( $new_post_id > 0 ) {
+			if( $new_post_id > 0 ) 
+			{
 				$this->moveTracingItem( $item_id );
+				$this->savePostMediaRelation( $new_post_id );
 				$this->redirect(array('viewbyid','post_id'=>$new_post_id , 'course_id'=>$course_id , 'item_id'=>$item_id));
-			}else {
+			}
+			else 
+			{
 				throw new CHttpException( 400 , "更新数据库错误，该课程资料已经被删除");
 			}
 		}
@@ -376,7 +400,8 @@ class CoursePostController extends Controller
 		$multimedia->status = Multimedia::STATUS_PROCESSING; //默认所有文档的初始状态都是处理中
 		$multimedia->item = $item_id;
 		$multimedia->upload_time = date( "Y-m-d H:i:s", time() );
-		$multimedia->save();		
+		$multimedia->save();	
+		return $multimedia;	
 	}
 	/*
 	 * 处理用户上传二进制文件
@@ -426,8 +451,15 @@ class CoursePostController extends Controller
 		}
 		else if ( $this->if_document($suffix[1]) )
 		{		
-			$this->process_document( $former_file_name , $file_name , $doc_folder , $item_id );
-			echo CHtml::link( $former_file_name , $this->getDocumentUrl($file_name, $uid)  );
+			//把多文档的信息存进数据库，并返回一个相应的tbl_multimedia的model
+			$doc_model = $this->process_document( $former_file_name , $file_name , $doc_folder , $item_id );
+			$res_array = array( 'result'	 => 'success' , 
+								 'file_name' => $former_file_name , 
+								 'url'		 => $this->getDocumentUrl($file_name,$uid),
+								 'mid' 		 => $doc_model->id, 
+					);
+			echo json_encode( $res_array );
+			//echo CHtml::link( $former_file_name , $this->getDocumentUrl($file_name, $uid)  );
 		}	
 	
 		exit();	
@@ -487,9 +519,9 @@ class CoursePostController extends Controller
 		{
 			$this->process_course_post_submit( $course_post_model , $item_id , $course_id );
 		}
-		$item_model = Item::model()->findByPk( $item_id ); 
-		$course_model = Course::model()->findByPk( $course_id );
-		$relate_kps = $item_model->relate_kps; 
+		$item_model      = Item::model()->findByPk( $item_id ); 
+		$course_model    = Course::model()->findByPk( $course_id );
+		$relate_kps      = $item_model->relate_kps; 
 		$baseAutoSaveUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/autosave&item_id=' . $item_id);
 		$base_create_url = Yii::app()->createAbsoluteUrl('teach/coursepost/create&item_id=' . $item_id . '&course_id='.$course_id . '&post_id=' );
 
