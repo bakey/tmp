@@ -21,6 +21,7 @@ class Multimedia extends CActiveRecord
 	 */
 	const TYPE_PPT = 0;
 	const STATUS_PROCESSING = 0;
+	const STATUS_FINISHED   = 1;
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);

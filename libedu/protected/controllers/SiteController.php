@@ -73,8 +73,8 @@ class SiteController extends Controller
 		//$str = "<p><br></p>";
 		//$str2 = "abcdedg";
 		$this->render('test');
-		$model = new CoursePost;
-		$this->render('test' , array('model'=>$model));
+		//$model = new CoursePost;
+		//$this->render('test' , array('model'=>$model));
 	}
 
 	public function actionTimelineTest(){

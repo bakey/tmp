@@ -120,14 +120,15 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params'=>array(
 		// this is used in contact page
-		'adminEmail'=>'chengchao@libedu.com',
-		'uploadFolder'=>'bin_data',
-		'currentSchoolID'=>$currntschoolid,
-		'user_role_school_admin' > 0,
-		'user_role_student' => 1,
-		'user_role_teacher' => 2,
-		'course_post_status_draft' => 0,
-		'course_post_status_published' => 1,
+		'adminEmail'					=> 'chengchao@libedu.com',
+		'uploadFolder'					=> 'bin_data',
+		'currentSchoolID'				=> $currntschoolid,
+		'user_role_school_admin' 		=> 0,
+		'user_role_student' 			=> 1,
+		'user_role_teacher' 			=> 2,
+		'course_post_status_draft' 		=> 0,
+		'course_post_status_published' 	=> 1,
+		'ppt_convert_command'		    => '"E:\OpenOffice.org 3\program\python" "E:\wamp\www\py_convert\DocumentConverter.py" '
 	),
 	'timeZone'=>"Asia/Shanghai",
 	'language'=>"zh_cn",
