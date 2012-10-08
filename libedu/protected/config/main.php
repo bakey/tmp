@@ -8,6 +8,7 @@
 
 //get current school from url and save to $currentschoolid variable
 $currntschoolid = 1;
+$currntschoolname = '中国人民大学附属中学';
 
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
@@ -16,7 +17,6 @@ return array(
 	// preloading 'log' component
 	'preload'=>array(
 		'log',
-		'bootstrap',
 	),
 
 	// autoloading model and component classes
@@ -35,9 +35,6 @@ return array(
 			'password'=>'libedu',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
-			'generatorPaths'=>array(
-            	'bootstrap.gii',
-       		 ),
 		),
 		'user' => array() ,
 		'teach' => array() ,		
@@ -53,10 +50,6 @@ return array(
 			'class'=>'CDbAuthManager',
 			'connectionID'=>'db',
 		),
-		'bootstrap'=>array(
-	        'class'=>'ext.bootstrap.components.Bootstrap', // assuming you extracted bootstrap under extensions
-	         'responsiveCss'=>false,
-	    ),
 
 		 'clientScript' => array(
     'class' => 'application.components.NLSClientScript',
@@ -123,6 +116,7 @@ return array(
 		'adminEmail'					=> 'chengchao@libedu.com',
 		'uploadFolder'					=> 'bin_data',
 		'currentSchoolID'				=> $currntschoolid,
+		'currentSchoolName'             => $currntschoolname,
 		'user_role_school_admin' 		=> 0,
 		'user_role_student' 			=> 1,
 		'user_role_teacher' 			=> 2,

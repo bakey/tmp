@@ -19,7 +19,6 @@
 </div>
 
 <script type="text/javascript">
-	$(document).ready(function(){
 	  $.ajax({
 	  	url:'<?php echo Yii::app()->createUrl("/user/libuser/gettimeline",array("uid"=>Yii::app()->user->id)); ?>',
 	  	success:function(response){
@@ -36,7 +35,6 @@
 		  Arrow_Points();
 	  	},
 	  });
-	});
 
 	function Arrow_Points(){ 
 		var s = $('#timeline_item_container').find('.timeline_item');

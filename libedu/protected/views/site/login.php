@@ -2,33 +2,35 @@
 <h1>用户登录</h1>
 
 <div class="form span9 offset1">
-<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'login-form',
 	'enableClientValidation'=>true,
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
 	),
-	'type'=>'inline',
-	'htmlOptions'=>array('class'=>'well'),
 )); ?>
 
-
-		<?php echo $form->textFieldRow($model,'username'); ?>
+		<div class="row">
+		<?php echo $form->labelEx($model,'username'); ?>
+		<?php echo $form->textField($model,'username'); ?>
 		<?php echo $form->error($model,'username'); ?>
+	</div>
 
-
-
-		<?php echo $form->passwordFieldRow($model,'password'); ?>
+	<div class="row">
+		<?php echo $form->labelEx($model,'password'); ?>
+		<?php echo $form->passwordField($model,'password'); ?>
 		<?php echo $form->error($model,'password'); ?>
-		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'登陆')); ?>
+	</div>
 
-		
+	<div class="row rememberMe">
 		<?php echo $form->checkBox($model,'rememberMe'); ?>
-		<?php echo CHtml::label('自动登陆','LoginForm[rememberMe]'); ?>
-	
-		<p>
-			<a href="<?php echo Yii::app()->createUrl('/user/libuser/iforgot') ?>">忘记密码？</a>
-		</p>
+		<?php echo $form->label($model,'rememberMe'); ?>
+		<?php echo $form->error($model,'rememberMe'); ?>
+	</div>
+
+	<div class="row buttons">
+		<?php echo CHtml::submitButton('Login'); ?>
+	</div>
 
 		
 
