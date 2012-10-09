@@ -24,14 +24,14 @@
 			</li>		
 			<li class="avatar">
 				<?php
-					/*$model = LibUser::model()->findByPk(Yii::app()->user->id);
+					$model = LibUser::model()->findByPk(Yii::app()->user->id);
 					$avatarCode = ''; 
 					if($model->user_profile->avatar != 'default_avatar.jpg'){
 						$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$model->id.'/avatar/'.$model->user_profile->avatar,'alt',array('width'=>64,'height'=>64,'alt'=>'avatar')));
 					}else{
 						$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->user_profile->avatar,'alt',array('width'=>64,'height'=>64,'alt'=>'avatar')));
 					}
-					echo $avatarCode;*/
+					echo $avatarCode;
 				?>
 				<ul>
 					<li>

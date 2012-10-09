@@ -47,7 +47,7 @@
 						$this->widget('zii.widgets.CDetailView', array(
 							'data'=>$model,
 							'itemCssClass'=>'',
-							'htmlOptions'=>array('class'=>'nullclass'),
+							'htmlOptions'=>array('class'=>'nullclass bordered'),
 							'attributes'=>array(
 								array(
 									'label'=>'用户头像',
@@ -71,8 +71,8 @@
 				</div>
 				<div class="container">
 					<div class="content">
-						<button class="turkish col_3 alpha"><span>编辑</span></button>
-						<button class="turkish col_5 omega" onclick="$.fn.modal({
+						<button class="turkish col_4 offset_2"><span>修改个人信息</span></button>
+						<button class="turkish col_4 omega" onclick="$.fn.modal({url: '<?php echo Yii::app()->createUrl('/user/libuser/changepassword',array('id'=>Yii::app()->user->id)) ?>',
    content: '<div class=\'libajaxloader\'></div>'})"><span>修改密码</span></button>
 					</div>
 				</div>
