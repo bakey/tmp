@@ -33,38 +33,32 @@
 ));
 */
 ?>
-<ul class="thumbnails">
 <?php
     if ( count($dataProvider->getData()) == 0 )
     {
-    	?>
-    	<li class="span3">
-			<div class="thumbnail linkthumbnail">
-				<div class="caption">
-						此章下面没有数据			
-				</div>
-			</div>
-		</li>
-    	
-    	<?php 
+    	echo "此章下面没有数据"; 
     	return ;
     }
+?>
+
+<?php 
 foreach( $dataProvider->getData() as $data )
 {
 	$update_time = explode( ' ', $data['update_time']);
-?>
-<li class="span3">
-<div class="thumbnail linkthumbnail">
-	<div class="caption">
+	?>
+	<div id="alpha">
+	<div class="container carton">
+		<div class="content">
+	<?php 
+		echo "第" . $data['item_index'] . "节: " . $data['content'] . "<br>";
+		echo "更新日期: " . $update_time[0] . "<br>";
+		echo CHtml::link($data["view_post"] , $data["view_url"]) . "<br>";
+		echo CHtml::link($data["new_post"] , $data["new_url"]);
+		?>
+				</div>
+	</div>
+</div>
 <?php 
-	echo "第" . $data['item_index'] . "节: " . $data['content'] . "<br>";
-	echo "更新日期: " . $update_time[0] . "<br>";
-
-	echo CHtml::link($data["view_post"] , $data["view_url"]) . "<br>";
-	echo CHtml::link($data["new_post"] , $data["new_url"]);
+		
 }
 ?>
-</div>
-</div>
-</li>
-</ul>

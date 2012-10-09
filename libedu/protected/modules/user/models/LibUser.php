@@ -50,6 +50,10 @@ class LibUser extends CActiveRecord
 	{
 		return Yii::app()->user->urole == Yii::app()->params['user_role_student'];
 	}
+	public static function is_school_admin()
+	{
+		return Yii::app()->user->urole == Yii::app()->params['user_role_school_admin'];
+	}
 
 	/**
 	 * @return array validation rules for model attributes.

@@ -109,16 +109,30 @@ class CourseController extends Controller
 
 	public function actionIndex()
 	{
-		$user_id = Yii::app()->user->id;
-		$user_model = LibUser::model()->findByPk( $user_id );
-		$courses = $user_model->user_course;
-		$userCourseData = new CActiveDataProvider('Course',array(
-				'pagination'=>array('pageSize'=>15),
-				));
-		$userCourseData->setData( $courses );
-		$this->render('index' , array(
-				'dataProvider'=>$userCourseData,
-				));
+		if ( LibUser::is_school_admin() )
+		{
+			$schoolid = Yii::app()->params['currentSchoolID'] ;
+			$criteria = new CDbCriteria;
+			$criteria->compare('school_id',$schoolid);
+			
+			$courses=Course::model()->findAll($criteria);
+			$this->render('admin_course',array(
+					'courseModel'=>$courses,
+					'schoolid'=>$schoolid,
+			));
+		}
+		else 
+		{
+			$user_id = Yii::app()->user->id;
+			$user_model = LibUser::model()->findByPk( $user_id );
+			$courses = $user_model->user_course;
+			$userCourseData = new CActiveDataProvider('Course',array(
+								'pagination'=>array('pageSize'=>15),));
+			$userCourseData->setData( $courses );
+			$this->render('index' , array(
+					'dataProvider'=>$userCourseData,
+					));
+		}
 	}
 	public function loadEditionModel( $id )
 	{

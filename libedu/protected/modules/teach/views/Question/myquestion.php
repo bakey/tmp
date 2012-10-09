@@ -8,7 +8,7 @@
 );*/
 ?>
 
-<?php $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
+<?php $this->widget('zii.widgets.CBreadcrumbs', array(
     'links'=>array('问答'=>array('/teach/question/myquestion'),'我的问答' ),
 )); ?>
 

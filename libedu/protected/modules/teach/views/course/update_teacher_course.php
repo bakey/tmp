@@ -7,8 +7,19 @@ $this->breadcrumbs=array(
 );
 ?>
 <link rel="stylesheet" type="text/css" href="/dev/libedu/css/my.css" />
+
+<div id="grid" class="tab current">
+	<div class="container col_12 omega">
+		<div class="content">
+			<h3>
+				<?php echo "第" . $top_item->edi_index . "章:" . $top_item->content; ?>
+			</h3>
+		</div>
+	</div>
+</div>
+
 <?php
-echo"<div id=\"stitle\"><h3>第" . $top_item->edi_index . "章:" . $top_item->content . "<h3></div><br>";
+//echo"<div id=\"stitle\"><h3>第" . $top_item->edi_index . "章:" . $top_item->content . "<h3></div><br>";
 
 $this->renderPartial( '_show_teacher_item' , array('dataProvider' => $tracing_item) );
 
@@ -31,9 +42,16 @@ foreach( $tracing_item as $item )
 */
 ?>
 
-
-<div id="stitle"><h3>全部课程</h3></div>
-<h3>
+<div id="grid" class="tab current">
+	<div class="container col_12 omega">
+		<div class="content">
+			<h3>
+				全部课程
+			</h3>
+		</div>
+	</div>
+</div>
+<h2>
 <?php
 foreach( $level_one_items as $single_item )
 {
@@ -50,14 +68,14 @@ foreach( $level_one_items as $single_item )
 		  	},
 		})' );
 ?>
-<a href="#">
+<a href="#" rel="external">
 <?php 
 	echo CHtml::image('images/show_item.jpg' , '' , $html_options );
 ?>
 </a>
 <?php 
-echo '<h5><div id="' . $item_table_id . '"></div></h5>';
+echo '<div id="' . $item_table_id . '"></div>';
 	echo "<br>";
 } 
 ?>
-</h3>
+</h2>

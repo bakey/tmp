@@ -25,11 +25,23 @@
 				<?php
 					$model = LibUser::model()->findByPk(Yii::app()->user->id);
 					$avatarCode = ''; 
-					if($model->user_profile->avatar != 'default_avatar.jpg'){
+					if ( null == $model ) 
+					{
+						return "";
+					}
+					$user_profile = $model->user_profile;
+					if ( null == $user_profile ) {
+						$avatarCode = "";
+					}else if ( $user_profile->avatar != 'default_avatar.jpg' ) {
+						$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$model->id.'/avatar/'.$model->user_profile->avatar,'alt',array('width'=>64,'height'=>64,'alt'=>'avatar')));
+					}else {
+						$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->user_profile->avatar,'alt',array('width'=>64,'height'=>64,'alt'=>'avatar')));
+					}
+					/*if($model->user_profile->avatar != 'default_avatar.jpg'){
 						$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$model->id.'/avatar/'.$model->user_profile->avatar,'alt',array('width'=>64,'height'=>64,'alt'=>'avatar')));
 					}else{
 						$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->user_profile->avatar,'alt',array('width'=>64,'height'=>64,'alt'=>'avatar')));
-					}
+					}*/
 					echo $avatarCode;
 				?>
 				<ul>
@@ -39,7 +51,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="#">
+						<a href="index.php?r=site/logout">
 							<h4>注销</h4>
 						</a>
 					</li>
@@ -95,19 +107,19 @@
 				</ul>
 			</div>
 
-			<a class="tile" rel="external">
+			<a data-href="index.php?r=teach/course/admin" class="tile" rel="external">
 				<span class="vector">'</span>
 				<span class="title"><strong>课程</strong> </span>
 			</a>
-			<a class="tile" rel="external">
+			<a data-href="index.php?r=teach/task" class="tile" rel="external">
 				<span class="vector">C</span>
 				<span class="title"><strong>测试</strong> </span>
 			</a>
-			<a class="tile" rel="external">
+			<a href="index.php?r=teach/question/myquestion" class="tile" rel="external">
 				<span class="vector">f</span>
 				<span class="title"><strong>问答</strong> </span>
 			</a>
-			<a class="tile" rel="external">
+			<a href="index.php?=teach/statistics" class="tile" rel="external">
 				<span class="vector">v</span>
 				<span class="title"><strong>统计</strong> </span>
 			</a>
@@ -132,9 +144,12 @@
 
 	<div id="footer">
 		<div class="con">
-			<p>Copyright &copy; <?php echo date('Y'); ?> by My Company.
+			<p>Copyright &copy; <?php echo date('Y'); ?> by 励博教育.
 			<span>All Rights Reserved.</span>
-			<span><?php echo Yii::powered(); ?></span></p>
+			<span>
+			<?php 
+			//	echo Yii::powered(); 
+			?></span></p>
 		</div>
 	</div><!-- footer -->
 
