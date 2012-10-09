@@ -4,16 +4,33 @@
 /* @var $form CActiveForm */
 ?>
 
+<ul class="tabs">
+    <li>
+        <a href="<?php echo Yii::app()->createUrl('/user/profile/view',array('id'=>Yii::app()->user->id)); ?>" rel="external">我的账号</a>
+    </li>
+    <li class="current">
+        <a href="#tab_one">个人设置</a>
+    </li>
+</ul>
+<div class="tabs">
+    <div id="tab_one" class="tab">
+    	<div class="container">
+    		<div class="carton col_12">
+    			<h3>个人设置</h3>
+
 <p class="note">Fields with <span class="required">*</span> are required.</p>
 <div class="form well row">
 
-<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'profile-form',
 	'enableAjaxValidation'=>false,
 )); 
 	//register js file
 		$baseUrl = Yii::app()->baseUrl; 
 		$cs = Yii::app()->getClientScript();
+		$cs->scriptMap=array(
+		        'jquery.js'=>false,
+		);
 		$cs->registerScriptFile($baseUrl.'/js/jquery.Jcrop.min.js');
 		$cs->registerScriptFile($baseUrl.'/js/jquery.color.js');
 		$cs->registerCssFile($baseUrl.'/css/jcrop/jquery.Jcrop.min.css');
@@ -108,11 +125,19 @@
 		<?php echo $form->hiddenField($model,'avatar',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'avatar'); ?>
 		
-		<?php echo $form->textAreaRow($model,'description',array('rows'=>6, 'cols'=>50,'class'=>'span8')); ?>
+		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50,'class'=>'span8')); ?>
 		<?php echo $form->error($model,'description'); ?>
 
-		<?php $this->widget('bootstrap.widgets.TbButton', array('buttonType'=>'submit', 'label'=>'保存')); ?>
+		<div class="container">
+					<div class="content">
+						<button class="turkish col_4 offset_2"><span>修改个人信息</span></button>
+					</div>
+				</div>
 
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+			</div>
+	    </div>
+	</div>
+</div>

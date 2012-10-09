@@ -1,14 +1,15 @@
 
 <h1>用户登录</h1>
 
-<div class="form span9 offset1">
+<div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'login-form',
 	'enableClientValidation'=>true,
 	'clientOptions'=>array(
 		'validateOnSubmit'=>true,
 	),
-)); ?>
+));
+?>
 
 		<div class="row">
 		<?php echo $form->labelEx($model,'username'); ?>
@@ -54,6 +55,5 @@
 </div>
 
 <style>
-
 	#registerArea, #mobileClientArea {border:1px solid #16a9f7; overflow: auto; padding: 20px; width:340px; margin-left: 50px; margin-top: 60px; float:left;}
 </style>

@@ -17,7 +17,7 @@
         <a href="#tab_one">我的账号</a>
     </li>
     <li>
-        <a href="#tab_two">账号管理</a>
+        <a href="<?php echo Yii::app()->createUrl('/user/profile/update',array('id'=>Yii::app()->user->id)); ?>" rel="external">个人设置</a>
     </li>
 </ul>
 <div class="tabs">
@@ -71,7 +71,7 @@
 				</div>
 				<div class="container">
 					<div class="content">
-						<button class="turkish col_4 offset_2"><span>修改个人信息</span></button>
+						<a href="<?php echo Yii::app()->createUrl('/user/profile/update',array('id'=>Yii::app()->user->id)); ?>" rel="external"><button class="turkish col_4 offset_2"><span>修改个人信息</span></button></a>
 						<button class="turkish col_4 omega" onclick="$.fn.modal({url: '<?php echo Yii::app()->createUrl('/user/libuser/changepassword',array('id'=>Yii::app()->user->id)) ?>',
    content: '<div class=\'libajaxloader\'></div>'})"><span>修改密码</span></button>
 					</div>
@@ -79,5 +79,4 @@
 			</div>
     </div>
 </div>
-<div id="tab_two" class="tab">Content of tab 1</div>
 </div>

@@ -18,6 +18,7 @@ $.initialize = function() {
 						if(element.size()>0) {
 							element.modal();
 						} else {
+							alert("bakey");
 							$.info({desc: "The hash <strong>"+$(this).data("href")+"</strong> is not valid"});
 						}
 					} else {
@@ -46,6 +47,7 @@ $.initialize = function() {
 					$(this).parents("ul.tabs").children("li.current").removeClass("current");
 					$(this).parents("li").addClass("current");
 				} else {
+					alert("bakey");
 					$.info({desc: "The hash <strong>"+$(this).data("href")+"</strong> is not valid"});
 				}
 			}
@@ -61,6 +63,7 @@ $.initialize = function() {
 		$.change(url, caption);
 	} else {
 		var url = "#" + $(".section.current").attr("id");
+		//alert( url );
 		var caption = $(url).data("title");
 		$.change(url, caption, true);
 	}
