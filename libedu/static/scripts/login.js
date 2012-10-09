@@ -289,7 +289,7 @@ $.initializeLogin = function() {
 	$.notification( 
 		{
 			title: "欢迎来到人大附中云校园",
-			content: "请选择一个用户!",
+			content: "请登陆使用!",
 			img: "static/demo/cloud.png",
 			border: false
 		}
@@ -352,14 +352,116 @@ $.initializeLogin = function() {
 	});
 	
 	$("#password button").bind("tap", function() {
-		forgot();
+		//alert( $("#LoginForm_username").val() );
+		//forgot();
+		//ajaxLoginCheck();
 	});
 	
 	$("#password .input.password input").keyup(function(event) {
 		if (event.which == 13) {
-			forgot();
+			//forgot();
 		}
 	});
+	$.fn.formToArray = function(semantic, elements) {
+	    var a = [];
+	    if (this.length === 0) {
+	        return a;
+	    }
+
+	    var form = this[0];
+	    var els = semantic ? form.getElementsByTagName('*') : form.elements;
+	    if (!els) {
+	        return a;
+	    }
+
+	    var i,j,n,v,el,max,jmax;
+	    for(i=0, max=els.length; i < max; i++) {
+	        el = els[i];
+	        n = el.name;
+	        if (!n) {
+	            continue;
+	        }
+
+	        if (semantic && form.clk && el.type == "image") {
+	            // handle image inputs on the fly when semantic == true
+	            if(!el.disabled && form.clk == el) {
+	                a.push({name: n, value: $(el).val(), type: el.type });
+	                a.push({name: n+'.x', value: form.clk_x}, {name: n+'.y', value: form.clk_y});
+	            }
+	            continue;
+	        }
+
+	        v = $.fieldValue(el, true);
+	        if (v && v.constructor == Array) {
+	            if (elements) 
+	                elements.push(el);
+	            for(j=0, jmax=v.length; j < jmax; j++) {
+	                a.push({name: n, value: v[j]});
+	            }
+	        }
+	        else if (feature.fileapi && el.type == 'file' && !el.disabled) {
+	            if (elements) 
+	                elements.push(el);
+	            var files = el.files;
+	            if (files.length) {
+	                for (j=0; j < files.length; j++) {
+	                    a.push({name: n, value: files[j], type: el.type});
+	                }
+	            }
+	            else {
+	                // #180
+	                a.push({ name: n, value: '', type: el.type });
+	            }
+	        }
+	        else if (v !== null && typeof v != 'undefined') {
+	            if (elements) 
+	                elements.push(el);
+	            a.push({name: n, value: v, type: el.type, required: el.required});
+	        }
+	    }
+
+	    if (!semantic && form.clk) {
+	        // input type=='image' are not found in elements array! handle it here
+	        var $input = $(form.clk), input = $input[0];
+	        n = input.name;
+	        if (n && !input.disabled && input.type == 'image') {
+	            a.push({name: n, value: $input.val()});
+	            a.push({name: n+'.x', value: form.clk_x}, {name: n+'.y', value: form.clk_y});
+	        }
+	    }
+	    return a;
+	};
+	
+	function ajaxLoginCheck() {
+		$.ajax(
+				{
+					url : "index.php?r=site/login",
+					type : "post",
+					//data : {username: $("#LoginForm_username").val() , password:$("#LoginForm_password").val()},
+					data : $("#LoginForm").formToArray(),
+					success: function(data) {	
+						/*var res = eval( data );
+						if ( res.status == "success" ) {
+							window.location.href = res.returnUrl;
+						}
+						else {
+							$.notification( 
+									{
+										title: "用户名密码错误",
+										content: "请检查您输入的用户名和密码",
+										icon: "!"
+									}
+								);
+							$("#password .input.password input").attr("value", "").focus();							
+						}*/
+						alert( data );
+					},
+					complete: function(jqXHR, textStatus) {
+						alert( textStatus );
+					},
+				}
+		);
+	}
 	
 	function forgot() {
 		if($("#password .input.password input").attr("value")!='') {

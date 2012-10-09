@@ -29,6 +29,11 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
+		
+		if ( Yii::app()->user->isGuest )
+		{
+			$this->redirect( array('site/login') );			
+		}
 
 		$cschool = School::model()->findByPk(Yii::app()->params['currentSchoolID']);
 
@@ -125,20 +130,31 @@ class SiteController extends Controller
 		// collect user input data
 		if( isset( $_POST['LoginForm'] ) )
 		{
-			var_dump( $_POST['LoginForm'] );
-			exit();
 			$model->attributes=$_POST['LoginForm'];
 			// validate user input and redirect to the previous page if valid
 			if( $model->validate() && $model->login() )
 			{
+				$response = array();
 				if(Yii::app()->user->ustatus < 2)
 				{
-					$this->redirect(array('/user/libuser/notactived'));
-				}else{
-					$this->redirect(Yii::app()->user->returnUrl);
+					$response['returnUrl'] = '/user/libuser/notactived';
+					//$this->redirect(array('/user/libuser/notactived'));
 				}
-			}
+				else
+				{
+					$response['returnUrl'] = Yii::app()->user->returnUrl;
+					//$this->redirect(Yii::app()->user->returnUrl);
+				}
+				$response['status'] = 'success';
+				echo @json_encode( $response );
 				
+			}
+			else
+			{
+				$response = array( 'status' => 'failed' );
+				echo @json_encode( $response );
+			}
+			return ;				
 		}
 		// display the login form
 		$this->render('login',array('model'=>$model));

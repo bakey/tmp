@@ -18,16 +18,19 @@ class EditionController extends Controller
 	public function accessRules()
 	{
 		return array(
-				array('allow',  // allow all users to perform 'index' and 'view' actions
-						'actions'=>array('index','view','importedition'),
+				/*array('allow', 
+						'actions'=>array(),
 						'users'=>array('*'),
-				),
-				array('allow', // allow authenticated user to perform 'create' and 'update' actions
-						'actions'=>array('admin','test','update','loadedition','doimportedition','writeedition','ajaxfilltree','add'),
+				),*/
+				array('allow', 
+						'actions'=>array('index','view','importedition','admin','test','update','loadedition',
+									'doimportedition','writeedition','ajaxfilltree','add'),
 						'users'=>array('@'),
 				),
-				array('deny',  // deny all users
-						'users'=>array('*'),
+				array( 'deny',  
+					   'actions' => array('index','view','importedition','admin','test','update','loadedition',
+									'doimportedition','writeedition','ajaxfilltree','add'),
+					   'users' =>array('*'),
 				),
 		);
 	}
