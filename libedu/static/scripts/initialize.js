@@ -250,19 +250,7 @@ $.initialize = function() {
 	});
 };
 
-//This $.demo function can easily be deleted without hurting core functionality - just be aware that demo won't function properly.
-$.demo = function() {	
-	$.notification( 
-		{
-			title: 'Pastel was initialized successfully!',
-			content: 'Welcome to the Dashboard.',
-			icon: "="
-		}
-	);
-}
-
 // Initializing of the Pastel Dashboard!
 $(document).ready(function() {
 	$.initialize();
-	$.demo();
 });

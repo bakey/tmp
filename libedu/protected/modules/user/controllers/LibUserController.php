@@ -169,12 +169,15 @@ class LibUserController extends Controller
 				}else{
 					$err = -2;
 				}
+			}else{
+				$err = 0;
 			}
 		}
+
 		$this->renderPartial('update',array(
 			'model'=>$model,
 			'msg'=>$err,
-		),false,true);
+		));
 	}
 
 	public function actionResetPassword($aid,$uid){
