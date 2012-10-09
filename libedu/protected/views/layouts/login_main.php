@@ -19,9 +19,7 @@
 				<a data-avatar="static/images/boy_avatar.jpg" href="#" class="avatar pin"></a>
 			</div>
 		</div>
-		<div id="password">
 			<?php echo $content; ?>
-		</div>
 	</div>
 </body>
 </html>
