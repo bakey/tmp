@@ -243,6 +243,7 @@ jQuery.event.special.tap = {
         return this
     }
 })(jQuery);
+
 $.initializeLogin = function() {
 	// Update
 	if ($.browser.msie  && parseInt($.browser.version, 10) === 8) {
@@ -281,18 +282,19 @@ $.initializeLogin = function() {
 
 		}, false);
 	}
+	
 	// Adding overlay to the body
 	$("body").addClass("welcome").append('<div id="overlays"></div>');
-	
 	// Welcome notification
 	$.notification( 
 		{
-			title: "Welcome to the Dashboard",
-			content: "Please pick a user!",
+			title: "欢迎来到人大附中云校园",
+			content: "请选择一个用户!",
 			img: "static/demo/cloud.png",
 			border: false
 		}
 	);
+
 	
 	// Adding animation to the user avatars.
 	$("#users").addClass("animated flipInY");
@@ -312,8 +314,8 @@ $.initializeLogin = function() {
 	$(".avatar").live("tap", function() {
 		$.notification( 
 			{
-				title: "Hi, " + $(this).attr("data-username"),
-				content: "Just leave the fields empty to enter the actual Dashboard. If you do type <em>something</em> be prepared for a cute wobble animation.",
+				title: "Hi, 亲爱的用户",
+				content: "欢迎来到我们的云校园",
 				img: $(this).attr("data-avatar"),
 				fill: true,
 				showTime: true
@@ -321,6 +323,7 @@ $.initializeLogin = function() {
 		);
 		$("#password .input.username .avatar").remove();
 		var avatar = $(this).clone().wrap('<div>').parent().html();
+		
 		$("#password .input.username").append(avatar);
 		$("#password .input.username input").attr( "value", $(this).attr("data-username") );
 		

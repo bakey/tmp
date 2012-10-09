@@ -12,7 +12,7 @@
     ),
 )); */
 
-	echo CHtml::button('label'=>'编辑',array('class'=>'white'));
+	echo CHtml::button('编辑',array('class'=>'white'));
 ?>
 
 <p></p>

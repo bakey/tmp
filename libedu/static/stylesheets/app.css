@@ -3176,6 +3176,9 @@ a.tile:nth-child(odd) {
 	-moz-box-shadow: white 0px 1px 0px inset, rgba(0,0,0,0.36) 0px -28px 29px -29px;
 	box-shadow: white 0px 1px 0px inset, rgba(0,0,0,0.36) 0px -28px 29px -29px;
 }
+#dashboard.login_board {
+	margin-top: 35px;
+}
 #dashboard:after {
 	content: '';
 	position: absolute;
@@ -3196,7 +3199,7 @@ a.tile:nth-child(odd) {
 	padding: 40px;
 }
 .section.padding {
-	padding: 0px;
+	padding: 43px;
 }
 .row.widgets {
 	margin: -40px;
