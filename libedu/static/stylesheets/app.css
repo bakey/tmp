@@ -3242,7 +3242,7 @@ a.tile:nth-child(odd) {
 	padding: 40px;
 }
 .section.padding {
-	padding: 43px;
+	padding: 0px;
 }
 .row.widgets {
 	margin: -40px;
