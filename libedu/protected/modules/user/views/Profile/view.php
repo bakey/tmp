@@ -5,12 +5,16 @@
 ?>
 
 <h1><?php echo $model->real_name; ?>的账号</h1>
-<?php $this->widget('bootstrap.widgets.TbButtonGroup', array(
+<?php /*$this->widget('bootstrap.widgets.TbButtonGroup', array(
     'buttons'=>array(
         array('label'=>'编辑', 'url'=>Yii::app()->createUrl('/user/profile/update',array('id'=>$model->uid))),
         array('label'=>'修改密码', 'url'=>Yii::app()->createUrl('/user/libuser/changepassword',array('id'=>$model->uid))),
     ),
-)); ?>
+)); */
+
+	echo CHtml::button('label'=>'编辑',array('class'=>'white'));
+?>
+
 <p></p>
 <?php
 $avatarCode = ''; 

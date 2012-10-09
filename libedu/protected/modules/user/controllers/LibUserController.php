@@ -171,10 +171,10 @@ class LibUserController extends Controller
 				}
 			}
 		}
-		$this->render('update',array(
+		$this->renderPartial('update',array(
 			'model'=>$model,
 			'msg'=>$err,
-		));
+		),false,true);
 	}
 
 	public function actionResetPassword($aid,$uid){
