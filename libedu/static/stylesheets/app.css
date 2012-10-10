@@ -117,6 +117,7 @@ input:focus, textarea:focus {
 input:focus::-webkit-input-placeholder { 
 	color: transparent;
 }
+
 input[type="submit"] { 
 	height: 45px;
 	font: bold 14px/45px HelveticaNeue, Helvetica, Arial;
