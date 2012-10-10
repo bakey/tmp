@@ -23,7 +23,7 @@ Yii::app()->getClientScript()->scriptMap=array(
 <?php 
 	foreach($courselist as $singlecourse){
 		echo '<a href="'.Yii::app()->createUrl('/teach/course/update',array('course_id'=>$singlecourse->id)).'" rel="external">
-  <div class="carton col_3">
+  <div class="carton col_3 coursecarton">
     <h2>'.$singlecourse->name.'</h2>
     <div class="content"><p>'.$singlecourse->description.'</p></div>
   </div></a>';
@@ -31,7 +31,7 @@ Yii::app()->getClientScript()->scriptMap=array(
 ?> 
 
 <a href="#" rel="external">
-  <div class="carton col_3">
+  <div class="carton col_3 coursecarton">
     <h2>添加课程</h2>
     <div class="content"><p><span class="iconclass min offset_5">+</span></p></div>
   </div></a>
