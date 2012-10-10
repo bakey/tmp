@@ -14,15 +14,17 @@ Yii::app()->getClientScript()->scriptMap=array(
 	echo("这是你的课程: " ); 
 ?>
 </h1>
-<a href="<?php
-	echo ("index.php?r=teach/course/update&course_id=" . $course_data[0]->id ); 
-?>">
-<button class="sea glyph tag"  />
+<?php
+foreach ( $course_data as $course )
+{?> 
+<a href="<?php echo ("index.php?r=teach/course/update&course_id=" . $course->id );?>" rel="external">
+	<button class="sea glyph tag" >
+		<?php echo $course->name; ?>
+	</button>
 </a>
-<span>
-高一数学
-</span>
-</button>
+<?php 
+}
+?>
 <?php
 //$this->renderPartial( '_form_admin_course' , array('dataProvider'=>$dataProvider)); 
 ?>

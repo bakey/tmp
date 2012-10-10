@@ -3231,6 +3231,7 @@ a.tile:nth-child(odd) {
 
 #dashboard.home_board {
 	margin-top: 35px;
+	min-height: 800px;
 }
 
 #dashboard:after {
@@ -9689,4 +9690,26 @@ body.feather .map .caption {
 	font-size:128px;
 	line-height: 128px;
 	vertical-align: -20px;
+}
+
+.carton.coursecarton{
+	height:150px;
+}
+.home_board .section.current {
+	overflow : auto;
+	min-height : 800px;	
+}
+.carton.topitemcarton{
+	margin-left : 275px;
+	magin-top:    250px;
+	margin-bottom: 0px;
+	width :       824px;
+}
+.container.topitem{
+	margin-bottom: 6px;
+}
+.carton.second_level_carton {
+	margin-left: 330px;
+	margin-top: 0px;
+	width :      770px;
 }

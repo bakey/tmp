@@ -70,6 +70,7 @@ $.initialize = function() {
 	$(window).hashchange( function(){
 	    var page = location.hash;
 	    var title = $(page).data("title");
+	    return ;
 	    if($(page).length>0) {
 		    if(title==undefined) {
 		    	document.title = "Dashboard"
