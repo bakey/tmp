@@ -433,34 +433,9 @@ $.initializeLogin = function() {
 	};
 	
 	function ajaxLoginCheck() {
-		$.ajax(
-				{
-					url : "index.php?r=site/login",
-					type : "post",
-					//data : {username: $("#LoginForm_username").val() , password:$("#LoginForm_password").val()},
-					data : $("#LoginForm").formToArray(),
-					success: function(data) {	
-						/*var res = eval( data );
-						if ( res.status == "success" ) {
-							window.location.href = res.returnUrl;
-						}
-						else {
-							$.notification( 
-									{
-										title: "用户名密码错误",
-										content: "请检查您输入的用户名和密码",
-										icon: "!"
-									}
-								);
-							$("#password .input.password input").attr("value", "").focus();							
-						}*/
-						alert( data );
-					},
-					complete: function(jqXHR, textStatus) {
-						alert( textStatus );
-					},
-				}
-		);
+		/*jQuery.ajax({'url':'index.php?r=site/login','type':'post','success':function(data){
+			alert( data );
+		},'cache':false,'data' : $("#LoginForm").formToArray()});*/
 	}
 	
 	function forgot() {

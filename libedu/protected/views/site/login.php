@@ -6,7 +6,28 @@
 	<div class="input password">
 		<input id="LoginForm_password" name="LoginForm[password]" type="password"  placeholder="密码" />
 	</div>
-	<button>登陆</button>
-	<?php /*echo CHtml::button('登陆')*/?>
+	<?php 
+	echo CHtml::htmlButton('登陆' , array(
+				'ajax' => array(
+						'url' => 'index.php?r=site/login',
+						'type' => "post",
+						'success' => 'function(data){
+							var res = eval( "(" + data + ")");
+							if ( res.status == "success" ) {
+								window.location.href = res.returnUrl;
+							}
+							else {
+								$.notification( 
+									{
+										title: "错误的用户名或者密码",
+										content: "请检查您的用户名和密码，尝试再次登陆",
+										icon: "!"
+									}
+								);
+								
+							}
+						}', 
+					)
+			) )?>
 	</form>
 </div>

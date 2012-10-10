@@ -2707,7 +2707,7 @@ div.overlay h2 span {
 	width: 34px;
 	line-height: 0px;
 	top: 50%;
-	margin-top: -17px;
+	margin-top: -19px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
@@ -2717,11 +2717,12 @@ div.overlay h2 span {
 	background-size: 100%;
 }
 #header ul li.avatar img {
-	height: 100%;
+	height: 30px;
 	width: 100%;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
+	padding-top: 0px;
 }
 #header ul li.search {
 	position: absolute;
@@ -2729,7 +2730,7 @@ div.overlay h2 span {
 	width: 126px;
 	height: 34px;
 	top: 50%;
-	margin-top: -17px;
+	margin-top: -20px;	
 	padding: 0px;
 	padding-left: 29px;
 	padding-right: 20px;
@@ -3225,6 +3226,7 @@ a.tile:nth-child(odd) {
 }
 #dashboard.login_board {
 	margin-top: 35px;
+	margin-bottom: 100px;
 }
 #dashboard:after {
 	content: '';

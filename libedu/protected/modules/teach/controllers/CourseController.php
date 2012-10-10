@@ -103,7 +103,8 @@ class CourseController extends Controller
 				'pagination'=>array('pageSize'=>15),
 		));
 		$this->render('admin' , array(
-				'dataProvider'=>$userCourseData,
+				//'dataProvider'=>$userCourseData,
+					'course_data' => $courses,
 				));
 	}
 

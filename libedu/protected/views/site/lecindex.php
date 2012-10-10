@@ -2,6 +2,10 @@
 /* @var $this SiteController */
 
 $this->pageTitle=Yii::app()->name;
+
+Yii::app()->getClientScript()->scriptMap=array(
+		'jquery.js'=>false,
+);
 ?>
 
 

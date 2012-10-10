@@ -1,72 +1,38 @@
-<?php /* @var $this Controller */ ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="language" content="en" />
-
-	<!-- blueprint CSS framework -->
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/screen.css" media="screen, projection" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/print.css" media="print" />
-	<!--[if lt IE 8]>
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
-	<![endif]-->
-
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
-
+	<script src="<?php echo Yii::app()->request->baseUrl; ?>/static/scripts/library.js"></script>
+	<script src="<?php echo Yii::app()->request->baseUrl; ?>/static/scripts/base.js"></script>
+	<script src="<?php echo Yii::app()->request->baseUrl; ?>/static/scripts/modal.js"></script>
+	<script src="<?php echo Yii::app()->request->baseUrl; ?>/static/scripts/initialize.js"></script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="user-scalable=no, initial-scale = 1, minimum-scale = 1, maximum-scale = 1, width=device-width" />
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
+	<link rel="stylesheet" href="<?php echo Yii::app()->request->baseUrl; ?>/static/stylesheets/app.css">
 </head>
-
 <body>
-
-<div class="container" id="page">
-
 	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
-	</div><!-- header -->
-
-	<div id="mainmenu">
-		<?php 
-			$uname = '';
-			$uid = -1;
-			if(isset(Yii::app()->user->real_name)){
-				$uname = Yii::app()->user->real_name;
-				$uid = Yii::app()->user->id;
-			}
-			$user_is_guest = Yii::app()->user->isGuest;
-			$this->widget('zii.widgets.CMenu',array(
-			'items'=>array(
-				array('label'=>'首页', 'url'=>array('/site/index')),
-				array('label'=>'课程', 'url'=>array('/teach/course/admin')),
-				array('label'=>'测试', 'url'=>array('/teach/task/index')),
-				array('label'=>'题库', 'url'=>array('/teach/problem')),
-				array('label'=>'问答', 'url'=>array('/teach/question')),
-				array('label'=>'学生', 'url'=>array('/user/libclass/admin') , 
-					'visible'=> (!$user_is_guest && ((int)Yii::app()->user->urole === Yii::app()->params['user_role_teacher'])) ),				
-				array('label'=>'统计', 'url'=>array('/teach/problem')),
-				array('label'=>'添加应用', 'url'=>array('/user/libuser/register')),
-				array('label'=>'退出系统 ('.$uname.')', 'url'=>array('/site/logout')),
-			),
-		)); ?>
-	</div><!-- mainmenu -->
-	<?php if(isset($this->breadcrumbs)):?>
-		<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-			'links'=>$this->breadcrumbs,
-		)); ?><!-- breadcrumbs -->
-	<?php endif?>
-
-	<?php echo $content; ?>
-
-	<div class="clear"></div>
+		<ul class="con">		
+		</ul>
+	</div>
+	<div id="dashboard" class="login_board">
+	    <div class="scroll con">
+	        <div class="section current padding" title="<?php echo CHtml::encode($this->pageTitle); ?>" id="home">
+	        	<?php echo $content; ?>
+	        </div>
+	    </div>
+	</div>
 
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
+		<div class="con">
+			<p>Copyright &copy; <?php echo date('Y'); ?> by 励博教育.
+			<span>All Rights Reserved.</span>
+			<span>
+			<?php 
+			//	echo Yii::powered(); 
+			?></span></p>
+		</div>
 	</div><!-- footer -->
-
-</div><!-- page -->
 
 </body>
 </html>

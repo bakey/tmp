@@ -17,7 +17,9 @@
 				<a href="#home" data-href="#home" rel="external"><?php echo Yii::app()->params['currentSchoolName']; ?>云校园</a>
 			</li>
 			<li>
-				<a href="#" rel="external"><span class="icon">1</span> 个人中心</a>
+				<a href="#" rel="external"><span class="icon">1</span> 
+					个人中心
+				</a>
 			</li>
 			<li>
 				<a href="#" rel="external"><span class="icon">|</span> 课程广场</a>
@@ -36,18 +38,19 @@
 						}else {
 							$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->user_profile->avatar,'alt',array('width'=>64,'height'=>64,'alt'=>'avatar')));
 						}
-						echo $avatarCode ;
 					}
 					echo $avatarCode;
 				?>
 				<ul>
 					<li>
 						<a href="#">
-							<h4>张老师</h4>
+							<h4>
+								<?php echo Yii::app()->user->real_name ; ?>老师
+							</h4>
 						</a>
 					</li>
 					<li>
-						<a href="index.php?r=site/logout">
+						<a href="www.baidu.com">
 							<h4>注销</h4>
 						</a>
 					</li>
@@ -55,50 +58,57 @@
 			</li>
 			<li class="search">
 				<input type="text" placeholder="Search" />
-				<ul>
-					<li>
-						<a href="#">
-							<h4>Jens Alba</h4>
-							<p>Lorem ipsum dolor sit imet smd ddm lksdm lkdsm</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h4>Jens Alba</h4>
-							<p>Lorem ipsum dolor sit imet smd ddm lksdm lkdsm</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h4>Jens Alba</h4>
-							<p>Lorem ipsum dolor sit imet smd ddm lksdm lkdsm</p>
-						</a>
-					</li>
-				</ul>
 			</li>
 		</ul>
 	</div>
 	<div id="stream">
-		<?php //echo CHtml::image(Yii::app()->request->baseUrl.'/images/rdfz-tile.jpg','alt',array());?>
 		<div class="con">
 			<div class="tile" id="hello">
-				<h2><span>高一数学</span> </h2>
+				<h2><span>
+				<?php
+				if ( isset(Yii::app()->user->course) )
+				{
+					$course_model = Course::model()->findByPk( Yii::app()->user->course );
+					echo $course_model->name;					
+				} 
+				?>
+				</span> </h2>
 				<ul class="nav">
 					<li class="teacher-avatar">
 						<?php
-					$model = LibUser::model()->findByPk(Yii::app()->user->id);
-					$avatarCode = ''; 
-					
-					$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/images/test.jpg','alt',array('width'=>36,'height'=>36,'alt'=>'avatar')));
-					
-					echo $avatarCode;
+						$avatarCode = "";
+						if ( isset(Yii::app()->user->course) )
+						{
+							$course_model = Course::model()->findByPk( Yii::app()->user->course );
+							Yii::log( "course id = " . $course_model->id , 'debug' );
+							$teacher_user_model = $course_model->getCourseTeacher();
+							if ( null != $teacher_user_model )
+							{
+								$avatar_name = $teacher_user_model->user_profile->avatar;
+								Yii::log( $avatar_name , 'debug' );
+								if ( $avatar_name != 'default_avatar.jpg' ) {
+									$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$teacher_user_model->id.'/avatar/'.$avatar_name,'
+																 alt',array('width'=>36,'height'=>36)));
+								}else {
+									$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/images/'.$avatar_name,
+																'avatar',array('width'=>36,'height'=>36)));
+								}
+								Yii::log( $avatarCode , 'debug' );
+							}
+						}
+						echo $avatarCode;
 				?>
 					</li>
 					<li class="teacher-info">
-						<a href="#" rel="external">某某老师</a>
+						<a href="#" rel="external"><?php echo Yii::app()->user->real_name ; ?>老师</a>
 					</li>
 					<li class="student-number">
-						<a href="#" rel="external">学生 123</a>
+						<a href="#" rel="external">学生 
+						<?php
+							$course_model = Course::model()->findByPk( Yii::app()->user->course );
+							echo $course_model->getCourseStudentCount();
+						?>
+						</a>
 					</li>
 				</ul>
 			</div>

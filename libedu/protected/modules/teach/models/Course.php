@@ -65,11 +65,11 @@ class Course extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'edition_id' => 'Edition',	
-			'name' => 'Name',
+			'id'          => 'ID',
+			'edition_id'  => 'Edition',	
+			'name'        => 'Name',
 			'description' => 'Description',
-			'view_count' => 'View Count',
+			'view_count'  => 'View Count',
 		);
 	}
 
@@ -93,5 +93,32 @@ class Course extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+	public function getCourseTeacher()
+	{
+		if ( !isset($this->id) )
+		{
+			return null;
+		}
+		$user_course_model = UserCourse::model()->find( 'course_id=:cid and role=:role' , array( 'cid' => $this->id , 
+																				 ':role' => Yii::app()->params['user_role_teacher']) );
+		if ( null != $user_course_model ) 
+		{
+			$teacher_id = $user_course_model->user_id;
+			return LibUser::model()->findByPk( $teacher_id );
+		}
+		else
+		{
+			return null;
+		}
+	}
+	public function getCourseStudentCount()
+	{
+		if ( !isset($this->id) )
+		{
+			return null;
+		}
+		return UserCourse::model()->count( 'course_id=:cid and role=:role' , array( 'cid' => $this->id ,
+				':role' => Yii::app()->params['user_role_student']) );
 	}
 }
