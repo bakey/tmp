@@ -29,7 +29,7 @@ class LibUserController extends Controller
 	}
 
     public function actionHome(){
-    	$this->layout = 'usercentertwocolumn';
+    	$this->layout = '//layouts/homepage';
     	$this->render('userhome');
     }
 
@@ -61,7 +61,7 @@ class LibUserController extends Controller
     }
 
 	public function actionGetTimeline($uid){
-		$cnews = News::model()->findAllByAttributes(array('user'=>Yii::app()->user->id));
+		$cnews = News::model()->findAllByAttributes(array('user'=>Yii::app()->user->id),array('order'=>'create_time DESC'));
 		if($cnews){
 			foreach($cnews as $singlenews){
 				$_GET['id']=$singlenews->id;

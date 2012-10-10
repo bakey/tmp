@@ -36,8 +36,10 @@
 						}else {
 							$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/images/'.$model->user_profile->avatar,'alt',array('width'=>64,'height'=>64,'alt'=>'avatar')));
 						}
+						echo $avatarCode ;
+					}else{
+						echo $avatarCode;
 					}
-					echo $avatarCode;
 				?>
 				<ul>
 					<li>
@@ -77,60 +79,9 @@
 			</li>
 		</ul>
 	</div>
-	<div id="stream">
-		<?php //echo CHtml::image(Yii::app()->request->baseUrl.'/images/rdfz-tile.jpg','alt',array());?>
-		<div class="con">
-			<div class="tile" id="hello">
-				<h2><span>高一数学</span> </h2>
-				<ul class="nav">
-					<li class="teacher-avatar">
-						<?php
-					$model = LibUser::model()->findByPk(Yii::app()->user->id);
-					$avatarCode = ''; 
-					
-					$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/images/test.jpg','alt',array('width'=>36,'height'=>36,'alt'=>'avatar')));
-					
-					echo $avatarCode;
-				?>
-					</li>
-					<li class="teacher-info">
-						<a href="#" rel="external">某某老师</a>
-					</li>
-					<li class="student-number">
-						<a href="#" rel="external">学生 123</a>
-					</li>
-				</ul>
-			</div>
-
-			<a data-href="index.php?r=teach/course/admin" class="tile" rel="external">
-				<span class="vector">'</span>
-				<span class="title"><strong>课程</strong> </span>
-			</a>
-			<a data-href="index.php?r=teach/task" class="tile" rel="external">
-				<span class="vector">C</span>
-				<span class="title"><strong>测试</strong> </span>
-			</a>
-			<a href="index.php?r=teach/question/myquestion" class="tile" rel="external">
-				<span class="vector">f</span>
-				<span class="title"><strong>问答</strong> </span>
-			</a>
-			<a href="index.php?=teach/statistics" class="tile" rel="external">
-				<span class="vector">v</span>
-				<span class="title"><strong>统计</strong> </span>
-			</a>
-			<a class="tile" rel="external">
-				<span class="vector">F</span>
-				<span class="title"><strong>视频</strong> </span>
-			</a>
-			<a class="tile" rel="external">
-				<span class="vector">+</span>
-				<span class="title"><strong>添加应用</strong></span>
-			</a>					
-		</div>
-	</div>
-	<div id="dashboard">
+	<div id="dashboard" class="home_board">
 	    <div class="scroll con">
-	        <div class="section current padding" title="<?php echo CHtml::encode($this->pageTitle); ?>" id="home">
+	        <div class="section current" title="<?php echo CHtml::encode($this->pageTitle); ?>" id="home">
 	        	<?php echo $content; ?>
 	        </div>
 	    </div>

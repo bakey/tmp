@@ -31,7 +31,7 @@ class SiteController extends Controller
 		// using the default layout 'protected/views/layouts/main.php'
 
 		$cschool = School::model()->findByPk(Yii::app()->params['currentSchoolID']);
-
+		$this->layout = 'homepage';
 		if(Yii::app()->user->isGuest) {
 			$this->render('index',array('cschool'=>$cschool));
 		}else{
