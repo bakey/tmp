@@ -34,21 +34,25 @@ class SiteController extends Controller
 		{
 			$this->redirect( array('site/login') );			
 		}
-		$this->layout = 'online_main';
 
 		$cschool = School::model()->findByPk(Yii::app()->params['currentSchoolID']);
+		$this->layout = 'homepage';
+		if(Yii::app()->user->isGuest) {
+			$this->render('index',array('cschool'=>$cschool));
+		}else{
 
-		$res = array();
-		$mycourselist = UserCourse::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->id));
-		foreach($mycourselist as $singlecourse){
-			array_push($res, Course::model()->findByPk($singlecourse->course_id));	
-		}
-		if( Libuser::is_student() ){
-			$this->render('stuindex',array('cschool'=>$cschool,'courselist'=>$res));
-		}else if( Libuser::is_teacher() ){
-			$this->render('lecindex',array('cschool'=>$cschool,'courselist'=>$res));
-		}else if( LibUser::is_school_admin() ){
-			$this->render('adminindex',array('cschool'=>$cschool));
+			$res = array();
+			$mycourselist = UserCourse::model()->findAllByAttributes(array('user_id'=>Yii::app()->user->id));
+			foreach($mycourselist as $singlecourse){
+				array_push($res, Course::model()->findByPk($singlecourse->course_id));	
+			}
+			if(Yii::app()->user->urole == 1){
+				$this->render('stuindex',array('cschool'=>$cschool,'courselist'=>$res));
+			}else if(Yii::app()->user->urole == 2){
+				$this->render('lecindex',array('cschool'=>$cschool,'courselist'=>$res));
+			}else if(Yii::app()->user->urole == 0){
+				$this->render('adminindex',array('cschool'=>$cschool));
+			}
 		}
 	}
 

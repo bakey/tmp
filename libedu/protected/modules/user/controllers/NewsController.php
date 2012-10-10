@@ -105,6 +105,12 @@ class NewsController extends Controller
 
 	public function actionGetResource($id){
 		$cnews = $this->loadModel($id);
+		if(!isset(Yii::app->user->isNewsListFinish)){
+			Yii::app()->user->setState('isNewsListFinish', 0);
+		}
+		
+		Yii::app()->user->setState('currentNewsDate', $cnews->create_time);
+		
 		if($cnews->type == 3){
 			$this->forward('/teach/answer/generateanswerfeed',false);
 		}else if($cnews->type == 6){

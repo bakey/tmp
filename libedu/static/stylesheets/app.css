@@ -3228,6 +3228,11 @@ a.tile:nth-child(odd) {
 	margin-top: 35px;
 	margin-bottom: 100px;
 }
+
+#dashboard.home_board {
+	margin-top: 35px;
+}
+
 #dashboard:after {
 	content: '';
 	position: absolute;
@@ -9662,4 +9667,26 @@ body.feather .map .caption {
 
 .bordered{
 	border:1px solid #C7D2D2 !important;
+}
+
+.iconclass{
+	font-family: 'Icons';
+}
+
+.iconclass.min{
+	font-size:32px;
+	line-height: 32px;
+	vertical-align: -5px;
+}
+
+.iconclass.mid{
+	font-size:64px;
+	line-height: 64px;
+	vertical-align: -10px;
+}
+
+.iconclass.large{
+	font-size:128px;
+	line-height: 128px;
+	vertical-align: -20px;
 }
