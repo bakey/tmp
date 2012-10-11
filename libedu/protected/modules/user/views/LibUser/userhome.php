@@ -45,25 +45,9 @@
 </div>
 
 <script type="text/javascript">
-	  $.ajax({
-	  	url:'<?php echo Yii::app()->createUrl("/user/libuser/gettimeline",array("uid"=>Yii::app()->user->id)); ?>',
-	  	success:function(response){
-	  		$('#timeline_item_container').html(response);
-	  		$('#timeline_item_container').masonry({
-		    // options
-		    itemSelector : '.timeline_item',
-		    columnWidth : 360,
-		    isAnimated: true,
-		    layoutPriorities: {
-		    	shelfOrder:1,
-		    },
-		  });
-		  Arrow_Points();
-	  	},
-	  });
-
-	function Arrow_Points(){ 
-		var s = $('#timeline_item_container').find('.timeline_item');
+	$('#header .con li.userhome').addClass('dashboard');
+	function Arrow_Points(nobj){
+		var s = $(nobj).find('.timeline_item');
 		var ttl = 0;
 		var previousPos = 0;
 		var previousLeftBottom = 0;
@@ -74,11 +58,14 @@
 			/*var posLeft = $(obj).css("left");
 			if(posLeft == "0px")
 			{*/
+
 				ttl++;
-				$(obj).addClass('rightArrow');
-				html = "<span class='leftCorner timeline_corner'></span>";
-				$(obj).prepend(html); 
-				$(obj).find('.timeline_corner').css('margin-top',Math.round(($(obj).height())*0.38)-24+'px');
+				if($(obj).attr('rel')=='1st'){
+					html = "<span class='leftCorner timeline_corner'></span>";
+					$(obj).prepend(html); 
+					$(obj).addClass('rightArrow');
+					$(obj).find('.timeline_corner').css('margin-top',Math.round(($(obj).height())*0.38)-24+'px');
+				}
 				currentDirection = 0;
 			/*}else{
 				ttl++;
@@ -120,4 +107,25 @@
 			}*/
 		});
 	}
+
+	$.ajax({
+	  	url:'<?php echo Yii::app()->createUrl("/user/libuser/gettimeline",array("uid"=>Yii::app()->user->id)); ?>',
+	  	success:function(response){
+	  		$('#timeline_item_container').html(response + '</div>');
+	  		var s = $('#timeline_item_container').find('.singleDayContainer');
+	  		$.each(s,function(i,obj){
+				$(obj).masonry({
+				    // options
+				    itemSelector : '.timeline_item',
+				    columnWidth : 320,
+				    isAnimated: true,
+				    layoutPriorities: {
+				    	shelfOrder:1,
+				    },
+				});
+				$(obj).css('margin-top','60px');
+				Arrow_Points(obj);	  		
+	  		});
+	  	},
+	  });
 </script>

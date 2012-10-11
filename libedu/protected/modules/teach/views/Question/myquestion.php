@@ -8,16 +8,15 @@
 );*/
 ?>
 
-<?php $this->widget('zii.widgets.CBreadcrumbs', array(
-    'links'=>array('问答'=>array('/teach/question/myquestion'),'我的问答' ),
-)); ?>
-
 <h3><?php
 	if(Yii::app()->user->urole == 1){
 		echo '最近的问答';
 	}else if(Yii::app()->user->urole == 2){
 		echo '未回答的问题';
 	}
+	Yii::app()->getClientScript()->scriptMap=array(
+		'jquery.js'=>false,
+);
 ?></h3>
 
 <?php 
