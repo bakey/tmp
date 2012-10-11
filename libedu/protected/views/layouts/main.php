@@ -17,12 +17,10 @@
 				<a href="<?php echo Yii::app()->createUrl('/site/index'); ?>" data-href="#home" rel="external"><?php echo Yii::app()->params['currentSchoolName']; ?>云校园</a>
 			</li>
 			<li>
-				<a href="<?php echo Yii::app()->createUrl('/user/libuser/home'); ?>" rel="external"><span class="icon">1</span> 
-					个人中心
-				</a>
+				<a href="#" rel="external"><span class="icon">1</span> 个人中心</a>
 			</li>
 			<li>
-				<a href="#" rel="external"><span class="icon">|</span> 课程广场</a>
+				<a href="#" rel="external"><span class="icon">|</span>课程广场</a>
 			</li>		
 			<li class="avatar">
 				<?php
@@ -51,7 +49,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="www.baidu.com">
+						<a href="index.php?r=site/logout" rel="external">
 							<h4>注销</h4>
 						</a>
 					</li>
@@ -81,20 +79,16 @@
 						if ( isset(Yii::app()->user->course) )
 						{
 							$course_model = Course::model()->findByPk( Yii::app()->user->course );
-							Yii::log( "course id = " . $course_model->id , 'debug' );
 							$teacher_user_model = $course_model->getCourseTeacher();
 							if ( null != $teacher_user_model )
 							{
 								$avatar_name = $teacher_user_model->user_profile->avatar;
-								Yii::log( $avatar_name , 'debug' );
 								if ( $avatar_name != 'default_avatar.jpg' ) {
-									$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$teacher_user_model->id.'/avatar/'.$avatar_name,'
-																 alt',array('width'=>36,'height'=>36)));
+									$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$teacher_user_model->id.'/avatar/'.$avatar_name,'avatar',array('width'=>36,'height'=>36)));
 								}else {
 									$avatarCode = html_entity_decode(CHtml::image(Yii::app()->request->baseUrl.'/images/'.$avatar_name,
 																'avatar',array('width'=>36,'height'=>36)));
 								}
-								Yii::log( $avatarCode , 'debug' );
 							}
 						}
 						echo $avatarCode;
