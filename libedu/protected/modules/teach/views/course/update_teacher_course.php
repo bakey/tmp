@@ -7,21 +7,9 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<div class="container  topitem">
-  <div class="carton col_4 topitemcarton">
-    <div class="content">
-      "第一章"
-    </div>
-  </div>
-</div>
-<div class="container">
-  <div class="carton col_4 second_level_carton">
-    <div class="content">       
-      "第一节"
-    </div>
-  </div>
-</div>
+
 <?php
+$this->renderPartial( '_show_teacher_item' , array( 'current_item' => $top_item) );
 //echo"<div id=\"stitle\"><h3>第" . $top_item->edi_index . "章:" . $top_item->content . "<h3></div><br>";
 
 //$this->renderPartial( '_show_teacher_item' , array('dataProvider' => $tracing_item) );
@@ -45,15 +33,6 @@ foreach( $tracing_item as $item )
 */
 ?>
 
-<div id="grid" class="tab current">
-	<div class="container col_12 omega">
-		<div class="content">
-			<h3>
-				全部课程
-			</h3>
-		</div>
-	</div>
-</div>
 <h2>
 <?php
 /*foreach( $level_one_items as $single_item )
@@ -70,16 +49,5 @@ foreach( $tracing_item as $item )
 					  		
 		  	},
 		})' );*/
-?>
-<a href="#" rel="external">
-<?php 
-//	echo CHtml::image('images/show_item.jpg' , '' , $html_options );
-?>
-</a>
-<?php 
-/*echo '<div id="' . $item_table_id . '"></div>';
-	echo "<br>";
-} 
-*/
 ?>
 </h2>
