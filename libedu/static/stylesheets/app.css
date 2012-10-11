@@ -117,6 +117,7 @@ input:focus, textarea:focus {
 input:focus::-webkit-input-placeholder { 
 	color: transparent;
 }
+input:-moz-placeholder { color: #transparent; }
 
 input[type="submit"] { 
 	height: 45px;
@@ -9701,7 +9702,7 @@ body.feather .map .caption {
 	min-height : 800px;	
 }
 .carton.topitemcarton{
-	margin-left : 275px;
+	margin-left : 0px;
 	magin-top:    250px;
 	margin-bottom: 0px;
 	width :       824px;
@@ -9710,8 +9711,18 @@ body.feather .map .caption {
 	margin-bottom: 6px;
 }
 .carton.second_level_carton {
-	margin-left: 330px;
+	margin-left: 400px;
 	margin-top: 0px;
-	width :      770px;
+	padding-top: 10px;
+	width :      699px;
+	height: 57px;
 }
-
+.scroll.extend_bottom{
+	min-height: 600px;	
+}
+.container.wrap_item{
+	margin-bottom:5px;
+}
+.content.item_name{
+	padding-top: 10px;
+}

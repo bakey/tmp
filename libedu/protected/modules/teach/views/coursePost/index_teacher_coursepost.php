@@ -1,4 +1,8 @@
-
+<?php
+Yii::app()->getClientScript()->scriptMap=array(
+'jquery.js'=>false,
+); 
+?>
 
 <h3>
 <?php echo "第" . $item_model->edi_index . "节: " . $item_model->content; ?>
@@ -12,19 +16,21 @@
 	foreach( $my_post as $post )
 	{
 		$first_post_id = $post->id;
+		$url = sprintf( "index.php?r=teach/coursepost/viewbyid&post_id=%d&course_id=%d&item_id=%d" ,
+				$post['id'],$course_id , $item_model->id );
 		$link = sprintf('<a rel="external" href="index.php?r=teach/coursepost/viewbyid&post_id=%d&course_id=%d&item_id=%d">'
 					 ,$post['id'],$course_id , $item_model->id);
 		$li_content = '<li class>' . $post['title'] . '</li>';
-		echo $link;
+		/*echo $link;
 		echo $li_content;
-		echo "</a>";
-//		$anchor = sprintf('<a rel="external" href="index.php?r=teach/coursepost/viewbyid&post_id=%d$course_id=%d&item_id=%d">' );
+		echo "</a>";*/
+		//$anchor = sprintf('<a rel="external" href="index.php?r=teach/coursepost/viewbyid&post_id=%d$course_id=%d&item_id=%d">' );
 		
-	/*	echo CHtml::link($li_content , '#' , array('rel'=>'external' , 'ajax' => array(
-				'url'    => $link,
+		echo CHtml::link($li_content , '#' , array('rel'=>'external' , 'ajax' => array(
+				'url'    => $url,
 				'type'   => 'post',
 				'update' => '#post_content'
-		) ) );*/		
+		) ) );		
 	} 
 ?>
 其他老师的课程资料
