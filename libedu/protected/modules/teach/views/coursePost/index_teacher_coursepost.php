@@ -17,10 +17,10 @@ $this->menu=array(
 $msg = sprintf("%s , 你好，你在[%s]下发布的课程如下" , Yii::app()->user->real_name , $item_model->content );
 echo $msg;
  ?></h1>
-<div class="well" >
-<?php $this->widget('bootstrap.widgets.TbListView', array(
+ 
+<?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider' => $dataProvider,
 	'itemView'     => '_view',
 	'viewData'     => array('course_id'=>$course_id),
 )); ?>
-</div>
+
