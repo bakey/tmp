@@ -1718,7 +1718,7 @@ tr:last-child td {
     font-family: 'Icons';
     src: url('http://std.li/pastel/host/glyph.eot');
     src: url('http://std.li/pastel/host/glyph.eot?#iefix') format('embedded-opentype'),
-         url('http://localhost/font/glyph.woff') format('woff'),
+         url('font/glyph.woff') format('woff'),
          url('http://localhost/font/glyph.ttf') format('truetype'),
          url('http://std.li/pastel/host/glyph.svg#iconSweetsRegular') format('svg');
     font-weight: normal;
@@ -9714,6 +9714,4 @@ body.feather .map .caption {
 	margin-top: 0px;
 	width :      770px;
 }
-#footer .con.customfooter {
-	margin-bottom: 120px;	
-}
+

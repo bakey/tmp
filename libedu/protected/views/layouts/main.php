@@ -42,9 +42,7 @@
 					<li>
 						<a href="'.Yii::app()->createUrl('/user/profile/view',array('id'=>$model->id)).'" rel="external">
 							<h4>'.$model->user_profile->real_name;
-				?>
-				
-								<?php echo Yii::app()->user->real_name ; ?>老师
+				?>老师
 							</h4>
 						</a>
 					</li>
@@ -60,18 +58,27 @@
 			</li>
 		</ul>
 	</div>
+	<?php
+		$course_model = null;
+		if ( isset(Yii::app()->user->course) )
+		{
+			$course_model = Course::model()->findByPk( Yii::app()->user->course );
+		//	echo $course_model->name;
+		}
+	?>
 	<div id="stream">
 		<div class="con">
 			<div class="tile" id="hello">
+			<a rel="external" href="index.php?r=teach/course/update&course_id=<?php echo $course_model->id ; ?>">
 				<h2><span>
 				<?php
-				if ( isset(Yii::app()->user->course) )
+				if ( null != $course_model )
 				{
-					$course_model = Course::model()->findByPk( Yii::app()->user->course );
-					echo $course_model->name;					
-				} 
+					echo $course_model->name;
+				}
 				?>
 				</span> </h2>
+				</a>
 				<ul class="nav">
 					<li class="teacher-avatar">
 						<?php
@@ -143,7 +150,7 @@
 	</div>
 
 	<div id="footer">
-		<div class="con customfooter">
+		<div class="con">
 			<p>Copyright &copy; <?php echo date('Y'); ?> by 励博教育.
 			<span>All Rights Reserved.</span>
 			<span>
