@@ -226,6 +226,7 @@ body.feather #footer h4 span.feather {
 	height: 100%;
 	padding-top: 20px;
 	padding-bottom: 20px;
+	
 }
 .date {
 	position: absolute;
@@ -9712,4 +9713,7 @@ body.feather .map .caption {
 	margin-left: 330px;
 	margin-top: 0px;
 	width :      770px;
+}
+#footer .con.customfooter {
+	margin-bottom: 120px;	
 }

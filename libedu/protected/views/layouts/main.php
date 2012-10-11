@@ -142,7 +142,7 @@
 	</div>
 
 	<div id="footer">
-		<div class="con">
+		<div class="con customfooter">
 			<p>Copyright &copy; <?php echo date('Y'); ?> by 励博教育.
 			<span>All Rights Reserved.</span>
 			<span>
