@@ -9694,3 +9694,7 @@ body.feather .map .caption {
 .carton.coursecarton{
 	height:150px;
 }
+
+.home_board .section.current{
+	min-height: 800px;
+}

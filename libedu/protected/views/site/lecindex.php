@@ -37,3 +37,7 @@ Yii::app()->getClientScript()->scriptMap=array(
   </div></a>
 
 </div>
+
+<script type="text/javascript">
+  $('#header .con li.siteindex').addClass('dashboard');
+</script>

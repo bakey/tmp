@@ -63,12 +63,14 @@ class LibUserController extends Controller
 	public function actionGetTimeline($uid){
 		$cnews = News::model()->findAllByAttributes(array('user'=>Yii::app()->user->id),array('order'=>'create_time DESC'));
 		if($cnews){
+			Yii::app()->user->setState('previousNewsDate', '1986-01-01');			
 			foreach($cnews as $singlenews){
 				$_GET['id']=$singlenews->id;
 				$_GET['rid']=$singlenews->resource_id;
 				$_GET['uid']=$uid;
 				$this->forward('/user/news/getresource',false);
 			}
+
 		}
 	}
 

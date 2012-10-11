@@ -13,10 +13,7 @@
 				<blockquote><?php echo $data->details; ?></blockquote>  
 				
 				<p>关联章节：
-					<?php $this->widget('bootstrap.widgets.TbLabel', array(
-						'type'=>'info', // 'success', 'warning', 'important', 'info' or 'inverse'
-						'label'=>$data->item_info->content,
-					)); ?></p>
+					<span>$data->item_info->content</span></p>
 
 				<h6><a class="btn" href="<?php echo Yii::app()->createUrl('/teach/question/answer',array('qid'=>$data->id)); ?>">回答</a> <?php
 				echo CHtml::ajaxLink('显示回答及追问',Yii::app()->createUrl('/teach/question/getallsubelement',array('qid'=>$data->id)),array('update'=>'#answer'.$data->id,'success'=>'js:function(data){$("#answer'.$data->id.'").html(data);$("#answer'.$data->id.'").fadeIn();}'),array('class'=>'btn')); 

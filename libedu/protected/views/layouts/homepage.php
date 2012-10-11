@@ -13,11 +13,11 @@
 <body>
 	<div id="header">
 		<ul class="con">
-			<li class="dashboard">
-				<a href="#home" data-href="#home" rel="external"><?php echo Yii::app()->params['currentSchoolName']; ?>云校园</a>
+			<li class="siteindex">
+				<a href="<?php echo Yii::app()->createUrl('/site/index'); ?>" data-href="#home" rel="external"><?php echo Yii::app()->params['currentSchoolName']; ?>云校园</a>
 			</li>
-			<li>
-				<a href="#" rel="external"><span class="icon">1</span> 个人中心</a>
+			<li class="userhome">
+				<a href="<?php echo Yii::app()->createUrl('/user/libuser/home'); ?>" rel="external"><span class="icon">1</span> 个人中心</a>
 			</li>
 			<li>
 				<a href="#" rel="external"><span class="icon">|</span> 课程广场</a>
@@ -40,11 +40,12 @@
 					}else{
 						echo $avatarCode;
 					}
-				?>
-				<ul>
+					echo '<ul>
 					<li>
-						<a href="#">
-							<h4>张老师</h4>
+						<a href="'.Yii::app()->createUrl('/user/profile/view',array('id'=>$model->id)).'" rel="external">
+							<h4>'.$model->user_profile->real_name;
+				?>
+				</h4>
 						</a>
 					</li>
 					<li>
