@@ -245,6 +245,7 @@ create table if not exists tbl_user_school(
 	
 create table if not exists tbl_course_post(
 	`id` int not null auto_increment primary key,
+	`title` varchar(255) not null,
 	`post` text not null,
 	`author` int not null references tbl_user(id) on delete cascade,
 	`item_id` int not null references tbl_item(id) on delete cascade,

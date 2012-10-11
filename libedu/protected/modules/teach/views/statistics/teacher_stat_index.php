@@ -4,6 +4,9 @@
 $this->breadcrumbs=array(
 	'统计',
 );
+Yii::app()->getClientScript()->scriptMap=array(
+'jquery.js'=>false,
+);
 ?>
 <h1>我发布的测试</h1>
 <?php 

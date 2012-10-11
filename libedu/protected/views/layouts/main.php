@@ -127,7 +127,7 @@
 				<span class="vector">f</span>
 				<span class="title"><strong>问答</strong> </span>
 			</a>
-			<a href="index.php?=teach/statistics" class="tile" rel="external">
+			<a href="index.php?r=teach/statistics" class="tile" rel="external">
 				<span class="vector">v</span>
 				<span class="title"><strong>统计</strong> </span>
 			</a>

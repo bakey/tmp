@@ -1,27 +1,9 @@
-<?php
-/* @var $this CoursePostController */
-/* @var $model CoursePost */
 
-$this->breadcrumbs=array(
-	'课程管理'=>array('course/admin'),
-	'课程浏览'=>array('coursepost/index&item_id='.$model->item_id),
-	$model->id,
-);
-/*
-$this->menu=array(
-	array('label'=>'List CoursePost', 'url'=>array('index')),
-	array('label'=>'Create CoursePost', 'url'=>array('create')),
-	array('label'=>'Update CoursePost', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete CoursePost', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage CoursePost', 'url'=>array('admin')),
-);
-*/
-?>
-
-<h1>View CoursePost #<?php echo $model->id; ?></h1>
+<h1><?php echo $model->id . ": " . $model->title ; ?></h1>
 
 <?php 
-
+echo $model->post;
+/*
 $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
@@ -31,7 +13,8 @@ $this->widget('zii.widgets.CDetailView', array(
 			'value' => $model->status == CoursePost::STATUS_DRAFT ? "草稿" : "已发布",
 		),
 	),
-));
+));*/
+/*
 echo CHtml::button('重新编辑' , array(
 		'onClick'=>"window.location.href='$reedit_url'",
 ) );
@@ -42,4 +25,5 @@ if ( $model->status == Yii::app()->params['course_post_status_draft'] ) {
 			'onClick'=>"window.location.href='$draft_to_publish_url'",
 	));
 }
+*/
 ?>
