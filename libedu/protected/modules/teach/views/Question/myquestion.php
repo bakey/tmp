@@ -8,6 +8,29 @@
 );*/
 ?>
 
+<ul class="tabs">
+    <li class="current">
+        <a href="#tab_one">我的账号</a>
+    </li>
+    <li>
+        <a href="<?php echo Yii::app()->createUrl('/user/profile/update',array('id'=>Yii::app()->user->id)); ?>" rel="external">个人设置</a>
+    </li>
+</ul>
+<div class="tabs">
+    <div id="tab_one" class="tab">
+    	<div class="container">
+    		<div class="carton col_12">
+				<h2>的账号</h2>
+				<div class="content">
+					
+				</div>
+			</div>
+    </div>
+</div>
+</div>
+
+
+
 <h3><?php
 	if(Yii::app()->user->urole == 1){
 		echo '最近的问答';

@@ -13,10 +13,10 @@
 				<blockquote><?php echo $data->details; ?></blockquote>  
 				
 				<p>关联章节：
-					<span>$data->item_info->content</span></p>
+					<span><?php echo $data->item_info->content; ?></span></p>
 
 				<h6><a class="btn" href="<?php echo Yii::app()->createUrl('/teach/question/answer',array('qid'=>$data->id)); ?>">回答</a> <?php
-				echo CHtml::ajaxLink('显示回答及追问',Yii::app()->createUrl('/teach/question/getallsubelement',array('qid'=>$data->id)),array('update'=>'#answer'.$data->id,'success'=>'js:function(data){$("#answer'.$data->id.'").html(data);$("#answer'.$data->id.'").fadeIn();}'),array('class'=>'btn')); 
+				echo CHtml::ajaxLink('显示回答及追问',Yii::app()->createUrl('/teach/question/getallsubelement',array('qid'=>$data->id)),array('update'=>'#answer'.$data->id,'success'=>'js:function(data){$("#answer'.$data->id.'").html(data);$("#answer'.$data->id.'").fadeIn();}'),array('class'=>'btn','rel'=>'external')); 
 			?></h6>
 
 			<div class="well" id="answer<?php echo $data->id ?>" style="display:none;margin-left:40px;">

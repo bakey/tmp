@@ -2964,7 +2964,7 @@ a.tile:nth-child(odd) {
 	background: rgba(0, 0, 0, 0.02);
 }
 .tile h2 {
-	font: bold 34px HelveticaNeue, Helvetica, Arial;
+	font: bold 50px HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei';
 	white-space:nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -9672,7 +9672,7 @@ body.feather .map .caption {
 }
 
 .iconclass{
-	font-family: 'Icons';
+	font-family: 'Icons' !important;
 }
 
 .iconclass.min{
@@ -9688,6 +9688,12 @@ body.feather .map .caption {
 }
 
 .iconclass.large{
+	font-size:96px;
+	line-height: 96px;
+	vertical-align: -15px;
+}
+
+.iconclass.xlarge{
 	font-size:128px;
 	line-height: 128px;
 	vertical-align: -20px;

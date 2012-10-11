@@ -331,6 +331,7 @@ class QuestionController extends Controller
 
 	public function actionMyQuestion()
 	{
+		//$this->layout = '//layouts/main_general';
 		$ccourse = null;
 		$eid = null;
 		if(isset(Yii::app()->user->course)){
