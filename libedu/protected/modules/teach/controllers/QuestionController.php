@@ -10,8 +10,6 @@ class QuestionController extends Controller
 	const TBL_ITEM = "tbl_item";
 	const TBL_ITEM_LEVEL = "tbl_item_item";
 
-	public $layout='//layouts/questiontwocolumn';
-
 	/**
 	 * @return array action filters
 	 */
