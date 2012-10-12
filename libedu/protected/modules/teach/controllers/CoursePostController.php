@@ -178,6 +178,7 @@ class CoursePostController extends Controller
 	private function saveCoursePost( $course_post_model , $item_id , $status , $post_id ) 
 	{		
 		$course_post_model->post = $_POST['CoursePost']['post'];
+		$course_post_model->title = $_POST['CoursePost']['post_title'];
 		$course_post_model->author = Yii::app()->user->id;
 		$course_post_model->item_id = $item_id ;
 		$course_post_model->status = $status ;
@@ -347,7 +348,7 @@ class CoursePostController extends Controller
 			{
 				$this->moveTracingItem( $item_id );
 				$this->savePostMediaRelation( $new_post_id );
-				$this->redirect(array('viewbyid','post_id'=>$new_post_id , 'course_id'=>$course_id , 'item_id'=>$item_id));
+				$this->redirect(array('index', 'item_id'=>$item_id));
 			}
 			else 
 			{

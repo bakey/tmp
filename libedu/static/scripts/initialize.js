@@ -19,7 +19,7 @@ $.initialize = function() {
 							element.modal();
 						} else {
 							alert('bakey');
-							$.info({desc: "The hash <strong>"+$(this).data("href")+"</strong> is not valid"});
+							//$.info({desc: "The hash <strong>"+$(this).data("href")+"</strong> is not valid"});
 						}
 					} else {
 						var page = $(this).data("href");
@@ -47,8 +47,8 @@ $.initialize = function() {
 					$(this).parents("ul.tabs").children("li.current").removeClass("current");
 					$(this).parents("li").addClass("current");
 				} else {
-					alert("bakey");
-					$.info({desc: "The hash <strong>"+$(this).data("href")+"</strong> is not valid"});
+					//alert("bakey");
+					//$.info({desc: "The hash <strong>"+$(this).data("href")+"</strong> is not valid"});
 				}
 			}
 			e.preventDefault();

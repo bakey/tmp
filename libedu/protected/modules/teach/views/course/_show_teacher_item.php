@@ -6,7 +6,21 @@
 </ul>
  <div class="tabs">
      <div id="tab_one" class="tab mytab">
-     <div>
+    	 <a onclick="" rel="external" href="#">
+    		 <div class="carton col_3">
+     			<div class="subcontent bordered">
+					最近课程
+				</div>
+		</a>
+		</div>	
+		<a onclick="" rel="external" href="#">
+		<div class="carton col_3">
+			<div class="subcontent bordered">
+				全部课程
+			</div>
+		</div>
+		</a>
+     <div style="margin-top:50px">
      <span class="iconclass mid" style="float:left">M</span>
        <div class="carton col_4 topitemcarton">
     		<div class="content">
@@ -15,7 +29,7 @@
       			?>
       		</div>
         </div>
-     </div>
+        </div>
         <?php
 	foreach( $item_info as $child_item_info )
 	{

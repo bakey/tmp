@@ -41,6 +41,10 @@ Yii::app()->getClientScript()->scriptMap=array(
 	if ( $first_post_id > 0 ) {
 		$post_model = CoursePost::model()->findByPk( $first_post_id );
 	}
+	$create_url = sprintf("index.php?r=teach/coursepost/create&item_id=%d&course_id=%d",$item_model->id,
+					$post['id'] );
+	$li_content = '<li class>' . '创建新内容' . '</li>';
+	echo CHtml::link( $li_content , $create_url , array('rel'=>'external') );
 ?>
 <div style="text-align:center">其他老师的课程资料</div>
 <li class>

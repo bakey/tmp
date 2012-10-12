@@ -9,10 +9,10 @@
 	'id'=>'course-post-form',
 	'enableAjaxValidation'=>false,
 )); ?>
-<?php
-	 echo $form->labelEx($model,'post');
-	 echo $form->error($model,'post');
-?>
+<input type="text" id="CoursePost_title" name="CoursePost[post_title]" height="10px" 
+		placeholder="请填写课程题目">
+</input>
+
 <div id="file-upload-notification" style="display:none;color:red">上传成功!!</div>
 <div id="upload-file-name" style="border-width:thin;border-style:solid;border-color:gray;color:red;display:none"></div>
 <script type="text/javascript">
@@ -25,6 +25,7 @@ function file_upload_callback( obj , json ){
 	$('#course-post-form').append("<input name='mid[]" + upload_ret.mid + "' value='" + upload_ret.mid + "' style='display:none'></input>");
 }
 </script>
+<h2>课程内容:</h2>
 <?php
 	$this->widget('application.extensions.redactorjs.Redactor',array(
 		'model'=>$model,
@@ -48,13 +49,10 @@ function file_upload_callback( obj , json ){
 	));
 ?>
 
-<div class="row buttons">
-		<?php
-		 echo CHtml::submitButton('发布' ,  array('name'=>'publish'));
-		 echo CHtml::submitButton('存草稿', array('name'=>'draft'));
-		 echo CHtml::submitButton('预览' ,  array('name'=>'draft'));
-		 echo CHtml::submitButton('取消' ,  array('name'=>'cancel'));
-		?>
+<div class="white">
+<button name="publish" type="submit">发布</button>
+<button name="draft" type="submit">预览</button>
+<button name="cancel" type="submit">预览</button>
 </div>
 	<?php $this->endWidget(); ?>
 

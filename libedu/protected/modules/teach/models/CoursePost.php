@@ -42,7 +42,7 @@ class CoursePost extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('post, author, item_id, status, create_time, update_time', 'required'),
+			array('author, item_id, status, create_time, update_time', 'required'),
 			array('author, item_id, status', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
