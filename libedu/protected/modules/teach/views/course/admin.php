@@ -1,9 +1,4 @@
 <?php
-/* @var $this CourseController */
-
-$this->breadcrumbs=array(
-	'课程管理',
-);
 Yii::app()->getClientScript()->scriptMap=array(
 'jquery.js'=>false,
 );

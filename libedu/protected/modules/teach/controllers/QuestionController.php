@@ -10,8 +10,6 @@ class QuestionController extends Controller
 	const TBL_ITEM = "tbl_item";
 	const TBL_ITEM_LEVEL = "tbl_item_item";
 
-	public $layout='//layouts/questiontwocolumn';
-
 	/**
 	 * @return array action filters
 	 */
@@ -163,8 +161,8 @@ class QuestionController extends Controller
 		}
 	}
 
-	public function actionGetAllSubElement($qid){
-		$res = Answer::model()->findAllByAttributes(array('question_id'=>$qid),array('order'=>'type DESC'));
+	public function actionGetAllSubElement($qid,$type){
+		$res = Answer::model()->findAllByAttributes(array('question_id'=>$qid,'type'=>$type),array('order'=>'type DESC'));
 		if(!$res){
 			echo '没有回答及追问';
 		}else{
@@ -331,6 +329,7 @@ class QuestionController extends Controller
 
 	public function actionMyQuestion()
 	{
+		//$this->layout = '//layouts/main_general';
 		$ccourse = null;
 		$eid = null;
 		if(isset(Yii::app()->user->course)){

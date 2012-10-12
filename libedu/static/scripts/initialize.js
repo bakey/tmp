@@ -188,7 +188,9 @@ $.initialize = function() {
 	    $(this).data('title', title).removeAttr('title');
 	});
 	$('a[href]').attr('href', function(i, title) {
-	    $(this).data('href', title).removeAttr('href').attr('data-href', title);
+	  
+	    	$(this).data('href', title).removeAttr('href').attr('data-href', title);
+	    
 	});
 	// -------------------------------------------------------
 	

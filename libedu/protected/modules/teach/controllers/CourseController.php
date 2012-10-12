@@ -69,11 +69,11 @@ class CourseController extends Controller
 		if ( null == $edition_first_level_items ) {
 			throw new CHttpException( 400 , "trace item data corruption");
 		}
-		/*$url = 'course/ajaxLoadItem&edition_id=' . $edition_id . '&course_id=' . $id ;*/
 		$this->render('update_teacher_course' , array(
 				'current_item'      => $top_item_model[0],
 				'item_info'  		=> $current_item_info ,
 				'level_one_items'   => $edition_first_level_items,
+				'course_id'         => $course_id,
 		
 				//'ajax_load_url' => $url ,
 		));		
