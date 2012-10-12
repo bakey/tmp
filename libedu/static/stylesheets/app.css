@@ -9694,8 +9694,27 @@ body.feather .map .caption {
 	padding-top:20px !important;
 }
 
+.nobottommargin{
+	margin-bottom: 0 !important;
+}
+
+.tinyallpadding{
+	padding:15px !important;
+}
+
+.questionop div.col_2{
+	width: 12% !important;
+	text-align: center !important;
+}
+
 .nobackground{
-	background:none !important;
+	background:transparent !important;
+	-webkit-box-shadow:none !important;
+	box-shadow: none !important;
+}
+
+.nobackground .round{
+	display: none !important;
 }
 
 .iconclass{
@@ -9748,3 +9767,17 @@ body.feather .map .caption {
 	width :      770px;
 }
 
+.qavatar img{
+	padding:2px;
+	border:1px solid #C7D2D2;
+}
+
+.qavatar p{
+	text-align: center;
+	width: 100%;
+	margin-bottom: 0 !important;
+}
+
+.qavatar p span{
+	font-size: 16px;
+}

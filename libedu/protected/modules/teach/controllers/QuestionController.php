@@ -161,8 +161,8 @@ class QuestionController extends Controller
 		}
 	}
 
-	public function actionGetAllSubElement($qid){
-		$res = Answer::model()->findAllByAttributes(array('question_id'=>$qid),array('order'=>'type DESC'));
+	public function actionGetAllSubElement($qid,$type){
+		$res = Answer::model()->findAllByAttributes(array('question_id'=>$qid,'type'=>$type),array('order'=>'type DESC'));
 		if(!$res){
 			echo '没有回答及追问';
 		}else{

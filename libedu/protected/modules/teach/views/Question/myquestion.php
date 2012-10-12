@@ -9,36 +9,6 @@
 ?>
 
 <script type="text/javascript">
-function changeToNextTab(event,ttltab) {
-	oid = $(event.target).attr('id');
-	var index = $('#'+oid).index();
-	index = index + 1;
-	if(index>ttltab)
-		index = ttltab;
-	var carton = $('#'+oid).parent().parent();
-	
-	carton.children("ul").children("li.current").removeClass("current");
-	carton.children("ul").children("li").eq(index).addClass("current");
-	
-	carton.children(".content.current").removeClass("current");
-	carton.children(".content").eq(index).addClass("current");
-}
-
-function changeToPreviousTab(event,ttltab) {
-	oid = $(event.target).attr('id');
-	var index = $('#'+oid).index();
-	index = index - 1;
-	if(index<0)
-		index = 0;
-	var carton = $('#'+oid).parent().parent();
-	
-	carton.children("ul").children("li.current").removeClass("current");
-	carton.children("ul").children("li").eq(index).addClass("current");
-	
-	carton.children(".content.current").removeClass("current");
-	carton.children(".content").eq(index).addClass("current");
-}
-
 function changeToTabByIndex(event,targettabindex) {
 	var index = $(event.target).index();
 	index = targettabindex;
@@ -49,6 +19,7 @@ function changeToTabByIndex(event,targettabindex) {
 	
 	carton.children(".content.current").removeClass("current");
 	carton.children(".content").eq(index).addClass("current");
+	carton.slideDown();
 	$(event.target).parent().parent().siblings().children(".carton").children(".subcontent").removeClass('sail');
 	$(event.target).addClass('sail');
 
@@ -116,7 +87,7 @@ function doselectchapter(cid){
 							</div>
 						</div></a>
 					</div>
-				<div class="content animated fadeInLeft">
+				<div class="content animated fadeInLeft tinyallpadding">
 					
 
 					<?php 
