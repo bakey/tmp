@@ -1922,6 +1922,9 @@ div.tabs > div.tab {
 	min-height: 512px;
 	display: none;
 }
+div.tabs > div.tab.mytab {
+	padding: 10px;
+}
 div.tabs > div.tab.current {
 	display: block;
 }
@@ -9702,27 +9705,51 @@ body.feather .map .caption {
 	min-height : 800px;	
 }
 .carton.topitemcarton{
-	margin-left : 0px;
-	magin-top:    250px;
-	margin-bottom: 0px;
-	width :       824px;
+	float:left;
+	margin-left :  10px;
+	margin-top:    20px ;
+	margin-bottom: 5px;
+	width :       720px;
 }
 .container.topitem{
 	margin-bottom: 6px;
 }
 .carton.second_level_carton {
-	margin-left: 400px;
+	float: left;
+	margin-left: 10px;
 	margin-top: 0px;
-	padding-top: 10px;
-	width :      699px;
-	height: 57px;
+	padding-top: 5px;
+	width :      655px;
+	height:      57px;
 }
 .scroll.extend_bottom{
-	min-height: 600px;	
+	min-height: 500px;	
 }
 .container.wrap_item{
 	margin-bottom:5px;
 }
 .content.item_name{
-	padding-top: 10px;
+	padding-top: 1px;
+}
+.carton.post_title{
+	float:left;
+	margin-left :  0px;
+	margin-top:    5px ;
+	margin-bottom: 5px;
+	width :       816px;
+	text-align:   center;
+}
+.carton.post_grid{
+	height: 800px;
+	width:  815px;
+	margin-top: 64px;
+}
+.active_tab{
+	background: rgba(0,0,0,0.1);
+}
+.iconclass.mid.item{
+	float:right;
+	padding-top:0px;
+	margin-top:5px;
+	line-height:30px
 }

@@ -143,7 +143,7 @@
 	</div>
 	<div id="dashboard">
 	    <div class="scroll con extend_bottom">
-	        <div class="section current padding" title="<?php echo CHtml::encode($this->pageTitle); ?>" id="home">
+	        <div class="section current padding" title="<?php echo CHtml::encode($this->pageTitle); ?>">
 	        	<?php echo $content; ?>
 	        </div>
 	    </div>

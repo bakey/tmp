@@ -1,8 +1,24 @@
-
-<h1><?php echo $model->id . ": " . $model->title ; ?></h1>
-
+ <div id="tab_one" class="tab mytab current">
+ 	<div class="carton col_4 topitemcarton post_title" >
+ 		<div class="content">
+    <?php
+    	if ( $post_model != null ) 
+		{
+ 			echo $post_model->id . ": " . $post_model->title ;
+		} 
+ 	?>
+  		</div>
+	</div>
+<div class="carton post_grid">
 <?php 
-echo $model->post;
+	if ( $post_model != null )
+	{
+		echo $post_model->post;
+	}
+?>
+</div>
+</div>
+<?php 
 /*
 $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
@@ -27,3 +43,4 @@ if ( $model->status == Yii::app()->params['course_post_status_draft'] ) {
 }
 */
 ?>
+

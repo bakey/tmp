@@ -99,7 +99,8 @@
 (function($){
 	$.change = function(page, title, first) {
 	if(!$(page).length>0) {
-		$.info({desc: "The hash <strong>"+page+"</strong> is not valid"});
+		//alert("bakey");
+		//$.info({desc: "The hash <strong>"+page+"</strong> is not valid"});
 	} else {
 		window.location.hash = page;
 		if (!$.browser.msie && first==true) {

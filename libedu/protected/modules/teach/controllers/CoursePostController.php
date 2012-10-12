@@ -64,10 +64,7 @@ class CoursePostController extends Controller
 		if ( LibUser::is_teacher() )
 		{
 			$this->renderPartial('teacher_view_post',array(
-				'model'                => $this->loadModel($post_id),
-				'draft_to_publish_url' => $draft_to_publish_url,
-				'reedit_url'           => $reedit_url,
-				'item_id'			   => $item_id,				
+				'post_model'                => $this->loadModel($post_id),				
 			));
 		}
 		else if ( LibUser::is_student() ) 
@@ -410,18 +407,14 @@ class CoursePostController extends Controller
 						'condition'=> ('author='.$cur_user.' and item_id='.$item_id ),
 						'order'    => 'update_time DESC',
 				),
-				'pagination'=>array(
-						'pageSize'=>15,
-				)
+				'pagination' => false, 
 		));
 		$other_post_data = new CActiveDataProvider('CoursePost',array(
 				'criteria'=>array(
 						'condition' => ('author !='.$cur_user.' and item_id='.$item_id ),
 						'order'     => 'update_time DESC',
 				),
-				'pagination'=>array(
-						'pageSize'=>15,
-				)
+				'pagination' => false,
 		));
 		$student_post_data = new CActiveDataProvider( 'CoursePost' , array(
 				'criteria' => array(
@@ -430,9 +423,7 @@ class CoursePostController extends Controller
 						'condition' => ( 'tbl_user_course.role=' . Yii::app()->params['user_role_student'] . ' and item_id='.$item_id ),
 						'order'     => 'update_time DESC',						
 				),
-				'pagination' => array(
-						'pageSize' => 15 , 
-				)
+				'pagination' => false,
 		));
 		$this->render('index_teacher_coursepost',array(
 				'self_post_data'     => $my_post_data ,

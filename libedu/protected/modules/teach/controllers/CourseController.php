@@ -10,6 +10,10 @@ class CourseController extends Controller
 	{
 		return Yii::app()->user->urole == Yii::app()->params['user_role_teacher'];
 	}
+	private function getPostCntByItem( $item_id )
+	{
+		return CoursePost::model()->count( 'item_id=' . $item_id);
+	}
 	
 	private function get_current_item_info( $user_model , $top_item_model , $course_id )
 	{		
@@ -39,6 +43,7 @@ class CourseController extends Controller
 					'new_post'   => $new_op,
 					'view_post'  => $view_op,
 					'operate'    => $operate,
+					'post_count' => $this->getPostCntByItem( $item->id ),
 			);
 			if ( count($post_model) <= 0 ) {
 				$info['update_time'] = '没数据';
@@ -48,7 +53,7 @@ class CourseController extends Controller
 			}
 			$item_info[] = $info;
 		} 
-		return new CArrayDataProvider( $item_info );
+		return  $item_info ;
 	}
 	private function renderTeacherCoursePost( $user_model , $course_id , $edition_id )
 	{
@@ -66,9 +71,9 @@ class CourseController extends Controller
 		}
 		/*$url = 'course/ajaxLoadItem&edition_id=' . $edition_id . '&course_id=' . $id ;*/
 		$this->render('update_teacher_course' , array(
-				'top_item'        => $top_item_model[0],
-				'tracing_item'    => $current_item_info ,
-				'level_one_items' => $edition_first_level_items,
+				'current_item'      => $top_item_model[0],
+				'item_info'  		=> $current_item_info ,
+				'level_one_items'   => $edition_first_level_items,
 		
 				//'ajax_load_url' => $url ,
 		));		
@@ -78,7 +83,7 @@ class CourseController extends Controller
 		$user_course_model = UserCourse::model()->find( 'course_id=:cid and role=:teacher_role' , 
 											array( ':cid'=>$course_id , ':teacher_role' => Yii::app()->params['user_role_teacher']) );
 		if ( null == $user_course_model ) {
-			throw new CHttpException( 404 , "这么课没有老师吗？");
+			throw new CHttpException( 404 , "这门课没有老师吗？");
 		}		
 		$teacher_model = LibUser::model()->findByPk( $user_course_model->user_id );
 		$top_item_model = $teacher_model->trace_item ;
@@ -181,6 +186,13 @@ class CourseController extends Controller
 		}else {
 			$this->renderStudentCoursePost( $user_model , $course_id , $edition_id );
 		}
+	}
+	/*
+	 * 获取课程对应的教材的第一层章节
+	 */
+	public function actionLoadTopLevelItem( $course_id )
+	{
+				
 	}
 	/*
 	 * 获取某个item的所有子item，并以表格的方式渲染回去

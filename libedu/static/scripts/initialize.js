@@ -18,7 +18,7 @@ $.initialize = function() {
 						if(element.size()>0) {
 							element.modal();
 						} else {
-							alert("bakey");
+							alert('bakey');
 							$.info({desc: "The hash <strong>"+$(this).data("href")+"</strong> is not valid"});
 						}
 					} else {
