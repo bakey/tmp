@@ -328,15 +328,9 @@ class CoursePostController extends Controller
 		{
 			$msg = sprintf("User cancel edit course post , user_id = %d , " , $user_id );
 			
-			if ( null == $course_id ) {
-				$msg .= "no course_id ";
-				Yii::log( $msg , 'debug' );
-				$this->redirect( array('course/admin') );
-			}else {
-				$msg .= "get course id = " . $course_id ;
-				Yii::log( $msg , 'debug' );
-				$this->redirect( array('course/update&course_id=' . $course_id) );
-			}
+			$msg .= "get course id = " . $course_id ;
+			Yii::log( $msg , 'debug' );
+			$this->redirect( array('course/update&course_id=' . $course_id) );
 		}
 		else if ( isset($_POST['publish']) )
 		{

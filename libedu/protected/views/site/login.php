@@ -29,5 +29,15 @@
 						}', 
 					)
 			) )?>
+			<span class="checkbox grey">
+				<label>
+					<input type="checkbox" class="grey"  name="LoginForm[rememberMe]" onchange='$(this).parents("span").toggleClass("checked");'> 
+						<span class="on">开</span>
+						<span class="toggle"></span>
+						<span class="off">关</span>
+				</label>
+			</span>
+			
+			<label>记住我</label>
 	</form>
 </div>

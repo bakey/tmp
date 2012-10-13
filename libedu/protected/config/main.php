@@ -122,6 +122,7 @@ return array(
 		'user_role_teacher' 			=> 2,
 		'course_post_status_draft' 		=> 0,
 		'course_post_status_published' 	=> 1,
+		'max_column_show_post_num'      => 5,
 		'ppt_convert_command'		    => '"E:\OpenOffice.org 3\program\python" "E:\wamp\www\py_convert\DocumentConverter.py" '
 	),
 	'timeZone'=>"Asia/Shanghai",

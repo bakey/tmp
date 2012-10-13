@@ -49,7 +49,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="index.php?r=site/logout">
+						<a href="index.php?r=site/logout" rel="external">
 							<h4>注销</h4>
 						</a>
 					</li>

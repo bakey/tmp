@@ -465,7 +465,8 @@ jQuery.event.special.tap = {
             $elem.unbind("touchmove", jQuery.event.special.tap.onTouchMove);
             $elem.unbind("touchend", jQuery.event.special.tap.onTouchEnd)
         } else {
-            $elem.unbind("click", jQuery.event.special.tap.click)
+        //	console.trace();
+            //$elem.unbind("click", jQuery.event.special.tap.click)
         }
     },
     onTouchStart: function (a) {

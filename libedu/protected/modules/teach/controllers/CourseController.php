@@ -74,8 +74,6 @@ class CourseController extends Controller
 				'item_info'  		=> $current_item_info ,
 				'level_one_items'   => $edition_first_level_items,
 				'course_id'         => $course_id,
-		
-				//'ajax_load_url' => $url ,
 		));		
 	}
 	private function renderStudentCoursePost( $user_model , $course_id , $edition_id )
@@ -97,8 +95,16 @@ class CourseController extends Controller
 				'level_one_items' => $edition_first_level_items,
 		
 				//'ajax_load_url' => $url ,
-		));
-		
+		));		
+	}
+	/*
+	 * 获取课程对应的教材的第一层章节
+	*/
+	public function actionLoadTopLevelItem( $course_id , $edition_id )
+	{
+		$edition_first_level_items = Item::model()->findAll( 'edition=:edition and level=1', array(
+				':edition' => $edition_id, ) );
+		$this->renderPartial( '_total_item_list' , array( 'top_items' => $edition_first_level_items ) );		
 	}
 	public function actionAdmin()
 	{
@@ -186,13 +192,6 @@ class CourseController extends Controller
 		}else {
 			$this->renderStudentCoursePost( $user_model , $course_id , $edition_id );
 		}
-	}
-	/*
-	 * 获取课程对应的教材的第一层章节
-	 */
-	public function actionLoadTopLevelItem( $course_id )
-	{
-				
 	}
 	/*
 	 * 获取某个item的所有子item，并以表格的方式渲染回去
@@ -360,7 +359,7 @@ class CourseController extends Controller
 						'users'=>array('@'),
 						),
 				array('allow', // allow authenticated user to perform 'create' and 'update' actions
-						'actions'=>array('admin','loadchilditemastable'),
+						'actions'=>array('admin','loadchilditemastable','loadtoplevelitem'),
 						'users'=>array('@'),
 				),
 				array('deny',  // deny all users

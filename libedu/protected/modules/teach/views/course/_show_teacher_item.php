@@ -1,3 +1,20 @@
+<script type="text/javascript">
+function show_total_item()
+{
+	$("#show_item_list").html( $("#total_item_list").html() );
+	$('#show_item_list a').bind("tap",function(e){window.location.href = $(this).attr("data-href")});
+}
+function show_current_item()
+{
+	//alert($("#current_item_list").html() );
+	$('#show_item_list').html( $("#current_item_list").html() ) ;
+	$('#show_item_list a').bind("tap",function(e){window.location.href = $(this).attr("data-href")});
+}
+
+$(document).ready(function(){
+	show_current_item();
+});
+</script>
 <ul class="tabs">
 <li class="active_tab">
 课程首页
@@ -5,59 +22,37 @@
 
 </ul>
  <div class="tabs">
-     <div id="tab_one" class="tab mytab">
-    	 <a onclick="" rel="external" href="#">
-    		 <div class="carton col_3">
-     			<div class="subcontent bordered">
-					最近课程
-				</div>
-		</a>
-		</div>	
-		<a onclick="" rel="external" href="#">
-		<div class="carton col_3">
-			<div class="subcontent bordered">
-				全部课程
-			</div>
-		</div>
-		</a>
-     <div style="margin-top:50px">
-     <span class="iconclass mid" style="float:left">M</span>
-       <div class="carton col_4 topitemcarton">
-    		<div class="content">
-       			<?php 
-      				echo "第" .$current_item->edi_index . "章 " . $current_item->content ;
-      			?>
-      		</div>
-        </div>
-        </div>
-        <?php
-	foreach( $item_info as $child_item_info )
-	{
-		$index_link_node  = sprintf('<a rel="external" href="index.php?r=teach/coursepost/index&item_id=%d">' , $child_item_info['id'] );
-		$create_link_node = sprintf('<a rel="external" href="index.php?r=teach/coursepost/create&item_id=%d&course_id=%d">' , $child_item_info['id'] , $course_id);
-		//echo $anchor;
-		echo '<div class="container wrap_item">';
-		echo '<div style="padding-left:65px">';
-		echo '<span class="iconclass mid" style="float:left">M</span>';
-		echo '<div class="carton col_4 second_level_carton">';
-		echo '<div class="content item_name">';
-		if ( $child_item_info['post_count'] > 0 ) 
-		{
-			echo $index_link_node;
-			echo '<span class="iconclass mid item">|</span>';
-		}
-		else
-		{
-			echo $create_link_node;
-			echo '<span class="iconclass mid item">+</span>';
-		}
-		echo '<div style="padding-top:5px;margin-top:10px">';
-		echo '第'.$child_item_info['item_index'] . "节 " . $child_item_info['content'] . "";
-		echo '</div>';
-		echo '</a><div style="clear:both">&nbsp;</div></div></div></div></div>';
-	}   
-?> 
-     </div>
-</div>
-
-   
+     <div id="tab_one" class="tab mytab" >
+     	
+		<?php
+			$current_content = '<div class="carton col_3"><div class="subcontent bordered">最近课程</div></div>';
+			echo CHtml::link( $current_content , '#' , array( 'onclick' => 'show_current_item()') );
+			
+			$content = '<div class="carton col_3"><div class="subcontent bordered">全部课程</div></div>';
+			echo CHtml::link( $content , '#' , array( 'onclick' => 'show_total_item()') );	 
+		?>					
+	<div id="show_item_list">
+		<?php
+		/*$this->renderPartial( '_current_item_list' , array( 
+									'current_item' => $current_item , 
+									'item_info'	   => $item_info,
+									'course_id'    => $course_id,
+					) );*/ 
+	?>
+	</div>
+	<div id="current_item_list" style="display:none" >
+	<?php
+		$this->renderPartial( '_current_item_list' , array( 
+									'current_item' => $current_item , 
+									'item_info'	   => $item_info,
+									'course_id'    => $course_id,
+					) ); 
+	?>
+	</div>
+	<div id="total_item_list"  style="display:none">
+	<?php 
+		$this->renderPartial( '_total_item_list' , array( 'top_items' => $top_items ) );
+	?>
+	</div>
+	</div>
+</div>   

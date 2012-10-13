@@ -136,7 +136,13 @@ class SiteController extends Controller
 		if( isset( $_POST['LoginForm'] ) )
 		{
 			$model->attributes=$_POST['LoginForm'];
+			if ( isset($_POST['LoginForm']['rememberMe']) ) {
+				$model->rememberMe = true;
+			}else {
+				$model->rememberMe = false;
+			}
 			// validate user input and redirect to the previous page if valid
+	
 			if( $model->validate() && $model->login() )
 			{
 				$response = array();

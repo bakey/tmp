@@ -1,14 +1,23 @@
-<?php
-/* @var $this CoursePostController */
-/* @var $model CoursePost */
-/* @var $form CActiveForm */
-?>
+<script type="text/javascript">
+function checkPost()
+{
+	if ( $('#CoursePost_title').val() == "" || $('#CoursePost_post').val() == "" )  {
+		alert('课程资料题目和课程内容都不能为空');
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+</script>
 
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'course-post-form',
-	'enableAjaxValidation'=>false,
+	'enableAjaxValidation'=>true,
 )); ?>
+
 <input type="text" id="CoursePost_title" name="CoursePost[post_title]" height="10px" 
 		placeholder="请填写课程题目">
 </input>
@@ -50,7 +59,7 @@ function file_upload_callback( obj , json ){
 ?>
 
 <div class="white">
-<button name="publish" type="submit">发布</button>
+<button name="publish" type="submit" onclick="return checkPost();">发布</button>
 <button name="draft" type="submit">预览</button>
 <button name="cancel" type="submit">预览</button>
 </div>

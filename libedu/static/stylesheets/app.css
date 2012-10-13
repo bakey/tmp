@@ -9795,6 +9795,7 @@ body.feather .map .caption {
 	height: 800px;
 	width:  815px;
 	margin-top: 64px;
+	word-wrap: break-word;
 }
 .active_tab{
 	background: rgba(0,0,0,0.1);
@@ -9819,4 +9820,8 @@ body.feather .map .caption {
 
 .qavatar p span{
 	font-size: 16px;
+}
+.side_bar_word {
+	text-align: center;
+	word-wrap: break-word;
 }
