@@ -52,7 +52,7 @@ class Redactor extends CInputWidget {
 		// Publish required assets
 		$cs = Yii::app()->getClientScript();
 		
-		$jsFile = $this->debugMode ? 'redactor.js' : 'redactor.min.js';
+		$jsFile = 'redactor.js';//$this->debugMode ? 'redactor.js' : 'redactor.min.js';
 		$cs->registerScriptFile($assets.'/' . $jsFile);
 		$cs->registerCssFile($assets.'/css/redactor.css');
 
@@ -64,7 +64,7 @@ class Redactor extends CInputWidget {
             $this->htmlOptions['style'] = "width:{$this->width};height:{$this->height};";
         }
 
-		$options = CJavaScript::encode(array_merge($this->editorOptions, array('lang' => $this->lang, 'toolbar' => $this->toolbar)));
+		$options = CJavaScript::encode(array_merge($this->editorOptions, array('lang' => $this->lang, 'toolbar' => $this->toolbar,'path'=>$assets)));
         //$options = CJSON::encode(array_merge($this->editorOptions, array('lang' => $this->lang, 'toolbar' => $this->toolbar)));
 
 		        $js =<<<EOP

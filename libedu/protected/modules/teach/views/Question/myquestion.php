@@ -67,7 +67,7 @@ function doselectchapter(cid){
     		<div class="carton col_12 nobackground">
     			<div class="container dotbottom normaltoppadding">
 						<a href="#" onclick="changeToTabByIndex(event,0)" rel="external"><div class="carton col_3">
-							<div class="subcontent bordered">
+							<div class="subcontent bordered sail">
 								<?php
 									if(Yii::app()->user->urole == 1){
 										echo '最近的问答';
@@ -100,6 +100,24 @@ function doselectchapter(cid){
 					<h3>我的问答</h3>
 					<div class="row-fluid">
 						<div class="span3 well">
+							<div id="div1">
+								<button onclick="changecontent(2)">get link 2</button>
+								<button onclick="changecontent(3)">get link 3</button>
+							</div>
+								<div id="div4">
+									<div id="div2" style="display:none">
+										<a href="http://www.google.com" rel="external">Link In Div2</a>
+									</div>
+									<div id="div3" style="display:none">
+										<a href="http://www.baidu.com" rel="external">Link In Div3</a>
+									</div>
+								</div>
+							<script type="text/javascript">
+								function changecontent(divid){
+									$("#div"+divid).css('display','block');
+									$("#div"+divid).siblings().css('display','none');
+								}
+							</script>
 							<h5>选择章节</h5>
 							<?php
 							/* @var $this UserController */

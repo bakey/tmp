@@ -26,11 +26,11 @@
 				</div>
 				<div class="col_2">
 					<p> <?php
-				echo CHtml::ajaxLink('追问',Yii::app()->createUrl('/teach/question/getallsubelement',array('qid'=>$data->id,'type'=>1)),array('update'=>'#answer'.$data->id,'success'=>'js:function(data){$("#answer'.$data->id.'").html(data);$("#answer'.$data->id.'").fadeIn();}'),array('rel'=>'external','href'=>'javascript:return false;'));?>(2)</p>
+				echo CHtml::ajaxLink('追问',Yii::app()->createUrl('/teach/question/getallsubelement',array('qid'=>$data->id,'type'=>1)),array('update'=>'#answer'.$data->id,'success'=>'js:function(data){$("#answer'.$data->id.'").html(data);$("#answer'.$data->id.'").fadeIn();}'),array('rel'=>'external','href'=>'javascript:void(0);'));?>(2)</p>
 				</div>
 				<div class="col_2">
 					<p> <?php
-				echo CHtml::ajaxLink('回答',Yii::app()->createUrl('/teach/question/getallsubelement',array('qid'=>$data->id,'type'=>2)),array('update'=>'#answer'.$data->id,'success'=>'js:function(data){$("#answer'.$data->id.'").html(data);$("#answer'.$data->id.'").fadeIn();}'),array('rel'=>'external','href'=>'javascript:return false;')); 
+				echo CHtml::ajaxLink('回答',Yii::app()->createUrl('/teach/question/getallsubelement',array('qid'=>$data->id,'type'=>2)),array('update'=>'#answer'.$data->id,'success'=>'js:function(data){$("#answer'.$data->id.'").html(data);$("#answer'.$data->id.'").fadeIn();}'),array('rel'=>'external','href'=>'javascript:void(0);','id'=>'answertrigger'.$data->id)); 
 			?>(2)</p>
 				</div>
 			</div>

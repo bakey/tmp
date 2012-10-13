@@ -9676,6 +9676,11 @@ body.feather .map .caption {
 	z-index: 9999999;
 }
 
+.libajaxloaderwithbg{
+	background:url(../images/ajax-loader.gif) center no-repeat -moz-linear-gradient(rgba(255, 255, 255, 0.9), #FAFAFA);
+	background:url(../images/ajax-loader.gif) center no-repeat -webkit-linear-gradient(rgba(255, 255, 255, 0.9), #FAFAFA);
+}
+
 .bordered{
 	border:1px solid #C7D2D2 !important;
 }
