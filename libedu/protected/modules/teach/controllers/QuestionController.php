@@ -135,10 +135,30 @@ class QuestionController extends Controller
 							}
 						}
 					}
-					$this->redirect(array('view','id'=>$qid));
-					exit();
+					echo 'success';
 				}
 			}
+		}
+	}
+
+	public function actionGetAllSubElement($qid,$type){
+		$model=new Answer;
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		//get current editon based on 
+
+		$mycourse = LibUser::model()->findByPk(Yii::app()->user->id);
+		$mycourse = $mycourse->user_course;
+		foreach ($mycourse as $singlecourse) {
+			$res[$singlecourse->id ] = $singlecourse->name;
+		}
+		
+		$cq = Question::model()->findByPk($qid);
+
+		if(!$cq){
+			throw new CHttpException(403,'问题不存在');
+		}else{
 			//get kp by question kp relation
 			$ckp = ItemKp::model()->findAllByAttributes(array('item'=>$cq->item));
 			$reskp = array();
@@ -150,24 +170,65 @@ class QuestionController extends Controller
 					array_push($selkp, $orikp->id);
 				}
 			}
-			$this->render('answer',array(
-				'model'=>$model,
+			$res = Answer::model()->findAllByAttributes(array('question_id'=>$qid,'type'=>$type),array('order'=>'type DESC'));
+			if(!$res){
+				$this->renderPartial('_answer',array('model'=>$model,
 				'mycourse'=>$res,
 				'qid'=>$qid,
 				'cq'=>$cq,
 				'kp'=>$reskp,
-				'skp'=>$selkp,
-			));
-		}
+				'skp'=>$selkp,),false,true);
+				echo '<h2>所有回答</h2><p>还没有任何回答</p>';
+				echo '<script type="text/javascript">
+	function submitAnswer(qid){
+		var data1=$("#question-form"+qid).serialize();
+		$.ajax({
+	    type: "POST",
+	    url: "'.Yii::app()->createUrl("/teach/question/answer",array("qid"=>$qid)).'",
+	    data:data1,
+	    success:function(data){
+	    			if(data == "success"){
+	    				var caloader = \'<div class="libajaxloader libajaxloaderwithbg"></div>\';
+	    				$("#answer'.$qid.'").append(caloader);
+	    				$("#answertrigger'.$qid.'").click();
+	    			}
+	              },
+	    error: function(data,err,err1) { // if error occured
+	         alert("Error occured.please try again"+err+err1);
+	    },
+	    dataType:"html"
+	  });
+	 
 	}
-
-	public function actionGetAllSubElement($qid,$type){
-		$res = Answer::model()->findAllByAttributes(array('question_id'=>$qid,'type'=>$type),array('order'=>'type DESC'));
-		if(!$res){
-			echo '没有回答及追问';
-		}else{
-			for($i=0;$i<count($res);$i++){
-				$this->renderPartial('_subAnswer',array('data'=>$res[$i]),false,true);
+</script>';
+			}else{
+				$this->renderPartial('_answer',array('model'=>$model,
+				'mycourse'=>$res,
+				'qid'=>$qid,
+				'cq'=>$cq,
+				'kp'=>$reskp,
+				'skp'=>$selkp,),false,true);
+				for($i=0;$i<count($res);$i++){
+					$this->renderPartial('_subAnswer',array('data'=>$res[$i]),false,true);
+				}
+				echo '<script type="text/javascript">
+	function submitAnswer(qid){
+		var data1=$("#question-form"+qid).serialize();
+		$.ajax({
+	    type: "POST",
+	    url: "'.Yii::app()->createUrl("/teach/question/answer",array("qid"=>$qid)).'",
+	    data:data1,
+	    success:function(data){
+	    			alert(data);
+	              },
+	    error: function(data,err,err1) { // if error occured
+	         alert("Error occured.please try again"+err+err1);
+	    },
+	    dataType:"html"
+	  });
+	 
+	}
+</script>';
 			}
 		}
 	}

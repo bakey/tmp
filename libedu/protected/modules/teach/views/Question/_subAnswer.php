@@ -1,8 +1,8 @@
-<div class="row-fluid">
-	<div class="span1">
+<div class="container">
+	<div class="col_2">
 		<img src="<?php echo Yii::app()->request->baseUrl.'/'.Yii::app()->params['uploadFolder'].'/'.$data->owner_info->id.'/avatar/'.$data->owner_info->user_profile->avatar; ?>" class="img-polaroid">
 	</div>
-	<div class="span10 offset1">
+	<div class="col_10">
 		<div class="well">
 				<p>
 					<?php 
@@ -14,10 +14,8 @@
 						}else if($data->type == 0){
 							$anstype = '评论';
 						}
-					$this->widget('bootstrap.widgets.TbLabel', array(
-						'type'=>'success', // 'success', 'warning', 'important', 'info' or 'inverse'
-						'label'=>$anstype,
-					)); ?></p>
+						echo $anstype;
+					?></p>
 				<p><?php echo CHtml::encode($data->owner_info->user_profile->real_name); ?> 于 <?php echo CHtml::encode($data->create_time); ?> 写道：
 				</p>	
 				<blockquote><?php echo $data->details; ?></blockquote>  
