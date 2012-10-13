@@ -4,10 +4,9 @@ Yii::app()->getClientScript()->scriptMap=array(
 ); 
 ?>
 
-<h3>
+<script type="text/javascript">
 
-</h3>
-
+</script>
 <ul class="tabs">
 <h3>
 	<div style="text-align:center">
@@ -35,12 +34,14 @@ Yii::app()->getClientScript()->scriptMap=array(
 			$url         = sprintf( "index.php?r=teach/coursepost/viewbyid&post_id=%d&course_id=%d&item_id=%d" ,$post['id'],$course_id , $item_model->id );
 			/*$anchor_node = sprintf('<a rel="external" href="index.php?r=teach/coursepost/viewbyid&post_id=%d&course_id=%d&item_id=%d">'
 					 ,$post['id'],$course_id , $item_model->id);*/
-			$li_content = '<li class="side_bar_word">' . $post['title'] . '</li>';
-			echo CHtml::link( $li_content , '#' , array('rel'=>'external' , 'ajax' => array(
-																						'url'    => $url,
-																						'type'   => 'post',
-																						'update' => '#post_content'
-																						)));		
+			$post_ele_id = 'post_title_' . $post['id'];
+			$li_content = '<li class="side_bar_word" id="' . $post_ele_id . '">' . $post['title'] . '</li>';
+			$onclick_js = sprintf('$("#%s").addClass("sail")' , $post_ele_id );
+			echo CHtml::link( $li_content , '#' , array('rel'=>'external' , 'onclick' => $onclick_js , 'ajax' => array(
+																										'url'    => $url,
+																										'type'   => 'post',
+																										'update' => '#post_content'
+																										)));		
 			++ $show_cnt ; 
 			if ( $show_cnt >= $max_show_num ) {
 				break;
