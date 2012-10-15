@@ -31,6 +31,7 @@
 		}
 		echo '<div style="padding-top:5px;margin-top:10px">';
 		echo '第'.$child_item_info['item_index'] . "节 " . $child_item_info['content'] . "";
+		echo '<p>更新时间: ' . $child_item_info['update_time'] . "</p>";
 		echo '</div>';
 		echo '</a></div></div></div></div>';
 	}   

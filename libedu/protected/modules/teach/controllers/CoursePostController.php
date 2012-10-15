@@ -32,7 +32,7 @@ class CoursePostController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','test','reedit','autosave','viewbyid','drafttopublished','delete','create','update','upload'),
+				'actions'=>array('admin','test','loadpostbyauthor','reedit','autosave','viewbyid','drafttopublished','delete','create','update','upload'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -341,7 +341,7 @@ class CoursePostController extends Controller
 			if( $new_post_id > 0 ) 
 			{
 				$this->moveTracingItem( $item_id );
-				$this->savePostMediaRelation( $new_post_id );
+				//$this->savePostMediaRelation( $new_post_id );
 				$this->redirect(array('index', 'item_id'=>$item_id));
 			}
 			else 
@@ -426,8 +426,30 @@ class CoursePostController extends Controller
 				'student_post_data'  => $student_post_data, 
 				'item_model'  	     => $item_model,
 				'course_id'   		 => Yii::app()->user->course,
-		));
-		
+		));		
+	}
+	/*
+	 * 获取某item下的某作者的所有post资料
+	 */
+	public function actionLoadPostByAuthor( $author , $item )
+	{
+		$post_models = CoursePost::model()->findAll( 'author=:uid and item_id=:iid' , array( ':uid' => $author , ':iid' => $item ) ) ;
+		/* 
+		$my_post_data = new CActiveDataProvider('CoursePost',array(
+				'criteria'=>array(
+						'condition'=> ('author='.$author.' and item_id='.$item ),
+						'order'    => 'update_time DESC',
+				),
+				'pagination' => false,
+		));	*/	
+		$return_data = array();
+		foreach( $post_models as $post )
+		{
+			$return_data[] = array( 'title' => $post->title , 'id' => $post->id );
+		}
+		//var_dump( $return_data );
+		//exit();
+		echo ( @json_encode( $return_data ) ); 
 	}
 	/*
 	 * 处理用户上传二进制文件
@@ -476,15 +498,15 @@ class CoursePostController extends Controller
 						$image_origin_url );
 		}
 		else if ( $this->if_document($suffix[1]) )
-		{		
+		{				
 			//把多文档的信息存进数据库，并返回一个相应的tbl_multimedia的model
 			$doc_model = $this->process_document( $former_file_name , $file_name , $doc_folder , $item_id );
-			$res_array = array( 'result'	 => 'success' , 
+			$res_array = array(  'result'	 => 'success' , 
 								 'file_name' => $former_file_name , 
 								 'url'		 => $this->getDocumentUrl($file_name,$uid),
 								 'mid' 		 => $doc_model->id, 
 					);
-			echo json_encode( $res_array );
+			echo @json_encode( $res_array );
 			//echo CHtml::link( $former_file_name , $this->getDocumentUrl($file_name, $uid)  );
 		}	
 	
@@ -497,7 +519,7 @@ class CoursePostController extends Controller
 		$msg = "";
 	
 		
-		if( isset($_POST['data']) && strlen(strip_tags($_POST['data'])) > 0)
+		if( isset($_POST['data']) )
 		{
 			if ( isset($_GET['post_id']) )
 			{
@@ -517,6 +539,7 @@ class CoursePostController extends Controller
 				$course_post_model->item_id = $item_id;
 				$course_post_model->status = $status;
 				$course_post_model->create_time = $course_post_model->update_time = date( "Y-m-d H:i:s", time() );
+				$course_post_model->title = "临时保存title";
 				$save_res = $course_post_model->save() > 0 ;	
 				$post_id = $course_post_model->id;
 			}
