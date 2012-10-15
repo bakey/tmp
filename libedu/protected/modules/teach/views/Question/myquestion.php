@@ -25,8 +25,18 @@ function changeToTabByIndex(event,targettabindex) {
 
 }
 
-function doselectchapter(cid){
-		 $.ajax({
+function closemodal(){
+			$('#overlays .modal').fadeOut(100);
+			$('#overlays').removeClass();
+			$(document).unbind('keyup');	
+}
+
+function doselectchapter(event,cid){
+	if($(event.target).parents('#modaltreeview').length >0){
+		$('#questioninput').val(cid);
+		$('#selectedchapterforquestion').html('您选择了章节： '+ $('.modal #child'+cid).text());
+	}else{
+		$.ajax({
 		  	url:'<?php echo Yii::app()->createUrl("/teach/question/getquestionbyitem"); ?>',
 		  	type:'POST',
 		  	data:{uid:<?php echo Yii::app()->user->id; ?>,chid:cid},
@@ -35,8 +45,46 @@ function doselectchapter(cid){
 		  	},
 		 });
 	}
+}
+
+function selectChapterForQuestion(){
+	$.fn.modal({
+		'url':'<?php echo Yii::app()->createUrl("/teach/question/getchapterfromcourse"); ?>',
+		'width':500,
+		'padding':'20px',
+	});
+
+	$('#overlays .modal').bind('DOMSubtreeModified', function(event) {
+		$("#overlays .modal").css("height",parseInt($("#modaltreeview").height())+280+"px");
+	});
+}
+
+function submitQuestion(){
+		var data1=$("#newquestion-form").serialize();
+		$.ajax({
+	    type: "POST",
+	    url: '<?php echo Yii::app()->createUrl("/teach/question/create"); ?>',
+	    data:data1,
+	    success:function(data){
+	    			closemodal();
+	    			$.notification ( 
+					    {
+					        title:      '提问成功',
+					        content:    '哈哈！'
+					    }
+					);
+	    			$(data).hide().prependTo(".list-view .items").fadeIn(1500);
+	              },
+	    error: function(data,err,err1) { // if error occured
+	         alert("Error occured.please try again"+err+err1);
+	    },
+	    dataType:"html"
+	  });
+}
 </script>
 
+<div id="chapterlistforquestion" style="display:none;">
+</div>
 
 <ul class="tabs">
     <li class="current">
@@ -64,24 +112,50 @@ function doselectchapter(cid){
 <div class="tabs">
     <div id="tab_one" class="tab padding">
     	<div class="container" rel="2">
-    		<div class="carton col_12 nobackground">
-    			<div class="container dotbottom normaltoppadding">
-						<a href="#" onclick="changeToTabByIndex(event,0)" rel="external"><div class="carton col_3">
-							<div class="subcontent bordered sail">
-								<?php
-									if(Yii::app()->user->urole == 1){
-										echo '最近的问答';
-									}else if(Yii::app()->user->urole == 2){
-										echo '未回答的问题';
-									}
-									Yii::app()->getClientScript()->scriptMap=array(
+    		<div class="carton col_12 nobackground dotbottom">
+    			<h2>今天有什么问题么</h2>
+    			<?php $form=$this->beginWidget('CActiveForm', array(
+					'id'=>'newquestion-form',
+					'enableAjaxValidation'=>false,
+				)); 
+    				$model = new Question;
+    				Yii::app()->getClientScript()->scriptMap=array(
 										'jquery.js'=>false,
 								);
-								?>
+				?>
+				<div id="chapterlist" style="display:none">
+					<?php echo $form->textField($model,'item',array('id'=>'questioninput')); ?>
+				</div>
+				<div class="col_12" style="margin:10px 0;">
+					<?php echo $form->error($model,'details'); ?>
+					<?php
+				$this->widget('application.extensions.redactorjs.Redactor',array(
+					'model'=>$model,
+					 'width'=>'100%', 'height'=>'150px',
+					'attribute'=>'details',
+					'editorOptions' => array(
+						'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
+						'lang'=>'en','toolbar'=>'default',
+						)
+				));
+				?>
+				</div>
+				<?php $this->endWidget(); ?>
+				<div class="container">
+					<div class="col_3 offset_9">
+						<button onclick="selectChapterForQuestion()" class="col_12 sugar">提问</button>
+					</div>	
+				</div>
+    		</div>
+    		<div class="carton col_12 nobackground">
+    			<div class="container dotbottom normaltoppadding">
+						<a href="javascript:void(0);" onclick="changeToTabByIndex(event,0)" rel="external"><div class="carton col_3">
+							<div class="subcontent bordered sail">
+								最新的提问
 							</div>
 						</div></a>
 
-						<a href="#" onclick="changeToTabByIndex(event,1)" rel="external"><div class="carton col_3">
+						<a href="javascript:void(0);" onclick="changeToTabByIndex(event,1)" rel="external"><div class="carton col_3">
 							<div class="subcontent bordered">
 								章节下的提问
 							</div>
@@ -94,6 +168,7 @@ function doselectchapter(cid){
 					$this->widget('zii.widgets.CListView', array(
 						'dataProvider'=>$dataProvider,
 						'itemView'=>'_view',
+						 'summaryText'=>'',
 					)); ?>
 				</div>
 				<div class="content animated fadeInLeft">
