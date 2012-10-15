@@ -3829,7 +3829,6 @@ ul.icons li ul li:before {
 	text-shadow: black 0px 1px 1px;
 }
 .modal > .wrapper  {
-	overflow: auto;
 	-webkit-overflow-scrolling: touch;
 	position: absolute;
 	top: 0px;
@@ -9709,6 +9708,11 @@ body.feather .map .caption {
 
 .tinyallpadding{
 	padding:15px !important;
+}
+
+.tinytinyallpadding{
+	padding:5px !important;
+	margin-bottom: 10px;
 }
 
 .questionop div.col_2{
