@@ -8,8 +8,6 @@ function show_total_item()
 }
 function show_current_item()
 {
-	//alert( $(this).parent()nodeName() );
-	//alert($("#current_item_list").html() );
 	
 	$('#show_item_list').html( $("#current_item_list").html() ) ;
 	$('#show_item_list a').bind("tap",function(e){window.location.href = $(this).attr("data-href")});
@@ -25,40 +23,31 @@ $(document).ready(function(){
 <li class="active_tab">
 课程首页
 </li>
-
 </ul>
  <div class="tabs">
      <div id="tab_one" class="tab mytab" >
-     	
-		<?php
+     	<?php
 			$current_content = '<div class="carton col_3"><div class="subcontent bordered" id="recent_course">最近课程</div></div>';
 			echo CHtml::link( $current_content , '#' , array( 'onclick' => 'show_current_item()') );
 			
 			$content = '<div class="carton col_3"><div class="subcontent bordered" id="total_course">全部课程</div></div>';
 			echo CHtml::link( $content , '#' , array( 'onclick' => 'show_total_item();') );	 
 		?>					
-	<div id="show_item_list">
+		<div id="show_item_list"></div>
+		<div id="current_item_list" style="display:none" >
 		<?php
-		/*$this->renderPartial( '_current_item_list' , array( 
-									'current_item' => $current_item , 
-									'item_info'	   => $item_info,
-									'course_id'    => $course_id,
-					) );*/ 
-	?>
-	</div>
-	<div id="current_item_list" style="display:none" >
-	<?php
-		$this->renderPartial( '_current_item_list' , array( 
+			$this->renderPartial( '_current_item_list' , array( 
 									'current_item' => $current_item , 
 									'item_info'	   => $item_info,
 									'course_id'    => $course_id,
 					) ); 
-	?>
-	</div>
-	<div id="total_item_list"  style="display:none">
-	<?php 
-		$this->renderPartial( '_total_item_list' , array( 'top_items' => $top_items ) );
-	?>
-	</div>
+		?>
+		</div>
+		<div id="total_item_list"  style="display:none">
+		<?php 
+			$this->renderPartial( '_total_item_list' , array( 'top_items' => $top_items , 
+															  'course_id' => $course_id) );
+		?>
+		</div>
 	</div>
 </div>   

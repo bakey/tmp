@@ -605,7 +605,6 @@ class CoursePostController extends Controller
 	 */
 	public function actionIndex( $item_id )
 	{
-		//$this->layout = 'usercentertwocolumn';
 		$cur_user = Yii::app()->user->id;
 
 		$item_model = Item::model()->findByPk( $item_id );

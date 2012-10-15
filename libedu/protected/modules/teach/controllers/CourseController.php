@@ -55,6 +55,30 @@ class CourseController extends Controller
 		} 
 		return  $item_info ;
 	}
+	/*
+	 * 找出$edition这个教材下的所有章节按层次组织的信息。
+	 */
+	private function collectTotalItem( $edition )
+	{
+		//找出第一层的所有item model
+		$top_level_models = Item::model()->findAll( 'edition=:edition and level=1', array(
+									':edition' => $edition, ) );
+
+		$ret_vector = array();
+		//首先获取第一层的所有item model
+		foreach( $top_level_models as $item_model )
+		{
+			$tmp_node = array( 'model' => $item_model );
+			$ret_vector[] = $tmp_node;
+		}
+		//遍历第一层一次，获取这一层的所有儿子节点
+		foreach( $ret_vector as $top_level )
+		{
+			$children_models = $top_level[ 'model' ]->level_child;
+			$tmp_node = array( 'model' => $children_models );
+			$top_level[ 'children' ] = $tmp_node;			
+		}
+	} 
 	private function renderTeacherCoursePost( $user_model , $course_id , $edition_id )
 	{
 		$top_item_model = $user_model->trace_item;
@@ -63,16 +87,14 @@ class CourseController extends Controller
 		}
 		//获取当前章节下面的各个子章节的信息.
 		$current_item_info = $this->get_current_item_info( $user_model , $top_item_model[0] , $course_id );
-		$edition_first_level_items = Item::model()->findAll( 'edition=:edition and level=1', array(
+		$top_level_models = Item::model()->findAll( 'edition=:edition and level=1', array(
 				':edition' => $edition_id, ) );
 		
-		if ( null == $edition_first_level_items ) {
-			throw new CHttpException( 400 , "trace item data corruption");
-		}
+		$total_items = $this->collectTotalItem( $edition_id );
 		$this->render('update_teacher_course' , array(
 				'current_item'      => $top_item_model[0],
 				'item_info'  		=> $current_item_info ,
-				'level_one_items'   => $edition_first_level_items,
+				'top_level_items'   => $top_level_models,
 				'course_id'         => $course_id,
 		));		
 	}
