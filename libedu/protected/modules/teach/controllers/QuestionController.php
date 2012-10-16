@@ -34,7 +34,7 @@ class QuestionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement','generatequestionfeed','myquestion','getquestionbyitem'),
+				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement','generatequestionfeed','myquestion','getquestionbyitem','zwtoanswer'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -125,6 +125,11 @@ class QuestionController extends Controller
 				$model->question_id = $qid;
 				$model->owner = Yii::app()->user->id;
 				$model->create_time = date("Y-m-d H:i:s");
+				if(isset($_REQUEST['subans'])){
+					$model->level = $qid;
+					$upans = Answer::model()->findByPk($qid);
+					$model->question_id = $upans->question_id;
+				}
 				if($model->save()){
 					QuestionKp::model()->deleteAllByAttributes(array('question'=>$qid));
 					if(isset($_POST['kprelation'])){
@@ -172,15 +177,16 @@ class QuestionController extends Controller
 					array_push($selkp, $orikp->id);
 				}
 			}
-			$res = Answer::model()->findAllByAttributes(array('question_id'=>$qid,'type'=>$type),array('order'=>'type DESC'));
+			$res = Answer::model()->findAllByAttributes(array('question_id'=>$qid,'type'=>$type,'level'=>0),array('order'=>'type DESC'));
 			if(!$res){
 				$this->renderPartial('_answer',array('model'=>$model,
 				'mycourse'=>$res,
 				'qid'=>$qid,
 				'cq'=>$cq,
 				'kp'=>$reskp,
+				'anstyp'=>$type,
 				'skp'=>$selkp,),false,true);
-				echo '<h2>所有回答</h2><p>还没有任何回答</p>';
+				echo '<h2>所有'; echo $type==1? '追问' : '回答'; echo'</h2><p>还没有任何'; echo $type==1? '追问' : '回答'; echo '</p>';
 				echo '<script type="text/javascript">
 	function submitAnswer(qid){
 		var data1=$("#question-form"+qid).serialize();
@@ -191,8 +197,9 @@ class QuestionController extends Controller
 	    success:function(data){
 	    			if(data == "success"){
 	    				var caloader = \'<div class="libajaxloader libajaxloaderwithbg"></div>\';
+	    				$("#';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").text("';echo $type==1? '追问' : '回答'; echo '("+(parseInt($("#';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").text().match(/\d/g))+1)+")").hide().fadeIn();
 	    				$("#answer'.$qid.'").append(caloader);
-	    				$("#answertrigger'.$qid.'").click();
+	    				$("#';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").click();
 	    			}
 	              },
 	    error: function(data,err,err1) { // if error occured
@@ -209,8 +216,10 @@ class QuestionController extends Controller
 				'qid'=>$qid,
 				'cq'=>$cq,
 				'kp'=>$reskp,
+				'anstyp'=>$type,
 				'skp'=>$selkp,),false,true);
 				for($i=0;$i<count($res);$i++){
+
 					$this->renderPartial('_subAnswer',array('data'=>$res[$i]),false,true);
 				}
 				echo '<script type="text/javascript">
@@ -221,7 +230,88 @@ class QuestionController extends Controller
 	    url: "'.Yii::app()->createUrl("/teach/question/answer",array("qid"=>$qid)).'",
 	    data:data1,
 	    success:function(data){
-	    			alert(data);
+	    			if(data == "success"){
+	    				var caloader = \'<div class="libajaxloader libajaxloaderwithbg"></div>\';
+	    				$("#';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").text("';echo $type==1? '追问' : '回答'; echo '("+(parseInt($("#';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").text().match(/\d/g))+1)+")").hide().fadeIn();
+	    				$("#answer'.$qid.'").append(caloader);
+	    				$("#';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").click();
+	    			}
+	              },
+	    error: function(data,err,err1) { // if error occured
+	         alert("Error occured.please try again"+err+err1);
+	    },
+	    dataType:"html"
+	  });
+	 
+	}
+</script>';
+			}
+		}
+	}
+
+	public function actionZwToAnswer($qid,$type){
+		$model=new Answer;
+		
+		$cq = Answer::model()->findByPk($qid);
+
+		if(!$cq){
+			throw new CHttpException(403,'回答不存在');
+		}else{
+			//get kp by question kp relation
+			$res = Answer::model()->findAllByAttributes(array('level'=>$qid,'type'=>$type),array('order'=>'create_time DESC'));
+			if(!$res){
+				$this->renderPartial('_answer',array('model'=>$model,
+				'qid'=>$qid,
+				'cq'=>$cq,
+				'anstyp'=>$type,'level'=>1),false,true);
+				echo '<h2>所有'; echo $type==1? '追问' : '回答'; echo'</h2><p>还没有任何'; echo $type==1? '追问' : '回答'; echo '</p>';
+				echo '<script type="text/javascript">
+	function submitSubAnswer(qid){
+		var data1=$("#subquestion-form"+qid).serialize();
+		$.ajax({
+	    type: "POST",
+	    url: "'.Yii::app()->createUrl("/teach/question/answer",array("qid"=>$qid,"subans"=>1)).'",
+	    data:data1,
+	    success:function(data){
+	    			if(data == "success"){
+	    				var caloader = \'<div class="libajaxloader libajaxloaderwithbg"></div>\';
+	    				$("#sub';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").text("';echo $type==1? '追问' : '回答'; echo '("+(parseInt($("#sub';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").text().match(/\d/g))+1)+")").hide().fadeIn();
+	    				$("#subanswer'.$qid.'").append(caloader);
+	    				$("#sub';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").click();
+	    			}
+	              },
+	    error: function(data,err,err1) { // if error occured
+	         alert("Error occured.please try again"+err+err1);
+	    },
+	    dataType:"html"
+	  });
+	 
+	}
+</script>';
+			}else{
+				$this->renderPartial('_answer',array('model'=>$model,
+				'qid'=>$qid,
+				'cq'=>$cq,
+				'anstyp'=>$type,
+				'level'=>1,
+				),false,true);
+				for($i=0;$i<count($res);$i++){
+					$this->renderPartial('_subAnswer',array('data'=>$res[$i]),false,true);
+				}
+				echo '<script type="text/javascript">
+	function submitSubAnswer(qid){
+		var data1=$("#subquestion-form"+qid).serialize();
+		$.ajax({
+	    type: "POST",
+	    url: "'.Yii::app()->createUrl("/teach/question/answer",array("qid"=>$qid,"subans"=>1)).'",
+	    data:data1,
+	    success:function(data){
+	    			if(data == "success"){
+	    				var caloader = \'<div class="libajaxloader libajaxloaderwithbg"></div>\';
+	    				$("#sub';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").text("';echo $type==1? '追问' : '回答'; echo '("+(parseInt($("#sub';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").text().match(/\d/g))+1)+")").hide().fadeIn();
+	    				$("#subanswer'.$qid.'").append(caloader);
+	    				$("#sub';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").click();
+	    			}
 	              },
 	    error: function(data,err,err1) { // if error occured
 	         alert("Error occured.please try again"+err+err1);
@@ -400,6 +490,7 @@ class QuestionController extends Controller
 			$edition = Course::model()->findByPk($ccourse);
 			$edition = $edition->edition;
 		}
+		$dataprovider = null;
 		if(Yii::app()->user->urole == 1)
 		{
 			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
@@ -416,7 +507,8 @@ class QuestionController extends Controller
 	        'group'=>'t.id',
 	        'condition'=>'t.owner='.Yii::app()->user->id,
 	        'order'=>'create_time DESC',
-	    	),));
+	    	),
+	    	));
 		}
 		$this->render('myquestion',array(
 			'dataProvider'=>$dataProvider,
@@ -444,18 +536,33 @@ class QuestionController extends Controller
 		else if(Yii::app()->user->urole == 2)
 		{
 			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
-			'select'=>'t.id,t.owner,t.item,t.details,t.create_time,t.view_count,tbl_item.edition',
-	        'join'=>'LEFT JOIN tbl_item ON t.item = tbl_item.id',
-	        'condition'=>'t.owner='.Yii::app()->user->id.' AND tbl_item.edition='.$edition->id,
+			'select'=>'t.id,t.owner,t.item,t.details,t.create_time,t.view_count,tbl_item.edition,SUM(CASE WHEN tbl_answer.type = 2 THEN 1 ELSE 0 END) AS numberofanswers, SUM(CASE WHEN tbl_answer.type = 1 THEN 1 ELSE 0 END) AS numberofzw',
+	        'join'=>'LEFT JOIN tbl_item ON t.item = tbl_item.id LEFT JOIN tbl_answer ON tbl_answer.question_id = t.id',
+	        'condition'=>'tbl_item.edition='.$edition->id,
+	        'group'=>'t.id',
+	        'together'=>true,
 	        'order'=>'t.create_time DESC',
-	    	),));
+	    	),
+			'pagination'=>array(
+                'pageSize'=>5,
+            ),
+	    	));
 		}
-		$this->render('myquestion',array(
-			'dataProvider'=>$dataProvider,
-			'ccourse' =>$ccourse,
-			'eid'=>$edition->id,
-		));
+		if(isset($_REQUEST['refreshafteraddquestion'])){
+			$this->renderPartial('myquestionrefresh',array(
+				'dataProvider'=>$dataProvider,
+				'ccourse' =>$ccourse,
+				'eid'=>$edition->id,
+			),false,true);
+		}else{
+			$this->render('myquestion',array(
+				'dataProvider'=>$dataProvider,
+				'ccourse' =>$ccourse,
+				'eid'=>$edition->id,
+			));
+		}
 	}
+
 
 	public function actionGetQuestionByItem()
 	{

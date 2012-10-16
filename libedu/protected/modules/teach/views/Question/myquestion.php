@@ -73,7 +73,9 @@ function submitQuestion(){
 					        content:    '哈哈！'
 					    }
 					);
-	    			$(data).hide().prependTo(".list-view .items").fadeIn(1500);
+					var refreshurl = '<?php echo Yii::app()->createUrl("/teach/question/myquestion",array("refreshafteraddquestion"=>1)); ?>';
+	    			$('#recentquestions').html('<div class="libajaxloader"></div>');
+	    			$('#recentquestions').load(refreshurl).hide().fadeIn(300);
 	              },
 	    error: function(data,err,err1) { // if error occured
 	         alert("Error occured.please try again"+err+err1);
@@ -81,6 +83,12 @@ function submitQuestion(){
 	    dataType:"html"
 	  });
 }
+
+$(document).ready(function(){
+	$('#recentquestions .pager a[data-href]').attr('href',function(i) {
+	    	$(this).attr('href', $(this).attr('data-href'));
+	});
+});
 </script>
 
 <div id="chapterlistforquestion" style="display:none;">
@@ -121,6 +129,8 @@ function submitQuestion(){
     				$model = new Question;
     				Yii::app()->getClientScript()->scriptMap=array(
 										'jquery.js'=>false,
+										'styles.css'=>false,
+										//'pager.css'=>false,
 								);
 				?>
 				<div id="chapterlist" style="display:none">
@@ -161,7 +171,7 @@ function submitQuestion(){
 							</div>
 						</div></a>
 					</div>
-				<div class="content animated fadeInLeft tinyallpadding">
+				<div class="content animated fadeInLeft tinyallpadding" id="recentquestions">
 					
 
 					<?php 
@@ -169,6 +179,9 @@ function submitQuestion(){
 						'dataProvider'=>$dataProvider,
 						'itemView'=>'_view',
 						 'summaryText'=>'',
+						 'id'=>'myrecentquestions',
+        				'ajaxUpdate'=>true,
+        				'pager'=>array('pageSize'=>5),
 					)); ?>
 				</div>
 				<div class="content animated fadeInLeft">
