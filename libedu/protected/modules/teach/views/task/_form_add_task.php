@@ -39,22 +39,6 @@
 	</span>
 	</h4>
 		
-	<h3>
-	关联以下知识点
-	</h3>
-	<?php
-	$url = 'task/ajaxloadkp';
-	$this->widget(
-			'CTreeView',
-			array(
-					'animated'=>'fast', //quick animation
-					'collapsed' => false,
-					'url' => array( $url ),
-			)
-	);		 
-	?>
-	<h3 id="hint_select_kp" style="display:none">您已选择关联的知识点:
-	</h3>
 		
 
 	<div class="row"  style="display:none">

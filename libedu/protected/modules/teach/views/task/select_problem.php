@@ -28,7 +28,7 @@
 	?>       
     <div id="param_id" class="well">
     	<?php 
-    		$this->widget('bootstrap.widgets.TbListView', array(
+    		$this->widget('zii.widgets.CListView', array(
     				'dataProvider'=>$problem_data,
     				'itemView'=>'_view_problem',
     		));

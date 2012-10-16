@@ -117,6 +117,9 @@ input:focus, textarea:focus {
 input:focus::-webkit-input-placeholder { 
 	color: transparent;
 }
+textarea:focus::-webkit-textarea-placeholder {
+	color: transparent;
+}
 input:-moz-placeholder { color: #transparent; }
 
 input[type="submit"] { 

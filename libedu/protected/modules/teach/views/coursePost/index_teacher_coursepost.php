@@ -27,8 +27,22 @@ Yii::app()->getClientScript()->scriptMap=array(
 		$max_show_num = Yii::app()->params['max_column_show_post_num'];
 		$show_cnt = 0;
 		$tot_post_cnt = count( $my_post );
-		$insert_js = ' function insert_post_title(){ var total_post = ' . $tot_post_cnt . '; for(i=5 ;i < total_post; i ++) { 
-				var sel_id = "#yt"+i ;  $(sel_id).children().show();  }  $(post_toggle).children().text("收起"); }' ;
+		
+		$insert_js = 'function hide_post_title(){ var tot_post = ' . $tot_post_cnt . '; for ( i = 5; i < tot_post; i ++){ var sel_id = "#yt"+i ;  $(sel_id).children().hide(); }';
+		$insert_js .= 'var prev_ele = $("#post_toggle").prev();  $("#post_toggle").remove(); ';
+		$insert_js .= 'var toggle_node = "<a id=\'post_toggle\' data-href=\"javascript:void(0)\" onclick=\"insert_post_title()\" rel=\"external\"><li class=\"side_bar_word\">';
+		$insert_js .= '更多<span class=\"iconclass min\">H</span></li></a>";';
+		$insert_js .= '$( toggle_node ).insertAfter(prev_ele);';
+		$insert_js .= '}';
+		
+		$insert_js .= ' function insert_post_title(){ var total_post = ' . $tot_post_cnt . '; for(i=5 ;i < total_post; i ++) { 
+				var sel_id = "#yt"+i ;  $(sel_id).children().show();  }';
+		$insert_js .= 'var prev_ele = $("#post_toggle").prev();  $("#post_toggle").remove(); ';
+		$insert_js .= 'var toggle_node = "<a id=\'post_toggle\' data-href=\"javascript:void(0)\" onclick=\"hide_post_title()\" rel=\"external\"><li class=\"side_bar_word\">';
+		$insert_js .= '收起<span class=\"iconclass min\">I</span></li></a>";';
+		$insert_js .= '$( toggle_node ).insertAfter(prev_ele);';
+		$insert_js .= '}';
+		//$insert_js .=  '$("#post_toggle").children().html("收起<span class=\"iconclass min\">I</span>"); }' ;
 		echo CHtml::script( $insert_js );
 		foreach( $my_post as $post )
 		{
@@ -73,8 +87,8 @@ Yii::app()->getClientScript()->scriptMap=array(
 	if ( $first_post_id > 0 ) {
 		$post_model = CoursePost::model()->findByPk( $first_post_id );
 	}
-	$create_url = sprintf("index.php?r=teach/coursepost/create&item_id=%d&course_id=%d", $item_model->id, $post['id'] );
-	$li_content = '<li class="side_bar_word">' . '创建新内容' . '</li>';
+	$create_url = sprintf("index.php?r=teach/coursepost/create&item_id=%d&course_id=%d", $item_model->id, $course_id );
+	$li_content = '<li class="side_bar_word">' . '创建新内容' . '<span class="iconclass min">+</span></li>';
 	echo CHtml::link( $li_content , $create_url , array('rel'=>'external') );
 ?>
 <div style="text-align:center">其他老师的课程资料</div>

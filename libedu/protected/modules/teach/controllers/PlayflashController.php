@@ -64,11 +64,7 @@ class PlayflashController extends Controller
 			$parent = $node->parent();
 			$node->outertext = '';
 			$flash_path = 'http://' . Yii::app()->params['web_host'] . '/dev/libedu/bin_data/' . $user_id . '/document/' . $flash_name;
-			$embed_str = sprintf( '<object width="420" height="363"><param name="movie" value="%s"></param> \
-					<param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param> \
-					<param name="wmode" value="opaque"></param> \
-					<embed src="%s" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="420" height="363"></embed> \
-					</object>' , $flash_path , $flash_path ) ;
+			$embed_str = sprintf( 't' , $flash_path , $flash_path ) ;
 			$parent->innertext = $embed_str;
 		}
 		$post_model->post = $html_dom->save();

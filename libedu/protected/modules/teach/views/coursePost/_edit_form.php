@@ -30,7 +30,8 @@ function file_upload_callback( obj , json ){
 	$('#file-upload-notification').fadeOut(3000);
 	var upload_ret = eval( '(' + json + ')');
 	$('#CoursePost_post').insertHtml('<img src="http://<?php echo Yii::app()->params['web_host']; ?>/dev/libedu/static/images/converting.png" class="doc_placeholder"></img>');
-	
+	var media_node = '<input name="mid[]" style="display:none" value="' + upload_ret.mid + '">';
+	$( media_node ).insertAfter( '#CoursePost_title' );	
 }
 </script>
 <h2>课程内容:</h2>
@@ -43,7 +44,7 @@ function file_upload_callback( obj , json ){
 				'fileUpload'  => Yii::app()->createAbsoluteUrl('teach/coursepost/upload&item_id='.$item_id),
 				'fileUploadCallback' => "js:file_upload_callback",
 				'autosave'=> $base_auto_save_url ,
-				'interval' => 5,
+				'interval' => 10,
 				'autosaveCallback'=>"js:function( response,redactor_ins,doc){
 					var json_obj = eval( response );
 					if ( json_obj.post_id != '' ) {
@@ -60,6 +61,7 @@ function file_upload_callback( obj , json ){
 <div class="white">
 <button name="publish" type="submit" onclick="return checkPost();">发布</button>
 <button name="draft" type="submit">预览</button>
+<button name="draft" type="submit">存草稿</button>
 <button name="cancel" type="submit">取消</button>
 </div>
 	<?php $this->endWidget(); ?>
