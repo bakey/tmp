@@ -15,15 +15,14 @@ Yii::app()->getClientScript()->scriptMap=array(
 <div class="container">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'question-form'.$qid,
+	'id'=>isset($level)?'subquestion-form'.$qid:'question-form'.$qid,
 	'enableAjaxValidation'=>false,
-	'htmlOptions'=>array('class'=>'well'),
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="carton">
-		<h2>回答问题</h2>
+		<h2><?php echo $anstyp==1? '追问' : '回答'; ?></h2>
 		<div class="col_12" style="margin:10px 0;">
 			<?php echo $form->error($model,'details'); ?>
 			<?php
@@ -31,27 +30,19 @@ Yii::app()->getClientScript()->scriptMap=array(
 			'model'=>$model,
 			 'width'=>'100%', 'height'=>'150px',
 			'attribute'=>'details',
+			'htmlOptions'=>array('id'=>uniqid()),
 			'editorOptions' => array(
 				'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
-				'lang'=>'en','toolbar'=>'default',
+				'lang'=>'en','toolbar'=>'mini',
 				)
 		));
 		?>
-		</div>
-		<div class="container">
-			<div class="col_4 roundbordered">
-				<label>知识点关联</label>
-				<p><?php echo CHtml::checkBoxList('kprelation',$skp,$kp);?></p>
-			</div>	
-			<div class="col_7 roundbordered">
-				<?php echo CHtml::label('请选择回答类型','Answer[type]',array('required'=>true));?>
-				<?php echo CHtml::dropDownList('Answer[type]',2,array('0'=>'评论','1'=>'追问','2'=>'回答'));?>
-			</div>		
+		<input type="hidden" name="Answer[type]" value="<?php echo $anstyp; ?>" />
 		</div>
 	</div>
 
 <?php $this->endWidget(); ?>
 	<div class="col_12" style="margin:10px 0;">
-		<button onclick="submitAnswer(<?php echo $qid;?>)" class="col_12 sugar">提交回答</button>
+		<button onclick="submit<?php if(isset($level)) echo 'Sub'; ?>Answer(<?php echo $qid;?>)" class="col_12 sugar">提交<?php echo $anstyp==1? '追问' : '回答';?></button>
 	</div>
 </div><!-- form -->

@@ -9837,3 +9837,17 @@ body.feather .map .caption {
 	text-align: center;
 	word-wrap: break-word;
 }
+
+.list-view a{
+	color:#555;
+	text-decoration: none;
+}
+
+.list-view a:hover{
+	color:#666;
+}
+
+img.img-polaroid{
+	padding: 2px;
+	border: 1px solid #C7D2D2;
+}
