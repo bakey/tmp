@@ -10,16 +10,44 @@ function checkPost()
 		return true;
 	}
 }
+function del_draft_post( element )
+{
+	var del_url = '<?php echo CController::createUrl('/teach/coursepost/delete&post_id=')?>' +	$(element).attr("data-post-id");
+	var post_title_id = '#draft_post_title_' + $(element).attr("data-post-id");
+	if ( !confirm("是否确定删除？") ) {
+		return ;
+	}
+	
+	$.ajax(
+			{
+				url : del_url,
+				type: 'GET',
+				success : function(data) {
+						var result = eval( '(' + data + ')' );
+						if ( result.del_ret ) {
+							$( post_title_id ).parent().parent().remove();
+							$('#CoursePost_title').val("");
+							$('#CoursePost_post').setCode("");
+						}				
+				},
+			}
+		);
+	var cnt = parseInt( $('#draft_post_count').text() );
+	--cnt ;
+	$('#draft_post_count').text( String(cnt) );
+	$( '#del_button' ).toggle();
+	return false;
+}
 </script>
 
 <div class="form">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'course-post-form',
+	'action' => $base_create_url,
 	'enableAjaxValidation'=>true,
 )); ?>
 
-<input type="text" id="CoursePost_title" name="CoursePost[post_title]" height="10px" 
-		placeholder="请填写课程题目">
+<input type="text" id="CoursePost_title" name="CoursePost[post_title]" height="10px"  placeholder="请填写课程题目"  <?php if ( !$model->isNewRecord ) { echo "value=\"" . $model->title . "\""; } ?>">
 </input>
 
 <div id="file-upload-notification" style="display:none;color:red">上传成功!!</div>
@@ -59,10 +87,11 @@ function file_upload_callback( obj , json ){
 ?>
 
 <div class="white">
-<button name="publish" type="submit" onclick="return checkPost();">发布</button>
-<button name="draft" type="submit">预览</button>
-<button name="draft" type="submit">存草稿</button>
-<button name="cancel" type="submit">取消</button>
+	<button name="publish" type="submit" onclick="return checkPost();">发布</button>
+	<button name="preview" type="submit">预览</button>
+	<button name="draft" type="submit">存草稿</button>
+	<button name="cancel" type="submit">取消</button>
+	<button name="delete"  id="del_button" style="display:none" onclick="del_draft_post(this); return false;">删除</button>
 </div>
 	<?php $this->endWidget(); ?>
 

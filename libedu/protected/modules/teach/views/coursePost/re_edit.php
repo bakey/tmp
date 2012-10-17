@@ -1,45 +1,32 @@
-<?php 
-$this->breadcrumbs=array(
-	'课程资料'=>array('/teach/course/update&course_id='.$course_id),
-	'重新编辑',
+<?php
+Yii::app()->getClientScript()->scriptMap=array(
+	'jquery.js'=>false,
 );
 ?>
-<div class="form">
-<?php 
-$form=$this->beginWidget('CActiveForm', array(
-		'id'=>'course-post-form',
-		'action' => $baseCreateUrl ,
-		'enableAjaxValidation'=>false,
-));
-echo $form->labelEx($post_model,'post');
-?>
-<?php	
-	$this->widget('application.extensions.redactorjs.Redactor',array(
-		'model'=>$post_model,
-		'attribute'=>'post',
-		'editorOptions' => array(
-				'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload&item_id='.$item_id),
-				'fileUpload'  => Yii::app()->createAbsoluteUrl('teach/coursepost/upload&item_id='.$item_id),
-				'autosave'=> $baseAutoSaveUrl,
-				'interval' => 5,
-				'autosaveCallback'=>"js:function(data,redactor_ins,doc){
-					var json_obj = eval( data );
-					redactor_ins.opts.autosave = '" . $baseAutoSaveUrl . "';".
-					"var createUrl = '" . $baseCreateUrl . "';" .  
-					"doc.getElementById('course-post-form').setAttribute('action' , createUrl );				 
-				}",
-				'focus' => false,
-		  ),
-	));
-?>
-<div class="row buttons">
+<ul class="tabs">
+	<li class="active_tab side_bar_word" >
 		<?php
-		 echo CHtml::submitButton('发布' , array('name'=>'publish'));
-		 echo CHtml::submitButton('存草稿' , array('name'=>'draft'));
-		 echo CHtml::submitButton('预览' , array('name'=>'draft'));
-		 echo CHtml::submitButton('取消' , array('name'=>'cancel'));
+			echo CHtml::link($item_model->content , array("index&item_id=" . $item_model->id) , array('rel'=>'external') );
 		?>
-	</div>
-
-<?php $this->endWidget(); ?>
+	</li>
+</ul>
+<div class="tabs">
+     <div id="tab_one" class="tab mytab">
+     	<div>
+        	<div class="content">
+       			<?php
+       				$this->renderPartial( '_edit_form' , array(
+								'model'				 => $post_model,
+								'base_auto_save_url' => $baseAutoSaveUrl,
+								'base_create_url'    => $baseCreateUrl,
+								'item_id'			 => $item_model->id,
+							) ); 
+       			?>
+      		</div>
+     	</div>
+     </div>
 </div>
+
+
+
+
