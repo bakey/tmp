@@ -43,6 +43,6 @@ Yii::app()->getClientScript()->scriptMap=array(
 
 <?php $this->endWidget(); ?>
 	<div class="col_12" style="margin:10px 0;">
-		<button onclick="submit<?php if(isset($level)) echo 'Sub'; ?>Answer(<?php echo $qid;?>)" class="col_12 sugar">提交<?php echo $anstyp==1? '追问' : '回答';?></button>
+		<button onclick="submit<?php if(isset($level)){if($level == 2) echo 'Subb'; else echo 'Sub';}  ?>Answer(<?php echo $qid;?>)" class="col_12 sugar">提交<?php echo $anstyp==1? '追问' : '回答';?></button>
 	</div>
 </div><!-- form -->
