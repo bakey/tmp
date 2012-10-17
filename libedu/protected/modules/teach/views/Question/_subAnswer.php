@@ -5,7 +5,7 @@
 	<div class="col_10">
 		<div class="col_12 roundbordered tinytinyallpadding">
 
-				<p><?php echo CHtml::encode($data->owner_info->user_profile->real_name); ?> 于 <?php echo CHtml::encode($data->create_time); ?> <?php 
+				<p><?php echo $data->level; echo CHtml::encode($data->owner_info->user_profile->real_name); ?> 于 <?php echo CHtml::encode($data->create_time); ?> <?php 
 					   $anstype = ''; 
 						if($data->type == 1){
 							$anstype= '追问';
@@ -61,7 +61,7 @@
 						if($data->level != 0){
 							echo '<div class="col_2">
 					<p> ';
-						echo CHtml::link('回答'.'(0)','javascript:void(0);',
+						/*echo CHtml::link('回答'.'(0)','javascript:void(0);',
 							array(
 							'onclick'=>CHtml::ajax( array('url'=>Yii::app()->createUrl('/teach/question/zwtoanswer',array('qid'=>$data->id,'type'=>2)),
 							'update'=>'#subanswer'.$data->id,'success'=>'js:function(data){$("#subanswer'.$data->id.'").html(data);$("#subanswer'.$data->id.'").fadeIn();}'
@@ -69,12 +69,37 @@
 
 							));
 						echo '</p>
-				</div>';
+				</div>';*/
+
+						echo '<a href="javascript:void(0)" onclick="answerzwtoanswer()">回答</a>
+					<script type="text/javascript">
+						function answerzwtoanswer(cid){
+							$.fn.modal({
+								"url":';
+								echo '"';
+								echo Yii::app()->createUrl("/teach/question/answerzwtoanswer",array("qid"=>$data->id,'type'=>2));
+								echo '",';
+								echo '"width":700,
+								"height":330,
+								"padding":"20px",
+							});
+
+							$("#overlays .modal").bind("DOMSubtreeModified", function(event) {
+								$("#overlays .modal").css("height",parseInt($("#modaltreeview").height())+280+"px");
+							});
+						}
+					</script>';
+					echo '</p>
+				</div><a href="javascript:void(0)" style="display:none" id="subzwtrigger'.$data->id.'" onclick="$('; echo "'#subzwtrigger".$data->level."'"; echo ').click();">a</a><div id="bottomansdiv'.$data->id.'" class="col_12">';
+					$tempans = Answer::model()->findAllByAttributes(array('level'=>$data->id),array('order'=>'create_time DESC'));
+					foreach($tempans as $singleans){
+						echo '<div class="col_12 roundbordered" style="margin-bottom:10px !important;"><p>'.$singleans->owner_info->user_profile->real_name.'回答道：</p><blockquote>'.$singleans->details.'</blockquote></div>';
+					}
+					echo '</div>';
 						}
 					}
 			?>
-
-
+					
 			<div class="carton roundbordered nobackground tinyallpadding col_11" id="subanswer<?php echo $data->id ?>" style="display:none;">
 			</div>
 		</div>

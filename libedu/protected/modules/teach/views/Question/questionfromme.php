@@ -6,6 +6,12 @@
 	array('label'=>'Create Question', 'url'=>array('create')),
 	array('label'=>'Manage Question', 'url'=>array('admin')),
 );*/
+
+Yii::app()->getClientScript()->scriptMap=array(
+										'jquery.js'=>false,
+										'styles.css'=>false,
+										//'pager.css'=>false,
+								);
 ?>
 
 <script type="text/javascript">
@@ -108,11 +114,11 @@ $(document).ready(function(){
 </div>
 
 <ul class="tabs">
-    <li class="current">
-        <a href="#tab_one">问答首页</a>
-    </li>
     <li>
-        <a href="<?php echo Yii::app()->createUrl('/teach/question/questionfromme'); ?>" rel="external">我的提问</a>
+        <a href="<?php echo Yii::app()->createUrl('/teach/question/myquestion'); ?>" rel="external">问答首页</a>
+    </li>
+    <li class="current">
+        <a href="#tab_one" rel="external">我的提问</a>
     </li>
     <li>
         <a href="<?php echo Yii::app()->createUrl('/teach/question/questionnotanswered'); ?>" rel="external">未回答问题</a>
@@ -133,57 +139,7 @@ $(document).ready(function(){
 <div class="tabs">
     <div id="tab_one" class="tab padding">
     	<div class="container" rel="2">
-    		<div class="carton col_12 nobackground dotbottom">
-    			<h2>今天有什么问题么</h2>
-    			<?php $form=$this->beginWidget('CActiveForm', array(
-					'id'=>'newquestion-form',
-					'enableAjaxValidation'=>false,
-				)); 
-    				$model = new Question;
-    				Yii::app()->getClientScript()->scriptMap=array(
-										'jquery.js'=>false,
-										'styles.css'=>false,
-										//'pager.css'=>false,
-								);
-				?>
-				<div id="chapterlist" style="display:none">
-					<?php echo $form->textField($model,'item',array('id'=>'questioninput')); ?>
-				</div>
-				<div class="col_12" style="margin:10px 0;">
-					<?php echo $form->error($model,'details'); ?>
-					<?php
-				$this->widget('application.extensions.redactorjs.Redactor',array(
-					'model'=>$model,
-					 'width'=>'100%', 'height'=>'150px',
-					'attribute'=>'details',
-					'editorOptions' => array(
-						'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
-						'lang'=>'en','toolbar'=>'default',
-						)
-				));
-				?>
-				</div>
-				<?php $this->endWidget(); ?>
-				<div class="container">
-					<div class="col_3 offset_9">
-						<button onclick="selectChapterForQuestion()" class="col_12 sugar">提问</button>
-					</div>	
-				</div>
-    		</div>
     		<div class="carton col_12 nobackground">
-    			<div class="container dotbottom normaltoppadding">
-						<a href="javascript:void(0);" onclick="changeToTabByIndex(event,0)" rel="external"><div class="carton col_3">
-							<div class="subcontent bordered sail">
-								最新的提问
-							</div>
-						</div></a>
-
-						<a href="javascript:void(0);" onclick="changeToTabByIndex(event,1)" rel="external"><div class="carton col_3">
-							<div class="subcontent bordered">
-								章节下的提问
-							</div>
-						</div></a>
-					</div>
 				<div class="content animated fadeInLeft tinyallpadding" id="recentquestions" style="min-height:200px;">
 					
 
@@ -196,32 +152,6 @@ $(document).ready(function(){
         				'ajaxUpdate'=>true,
         				'pager'=>array('pageSize'=>5),
 					)); ?>
-				</div>
-				<div class="content animated fadeInLeft tinytinyallpadding">
-					<div class="container">
-						<div class="col_2 roundbordered carton">
-							<h2>选择章节</h2>
-							<?php
-							/* @var $this UserController */
-							/* @var $data User */
-								$url = 'question/ajaxFillTree&edition_id='.$eid;
-									$this->widget(
-										    'CTreeView',
-											array(
-									            'animated'=>'fast', //quick animation
-									            'collapsed' => false,
-									            'url' => array( $url ),
-											)
-									);
-							?>
-
-
-						</div>
-						<div class="col_9 roundbordered carton" id="questiongroupbyitem" style="display:none;">
-							&nbsp;
-						</div>
-					</div>
-
 				</div>
 			</div>
     </div>

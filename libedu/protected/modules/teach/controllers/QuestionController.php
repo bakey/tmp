@@ -34,7 +34,7 @@ class QuestionController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement','generatequestionfeed','myquestion','getquestionbyitem','zwtoanswer'),
+				'actions'=>array('create','update','getchapterfromcourse','ajaxfilltree','answer','getallsubelement','generatequestionfeed','myquestion','getquestionbyitem','zwtoanswer','questionnotanswered','allmyansweredquestion','questionfromme','answerzwtoanswer'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -113,9 +113,13 @@ class QuestionController extends Controller
 		foreach ($mycourse as $singlecourse) {
 			$res[$singlecourse->id ] = $singlecourse->name;
 		}
-		
+
 		$cq = Question::model()->findByPk($qid);
 
+		if(isset($_REQUEST['subans'])){
+			$tempans = Answer::model()->findByPk($qid);
+			$cq = Question::model()->findByPk($tempans->question_id);
+		}
 		if(!$cq){
 			throw new CHttpException(403,'问题不存在');
 		}else{
@@ -249,6 +253,38 @@ class QuestionController extends Controller
 		}
 	}
 
+	public function actionAnswerZwToAnswer($qid,$type){
+		$model = new Answer;
+		$this->renderPartial('_answer',array('model'=>$model,
+			'qid'=>$qid,
+			'anstyp'=>$type,'level'=>2),false,true);
+		echo '<script type="text/javascript">
+	function submitSubbAnswer(qid){
+		var data1=$("#subquestion-form"+qid).serialize();
+		$.ajax({
+	    type: "POST",
+	    url: "'.Yii::app()->createUrl("/teach/question/answer",array("qid"=>$qid,"subans"=>1)).'",
+	    data:data1,
+	    success:function(data){
+	    			if(data == "success"){
+	    				var caloader = \'<div class="libajaxloader libajaxloaderwithbg"></div>\';
+	    				$("#bottomansdiv'.$qid.'").append(caloader);
+	    				$("#subzwtrigger'.$qid.'").click();
+	    				$("#overlays .modal").fadeOut(100);
+						$("#overlays").removeClass();
+						$(document).unbind("keyup");
+	    			}
+	              },
+	    error: function(data,err,err1) { // if error occured
+	         alert("Error occured.please try again"+err+err1);
+	    },
+	    dataType:"html"
+	  });
+	 
+	}
+</script>';
+	}
+
 	public function actionZwToAnswer($qid,$type){
 		$model=new Answer;
 		
@@ -258,7 +294,7 @@ class QuestionController extends Controller
 			throw new CHttpException(403,'回答不存在');
 		}else{
 			//get kp by question kp relation
-			$res = Answer::model()->findAllByAttributes(array('level'=>$qid,'type'=>$type),array('order'=>'create_time DESC'));
+			$res = Answer::model()->findAllByAttributes(array('level'=>$qid,'type'=>$type),array('order'=>'create_time DESC',));
 			if(!$res){
 				$this->renderPartial('_answer',array('model'=>$model,
 				'qid'=>$qid,
@@ -480,9 +516,9 @@ class QuestionController extends Controller
 		));
 	}
 
-	public function actionQuestionNotAnswered()
+
+	public function actionAllMyAnsweredQuestion()
 	{
-		//$this->layout = '//layouts/main_general';
 		$ccourse = null;
 		$eid = null;
 		if(isset(Yii::app()->user->course)){
@@ -490,7 +526,6 @@ class QuestionController extends Controller
 			$edition = Course::model()->findByPk($ccourse);
 			$edition = $edition->edition;
 		}
-		$dataprovider = null;
 		if(Yii::app()->user->urole == 1)
 		{
 			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
@@ -501,21 +536,109 @@ class QuestionController extends Controller
 		else if(Yii::app()->user->urole == 2)
 		{
 			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
-			'select'=>'t.id,t.owner,t.item,t.details,t.create_time,t.view_count,tbl_answer.question_id',
-	        'join'=>'LEFT JOIN tbl_answer ON t.id = tbl_answer.question_id',
-	        'having'=>'COUNT( tbl_answer.id ) <1',
+			'select'=>'t.id,t.owner,t.item,t.details,t.create_time,t.view_count,tbl_item.edition,SUM(CASE WHEN (tbl_answer.type = 2 AND tbl_answer.level = 0) THEN 1 ELSE 0 END) AS numberofanswers, SUM(CASE WHEN (tbl_answer.type = 1 AND tbl_answer.level = 0) THEN 1 ELSE 0 END) AS numberofzw, SUM(CASE WHEN tbl_answer.owner = '.Yii::app()->user->id.' THEN 1 ELSE 0 END) AS numberofmyanswer ',
+	        'join'=>'LEFT JOIN tbl_item ON t.item = tbl_item.id LEFT JOIN tbl_answer ON tbl_answer.question_id = t.id',
+	        'condition'=>'tbl_item.edition='.$edition->id,
 	        'group'=>'t.id',
-	        'condition'=>'t.owner='.Yii::app()->user->id,
-	        'order'=>'create_time DESC',
+	        'together'=>true,
+	        'having'=>' numberofmyanswer > 0',
+	        'order'=>'t.create_time DESC',
 	    	),
+			'pagination'=>array(
+                'pageSize'=>5,
+            ),
 	    	));
 		}
-		$this->render('myquestion',array(
+		
+		$this->render('myanswered',array(
 			'dataProvider'=>$dataProvider,
 			'ccourse' =>$ccourse,
 			'eid'=>$edition->id,
 		));
+		
+	}	
+
+
+	public function actionQuestionFromMe()
+	{
+		$ccourse = null;
+		$eid = null;
+		if(isset(Yii::app()->user->course)){
+			$ccourse = Yii::app()->user->course;
+			$edition = Course::model()->findByPk($ccourse);
+			$edition = $edition->edition;
+		}
+		if(Yii::app()->user->urole == 1)
+		{
+			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
+       				 'condition'=>'owner='.Yii::app()->user->id,
+        			'order'=>'create_time DESC',
+    		),));
+		}
+		else if(Yii::app()->user->urole == 2)
+		{
+			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
+			'select'=>'t.id,t.owner,t.item,t.details,t.create_time,t.view_count,tbl_item.edition,SUM(CASE WHEN (tbl_answer.type = 2 AND tbl_answer.level = 0) THEN 1 ELSE 0 END) AS numberofanswers, SUM(CASE WHEN (tbl_answer.type = 1 AND tbl_answer.level = 0) THEN 1 ELSE 0 END) AS numberofzw',
+	        'join'=>'LEFT JOIN tbl_item ON t.item = tbl_item.id LEFT JOIN tbl_answer ON tbl_answer.question_id = t.id',
+	        'condition'=>'tbl_item.edition='.$edition->id.' AND t.owner = '.Yii::app()->user->id,
+	        'group'=>'t.id',
+	        'together'=>true,
+	        'order'=>'t.create_time DESC',
+	    	),
+			'pagination'=>array(
+                'pageSize'=>5,
+            ),
+	    	));
+		}
+		
+		$this->render('questionfromme',array(
+			'dataProvider'=>$dataProvider,
+			'ccourse' =>$ccourse,
+			'eid'=>$edition->id,
+		));
+		
 	}
+
+	public function actionQuestionNotAnswered()
+	{
+		$ccourse = null;
+		$eid = null;
+		if(isset(Yii::app()->user->course)){
+			$ccourse = Yii::app()->user->course;
+			$edition = Course::model()->findByPk($ccourse);
+			$edition = $edition->edition;
+		}
+		if(Yii::app()->user->urole == 1)
+		{
+			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
+       				 'condition'=>'owner='.Yii::app()->user->id,
+        			'order'=>'create_time DESC',
+    		),));
+		}
+		else if(Yii::app()->user->urole == 2)
+		{
+			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
+			'select'=>'t.id,t.owner,t.item,t.details,t.create_time,t.view_count,tbl_item.edition,SUM(CASE WHEN (tbl_answer.type = 2 AND tbl_answer.level = 0) THEN 1 ELSE 0 END) AS numberofanswers, SUM(CASE WHEN (tbl_answer.type = 1 AND tbl_answer.level = 0) THEN 1 ELSE 0 END) AS numberofzw',
+	        'join'=>'LEFT JOIN tbl_item ON t.item = tbl_item.id LEFT JOIN tbl_answer ON tbl_answer.question_id = t.id',
+	        'condition'=>'tbl_item.edition='.$edition->id,
+	        'group'=>'t.id',
+	        'together'=>true,
+	        'having'=>' numberofanswers = 0',
+	        'order'=>'t.create_time DESC',
+	    	),
+			'pagination'=>array(
+                'pageSize'=>5,
+            ),
+	    	));
+		}
+		
+		$this->render('notanswered',array(
+			'dataProvider'=>$dataProvider,
+			'ccourse' =>$ccourse,
+			'eid'=>$edition->id,
+		));
+		
+	}	
 
 	public function actionMyQuestion()
 	{
@@ -536,7 +659,7 @@ class QuestionController extends Controller
 		else if(Yii::app()->user->urole == 2)
 		{
 			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
-			'select'=>'t.id,t.owner,t.item,t.details,t.create_time,t.view_count,tbl_item.edition,SUM(CASE WHEN tbl_answer.type = 2 THEN 1 ELSE 0 END) AS numberofanswers, SUM(CASE WHEN tbl_answer.type = 1 THEN 1 ELSE 0 END) AS numberofzw',
+			'select'=>'t.id,t.owner,t.item,t.details,t.create_time,t.view_count,tbl_item.edition,SUM(CASE WHEN (tbl_answer.type = 2 AND tbl_answer.level = 0) THEN 1 ELSE 0 END) AS numberofanswers, SUM(CASE WHEN (tbl_answer.type = 1 AND tbl_answer.level = 0) THEN 1 ELSE 0 END) AS numberofzw',
 	        'join'=>'LEFT JOIN tbl_item ON t.item = tbl_item.id LEFT JOIN tbl_answer ON tbl_answer.question_id = t.id',
 	        'condition'=>'tbl_item.edition='.$edition->id,
 	        'group'=>'t.id',
@@ -566,13 +689,25 @@ class QuestionController extends Controller
 
 	public function actionGetQuestionByItem()
 	{
+		$chid = 0;
+		if(isset($_POST['chid'])){
+			$chid = $_POST['chid'];
+		}else if(isset($_REQUEST['chid'])){
+			$chid = $_REQUEST['chid'];
+		}
 		$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
-        'condition'=>'item='.$_POST['chid'].' AND owner = '.$_POST['uid'],
+		'select'=>'t.id,t.owner,t.item,t.details,t.create_time,t.view_count,tbl_item.edition,SUM(CASE WHEN tbl_answer.type = 2 THEN 1 ELSE 0 END) AS numberofanswers, SUM(CASE WHEN tbl_answer.type = 1 THEN 1 ELSE 0 END) AS numberofzw',
+	        'join'=>'LEFT JOIN tbl_item ON t.item = tbl_item.id LEFT JOIN tbl_answer ON tbl_answer.question_id = t.id',
+        'condition'=>'item='.$chid,
         'order'=>'create_time DESC',
-    ),));
+        'group'=>'t.id',
+    ),'pagination'=>array(
+                'pageSize'=>5,
+            ),)
+		);
 		$this->renderPartial('index',array(
 			'dataProvider'=>$dataProvider,
-		));
+		),false,true);
 	}
 
 	/**
