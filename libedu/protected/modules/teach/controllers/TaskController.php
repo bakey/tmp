@@ -357,8 +357,7 @@ class TaskController extends Controller
 		$this->render('viewTopics',array(
 				'data'=>$problems,
 				'id'=>$id));
-	}
-	
+	}	
 
 	/**
 	 * Updates a particular model.

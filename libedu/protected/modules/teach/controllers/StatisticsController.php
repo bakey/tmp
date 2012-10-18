@@ -122,7 +122,7 @@ class StatisticsController extends Controller
 		));
 		
 	}
-	public function actionIndex()
+	public function actionOldIndex()
 	{
 		if ( LibUser::is_teacher() ) 
 		{			 
@@ -163,6 +163,31 @@ class StatisticsController extends Controller
 			$this->render('student_stat_index' );
 		}
 	}
+
+	public function actionIndex(){
+		$ctask = Task::model()->findAllByAttributes(array('author'=>Yii::app()->user->id),array(
+			'select'=>'t.id,t.name, SUM(CASE WHEN tbl_task_record.task IS NOT NULL THEN 1 ELSE 0 END ) AS numberoftaken',
+			//'condition'=>'t.create_time <= "'.date("Y-m-d H:i:s").'"',
+			'join'=>'LEFT JOIN tbl_task_record ON t.id = tbl_task_record.task',
+			'group'=>'t.id',
+			'order'=>'numberoftaken DESC',
+			'limit'=>'10'
+			)
+		);
+		$xAxisArray = array();
+		$dataArray = array();
+		$ttl = 0;
+
+		foreach ($ctask as $singletask) {
+			$ttl ++;
+			array_push($xAxisArray, '测验'.$ttl);	
+			array_push($dataArray,intval($singletask->numberoftaken));
+			//echo $singletask->name.' '.$singletask->numberoftaken.' <br />';
+		}
+		$this->render('lec_index', array('xaxisarray' => $xAxisArray, 'dataarray' => $dataArray, 'ctask'=>$ctask));
+	}
+
+
 	public function actionGetTaskStat( $task_id )
 	{	
 		if ( LibUser::is_teacher() )
