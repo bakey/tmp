@@ -22,6 +22,10 @@ class Task extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * @return Task the static model class
 	 */
+
+
+	public $numberoftaken;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -48,7 +52,7 @@ class Task extends CActiveRecord
 			array('create_time, update_time, last_time, description', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, item, name, create_time, update_time, last_time, author, description, status', 'safe', 'on'=>'search'),
+			array('id, item, name, create_time, update_time, numberoftaken, last_time, author, description, status', 'safe', 'on'=>'search'),
 		);
 	}
 

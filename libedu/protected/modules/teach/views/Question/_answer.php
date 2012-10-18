@@ -12,7 +12,7 @@ Yii::app()->getClientScript()->scriptMap=array(
 
 
 
-<div class="container">
+<div class="container" id="<?php echo isset($level)?'subquestion-container'.$qid:'question-container'.$qid; ?>">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>isset($level)?'subquestion-form'.$qid:'question-form'.$qid,
@@ -32,6 +32,10 @@ Yii::app()->getClientScript()->scriptMap=array(
 			'attribute'=>'details',
 			'htmlOptions'=>array('id'=>uniqid()),
 			'editorOptions' => array(
+				'buttons'=>array('html', '|', 'formatting', '|', 'bold', 'italic', 'deleted', 'underline','|','unorderedlist', 'orderedlist', 'outdent', 'indent', '|','image',  'table', 'link', '|','fontcolor', 'backcolor', '|', 'alignment', '|', 'horizontalrule'),
+							 
+							// additional buttons /*'video', 'file',*/
+							// , 'alignleft', 'aligncenter', 'alignright', 'justify'
 				'imageUpload' => Yii::app()->createAbsoluteUrl('teach/coursepost/upload'),
 				'lang'=>'en','toolbar'=>'mini',
 				)

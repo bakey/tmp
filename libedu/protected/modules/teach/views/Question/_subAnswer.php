@@ -71,14 +71,14 @@
 						echo '</p>
 				</div>';*/
 
-						echo '<a href="javascript:void(0)" onclick="answerzwtoanswer()">回答</a>
+						echo '<a href="javascript:void(0)" onclick="answerzwtoanswer('.$data->id.')">回答</a>
 					<script type="text/javascript">
 						function answerzwtoanswer(cid){
 							$.fn.modal({
 								"url":';
 								echo '"';
-								echo Yii::app()->createUrl("/teach/question/answerzwtoanswer",array("qid"=>$data->id,'type'=>2));
-								echo '",';
+								echo Yii::app()->createUrl("/teach/question/answerzwtoanswer",array('type'=>2));
+								echo '"+"&qid="+cid,';
 								echo '"width":700,
 								"height":330,
 								"padding":"20px",
