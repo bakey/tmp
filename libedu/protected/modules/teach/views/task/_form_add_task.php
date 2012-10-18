@@ -6,17 +6,6 @@
 )); ?>
 
 	<?php echo $form->errorSummary($task_model); ?>
-	<div class="row">
-		<?php echo $form->labelEx($task_model,'测验名'); ?>
-		<?php echo $form->textField($task_model,'name',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($task_model,'name'); ?>
-	</div>
-	
-	<div class="row">
-			<?php echo $form->labelEx($task_model,'测试描述'); ?>
-			<?php echo $form->textArea($task_model,'description',array('rows'=>6, 'cols'=>50)); ?>
-			<?php echo $form->error($task_model,'description'); ?>
-	</div>
 	
 	<div class="row" id="item_tree">
 	<h3>关联本课程以下章节</h3>

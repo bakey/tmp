@@ -72,12 +72,12 @@ class Task extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'item' => 'Item',
-			'name' => 'Name',
+			'name' => '请输入测试名',
 			'create_time' => 'Create Time',
 			'update_time' => 'Update Time',
 			'last_time' => 'Last Time',
 			'author' => 'Author',
-			'description' => 'Description',
+			'description' => '请输入测试的简述',
 			'status' => 'Status',
 		);
 	}

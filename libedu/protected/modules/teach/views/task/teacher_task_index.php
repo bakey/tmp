@@ -1,18 +1,24 @@
 <?php
-$cs = Yii::app()->getClientScript();
-$cs->scriptMap=array(
+Yii::app()->getClientScript()->scriptMap=array(
 		'jquery.js'=>false,
 );
-
 ?>
-<?php
-$this->menu=array(
-	array('label'=>'创建测验', 'url'=>array('create')),
-	array('label'=>'管理测验', 'url'=>array('admin')),
-);
-echo( Yii::app()->user->real_name . "老师 ，以下是你最近出的试卷");
-$this->widget('zii.widgets.CListView', array(
-		'dataProvider'=>$dataProvider,
-		'itemView'=>'_view_teacher_task',
-));
-?>
+<script type="text/javascript">
+function create_task()
+{
+	$.fn.modal({
+		url : '<?php echo Yii::app()->params['index_path']?>?r=teach/task/newtaskname',
+    	/*theme:      "dark",
+    	width:      80,
+    	height:     40,
+    	layout:     "elastic",
+    	url:        undefined,
+    	content:    "<strong>HTML</strong> content",
+    	padding:    "100px",*/
+    	animation:  "fadeIn"
+	});
+}
+</script>
+<button onclick="create_task()">
+<span class="iconclass mid">+</span>
+创建测试</button>
