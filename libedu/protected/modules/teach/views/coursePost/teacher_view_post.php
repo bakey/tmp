@@ -24,7 +24,7 @@
  	} 
  ?>
  	<div class="carton col_4 topitemcarton post_title" >
- 		<div class="content">
+ 		<div class="content post_title" >
     <?php
     	if ( $post_model != null ) 
 		{

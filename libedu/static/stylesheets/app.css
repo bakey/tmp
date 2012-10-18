@@ -9806,6 +9806,7 @@ body.feather .map .caption {
 	margin-bottom: 5px;
 	width :       816px;
 	text-align:   center;
+	height:       55px;
 }
 .carton.post_grid{
 	min-height: 800px;
@@ -9855,6 +9856,24 @@ img.img-polaroid{
 	padding: 2px;
 	border: 1px solid #C7D2D2;
 }
+/*course add*/
+#draft_box { cursor: pointer;}
+
+ul.tabs li { 
+	cursor: pointer;
+}
+.post_title, .draft_post_update_time{ 
+	height: 25px; 
+	line-height: 25px;
+}
+
+#draft_post .side_bar_word { 
+	height: 50px; padding: 5px 0;
+}
+#draft_post { 
+	height: 487px; 
+	overflow: auto;
+}
 select.select_problem {
 	width: 100px;	
 }
@@ -9865,4 +9884,7 @@ select.select_problem {
 	height:1px; 
 	width: 745px;
 	border-bottom:1px dashed #000;
+}
+.content.post_title{
+	font-size: 45px;
 }

@@ -2,6 +2,7 @@
 Yii::app()->getClientScript()->scriptMap=array(
 	'jquery.js'=>false,
 );
+
 ?>
 <script type="text/javascript">
 function show_draft()
@@ -22,9 +23,8 @@ function insert_draft_to_editor(element)
 	$( "#CoursePost_title" ).val( $(element).children(".side_bar_word").children('.post_title').text() );
 	$( "#CoursePost_post" ).setCode( $(element).children(".side_bar_word").children('#draft_post_content').text() );
 
-//	$( element ).parent().children('.side_bar_word').each( function(){ alert( $(this) ); } );
-//	alert( $(element).siblings().html() );
-//	$( element ).children('.side_bar_word').toggleClass("sail");
+	//alert( $(element).children(".side_bar_word").children("#draft_post_title_817").html() );
+
 	$( "#del_button" ).attr( "data-post-id" , $(element).children(".side_bar_word").children('#draft_post_id').text() );
 	$( "#del_button" ).fadeIn(300);
 	var auto_save_url = 'http://<?php echo Yii::app()->params['web_host'] . Yii::app()->params['index_path']; ?>' + 
@@ -53,7 +53,7 @@ function insert_draft_to_editor(element)
 			echo '<li class="side_bar_word">';
 			echo '<div id="draft_post_id" style="display:none">' . $dpost->id .'</div>';
 			echo '<div class="post_title" id="draft_post_title_' . $dpost->id . '">' . $dpost->title . '</div>';
-			echo '<div id="draft_post_update_time">' . $dpost->update_time . '</div>';
+			echo '<div id="draft_post_update_time" class="draft_post_update_time">' . $dpost->update_time . '</div>';
 			echo '<div id="draft_post_content" style="display:none">' . $dpost->post . '</div>';
 			echo '</li>';
 			echo '</a>';

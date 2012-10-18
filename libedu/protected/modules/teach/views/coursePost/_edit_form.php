@@ -89,7 +89,7 @@ function file_upload_callback( obj , json ){
 
 <div class="white">
 	<button name="publish" type="submit" onclick="return checkPost();">发布</button>
-	<button name="preview" type="submit">预览</button>
+	<button name="preview" type="submit" onclick="return checkPost();">预览</button>
 	<button name="draft" type="submit">存草稿</button>
 	<button name="cancel" type="submit">取消</button>
 	<button name="delete"  id="del_button" style="display:none" onclick="del_draft_post(this); return false;">删除</button>
