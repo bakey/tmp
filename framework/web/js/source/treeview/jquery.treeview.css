@@ -5,8 +5,8 @@
 }
 
 .treeview ul {
-	background-color: white;
 	margin-top: 4px;
+	color:#000;
 }
 
 .treeview .hitarea {
@@ -26,6 +26,15 @@
 .treeview li {
 	margin: 0;
 	padding: 3px 0pt 3px 16px;
+}
+
+.treeview a{
+	text-decoration: none !important;
+	color:#000;
+}
+
+.treeview a:hover{
+	color:#e84a5f;
 }
 
 .treeview a.selected {

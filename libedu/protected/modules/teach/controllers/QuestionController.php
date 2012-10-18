@@ -75,21 +75,23 @@ class QuestionController extends Controller
 		{
 			$model->attributes=$_POST['Question'];
 			if($model->save()) {
-				$this->redirect(array('view','id'=>$model->id));
+			$this->renderPartial('_view',array(
+				'data'=>$model,
+			));
 			}
 		}
 
-		$mycourse = LibUser::model()->findByPk(Yii::app()->user->id);
+		/*$mycourse = LibUser::model()->findByPk(Yii::app()->user->id);
 		$mycourse = $mycourse->user_course;
 		
 		$res = array();
 		foreach ($mycourse as $singlecourse) {
 			$res[$singlecourse->id ] = $singlecourse->name;
-		}
-		$this->render('create',array(
+		}*/
+		/*$this->render('create',array(
 			'model'=>$model,
 			'mycourse'=>$res,
-		));
+		));*/
 	}
 
 	public function actionGenerateQuestionFeed(){
@@ -312,7 +314,7 @@ class QuestionController extends Controller
 			if(isset($_GET['root'])){
 				$res = ItemItem::model()->findByAttributes(array('parent'=>$child['id']));
 				if(!$res){
-					$nodeText = '<a id="child'.$child['id'].'" href="javascript:void(0);" onclick="doselectchapter('.$child['id'].')">'.$child['text'].'</a>';
+					$nodeText = '<a id="child'.$child['id'].'" href="javascript:void(0);" onclick="doselectchapter(event,'.$child['id'].')">'.$child['text'].'</a>';
 				}else{
 					$nodeText = $child['text'];	
 				}
@@ -330,8 +332,8 @@ class QuestionController extends Controller
 	}
 
 	public function actionGetChapterFromCourse(){
-		if(isset($_POST['cid'])){
-			$edition = Course::model()->findByPk($_POST['cid']);
+		if(isset(Yii::app()->user->course)){
+			$edition = Course::model()->findByPk(Yii::app()->user->course);
 			$edition = $edition->edition;
 			$this->renderPartial('_ajaxGetChapter',array('eid'=>$edition),false,true);
 		}else{
@@ -388,7 +390,7 @@ class QuestionController extends Controller
 		));
 	}
 
-	public function actionMyQuestion()
+	public function actionQuestionNotAnswered()
 	{
 		//$this->layout = '//layouts/main_general';
 		$ccourse = null;
@@ -414,6 +416,38 @@ class QuestionController extends Controller
 	        'group'=>'t.id',
 	        'condition'=>'t.owner='.Yii::app()->user->id,
 	        'order'=>'create_time DESC',
+	    	),));
+		}
+		$this->render('myquestion',array(
+			'dataProvider'=>$dataProvider,
+			'ccourse' =>$ccourse,
+			'eid'=>$edition->id,
+		));
+	}
+
+	public function actionMyQuestion()
+	{
+		$ccourse = null;
+		$eid = null;
+		if(isset(Yii::app()->user->course)){
+			$ccourse = Yii::app()->user->course;
+			$edition = Course::model()->findByPk($ccourse);
+			$edition = $edition->edition;
+		}
+		if(Yii::app()->user->urole == 1)
+		{
+			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
+       				 'condition'=>'owner='.Yii::app()->user->id,
+        			'order'=>'create_time DESC',
+    		),));
+		}
+		else if(Yii::app()->user->urole == 2)
+		{
+			$dataProvider=new CActiveDataProvider('Question',array('criteria'=>array(
+			'select'=>'t.id,t.owner,t.item,t.details,t.create_time,t.view_count,tbl_item.edition',
+	        'join'=>'LEFT JOIN tbl_item ON t.item = tbl_item.id',
+	        'condition'=>'t.owner='.Yii::app()->user->id.' AND tbl_item.edition='.$edition->id,
+	        'order'=>'t.create_time DESC',
 	    	),));
 		}
 		$this->render('myquestion',array(

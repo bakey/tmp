@@ -8,7 +8,10 @@ function show_total_item()
 }
 function show_current_item()
 {
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 66ef11dbd89f7664567bb8434330d3346f0fa912
 	$('#show_item_list').html( $("#current_item_list").html() ) ;
 	$('#show_item_list a').bind("tap",function(e){window.location.href = $(this).attr("data-href")});
 	$('#recent_course').addClass('sail');
@@ -33,10 +36,17 @@ $(document).ready(function(){
 			$content = '<div class="carton col_3"><div class="subcontent bordered" id="total_course">全部课程</div></div>';
 			echo CHtml::link( $content , '#' , array( 'onclick' => 'show_total_item();') );	 
 		?>					
+<<<<<<< HEAD
 		<div id="show_item_list"></div>
 		<div id="current_item_list" style="display:none" >
 		<?php
 			$this->renderPartial( '_current_item_list' , array( 
+=======
+	<div id="show_item_list"></div>
+	<div id="current_item_list" style="display:none" >
+	<?php
+		$this->renderPartial( '_current_item_list' , array( 
+>>>>>>> 66ef11dbd89f7664567bb8434330d3346f0fa912
 									'current_item' => $current_item , 
 									'item_info'	   => $item_info,
 									'course_id'    => $course_id,

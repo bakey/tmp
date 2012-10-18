@@ -1,10 +1,13 @@
 <div style="margin-top:50px">
       		
        			<?php 
-      				foreach( $top_items as $item )
+       				$top_item_cnt = count( $top_items );
+      				//foreach( $top_items as $item )
+      				for ( $i = 0 ; $i < $top_item_cnt ; ++ $i )
       				{
+      					$item = $top_items[ $i ];
       					echo '<span class="iconclass mid" style="float:left">M</span>';
-      					echo '<a href="#" onclick="">';
+      					echo '<a href="javascript:void(0)" onclick="">';
       					echo '<div class="carton col_4 topitemcarton">';
       					echo '<div class="content">';      					
       					echo "第" . $item->edi_index . "章" . $item->content;   
@@ -17,10 +20,16 @@
       					foreach( $children as $child )
       					{
       						echo '<div class="container wrap_item " style="">';
-							echo '<div style="padding-left:65px">';
+      						/*if ( $i >= 0 ){
+      							echo '<div style="padding-left:65px">';
+      						}
+      						else {
+      							echo '<div style="padding-left:65px;display:none">';
+      						}*/
+      						
+      						echo '<div style="padding-left:65px">';
 							echo '<span class="iconclass mid" style="float:left">M</span>';
 							echo '<div class="carton col_4 second_level_carton">';
-							echo '<div class="content item_name">';
 							
 							$post_cnt = CoursePost::model()->count( 'item_id=' . $child->id );
 							$index_link_node  = sprintf('<a rel="external"  href="index.php?r=teach/coursepost/index&item_id=%d">' , $child->id );

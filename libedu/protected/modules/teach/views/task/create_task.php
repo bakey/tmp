@@ -1,14 +1,4 @@
-<?php
-$this->breadcrumbs=array(
-	'测试首页'=>array('index'),
-	'新建测试',
-);
 
-$this->menu=array(
-	array('label'=>'测试首页', 'url'=>array('index')),
-	array('label'=>'管理测试', 'url'=>array('admin')),
-);
-?>
 
 <h1>创建测试</h1>
 

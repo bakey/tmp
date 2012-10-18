@@ -32,7 +32,7 @@ class CoursePostController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','test','reedit','autosave','viewbyid','drafttopublished','delete','create','update','upload'),
+				'actions'=>array('admin','test','loadpostbyauthor','reedit','autosave','viewbyid','drafttopublished','delete','create','update','upload'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -150,8 +150,13 @@ class CoursePostController extends Controller
 	}
 	private function getDocumentPath( $uid ) 
 	{
-		return Yii::app()->params['uploadFolder'] . "/" . $uid . "/document/";
+		return Yii::app()->params['uploadFolder'] . "/temp_upload/" . $uid . "/document/";
 	} 
+	private function getSaveDocPath( $uid )
+	{
+		return Yii::app()->params['uploadFolder'] . '/' . $uid . '/document/';
+	}
+
 	private function getThumbImageUrl( $file_name , $uid ) {
 		if ( null == $file_name || null == $uid ) {
 			return null;
@@ -217,6 +222,7 @@ class CoursePostController extends Controller
 			$post_media = new PostMedia;
 			$post_media->post = $post_id;
 			$post_media->mid = $mid;
+			$post_media->uid = Yii::app()->user->id;
 			$post_media->save();
 		}
 	}
@@ -316,7 +322,7 @@ class CoursePostController extends Controller
 			{
 				$this->savePostMediaRelation( $new_post_id );
 				$this->moveTracingItem( $item_id );
-				$this->redirect(array('viewbyid','post_id'=>$new_post_id , 'course_id'=>$course_id));
+				$this->redirect(array('index','item_id' => $item_id ));
 			}
 			else 
 			{
@@ -326,9 +332,7 @@ class CoursePostController extends Controller
 		}
 		else if ( isset($_POST['cancel']) )
 		{
-			$msg = sprintf("User cancel edit course post , user_id = %d , " , $user_id );
-			
-			$msg .= "get course id = " . $course_id ;
+			$msg = sprintf("User cancel edit course post , user_id = %d , course id = %d" , $user_id , $course_id );			
 			Yii::log( $msg , 'debug' );
 			$this->redirect( array('course/update&course_id=' . $course_id) );
 		}
@@ -381,16 +385,18 @@ class CoursePostController extends Controller
 	{
 		$relate_kp_models = ItemKp::model()->findAll( 'item=:iid' , array(':iid'=>$item_id) );
 	}
-	private function process_document( $former_name , $save_name , $doc_folder , $item_id )
+	private function process_document( $save_origin_doc_folder , $former_name , $save_name , $doc_folder , $item_id )
 	{
 		copy( $_FILES['file']['tmp_name'] , $doc_folder . $save_name );
+		//保存一份原始的文档，供用户下载
+		copy( $_FILES['file']['tmp_name'] , $save_origin_doc_folder . $former_name );
 		$multimedia = new Multimedia;
-		$multimedia->type = Multimedia::TYPE_PPT;
+		$multimedia->type 		 = Multimedia::TYPE_PPT;
 		$multimedia->former_name = $former_name;
-		$multimedia->save_name = $save_name;
-		$multimedia->uploader = Yii::app()->user->id;
-		$multimedia->status = Multimedia::STATUS_PROCESSING; //默认所有文档的初始状态都是处理中
-		$multimedia->item = $item_id;
+		$multimedia->save_name 	 = $save_name;
+		$multimedia->uploader 	 = Yii::app()->user->id;
+		$multimedia->status 	 = Multimedia::STATUS_PROCESSING; //默认所有文档的初始状态都是处理中
+		$multimedia->item 		 = $item_id;
 		$multimedia->upload_time = date( "Y-m-d H:i:s", time() );
 		$multimedia->save();	
 		return $multimedia;	
@@ -399,7 +405,7 @@ class CoursePostController extends Controller
 	{
 		$my_post_data = new CActiveDataProvider('CoursePost',array(
 				'criteria'=>array(
-						'condition'=> ('author='.$cur_user.' and item_id='.$item_id ),
+						'condition'=> ('author='.$cur_user.' and item_id='.$item_id . ' and status = ' . Yii::app()->params['course_post_status_published']),
 						'order'    => 'update_time DESC',
 				),
 				'pagination' => false, 
@@ -426,8 +432,30 @@ class CoursePostController extends Controller
 				'student_post_data'  => $student_post_data, 
 				'item_model'  	     => $item_model,
 				'course_id'   		 => Yii::app()->user->course,
-		));
-		
+		));		
+	}
+	/*
+	 * 获取某item下的某作者的所有post资料
+	 */
+	public function actionLoadPostByAuthor( $author , $item )
+	{
+		$post_models = CoursePost::model()->findAll( 'author=:uid and item_id=:iid' , array( ':uid' => $author , ':iid' => $item ) ) ;
+		/* 
+		$my_post_data = new CActiveDataProvider('CoursePost',array(
+				'criteria'=>array(
+						'condition'=> ('author='.$author.' and item_id='.$item ),
+						'order'    => 'update_time DESC',
+				),
+				'pagination' => false,
+		));	*/	
+		$return_data = array();
+		foreach( $post_models as $post )
+		{
+			$return_data[] = array( 'title' => $post->title , 'id' => $post->id );
+		}
+		//var_dump( $return_data );
+		//exit();
+		echo ( @json_encode( $return_data ) ); 
 	}
 	/*
 	 * 处理用户上传二进制文件
@@ -444,19 +472,29 @@ class CoursePostController extends Controller
 		$suffix = explode( '/' , $_FILES['file']['type'] );
 		$file_name .= $suffix[1];
 		
-		$target_folder = $this->getOriginPath( $uid );
-		$thumb_folder = $this->getThumbPath( $uid );
-		$doc_folder = $this->getDocumentPath( $uid );
-		if ( !is_dir( $target_folder ) ) {
+		//===================================================precheck the folder
+		//存放原始图片的文件夹		
+		$target_folder 				= $this->getOriginPath( $uid );
+		//存放缩略图的文件夹
+		$thumb_folder 				= $this->getThumbPath( $uid );
+		//临时保存一下的文件夹，这下面的文件转换完成后就会被删
+		$temp_doc_folder 			= $this->getDocumentPath( $uid );
+		//保存原始文档的文件夹
+		$save_origin_doc_folder 	= $this->getSaveDocPath( $uid );		
+		if ( !@is_dir( $target_folder ) ) {
 			mkdir( $target_folder , 0777 , true );
-		} 
-		if ( !is_dir( $thumb_folder ) ) {
+		}
+		if ( !@is_dir( $thumb_folder ) ) {
 			mkdir( $thumb_folder , 0777 , true );
 		}
-		if ( !is_dir( $doc_folder ) ) 
-		{
-			mkdir( $doc_folder , 0777 , true );
+		if ( !@is_dir( $temp_doc_folder ) ) {
+			mkdir( $temp_doc_folder , 0777 , true );
 		}
+		if ( !@is_dir( $save_origin_doc_folder) ) {
+			mkdir( $save_origin_doc_folder );
+		}	
+		//==============================================================
+		
 		
 		if ( $this->if_image_file_suffix($suffix[1]) )
 		{
@@ -476,15 +514,15 @@ class CoursePostController extends Controller
 						$image_origin_url );
 		}
 		else if ( $this->if_document($suffix[1]) )
-		{		
+		{				
 			//把多文档的信息存进数据库，并返回一个相应的tbl_multimedia的model
-			$doc_model = $this->process_document( $former_file_name , $file_name , $doc_folder , $item_id );
-			$res_array = array( 'result'	 => 'success' , 
-								 'file_name' => $former_file_name , 
-								 'url'		 => $this->getDocumentUrl($file_name,$uid),
-								 'mid' 		 => $doc_model->id, 
+			$doc_model = $this->process_document( $save_origin_doc_folder , $former_file_name , $file_name , $temp_doc_folder , $item_id );
+			$res_array = array(  'result'	  => 'success' , 
+								  'file_name' => $former_file_name , 
+								  'url'		  => $this->getDocumentUrl($file_name,$uid),
+								  'mid' 	  => $doc_model->id, 
 					);
-			echo json_encode( $res_array );
+			echo @json_encode( $res_array );
 			//echo CHtml::link( $former_file_name , $this->getDocumentUrl($file_name, $uid)  );
 		}	
 	
@@ -497,7 +535,7 @@ class CoursePostController extends Controller
 		$msg = "";
 	
 		
-		if( isset($_POST['data']) && strlen(strip_tags($_POST['data'])) > 0)
+		if( isset($_POST['data']) )
 		{
 			if ( isset($_GET['post_id']) )
 			{
@@ -517,6 +555,7 @@ class CoursePostController extends Controller
 				$course_post_model->item_id = $item_id;
 				$course_post_model->status = $status;
 				$course_post_model->create_time = $course_post_model->update_time = date( "Y-m-d H:i:s", time() );
+				$course_post_model->title = "临时保存title";
 				$save_res = $course_post_model->save() > 0 ;	
 				$post_id = $course_post_model->id;
 			}
@@ -550,6 +589,11 @@ class CoursePostController extends Controller
 		$relate_kps      = $item_model->relate_kps; 
 		$baseAutoSaveUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/autosave&item_id=' . $item_id);
 		$base_create_url = Yii::app()->createAbsoluteUrl('teach/coursepost/create&item_id=' . $item_id . '&course_id='.$course_id . '&post_id=' );
+		$draft_posts 	 = CoursePost::model()->findAll( 'author = :user_id and item_id = :iid and status = :status_draft order by update_time desc' , array(
+										':user_id' 		=> $user_id,
+										':iid'     		=> $item_id,
+										':status_draft' => Yii::app()->params['course_post_status_draft'],
+								) );
 
 		$this->render('create',array(
 			'model'			   => $course_post_model,
@@ -558,6 +602,7 @@ class CoursePostController extends Controller
 			'relate_kp_models' => $relate_kps,
 			'base_auto_save_url' => $baseAutoSaveUrl,
 			'base_create_url'    => $base_create_url,
+			'draft_posts'   => $draft_posts,
 		));
 	}
 

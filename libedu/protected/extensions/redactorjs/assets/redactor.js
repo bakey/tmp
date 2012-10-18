@@ -1814,7 +1814,7 @@ var RTOOLBAR = {};
 		fileUploadCallback: function(data)
 		{
 			// chrome fix
-			if ($.browser.webkit && !!window.chrome) data = data + '&nbsp;'; 
+			//if ($.browser.webkit && !!window.chrome) data = data + '&nbsp;'; 
 
 			if ($.browser.msie) 
 			{

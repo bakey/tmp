@@ -10,7 +10,7 @@
 <?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'id'=>'question-form',
 	'enableAjaxValidation'=>false,
-	'htmlOptions'=>array('class'=>'well'),
+	'action'=>Yii::app()->createUrl('/teach/question/create'),
 )); ?>
 
 	<div class="alert alert-block alert-success" id="chapternotificationcover" style="display:none">

@@ -385,13 +385,13 @@ class TaskController extends Controller
 		$dataProvider = null;
 		$condition = "";
 		$user_model = LibUser::model()->findByPk( Yii::app()->user->id );
-		if ( Yii::app()->user->urole == Yii::app()->params['user_role_teacher'] ) 
+		if ( LibUser::is_teacher() ) 
 		{
 			$this->render('teacher_task_index',array(
 					'dataProvider'=>$this->getTaskInfoData( $user_model ),
 			));
 		}
-		else if ( Yii::app()->user->urole == Yii::app()->params['user_role_student'] )
+		else if ( LibUser::is_student() )
 		{
 			$tasks = $user_model->task_as_student;
 			$finished_tasks = $unfinished_tasks = array();
