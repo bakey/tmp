@@ -1,4 +1,3 @@
-<div class="well">
 
 	<b><?php
 		 $item_model = Item::model()->findByPk( $data['item'] );
@@ -9,7 +8,7 @@
 
 	<b><?php echo CHtml::encode('测验名'); ?>:</b>
 	<?php
-	 	echo CHtml::link( CHtml::encode($data['name']) , array('view', 'id'=>$data['id']));
+	 	echo CHtml::link( CHtml::encode($data['name']) , array('view', 'id'=>$data['id']) , array('rel'=>'external'));
 	?>
 	<br />
 	
@@ -35,5 +34,3 @@
 			}
 	?></b>
 	
-
-</div>

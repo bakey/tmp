@@ -123,7 +123,7 @@ return array(
 		'course_post_status_draft' 		=> 0,
 		'course_post_status_published' 	=> 1,
 		'max_column_show_post_num'      => 5,
-		'web_host'                      => '192.168.1.101',
+		'web_host'                      => '192.168.1.100',
 		'index_path'					=> '/dev/libedu/index.php',  //首页的路径
 		'ppt_convert_command'		    => '"E:\OpenOffice.org 3\program\python" "E:\wamp\www\py_convert\DocumentConverter.py" '
 	),

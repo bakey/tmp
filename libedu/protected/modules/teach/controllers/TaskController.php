@@ -33,7 +33,7 @@ class TaskController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','index','showfinishtask','ajaxcheckanswer','test','publishtask','previewtask','filterproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
+				'actions'=>array('admin','index','showfinishtask','ajaxcheckanswer','newtaskname','test','publishtask','previewtask','filterproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -178,6 +178,7 @@ class TaskController extends Controller
 						));*/
 	}
 
+
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -307,6 +308,11 @@ class TaskController extends Controller
 			'task_model'=>$task_model,
 			'problem_data' => $dataProvider,
 		));
+	}
+	public function actionNewTaskName()
+	{
+		$task_model    = new Task;
+		$this->renderPartial('input_new_task_name' , array( 'task_model' => $task_model ) );
 	}
 	public function actionViewTopics($id)
 	{

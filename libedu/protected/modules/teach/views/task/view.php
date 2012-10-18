@@ -1,23 +1,13 @@
 <?php
-$this->breadcrumbs=array(
-	'Tasks'=>array('index'),
-	$model->name,
-);
-
-$this->menu=array(
-	array('label'=>'浏览测验记录', 'url'=>array('index')),
-	array('label'=>'新建测试', 'url'=>array('create')),
-	//array('label'=>'Delete Task', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	//array('label'=>'Manage Task', 'url'=>array('admin')),
-	//array('label'=>'Add Topics','url'=>array('add','id'=>$model->id)),
+Yii::app()->getClientScript()->scriptMap=array(
+	'jquery.js'=>false,
 );
 ?>
 
 <h1>测验情况 #<?php echo $model->id; ?></h1>
 
-<?php $this->widget('bootstrap.widgets.TbDetailView', array(
+<?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
-	'type'=>'striped',
 	'attributes'=>array(
 		'id',
 		'name',
