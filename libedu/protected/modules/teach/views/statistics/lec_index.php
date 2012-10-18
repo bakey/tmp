@@ -42,18 +42,66 @@ function closemodal(){
 			$('#overlays').removeClass();
 			$(document).unbind('keyup');	
 }
+
+function flipUpOthers(){
+	$(".tabheader").siblings().not(".current").fadeOut();
+}
+
+$(document).ready(function(){
+	$(".tabs .current").siblings().not(".tabheader").fadeOut();
+});
 </script>
 
 <div id="chapterlistforquestion" style="display:none;">
 </div>
 
 <ul class="tabs">
+	<li class="tabheader">
+        <h3>课程统计<span class="iconclass min">]</span></h3>
+    </li>
     <li>
-        <h2>测试统计</h2>
+        <a href="#tab_one">热点统计</a>
+    </li>
+    <li>
+        <a href="#tab_one">浏览统计</a>
+    </li>
+    <li>
+        <a href="#tab_one">共建统计</a>
+    </li>
+    <li>
+        <a href="#tab_one">来访统计</a>
+    </li>
+    <li class="tabheader">
+        <h3>测试统计<span class="iconclass min">]</span></h3>
     </li>
     <li class="current">
         <a href="#tab_one">热点统计</a>
     </li>
+    <li>
+        <a href="#tab_one">得分统计</a>
+    </li>
+    <li>
+        <a href="#tab_one">错题与知识点统计</a>
+    </li>
+    <li>
+        <a href="#tab_one">共建统计</a>
+    </li>
+    <li class="tabheader">
+        <h3>问答统计<span class="iconclass min">]</span></h3>
+    </li>
+    <li>
+        <a href="#tab_one">热点统计</a>
+    </li>
+    <li>
+        <a href="#tab_one">知识点统计</a>
+    </li>
+    <li>
+        <a href="#tab_one">学生统计</a>
+    </li>
+    <li>
+        <a href="#tab_one">章节统计</a>
+    </li>
+
 </ul>
 <div class="tabs">
     <div id="tab_one" class="tab padding">
