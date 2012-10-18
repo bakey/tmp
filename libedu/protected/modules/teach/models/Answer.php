@@ -72,6 +72,7 @@ class Answer extends CActiveRecord
 			'type' => 'Type',
 			'details' => 'Details',
 			'create_time' => 'Create Time',
+			'level' => 'level',
 		);
 	}
 

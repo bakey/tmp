@@ -2,7 +2,7 @@ body, h2 {
 	margin: 0px;
 }
 body {
-	font: normal 15px HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei';
+	font: normal 15px HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei';
 	-webkit-text-stroke: 1px transparent;
 	overflow-x: hidden;
 	-webkit-backface-visibility: hidden;
@@ -36,7 +36,7 @@ h1 {
 p {
 	font-size: 14px;
 	line-height: 1.8;
-	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica,'simhei','Microsoft YaHei', Arial, sans-serif;
+	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica,'simsun','Microsoft YaHei', Arial, sans-serif;
 	color: #555;
 }
 p.first:first-letter {
@@ -63,7 +63,7 @@ ol {
 	padding: 0px;
 	font-size: 14px;
 	line-height: 1.8;
-	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei', sans-serif;
+	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei', sans-serif;
 	color: #444;
 }
 ol li {
@@ -208,7 +208,7 @@ label {
 	position: relative;
 }
 #footer h4 span {
-	font-family: HelveticaNeue-Light,HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei', sans-serif;
+	font-family: HelveticaNeue-Light,HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei', sans-serif;
 	font-weight: normal;
 }
 #footer h4 span.theme {
@@ -338,7 +338,7 @@ div.tagsinput input {
 	outline:0px;  
 	margin-right:5px; 
 	margin-bottom:5px; 
-	font-family: HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei',sans-serif;
+	font-family: HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei',sans-serif;
 	line-height: 1.6;
 }
 div.tagsinput div {
@@ -382,7 +382,7 @@ div.tagsinput div {
 	padding: 15px;
 	font-size: 14px;
 	line-height: 1.8;
-	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei', sans-serif;
+	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei', sans-serif;
 }
 #tooltip.small p {
 	padding: 4px;
@@ -943,7 +943,7 @@ button:active, input[type="submit"]:active {
 	background-image: -moz-linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5));
 }
 button span {
-	font-family: HelveticaNeue-Light, Helvetica, Arial, 'simhei','Microsoft YaHei', sans-serif;
+	font-family: HelveticaNeue-Light, Helvetica, Arial, 'simsun','Microsoft YaHei', sans-serif;
 	font-weight: normal;
 }
 .con {
@@ -2442,7 +2442,7 @@ body.welcome #notifications {
 #overlays.info > .wrapper h2 {
 	font-size: 60px;
 	text-align: center;
-	font-family: HelveticaNeue-UltraLight, HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei',sans-serif;
+	font-family: HelveticaNeue-UltraLight, HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei',sans-serif;
 	font-weight: normal;
 }
 #overlays.info > .wrapper .icon {
@@ -2572,7 +2572,7 @@ div.overlay .wrapper h2:first-child {
 	text-shadow: black 0px 2px 2px;
 }
 div.overlay h2 span {
-	font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, 'simhei','Microsoft YaHei',sans-serif;
+	font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, 'simsun','Microsoft YaHei',sans-serif;
 	font-weight: normal;
 }
 #header {
@@ -2600,7 +2600,7 @@ div.overlay h2 span {
 #header ul li {
 	float: left;
 	list-style: none;
-	font: bold 14px/38px HelveticaNeue, Helvetica, Arial,'simhei','Microsoft Yahei';
+	font: bold 14px/38px HelveticaNeue, Helvetica, Arial,'simsun','Microsoft Yahei';
 	color: #828282;
 	text-shadow: rgba(0,0,0,0.8) 0px 1px 1px;
 	padding-left: 20px;
@@ -2774,7 +2774,7 @@ div.overlay h2 span {
 	margin: 0px;
 	border: 0px solid;
 	color: #777777;
-	font: normal 12px HelveticaNeue, Helvetica, Arial,'simhei','Microsoft Yahei';
+	font: normal 12px HelveticaNeue, Helvetica, Arial,'simsun','Microsoft Yahei';
 	-moz-box-shadow: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
@@ -2976,7 +2976,7 @@ a.tile:nth-child(odd) {
 	background: rgba(0, 0, 0, 0.02);
 }
 .tile h2 {
-	font: bold 50px HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei';
+	font: bold 50px HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei';
 	white-space:nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -2987,7 +2987,7 @@ a.tile:nth-child(odd) {
 	margin-left: 40px;
 }
 .tile h2 span {
-	font-family: HelveticaNeue-UltraLight, Helvetica, Arial,'simhei','Microsoft YaHei';
+	font-family: HelveticaNeue-UltraLight, Helvetica, Arial,'simsun','Microsoft YaHei';
 	font-weight: normal;
 }
 .tile span.title {
@@ -3084,7 +3084,7 @@ a.tile:nth-child(odd) {
 	box-shadow: rgba(0,0,0,0.37) 0px 2px 6px;
 	background-color: #3b3b3b;
 	background-color: rgba(59, 59, 59, 0.75);
-	font-family: HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei', sans-serif;
+	font-family: HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei', sans-serif;
 }
 
 
@@ -3198,7 +3198,7 @@ a.tile:nth-child(odd) {
 
 #hello ul li.teacher-info a, #hello ul li.student-number a{
 	font-size: 16px;
-	font-family: 'simhei','Microsoft Yahei', Arial, Helvetica, sans-serif !important;
+	font-family: 'simsun','Microsoft Yahei', Arial, Helvetica, sans-serif !important;
 }
 
 #hello ul li a:hover {
@@ -8613,7 +8613,7 @@ pre .dec, code .dec { color: #3387CC; } /* decimal - blue */
 #grid .carton > .content > em {
 	font-style: normal;
 	font-weight: normal;
-	font-family: HelveticaNeue-Light, Helvetica,'simhei','Microsoft YaHei', Arial, sans-serif;
+	font-family: HelveticaNeue-Light, Helvetica,'simsun','Microsoft YaHei', Arial, sans-serif;
 }
 #grid .container:nth-child(2) .carton, #grid .container:nth-child(3) .carton, #grid .container:nth-child(4) .carton {
 	color: #333;
@@ -8859,7 +8859,7 @@ pre .dec, code .dec { color: #3387CC; } /* decimal - blue */
 #docs div.tabs > div.tab ul {
 	padding: 0px;
 	color: #555;
-	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, 'simhei','Microsoft YaHei',Arial;
+	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, 'simsun','Microsoft YaHei',Arial;
 	list-style-type: square;
 	line-height: 1.8;
 }
@@ -9709,6 +9709,10 @@ body.feather .map .caption {
 	margin-bottom: 0 !important;
 }
 
+.normalbottommargin{
+	margin-bottom: 20px !important;
+}
+
 .tinyallpadding{
 	padding:15px !important;
 }
@@ -9802,10 +9806,11 @@ body.feather .map .caption {
 	margin-bottom: 5px;
 	width :       816px;
 	text-align:   center;
+	height:       55px;
 }
 .carton.post_grid{
-	height: 800px;
-	width:  815px;
+	min-height: 800px;
+	min-width:  815px;
 	margin-top: 64px;
 	word-wrap: break-word;
 }
@@ -9836,4 +9841,50 @@ body.feather .map .caption {
 .side_bar_word {
 	text-align: center;
 	word-wrap: break-word;
+}
+
+.list-view a{
+	color:#555;
+	text-decoration: none;
+}
+
+.list-view a:hover{
+	color:#666;
+}
+
+img.img-polaroid{
+	padding: 2px;
+	border: 1px solid #C7D2D2;
+}
+/*course add*/
+#draft_box { cursor: pointer;}
+
+ul.tabs li { 
+	cursor: pointer;
+}
+.post_title, .draft_post_update_time{ 
+	height: 25px; 
+	line-height: 25px;
+}
+
+#draft_post .side_bar_word { 
+	height: 50px; padding: 5px 0;
+}
+#draft_post { 
+	height: 487px; 
+	overflow: auto;
+}
+select.select_problem {
+	width: 100px;	
+}
+.carton.col_4.prblem_selected_info {
+	float:right;
+}
+.horizon_dotted_line{
+	height:1px; 
+	width: 745px;
+	border-bottom:1px dashed #000;
+}
+.content.post_title{
+	font-size: 45px;
 }

@@ -18,6 +18,10 @@ class Question extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return Question the static model class
 	 */
+
+	public $numberofanswers;
+	public $numberofzw;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -43,7 +47,7 @@ class Question extends CActiveRecord
 			array('owner, item, view_count', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, owner, item, details, create_time, view_count', 'safe', 'on'=>'search'),
+			array('id, owner, item, details, create_time, view_count, numberofanswers,numberofzw', 'safe', 'on'=>'search'),
 		);
 	}
 

@@ -115,7 +115,16 @@
 				</ul>
 			</div>
 
-			<a data-href="index.php?r=teach/course/admin" class="tile" rel="external">
+			<?php
+				if ( isset( Yii::app()->user->course) ) {
+					$anchor = sprintf('<a data-href="index.php?r=teach/course/update&course_id=%d" class="tile" rel="external">' , Yii::app()->user->course);	
+					
+				}
+				else {
+					$anchor = sprintf('<a data-href="index.php?r=teach/course/admin" class="tile" rel="external">');
+				}	
+				echo $anchor;
+			?>
 				<span class="vector">'</span>
 				<span class="title"><strong>课程</strong> </span>
 			</a>

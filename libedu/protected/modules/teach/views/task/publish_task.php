@@ -10,9 +10,8 @@ if ( count($task_record_model->getData()) > 0 ){
 	}else {
 		echo("<h4>此次测试已经发布，不需再次发布</h4>");
 	}
-	$this->widget('bootstrap.widgets.TbGridView', array(
+	$this->widget('zii.widgets.grid.CGridView', array(
 			'dataProvider'=>$task_record_model,
-			'type' =>'bordered striped',
 			'columns'=>array(
 					array(
 							'name'=>'task',

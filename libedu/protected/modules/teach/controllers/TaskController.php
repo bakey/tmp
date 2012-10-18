@@ -33,7 +33,7 @@ class TaskController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','index','showfinishtask','ajaxcheckanswer','test','publishtask','previewtask','filterproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
+				'actions'=>array('admin','createtaskitemrelation','index','showfinishtask','ajaxcheckanswer','newtaskname','test','publishtask','previewtask','filterproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -178,6 +178,7 @@ class TaskController extends Controller
 						));*/
 	}
 
+
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -279,16 +280,17 @@ class TaskController extends Controller
 				) );
 	}
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-	public function actionCreate()
+
+	public function actionCreate( $task_id )
 	{
-		$task_model    = new Task;
+		$task_model    = Task::model()->findByPk( $task_id );
+		$course_model  = Course::model()->findByPk( Yii::app()->user->course );
+		if ( $task_model == null ){
+			throw new CHttpException( 404 , "没有此测试记录");
+		}		
 		$dataProvider  = new CActiveDataProvider('Problem');
 		
-		if( isset($_POST['Task']) )
+		/*if( isset($_POST['Task']) )
 		{			
 			if ( isset( $_POST['publish']) || isset($_POST['preview']) ) {
 				//把task model存好，并把task_problem,task_knowledge_point都关联好
@@ -301,12 +303,38 @@ class TaskController extends Controller
 			else {
 				throw  new CHttpException( 404 , "未知的测验请求");
 			}
-		}
+		}*/
 
 		$this->render('create_task',array(
-			'task_model'=>$task_model,
+			'task_model'   => $task_model,
 			'problem_data' => $dataProvider,
+			'course_model' => $course_model,
 		));
+	}
+	public function actionNewTaskName()
+	{
+		$task_model    = new Task;
+		if ( isset($_POST['Task']) )
+		{
+			$task_model->name 		 = $_POST['Task']['name'];
+			$task_model->description = $_POST['Task']['description'];
+			$task_model->create_time = $task_model->update_time = date( "Y-m-d H:i:s", time() );
+			$task_model->author 	 = Yii::app()->user->id;
+			$task_model->status 	 = Task::STATUS_DRAFT;
+			$task_model->course 	 = Yii::app()->user->course;
+			$task_model->save();
+			echo @json_encode( array( 'result' => 'success' , 'task_id' => $task_model->id ) );
+		}
+		else
+		{
+			$this->renderPartial('input_new_task_name' , array( 'task_model' => $task_model ) );
+		}
+	}
+	public function actionCreateTaskItemRelation( $edition_id )
+	{
+		$task_model = new Task_model();
+		$this->renderPartial('input_new_task_name' , array( 'task_model' => $task_model ) );
+		//$this->renderPartial( 'select_item'  , array( 'edition_id' => $edition_id ) );
 	}
 	public function actionViewTopics($id)
 	{
@@ -329,8 +357,7 @@ class TaskController extends Controller
 		$this->render('viewTopics',array(
 				'data'=>$problems,
 				'id'=>$id));
-	}
-	
+	}	
 
 	/**
 	 * Updates a particular model.

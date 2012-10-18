@@ -1,22 +1,19 @@
-<div class="well">
 	<?php
-	echo '题目难度: ' . $data->getDifficulty() . " | ";
+	echo '难度: ' . $data->getDifficulty() . " | ";
+	echo '知识点:' . $data->getKnowledgePoint();
 	echo '使用次数:' . $data->use_count . "|";	
 	?>
 	选择本题<input type="checkbox" name="problem_selected[]" value="<?php echo $data->id ?>"/>
 	<?php 
 	echo "<br>";
 	echo '入库时间:' . $data->create_time . "<br>";
-	echo '来源: ' . $data->source;
 	$content = $data->content;  
 	?>
 
 	<?php 
+		echo '(' . $data->source . ')';
 		echo $content ; 
-	?>
-	
-	<br />
-
+	?>	
 	<b>
 	<?php 
 	if ( isset( $data->select_ans ) )
@@ -42,18 +39,13 @@
 	?>
 	<br/>
 	</b>
-	<pre>
 	<?php
-	$knowledgePoints = $data->problem_kp;
-	if ( count($knowledgePoints ) > 0 ) {
-		echo("<font color=\"#FF0000\"><p>关联的知识点:</p></font>");
-		foreach( $knowledgePoints as $key=>$kp )
-		{
-			echo( $key . ": " . $kp->name . "|<br>");
+		$knowledgePoints = $data->problem_kp;
+		if ( count($knowledgePoints ) > 0 ) {
+			echo("<p>关联的知识点:</p>");
+			foreach( $knowledgePoints as $key=>$kp )
+			{
+				echo( $key . ": " . $kp->name . "|<br>");
+			}
 		}
-	}
-	
-	 ?>
-	 </pre>
-
-</div>
+	?>

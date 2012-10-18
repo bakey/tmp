@@ -1,4 +1,6 @@
 *.bak
+*.zip
+*.rar
 .DS_Store
 \.settings\*
 .buildpath
@@ -7,6 +9,7 @@ id_rsa.pub
 .project
 libedu/bin_data/13/avatar/*.db
 libedu/bin_data/temp_upload/*
+libedu/bin_data/*
 libedu/protected/runtime/*
 libedu/assets/*
 libedu/logs/*.log

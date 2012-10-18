@@ -5,13 +5,17 @@
 										'url'  => array('filterproblem'),
 										'update' => '#param_id',
 									),
+							'class' => 'select_problem',
 						  );  
 	        echo '题型: ';
 			echo CHtml::dropDownList('problem_type','',	Problem::getTypeOptions(),$html_options );	
-	 		echo '<br>难度: ' ;
+	 		echo '难度: ' ;
 			echo CHtml::dropDownList('difficulty_level','',Problem::$difficulty_level_map , $html_options);
          	echo '<br>科目: ';
          	echo CHtml::dropDownList( 'subject', '', Subject::getIDSubjectMap() , $html_options );
+         	echo '<div>';
+         	echo CHtml::htmlButton('选择知识点' , array('onclick'=>'') );
+         	echo '</div>';
 ?>  
 	<br><br>   
 	<?php	
@@ -26,11 +30,14 @@
 					)));
 			
 	?>       
-    <div id="param_id" class="well">
+    <div id="param_id" >
     	<?php 
-    		$this->widget('zii.widgets.CListView', array(
-    				'dataProvider'=>$problem_data,
-    				'itemView'=>'_view_problem',
-    		));
+    		foreach( $problem_data->getData() as $problem )
+    		{
+    			echo '<div class="carton col_4">';
+    			$this->renderPartial( '_view_problem' , array('data' => $problem ) );
+    			echo '';
+    			echo '</div>';
+    		}
     	?>
     </div>

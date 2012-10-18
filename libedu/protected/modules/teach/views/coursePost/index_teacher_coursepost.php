@@ -20,7 +20,7 @@ Yii::app()->getClientScript()->scriptMap=array(
 	
 	if ( count( $my_post) == 0 )
 	{
-		echo "<li class>本章节下暂无资料</li>";
+		echo "<li style='text-align:center'>本章节下暂无资料</li>";
 	}	
 	else
 	{
@@ -147,6 +147,6 @@ Yii::app()->getClientScript()->scriptMap=array(
 
 <div class="tabs" id="post_content" allowFullScreen="allowFullScreen">
 <?php  
-$this->renderPartial( 'teacher_view_post' , array('post_model' => $post_model) );
+$this->renderPartial( 'teacher_view_post' , array('post_model' => $post_model , 'course_id' => $course_id ) );
 ?>
 </div>

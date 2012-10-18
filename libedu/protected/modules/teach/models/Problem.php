@@ -54,6 +54,10 @@ class Problem extends CActiveRecord
 			return "未知难度";
 		}
 	}
+	public function getKnowledgePoint()
+	{
+		
+	}
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @return Problem the static model class

@@ -32,7 +32,7 @@ class CoursePostController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','test','loadpostbyauthor','reedit','autosave','viewbyid','drafttopublished','delete','create','update','upload'),
+				'actions'=>array('admin','test','loadpostbyauthor','previewpost','reedit','autosave','viewbyid','drafttopublished','delete','create','update','upload'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -64,7 +64,8 @@ class CoursePostController extends Controller
 		if ( LibUser::is_teacher() )
 		{
 			$this->renderPartial('teacher_view_post',array(
-				'post_model'                => $this->loadModel($post_id),				
+				'post_model'   => $this->loadModel($post_id),	
+				'course_id'    => $course_id,  	
 			));
 		}
 		else if ( LibUser::is_student() ) 
@@ -91,29 +92,42 @@ class CoursePostController extends Controller
 		if ( null == $post_model ) {
 			throw new CHttpException( 404 , "找不到这个post");
 		}
+		$user_id = Yii::app()->user->id;
+		$course_model = Course::model()->findByPk( $course_id );
+		$item_model      = $post_model->item;
+		$relate_kps      = $item_model->relate_kps;
+		$draft_posts 	 = CoursePost::model()->findAll( 'author = :user_id and item_id = :iid and status = :status_draft order by update_time desc' , array(
+				':user_id' 		=> $user_id,
+				':iid'     		=> $item_model->id,
+				':status_draft' => Yii::app()->params['course_post_status_draft'],
+		) );
+		
 		$baseCreateUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/create&item_id=' . 
 								$post_model->item_id . '&post_id='.$post_id.'&course_id='.$course_id);
 		$baseAutoSaveUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/autosave&item_id=' . 
 								$post_model->item_id . '&post_id=' . $post_id );
-		$this->render('re_edit' , array(
-				'post_model'      => $post_model,
+		$this->render('create' , array(
+				'model'           => $post_model,
+				'course_model'    => $course_model,
 				'course_id'       => $course_id,
-				'baseCreateUrl'   => $baseCreateUrl,
-				'baseAutoSaveUrl' => $baseAutoSaveUrl,
-				'item_id'         => $post_model->item_id,
+				'base_auto_save_url' => $baseAutoSaveUrl,
+				'base_create_url'    => $baseCreateUrl,
+				'item_model'      => $post_model->item,
+				'relate_kp_models' => $relate_kps,
+				'draft_posts'   => $draft_posts,
 				) );
 		
 	}
-	public function actionDraftToPublished( $post_id )
+	public function actionDraftToPublished( $post_id , $item_id )
 	{
-		$course_id = $_GET['course_id'];
+		$course_id = Yii::app()->user->course;
 		$post_model = CoursePost::model()->findByPk( $post_id );
 		if ( null == $post_model ) {
 			throw new CHttpException(404 , "no this post ");
 		}
 		$post_model->status = Yii::app()->params['course_post_status_published'];
 		if ( $post_model->save() ){
-			$this->redirect( array('viewbyid','id'=>$post_id , 'course_id'=>$course_id) );
+			$this->redirect( array('index','item_id'=>$item_id , 'course_id'=>$course_id) );
 		}	
 		else {
 			throw new CHttpException( 500 , "internal server error ");
@@ -191,10 +205,11 @@ class CoursePostController extends Controller
 		{
 			$course_post_model->update_time = date("Y-m-d H:i:s", time() ); 
 			$save_res = $course_post_model->updateByPk( $post_id , array(
-					'post'=>$_POST['CoursePost']['post'],
-					'status'=>$status,
+					'post'  => $_POST['CoursePost']['post'],
+					'title' => $_POST['CoursePost']['post_title'],
+					'status'=> $status,
 					)) ;
-			if ( $save_res > 0 ) {
+			if ( $save_res >= 0 ) {
 				return $post_id;
 			}
 			else {
@@ -314,7 +329,7 @@ class CoursePostController extends Controller
 		$user_id = Yii::app()->user->id;
 		$post_id = isset($_GET['post_id']) ? $_GET['post_id'] : null ;
 
-		if ( isset( $_POST['draft']) )
+		if ( isset( $_POST['draft']) || isset( $_POST['preview']) )
 		{
 			$status = CoursePost::STATUS_DRAFT;
 			$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
@@ -322,19 +337,28 @@ class CoursePostController extends Controller
 			{
 				$this->savePostMediaRelation( $new_post_id );
 				$this->moveTracingItem( $item_id );
-				$this->redirect(array('index','item_id' => $item_id ));
+				
+				if ( isset( $_POST['draft']) ) 
+				{
+					$this->redirect(array('index','item_id' => $item_id ));
+				}
+				else
+				{
+					$post_model = CoursePost::model()->findByPk( $post_id );
+					$item_model = Item::model()->findByPk( $item_id );
+					$this->redirect( array('previewpost' , 'post_id' => $new_post_id ) );
+				}
 			}
 			else 
 			{
 				throw new CHttpException( 400 , "更新数据库错误，该课程资料已经被删除");
-			}
-			
+			}			
 		}
 		else if ( isset($_POST['cancel']) )
 		{
 			$msg = sprintf("User cancel edit course post , user_id = %d , course id = %d" , $user_id , $course_id );			
 			Yii::log( $msg , 'debug' );
-			$this->redirect( array('course/update&course_id=' . $course_id) );
+			$this->redirect( array('coursepost/index&item_id=' . $item_id) );
 		}
 		else if ( isset($_POST['publish']) )
 		{
@@ -375,10 +399,6 @@ class CoursePostController extends Controller
 							'pageSize'=>15,
 					)
 				) );
-		/*$course_post_models = CoursePost::model()->findAll( 'author=:author and item_id=:item_id' , array(
-					':author' => $user_course_model->user_id,
-					':item_id' => $item_id,
-				));*/
 		return $stu_post_data ;
 	}
 	private function get_relate_kp( $item_id )
@@ -433,6 +453,12 @@ class CoursePostController extends Controller
 				'item_model'  	     => $item_model,
 				'course_id'   		 => Yii::app()->user->course,
 		));		
+	}
+	public function actionPreviewPost( $post_id )
+	{
+		$post_model = CoursePost::model()->findByPk( $post_id );
+		$item_model = $post_model->item;
+		$this->render('preview_post' , array( 'post_model' => $post_model , 'course_id' => Yii::app()->user->course , 'item_id' => $item_model->id ) );		
 	}
 	/*
 	 * 获取某item下的某作者的所有post资料
@@ -504,7 +530,7 @@ class CoursePostController extends Controller
 			$thumb=new EPhpThumb();
 			$thumb->init();
 			$thumb->create( $target_folder . $file_name )
-				->resize(1024,800)
+				->resize(800,800)
 				->save( $thumb_folder . $file_name );
 		
 			$image_thumb_url = $this->getThumbImageUrl( $file_name , $uid );
@@ -635,14 +661,15 @@ class CoursePostController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
-	public function actionDelete($post_id , $item_id)
+	public function actionDelete($post_id )
 	{
 		$this->loadModel($post_id)->delete();
+		echo @json_encode( array('del_ret' => '1') );
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax'])) {
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index&item_id='.$item_id));
-		}
+		//if(!isset($_GET['ajax'])) {
+			//$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index&item_id='.$item_id));
+		//}
 	}
 
 	/**
