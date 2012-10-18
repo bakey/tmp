@@ -1,7 +1,4 @@
 <?php
-$this->breadcrumbs=array(
-	'我的测验',
-);
 $cs = Yii::app()->getClientScript();
 $cs->scriptMap=array(
 		'jquery.js'=>false,
