@@ -20,5 +20,6 @@ function create_task()
 }
 </script>
 <button onclick="create_task()">
-<span class="iconclass mid">+</span>
-创建测试</button>
+	<span class="iconclass mid">+</span>
+	创建测试
+</button>

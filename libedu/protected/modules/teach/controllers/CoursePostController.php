@@ -92,17 +92,29 @@ class CoursePostController extends Controller
 		if ( null == $post_model ) {
 			throw new CHttpException( 404 , "找不到这个post");
 		}
-
+		$user_id = Yii::app()->user->id;
+		$course_model = Course::model()->findByPk( $course_id );
+		$item_model      = $post_model->item;
+		$relate_kps      = $item_model->relate_kps;
+		$draft_posts 	 = CoursePost::model()->findAll( 'author = :user_id and item_id = :iid and status = :status_draft order by update_time desc' , array(
+				':user_id' 		=> $user_id,
+				':iid'     		=> $item_model->id,
+				':status_draft' => Yii::app()->params['course_post_status_draft'],
+		) );
+		
 		$baseCreateUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/create&item_id=' . 
 								$post_model->item_id . '&post_id='.$post_id.'&course_id='.$course_id);
 		$baseAutoSaveUrl = Yii::app()->createAbsoluteUrl('teach/coursepost/autosave&item_id=' . 
 								$post_model->item_id . '&post_id=' . $post_id );
-		$this->render('re_edit' , array(
-				'post_model'      => $post_model,
+		$this->render('create' , array(
+				'model'           => $post_model,
+				'course_model'    => $course_model,
 				'course_id'       => $course_id,
-				'baseCreateUrl'   => $baseCreateUrl,
-				'baseAutoSaveUrl' => $baseAutoSaveUrl,
+				'base_auto_save_url' => $baseAutoSaveUrl,
+				'base_create_url'    => $baseCreateUrl,
 				'item_model'      => $post_model->item,
+				'relate_kp_models' => $relate_kps,
+				'draft_posts'   => $draft_posts,
 				) );
 		
 	}
@@ -518,7 +530,7 @@ class CoursePostController extends Controller
 			$thumb=new EPhpThumb();
 			$thumb->init();
 			$thumb->create( $target_folder . $file_name )
-				->resize(1024,800)
+				->resize(800,800)
 				->save( $thumb_folder . $file_name );
 		
 			$image_thumb_url = $this->getThumbImageUrl( $file_name , $uid );

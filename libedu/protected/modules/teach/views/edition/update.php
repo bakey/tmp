@@ -1,10 +1,6 @@
 
 
-<?php
-$this->breadcrumbs=array(
-	'Update Edition',
-);
-?>
+
 <h1>Update Editions</h1>
 <h2>
 <?php 

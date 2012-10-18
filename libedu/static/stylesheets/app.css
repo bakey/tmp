@@ -9804,8 +9804,8 @@ body.feather .map .caption {
 	text-align:   center;
 }
 .carton.post_grid{
-	height: 800px;
-	width:  815px;
+	min-height: 800px;
+	min-width:  815px;
 	margin-top: 64px;
 	word-wrap: break-word;
 }
@@ -9850,4 +9850,15 @@ body.feather .map .caption {
 img.img-polaroid{
 	padding: 2px;
 	border: 1px solid #C7D2D2;
+}
+select.select_problem {
+	width: 100px;	
+}
+.carton.col_4.prblem_selected_info {
+	float:right;
+}
+.horizon_dotted_line{
+	height:1px; 
+	width: 745px;
+	border-bottom:1px dashed #000;
 }

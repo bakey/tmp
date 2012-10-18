@@ -7,11 +7,21 @@ function close_model()
 }
 function submit_and_redirect()
 {
-	window.location.href = '<?php echo Yii::app()->params['index_path']; ?>?r=teach/task/create';
+	$.ajax(
+			{
+				url : '<?php echo Yii::app()->params['index_path']; ?>?r=teach/task/newtaskname',
+				data: $("#create_task_name_form").serialize(),
+				type: 'POST',
+				success: function(resp) {
+					var ret = eval( '(' + resp + ')' );
+					window.location.href = '<?php echo Yii::app()->params['index_path']; ?>?r=teach/task/create&task_id=' + ret.task_id ;					
+				}			
+			}
+		);
 }
 </script>
 <?php $form=$this->beginWidget('CActiveForm', array(
-		//'id'=>'create_task_name_form',
+		'id'=>'create_task_name_form',
 		'enableAjaxValidation'=>true,
 		'htmlOptions'=>array('id'=>'create_task_name_form'),
 )); ?>

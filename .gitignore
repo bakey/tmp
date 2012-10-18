@@ -1,4 +1,6 @@
 *.bak
+*.zip
+*.rar
 .DS_Store
 \.settings\*
 .buildpath

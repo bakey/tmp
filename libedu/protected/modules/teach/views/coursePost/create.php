@@ -27,6 +27,10 @@ function insert_draft_to_editor(element)
 //	$( element ).children('.side_bar_word').toggleClass("sail");
 	$( "#del_button" ).attr( "data-post-id" , $(element).children(".side_bar_word").children('#draft_post_id').text() );
 	$( "#del_button" ).fadeIn(300);
+	var auto_save_url = 'http://<?php echo Yii::app()->params['web_host'] . Yii::app()->params['index_path']; ?>' + 
+			'?r=teach/coursepost/autosave&item_id=<?php echo $item_model->id; ?>' + 
+			'&post_id=' + $(element).children("li.side_bar_word").children("#draft_post_id").text();	
+	$('#CoursePost_post').data("redactor").opts.autosave = auto_save_url ;		
 }
 </script>
 <ul class="tabs">

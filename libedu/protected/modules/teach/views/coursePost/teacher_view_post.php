@@ -1,7 +1,6 @@
  <script type="text/javascript">
  function show_edit_icon()
  {
-	// alert( $("#edit_icon").html() );
  	$("#edit_icon").fadeIn();
  }
  function hide_edit_icon()

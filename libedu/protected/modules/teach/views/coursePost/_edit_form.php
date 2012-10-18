@@ -75,6 +75,7 @@ function file_upload_callback( obj , json ){
 				'interval' => 10,
 				'autosaveCallback'=>"js:function( response,redactor_ins,doc){
 					var json_obj = eval( response );
+					
 					if ( json_obj.post_id != '' ) {
 						redactor_ins.opts.autosave = '" . $base_auto_save_url . "'+ '&post_id=' + json_obj.post_id ;".
 						"var createUrl = '" . $base_create_url . "' + json_obj.post_id;" .  
