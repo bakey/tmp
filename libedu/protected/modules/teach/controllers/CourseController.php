@@ -89,6 +89,7 @@ class CourseController extends Controller
 		$current_item_info = $this->get_current_item_info( $user_model , $top_item_model[0] , $course_id );
 		$top_level_models = Item::model()->findAll( 'edition=:edition and level=1', array(
 				':edition' => $edition_id, ) );
+		//var_dump( count($top_level_models) ); 
 		
 		$total_items = $this->collectTotalItem( $edition_id );
 		$this->render('update_teacher_course' , array(
