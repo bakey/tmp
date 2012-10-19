@@ -7,6 +7,10 @@ function close_model()
 }
 function submit_and_redirect()
 {
+	if ( $("#Task_name").val() == "" || $("#Task_description").val() == "" ) {
+		alert("测试名称和描述都需要输入");
+		return false;
+	}
 	$.ajax(
 			{
 				url : '<?php echo Yii::app()->params['index_path']; ?>?r=teach/task/newtaskname',
@@ -37,7 +41,7 @@ function submit_and_redirect()
 		<?php echo $form->error($task_model,'description'); ?>
 	</p>
 	<p>
-		<button class="sugar col_3" onclick="submit_and_redirect()"><span>下一步</span></button>
-		<button class="sugar col_3" onclick="close_model()"><span>取消</span></button>
+		<button id="submit_next" class="sugar col_3" onclick="submit_and_redirect()"><span>下一步</span></button>
+		<button id="cancel_submit" class="sugar col_3" onclick="close_model()"><span>取消</span></button>
 	</p>
 <?php $this->endWidget(); ?>

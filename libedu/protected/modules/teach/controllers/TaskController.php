@@ -286,7 +286,7 @@ class TaskController extends Controller
 		$task_model    = Task::model()->findByPk( $task_id );
 		$course_model  = Course::model()->findByPk( Yii::app()->user->course );
 		if ( $task_model == null ){
-			throw new CHttpException( 404 , "没有此测试记录");
+			$this->redirect( array('/teach/task/') , true );
 		}		
 		$dataProvider  = new CActiveDataProvider('Problem');
 		

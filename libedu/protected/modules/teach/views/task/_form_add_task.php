@@ -4,13 +4,17 @@ function select_item()
 	//alert('xxx');
 }
 </script>
-<h2>题库选题</h2>
+<span style="margin-left:50px;font-size:30px">题库选题</span>
+<span style="margin-left:30px">收藏的题</span>
+<span style="margin-left:30px">自己出题</span>
+<span style="margin-left:30px">测试过的试卷</span>
 <div class="horizon_dotted_line"></div>
-<div class="carton col_4 prblem_selected_info">
+<span class="carton col_4 prblem_selected_info">
 		测试名: &nbsp; <?php echo $task_model->name ; ?>
 		<div>您已勾选5道选择题，6道判断题</div>
 		<button onclick="select_item(); return false;" style="float:right;">下一步</button>
-</div>
+</span>
+
 <div class="form">
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'task-form',

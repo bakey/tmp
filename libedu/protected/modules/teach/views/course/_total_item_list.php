@@ -16,6 +16,17 @@ function hide_sub_items( ele )
 	$( ele ).attr( 'onclick' , 'extend_sub_items(this)');
 }
 </script>
+<?php
+function getItemPostUpdateTime( $item_id )
+{
+	$posts = CoursePost::model()->findAll( 'item_id=:iid and author=:uid order by update_time DESC' , 
+										   array(':iid' => $item_id , ':uid' => Yii::app()->user->id));
+	if ( count($posts) > 0 ) {
+		return $posts[0]->update_time;
+	}	
+	return 0;
+} 
+?>
 <div style="margin-top:50px">
       		
        			<?php 
@@ -65,8 +76,10 @@ function hide_sub_items( ele )
 								echo '<span class="iconclass mid item">|</span>';;
 							}
 							
-							echo '<div style="padding-top:5px;margin-top:10px">';
+							echo '<div style="padding-top:5px;margin-top:10px;line-height:5px">';
 							echo '第'.$child->edi_index . "节 " . $child->content . "";
+							$update_time = getItemPostUpdateTime( $child->id );
+							echo '<p>更新时间: ' . $update_time . "</p>";
 							echo '</div>';
 							echo '</a></span></div></div>';
       					}

@@ -60,6 +60,7 @@ function file_upload_callback( obj , json ){
 	$('#CoursePost_post').insertHtml('<img src="http://<?php echo Yii::app()->params['web_host']; ?>/dev/libedu/static/images/converting.png" class="doc_placeholder"></img>');
 	var media_node = '<input name="mid[]" style="display:none" value="' + upload_ret.mid + '">';
 	$( media_node ).insertAfter( '#CoursePost_title' );	
+	alert( 'insert ') ;
 }
 </script>
 <h2>课程内容:</h2>

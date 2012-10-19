@@ -1677,7 +1677,7 @@ tr:last-child td {
 	background-color: #79BD9A;
 }
 .sail {
-	background-color: #3B8686;
+	background-color: #3B8686 !important;
 }
 .adrift {
 	background-color: #0B486B;
@@ -9885,6 +9885,25 @@ select.select_problem {
 	width: 745px;
 	border-bottom:1px dashed #000;
 }
+.horizon_line {
+	border-bottom : solid;
+}
 .content.post_title{
-	font-size: 45px;
+	word-wrap: break-word;
+}
+.problem_filter {
+	margin-left: 50px;
+}
+.carton.col_4.problem_des {
+	margin-top:20px;
+	margin-left:50px;
+	width:800px;
+}
+.course_square_body {
+	margin-top:80px;
+	min-height:800px;
+}
+.course_square_content_body {
+	min-height:800px;
+	padding-left:180px;
 }

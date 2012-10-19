@@ -430,9 +430,10 @@ class CoursePostController extends Controller
 				),
 				'pagination' => false, 
 		));
-		$other_post_data = new CActiveDataProvider('CoursePost',array(
+		$other_teacher_post_data = new CActiveDataProvider('CoursePost',array(
 				'criteria'=>array(
-						'condition' => ('author !='.$cur_user.' and item_id='.$item_id ),
+						'join'      => 'join tbl_user_course on author = tbl_user_course.user_id',
+						'condition' => ( 'tbl_user_course.role=' . Yii::app()->params['user_role_teacher'] . ' and author !='.$cur_user.' and item_id='.$item_id ),
 						'order'     => 'update_time DESC',
 				),
 				'pagination' => false,
@@ -448,7 +449,7 @@ class CoursePostController extends Controller
 		));
 		$this->render('index_teacher_coursepost',array(
 				'self_post_data'     => $my_post_data ,
-				'other_teacher_data' => $other_post_data,
+				'other_teacher_data' => $other_teacher_post_data,
 				'student_post_data'  => $student_post_data, 
 				'item_model'  	     => $item_model,
 				'course_id'   		 => Yii::app()->user->course,
@@ -521,7 +522,7 @@ class CoursePostController extends Controller
 		}	
 		//==============================================================
 		
-		
+		$res_array = null;
 		if ( $this->if_image_file_suffix($suffix[1]) )
 		{
 			copy( $_FILES['file']['tmp_name'] , $target_folder.$file_name );
@@ -535,21 +536,29 @@ class CoursePostController extends Controller
 		
 			$image_thumb_url = $this->getThumbImageUrl( $file_name , $uid );
 			$image_origin_url = $this->getOriginImageUrl($file_name, $uid);
+			
+			$res_array = array(
+						'type'       => 1,
+						'thumb_url'  => $image_thumb_url,
+						'origin_url' => $image_origin_url,
+						'image_class' => 'img-rounded',
+						'upload_ret' => 'success',
+					);
 		
-			echo CHtml::link( CHtml::image( $image_thumb_url,'', array('class'=>'img-rounded') ) , 
-						$image_origin_url );
+			echo CHtml::link( CHtml::image( $image_thumb_url,'', array('class'=>'img-rounded') ) , $image_origin_url );
 		}
 		else if ( $this->if_document($suffix[1]) )
 		{				
 			//把多文档的信息存进数据库，并返回一个相应的tbl_multimedia的model
 			$doc_model = $this->process_document( $save_origin_doc_folder , $former_file_name , $file_name , $temp_doc_folder , $item_id );
-			$res_array = array(  'result'	  => 'success' , 
+			$res_array = array(
+								 'type'       => 2, 
+								 'result'	  => 'success' , 
 								  'file_name' => $former_file_name , 
 								  'url'		  => $this->getDocumentUrl($file_name,$uid),
 								  'mid' 	  => $doc_model->id, 
 					);
 			echo @json_encode( $res_array );
-			//echo CHtml::link( $former_file_name , $this->getDocumentUrl($file_name, $uid)  );
 		}	
 	
 		exit();	

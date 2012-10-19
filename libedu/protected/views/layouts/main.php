@@ -117,7 +117,10 @@
 
 			<?php
 				if ( isset( Yii::app()->user->course) ) {
-					$anchor = sprintf('<a data-href="index.php?r=teach/course/update&course_id=%d" class="tile" rel="external">' , Yii::app()->user->course);	
+					if ( $this->getId() == "course" || $this->getId() == "coursepost")
+						$anchor = sprintf('<a data-href="index.php?r=teach/course/update&course_id=%d" class="tile sail" rel="external">' , Yii::app()->user->course);
+					else 
+						$anchor = sprintf('<a data-href="index.php?r=teach/course/update&course_id=%d" class="tile" rel="external">' , Yii::app()->user->course);
 					
 				}
 				else {
@@ -128,23 +131,59 @@
 				<span class="vector">'</span>
 				<span class="title"><strong>课程</strong> </span>
 			</a>
-			<a data-href="index.php?r=teach/task" class="tile" rel="external">
+			<?php
+			if ( $this->getId() == 'task' ) {
+				echo '<a data-href="index.php?r=teach/task" class="tile sail" rel="external" >' ;
+			} 
+			else {
+				echo '<a data-href="index.php?r=teach/task" class="tile" rel="external" >' ;
+			}
+			?>
 				<span class="vector">C</span>
 				<span class="title"><strong>测试</strong> </span>
 			</a>
-			<a href="index.php?r=teach/question/myquestion" class="tile" rel="external">
+			<?php
+				if ( $this->getId() == 'question' ) {
+					echo '<a href="index.php?r=teach/question/myquestion" class="tile sail" rel="external" >' ;
+				} 
+				else {
+					echo '<a href="index.php?r=teach/question/myquestion" class="tile" rel="external" >' ;
+				}
+			?>
 				<span class="vector">f</span>
 				<span class="title"><strong>问答</strong> </span>
 			</a>
-			<a href="index.php?r=teach/statistics" class="tile" rel="external">
+				<?php
+				if ( $this->getId() == 'statistics' ) {
+					echo '<a href="index.php?r=teach/statistics" class="tile sail" rel="external">' ;
+				} 
+				else {
+					echo '<a href="index.php?r=teach/statistics" class="tile" rel="external">' ;
+				}
+			?>
+			
 				<span class="vector">v</span>
 				<span class="title"><strong>统计</strong> </span>
 			</a>
-			<a class="tile" rel="external">
+			<?php
+				if ( $this->getId() == 'video' ) {
+					echo '<a href="index.php?r=teach/video" class="tile sail" rel="external">' ;
+				} 
+				else {
+					echo '<a href="index.php?r=teach/video" class="tile" rel="external">' ;
+				}
+			?>
 				<span class="vector">F</span>
 				<span class="title"><strong>视频</strong> </span>
 			</a>
-			<a class="tile" rel="external">
+			<?php
+				if ( Yii::app()->controller->module->id == "app" ) {
+					echo '<a href="index.php?r=app/default" class="tile sail" rel="external">';
+				}
+				else {
+					echo '<a href="index.php?r=app/default" class="tile" rel="external">';
+				}
+			?>
 				<span class="vector">+</span>
 				<span class="title"><strong>添加应用</strong></span>
 			</a>					

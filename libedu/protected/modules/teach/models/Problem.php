@@ -56,7 +56,13 @@ class Problem extends CActiveRecord
 	}
 	public function getKnowledgePoint()
 	{
-		
+		$knowledgePoints = $this->problem_kp;
+		$ret = "";
+		foreach( $knowledgePoints as $kp )
+		{
+			$ret .= $kp->name;
+		}
+		return $ret;		
 	}
 	/**
 	 * Returns the static model of the specified AR class.

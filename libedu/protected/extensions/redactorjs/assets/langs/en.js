@@ -57,7 +57,7 @@ var RLANG = {
 	text: 'Text',
 	mailto: 'Email',
 	web: 'URL',
-	video_html_code: 'Video embed code',
+	video_html_code: '插入视频链接，当前仅支持土豆视频',
 	file: 'File',	
 	upload: 'Upload',
 	download: 'Download',

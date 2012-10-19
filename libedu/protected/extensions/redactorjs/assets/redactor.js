@@ -1492,6 +1492,15 @@ var RTOOLBAR = {};
 
 			this.syncCode();
 		},
+		parse_tudou_video_url: function(url)
+		{
+			var uri = new Uri( url );
+			var path_element = uri.path().split("/");
+			if ( path_element[2] != 'view' ) {
+				return '';
+			}
+			return 'http://www.tudou.com/v/' + path_element[3];
+		},
 
 		// INSERT VIDEO
 		showVideo: function()
@@ -1508,14 +1517,30 @@ var RTOOLBAR = {};
 		insertVideo: function()
 		{
 			var data = $('#redactor_insert_video_area').val();
+			
+			var new_url = this.parse_tudou_video_url( data );
+			if ( new_url == '' ) {
+				alert("输入视频链接有误");
+				return ;
+			}  
+			var new_data = '<object width="420" height="363"><param name="movie" value="' ;
+			new_data += new_url;
+			new_data += '">';
+			new_data +=	'<param name="allowFullScreen" value="true"><param name="allowscriptaccess" value="always"> <param name="wmode" value="opaque">';
+			new_data += '<embed src="'; 
+			new_data += new_url ;
+			new_data += '" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="420" height="363"></object>';
+			
 
 			if ($.browser.msie)
 			{
-				$(this.doc.getElementById('span' + this.spanid)).after(data).remove();
+				$(this.doc.getElementById('span' + this.spanid)).after(new_data).remove();
 				this.syncCode();
 			}
-			else this.execCommand('inserthtml', data);
-
+			else 
+			{
+				this.execCommand('inserthtml', new_data);
+			}
 			this.modalClose();
 		},
 

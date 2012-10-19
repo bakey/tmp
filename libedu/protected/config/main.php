@@ -25,6 +25,7 @@ return array(
 		'application.components.*',
 		'application.modules.user.models.*',
 		'application.modules.teach.models.*',
+		'application.modules.app.models.*',
 	),
 
 	'modules'=>array(
@@ -36,8 +37,9 @@ return array(
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','::1'),
 		),
-		'user' => array() ,
-		'teach' => array() ,		
+		'user'  => array() ,
+		'teach' => array() ,
+		'app'   => array(),		
 	),
 
 	// application components
