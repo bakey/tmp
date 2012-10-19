@@ -12,10 +12,10 @@ Yii::app()->getClientScript()->scriptMap=array(
 	</h3>
 	<div class="side_bar_word">课程资料</div>
 <?php
+	$post_data = $self_post_data->getData();
 	$post_model = null;
-	if ( count($self_post_data) > 0 )
+	if ( count($post_data) > 0 )
 	{
-		$post_data = $self_post_data->getData();
 		$post_model = CoursePost::model()->findByPk( $post_data[0]['id'] );
 	}
 	$this->renderPartial( 'my_course_post_list' , array( 'self_post_data' => $self_post_data , 'course_id' => $course_id , 'item_model' => $item_model ) );

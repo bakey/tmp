@@ -518,7 +518,7 @@ class CoursePostController extends Controller
 			mkdir( $temp_doc_folder , 0777 , true );
 		}
 		if ( !@is_dir( $save_origin_doc_folder) ) {
-			mkdir( $save_origin_doc_folder );
+			mkdir( $save_origin_doc_folder , 0777 , true );
 		}	
 		//==============================================================
 		

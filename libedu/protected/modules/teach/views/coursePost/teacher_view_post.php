@@ -19,8 +19,11 @@
  <?php
  	if ( $post_model != null )
  	{
- 		echo CHtml::link( '<span class="iconclass mid"  style="position:absolute; top:0; z-index:999;" id="edit_icon">C</span>' , $reedit_url , 
+ 		if ( $post_model->author == Yii::app()->user->id )
+ 		{
+ 			echo CHtml::link( '<span class="iconclass mid"  style="position:absolute; top:0; z-index:999;" id="edit_icon">C</span>' , $reedit_url , 
  				array('rel' => 'external') );
+ 		}
  	} 
  ?>
  	<div class="carton col_4 topitemcarton post_title" >

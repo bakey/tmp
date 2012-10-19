@@ -53,14 +53,22 @@ function del_draft_post( element )
 <div id="file-upload-notification" style="display:none;color:red">上传成功!!</div>
 <div id="upload-file-name" style="border-width:thin;border-style:solid;border-color:gray;color:red;display:none"></div>
 <script type="text/javascript">
-function file_upload_callback( obj , json ){
+function file_upload_callback( obj , resp ){
 	$('#file-upload-notification').fadeIn(100);
-	$('#file-upload-notification').fadeOut(3000);
-	var upload_ret = eval( '(' + json + ')');
-	$('#CoursePost_post').insertHtml('<img src="http://<?php echo Yii::app()->params['web_host']; ?>/dev/libedu/static/images/converting.png" class="doc_placeholder"></img>');
-	var media_node = '<input name="mid[]" style="display:none" value="' + upload_ret.mid + '">';
-	$( media_node ).insertAfter( '#CoursePost_title' );	
-	alert( 'insert ') ;
+
+	var is_image = false;
+	try {
+		var upload_ret = eval( '(' + resp + ')');
+	}catch(e) {
+		$('#CoursePost_post').insertHtml( resp );
+		is_image = 	true;	
+	}
+	if ( !is_image )
+	{
+		$('#CoursePost_post').insertHtml('<img src="http://<?php echo Yii::app()->params['web_host']; ?>/dev/libedu/static/images/converting.png" class="doc_placeholder"></img>');
+		var media_node = '<input name="mid[]" style="display:none" value="' + upload_ret.mid + '">';
+		$( media_node ).insertAfter( '#CoursePost_title' );
+	}	
 }
 </script>
 <h2>课程内容:</h2>
