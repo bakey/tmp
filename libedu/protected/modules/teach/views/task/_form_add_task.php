@@ -10,13 +10,20 @@ function select_item()
 <span style="margin-left:30px">测试过的试卷</span>
 <span>
 <div class="horizon_dotted_line"></div>
+<div class="vertical_line"></div>
 </span>
 <span class="carton col_4 prblem_selected_info">
-		<div style="margin-top:10px; margin-left:10px">
-			测试名: &nbsp; <?php echo $task_model->name ; ?>
+
+		<div style="margin-top:30px; margin-left:10px">
+			<span class>
+			               测试名: &nbsp; <?php echo $task_model->name ; ?>
 				<br>您已勾选<span id="choice_problem_cnt">0</span>道选择题
+			</span>
+			<span style="position:absolute;top:22px; left:250px">
+				<button onclick="select_item(); return false;" style="float:right;">下一步</button>
+			</span>
 		</div>
-		<button onclick="select_item(); return false;" style="float:right;">下一步</button>
+		
 </span>
 
 <div class="form">

@@ -1,19 +1,25 @@
-<span style="width:31.3%">
-<?php
-	echo '难度: ' . $data->getDifficulty() ;
-?>
-	<?php 
-		echo '知识点:' ;
-		echo '<font style="color: #0064CC">' ; 
-		echo $data->getKnowledgePoint();
-		echo '</font>';
+<div style="margin-top:10px; margin-left:50px;">
+	<span>
+	<?php
+		echo '难度: ' . $data->getDifficulty() ;
 	?>
-</span>
+	</span>
+	<span style="margin-left:100px">
+		<?php 
+			echo '知识点:' ;
+			echo '<font style="color: #0064CC">' ; 
+			echo $data->getKnowledgePoint();
+			echo '</font>';
+		?>
+	</span>
+</div>
+<div class>
 	<?php 
 	echo '入库时间:' . $data->create_time . "<br>";
 	
 	echo '使用次数:';	
 ?>
+</div>
 	<button onclick="select_problem(this); return false;" style="float:right">选择本题</button>
 	<div class>
 	<?php 	

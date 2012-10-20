@@ -9893,7 +9893,7 @@ select.select_problem {
 	margin-right:0px;
 	margin-bottom:0px;
 	position : absolute;
-    top : 10px;
+    top : 19px;
 	right : 0px;
 }
 .horizon_dotted_line{
@@ -9974,4 +9974,15 @@ select.select_problem {
 
 .videoitemcontrol p:hover span{
 	display: inline-block;
+}
+.check_task_btn {
+	margin-top:8px;
+	float:right;	
+}
+.vertical_line {
+	width:0px;
+	height: 1061px;
+	position : absolute;
+	border-style : solid;
+	left: 751px;
 }

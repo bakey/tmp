@@ -3,11 +3,9 @@
 	{
 		echo '<div class="carton col_4 task_list">';
 ?>
-		<span style="float:right">
-			<button>查看学生完成情况</button>
-		</span>
-		<span style="float:right">
+		<span class="check_task_btn">
 			<button>查看练习</button>
+			<button>查看学生完成情况</button>			
 		</span>
 
 		<div class="task_info">
