@@ -8,10 +8,14 @@ function select_item()
 <span style="margin-left:30px">收藏的题</span>
 <span style="margin-left:30px">自己出题</span>
 <span style="margin-left:30px">测试过的试卷</span>
+<span>
 <div class="horizon_dotted_line"></div>
+</span>
 <span class="carton col_4 prblem_selected_info">
-		测试名: &nbsp; <?php echo $task_model->name ; ?>
-		<div>您已勾选5道选择题，6道判断题</div>
+		<div style="margin-top:10px; margin-left:10px">
+			测试名: &nbsp; <?php echo $task_model->name ; ?>
+				<br>您已勾选<span id="choice_problem_cnt">0</span>道选择题
+		</div>
 		<button onclick="select_item(); return false;" style="float:right;">下一步</button>
 </span>
 

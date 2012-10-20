@@ -8,7 +8,15 @@ function close_model()
 function submit_and_redirect()
 {
 	if ( $("#Task_name").val() == "" || $("#Task_description").val() == "" ) {
-		alert("测试名称和描述都需要输入");
+		$.notification( 
+			{
+				title  : "测试名称和描述都不能为空",
+				content: "请输入测试的名称和描述",
+				icon   : "!",
+				color  : '#FF0000',
+			}
+		);
+		//alert("测试名称和描述都不能为空");
 		return false;
 	}
 	$.ajax(

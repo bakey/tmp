@@ -1,3 +1,18 @@
+<script type="text/javascript">
+function select_problem( element )
+{
+	$.notification( 
+			{
+				title: "添加成功",
+				//content: "请检查您的用户名和密码，尝试再次登陆",
+				icon: "!"
+			}
+	);
+	var current_selected = $('#choice_problem_cnt').text();
+	++ current_selected;
+	$('#choice_problem_cnt').text( current_selected );
+}
+</script>
 <div class="problem_filter">
 <?php
 
@@ -14,12 +29,17 @@
 			echo CHtml::dropDownList('difficulty_level','',Problem::$difficulty_level_map , $html_options);
          	echo '<br>科目: ';
          	echo CHtml::dropDownList( 'subject', '', Subject::getIDSubjectMap() , $html_options );
-         	echo '<div>';
-         	echo CHtml::htmlButton('选择知识点' , array('onclick'=>'') );
-         	echo '</div>';
 ?>  
+		<br>
+    	<span>
+    		<button>选择知识点</button>
+    	</span>
+    	<span>
+    		<button>题目筛选</button>
+    	</span>
+  
 </div>
-<div class="horizon_line"></div>   
+<div class="horizon_line"></div>  
 	<?php	
 	 echo CHtml::radioButtonList(
 				'sort_type','0',

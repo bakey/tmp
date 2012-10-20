@@ -9783,6 +9783,12 @@ body.feather .map .caption {
 	margin-bottom: 5px;
 	width :       720px;
 }
+.carton.task_list{
+	margin-top: 10px;
+	margin-left: 40px;
+	width      : 750px;
+	height     :  60px;
+}
 .container.topitem{
 	margin-bottom: 6px;
 }
@@ -9883,11 +9889,19 @@ select.select_problem {
 }
 .carton.col_4.prblem_selected_info {
 	float:right;
+	height: 130px;
+	margin-right:0px;
+	margin-bottom:0px;
+	position : absolute;
+    top : 10px;
+	right : 0px;
 }
 .horizon_dotted_line{
 	height:1px; 
-	width: 745px;
-	border-bottom:1px dashed #000;
+	width: 750px;
+	border-bottom:2px dashed #C7D2D2;
+	margin-top : 5px;
+	margin-bottom: 5px;
 }
 .horizon_line {
 	border-bottom : solid;
@@ -9901,7 +9915,7 @@ select.select_problem {
 .carton.col_4.problem_des {
 	margin-top:20px;
 	margin-left:50px;
-	width:800px;
+	width:700px;
 }
 .course_square_body {
 	margin-top:80px;
@@ -9910,4 +9924,13 @@ select.select_problem {
 .course_square_content_body {
 	min-height:800px;
 	padding-left:180px;
+}
+.carton .task_info {
+	margin-top:  10px;
+	margin-left: 30px;
+	width      : 150px;
+	text-align:  center;
+}
+.add_problem_circle {
+           list-style-type:circle;	
 }

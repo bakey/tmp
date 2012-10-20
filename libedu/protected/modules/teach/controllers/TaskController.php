@@ -131,6 +131,15 @@ class TaskController extends Controller
 	{
 		return TaskRecord::model()->count( 'task=:tid', array( ':tid' => $task_id ) );	
 	}
+	private function getRecentTaskRecord( $author )
+	{
+		$current_course = Yii::app()->user->course;
+		$criteria=new CDbCriteria;
+		$criteria->condition='author=:user and status=:stat and course=:course order by create_time desc';
+		$criteria->params=array(':user'=> $author , ':stat' => Task::STATUS_PUBLISHED , ':course' => $current_course );
+		
+		return Task::model()->findAll( $criteria->condition , $criteria->params );				
+	}
 	private function getTaskInfoData( $teacher )
 	{
 		$tasks = $teacher->task_as_teacher;
@@ -415,7 +424,8 @@ class TaskController extends Controller
 		if ( LibUser::is_teacher() ) 
 		{
 			$this->render('teacher_task_index',array(
-					'dataProvider'=>$this->getTaskInfoData( $user_model ),
+					'dataProvider' => $this->getTaskInfoData( $user_model ),
+					'recent_task' =>  $this->getRecentTaskRecord( Yii::app()->user->id ),
 			));
 		}
 		else if ( LibUser::is_student() )

@@ -70,7 +70,7 @@
 		<div class="con">
 			<div class="tile" id="hello">
 			<a rel="external" href="index.php?r=teach/course/update&course_id=<?php echo $course_model->id ; ?>">
-				<h2><span>
+				<h2><span style="text-decoration:none !important;">
 				<?php
 				if ( null != $course_model )
 				{
@@ -177,7 +177,7 @@
 				<span class="title"><strong>视频</strong> </span>
 			</a>
 			<?php
-				if ( Yii::app()->controller->module->id == "app" ) {
+				if ( isset(Yii::app()->controller->module) && Yii::app()->controller->module->id == "app" ) {
 					echo '<a href="index.php?r=app/default" class="tile sail" rel="external">';
 				}
 				else {

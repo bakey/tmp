@@ -25,27 +25,16 @@
 ));
 */
 ?>
-<script type="text/javascript">
-$(".tooltip").tooltip({
-    activation:         "hover",
-    maxWidth:           "340px",
-    title:              "This is a title",
-    edgeOffset:         20,
-    defaultPosition:    "right",
-    delay:              100,
-    fadeIn:             500,
-    fadeOut:            500,
-    attribute:          "data-tooltip",
-    theme:              "blue",
-    content:            "Sample <strong>content</strong>",
-    enter:              function() {
-                            alert("Enter")
-                        },
-    exit:               function() {
-                            alert("Exit")
-                        }
-});
-</script>
+<style>
+a1 ul li {list-style-type:decimal;}
+</style>
+<div class="a1">
+<ul>
+<li>1</li>
+<li>2</li>
+<li>3</li>
+</ul>
+</div>
 <a href="#" class="tooltip" title="This is a tooltip">A link with a tooltip</a>
 
 

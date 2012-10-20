@@ -19,7 +19,31 @@ function create_task()
 	});
 }
 </script>
-<button onclick="create_task()">
-	<span class="iconclass mid">+</span>
-	创建测试
-</button>
+<ul class="tabs">
+	<li class="active_tab">
+	我发布的测试
+	</li>
+	<li class="active_tab">
+	学生共建测试
+	</li>
+	<li class="active_tab">
+	热门试卷
+	</li>
+	<li class="active_tab">
+	收藏的试卷
+	</li>
+</ul>
+ <div class="tabs">
+     <div id="tab_one" class="tab mytab" >
+    	 <div class>
+    	 	<button class="subcontent bordered col_3"  onclick="create_task()" style="float:right">
+    	 		<span class="iconclass min">+</span>
+    	 		创建测试
+    	 	</button>
+		</div>
+     <?php
+     	$this->renderPartial( 'recent_task_list' , array('recent_task' => $recent_task ) ); 
+     ?>
+	
+	</div>
+</div>

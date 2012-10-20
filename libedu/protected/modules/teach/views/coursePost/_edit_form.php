@@ -21,7 +21,7 @@ function del_draft_post( element )
 	$.ajax(
 			{
 				url : del_url,
-				type: 'GET',
+				type: 'POST',
 				success : function(data) {
 						var result = eval( '(' + data + ')' );
 						if ( result.del_ret ) {

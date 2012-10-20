@@ -2,8 +2,6 @@
 <?php
 	echo '难度: ' . $data->getDifficulty() ;
 ?>
-</span>
-<span style="width:31.3%">
 	<?php 
 		echo '知识点:' ;
 		echo '<font style="color: #0064CC">' ; 
@@ -14,12 +12,14 @@
 	<?php 
 	echo '入库时间:' . $data->create_time . "<br>";
 	
-	echo '使用次数:' . $data->use_count . "|";	
+	echo '使用次数:';	
 ?>
-	选择本题<input type="checkbox" name="problem_selected[]" value="<?php echo $data->id ?>"/>
+	<button onclick="select_problem(this); return false;" style="float:right">选择本题</button>
+	<div class>
 	<?php 	
 		$content = $data->content;  
 	?>
+	</div>
 
 	<?php 
 		echo '(' . $data->source . ')';

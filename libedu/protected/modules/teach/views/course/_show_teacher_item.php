@@ -19,9 +19,9 @@ $(document).ready(function(){
 });
 </script>
 <ul class="tabs">
-<li class="active_tab">
-课程首页
-</li>
+	<li class="active_tab">
+	课程首页
+	</li>
 </ul>
  <div class="tabs">
      <div id="tab_one" class="tab mytab" >
