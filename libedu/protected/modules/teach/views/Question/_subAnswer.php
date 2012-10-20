@@ -32,7 +32,7 @@
 					if(($data->type == 2) and ($data->level == 0)){
 						echo '<div class="col_2">
 					<p> ';
-						echo CHtml::link('追问'.'(0)','javascript:void(0);',
+						echo CHtml::link('追问'.'('.$noa.')','javascript:void(0);',
 							array(
 							'onclick'=>CHtml::ajax( array('url'=>Yii::app()->createUrl('/teach/question/zwtoanswer',array('qid'=>$data->id,'type'=>1)),
 							'update'=>'#subanswer'.$data->id,'success'=>'js:function(data){$("#subanswer'.$data->id.'").html(data);$("#subanswer'.$data->id.'").fadeIn();}'
@@ -48,7 +48,7 @@
 					if(($data->type == 1) and ($data->level == 0)){
 						echo '<div class="col_2">
 					<p> ';
-						echo CHtml::link('回答'.'(0)','javascript:void(0);',
+						echo CHtml::link('回答'.'('.$noa.')','javascript:void(0);',
 							array(
 							'onclick'=>CHtml::ajax( array('url'=>Yii::app()->createUrl('/teach/question/zwtoanswer',array('qid'=>$data->id,'type'=>2)),
 							'update'=>'#subanswer'.$data->id,'success'=>'js:function(data){$("#subanswer'.$data->id.'").html(data);$("#subanswer'.$data->id.'").fadeIn();}'

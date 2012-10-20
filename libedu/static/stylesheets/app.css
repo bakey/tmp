@@ -9911,3 +9911,43 @@ select.select_problem {
 	min-height:800px;
 	padding-left:180px;
 }
+
+.jetext input{
+	border: 1px solid #bbb; 
+	background: -webkit-linear-gradient(rgba(255,255,255,0.2), white);
+	background: -moz-linear-gradient(rgba(255,255,255,0), white);
+	height: 40px !important;
+	width: 200px !important;
+	color: #888;
+	border-radius: 2px;
+	font-size: 12px;
+	-webkit-box-shadow: 0px 1px 0px white, rgba(0, 0, 0, .35) 0px 4px 5px -5px inset;
+	-moz-box-shadow: 0px 1px 0px white, rgba(0, 0, 0, .35) 0px 4px 5px -5px inset;
+	box-shadow: 0px 1px 0px white, rgba(0, 0, 0, .35) 0px 4px 5px -5px inset;
+	display: block;
+	width: 100%;
+	font: normal 12px HelveticaNeue, Helvetica, Arial;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.videoitemcontrol p{
+	font-size: 19px;
+	font-weight: bold;
+}
+
+.videoitemcontrol p span{
+	font-size: 11px;
+	line-height: 16px;
+	display: inline-block;
+	margin-left: 20px;
+	display: none;
+}
+
+.videoitemcontrol p:hover span{
+	display: inline-block;
+}
