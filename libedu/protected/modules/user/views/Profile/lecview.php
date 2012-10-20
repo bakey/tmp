@@ -93,6 +93,7 @@ $cs->registerScriptFile($baseUrl.'/js/jquery.jeditable.mini.js');
 		         tooltip   : 'Click to edit...',
 		         onblur    : 'submit',
 		         submit    : '修改',
+		         cssclass  : 'jetext',
  		     });
     		$('#jjeditable').editable('<?php echo Yii::app()->createUrl("/user/profile/update",array("id"=>Yii::app()->user->id,"clicktoedit"=>1)); ?>', {
 		         indicator : '<?php echo CHtml::image(Yii::app()->request->baseUrl."/images/ajax-loader.gif","alt",array()); ?>',

@@ -223,8 +223,8 @@ class QuestionController extends Controller
 				'anstyp'=>$type,
 				'skp'=>$selkp,),false,true);
 				for($i=0;$i<count($res);$i++){
-
-					$this->renderPartial('_subAnswer',array('data'=>$res[$i]),false,true);
+					$tempres = Answer::model()->findAllByAttributes(array('level'=>$res[$i]->id));
+					$this->renderPartial('_subAnswer',array('data'=>$res[$i],'noa'=>count($tempres)),false,true);
 				}
 				echo '<script type="text/javascript">
 	function submitAnswer(qid){
@@ -269,6 +269,7 @@ class QuestionController extends Controller
 	    			if(data == "success"){
 	    				var caloader = \'<div class="libajaxloader libajaxloaderwithbg"></div>\';
 	    				$("#bottomansdiv'.$qid.'").append(caloader);
+	    				$("#';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").text("';echo $type==1? '追问' : '回答'; echo '("+(parseInt($("#';echo $type==1? 'zw' : 'answer'; echo 'trigger'.$qid.'").text().match(/\d/g))+1)+")").hide().fadeIn();
 	    				$("#subzwtrigger'.$qid.'").click();
 	    				$("#overlays .modal").fadeOut(100);
 						$("#overlays").removeClass();

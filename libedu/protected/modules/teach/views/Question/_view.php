@@ -10,12 +10,10 @@
 	</div>
 	<div class="col_10">
 		<div class="carton roundbordered tinyallpadding">  
-			<h2>问题章节：<?php echo $data->item_info->content; ?></h2>
 			<div class="container nobottommargin  questionop">
 				<div class="col_12 dotbottom">
-					<blockquote>
 						<?php echo $data->details;?>
-					</blockquote>
+					
 				</div>
 				
 				<div class="col_5">
