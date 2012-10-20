@@ -6,7 +6,7 @@ class ProfileController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout='//layouts/homepage';
 
 	/**
 	 * @return array action filters
@@ -196,12 +196,22 @@ class ProfileController extends Controller
 		{
 			$model->attributes=$_POST['Profile'];
 			if($model->save())
+				echo 'success';
 				$this->redirect(array('view','id'=>$model->uid));
 		}
-
-		$this->render('update',array(
+		if(!isset($_REQUEST['clicktoedit'])){
+			$this->renderPartial('update',array(
 			'model'=>$model,
-		));
+			));
+		}else{
+			$cprofile = Profile::model()->findByPk($id);
+			$cprofile->description = $_POST['value'];
+			if($cprofile->save(false)){
+				echo $_POST['value'];
+			}else{
+				echo 'fail';
+			}
+		}
 	}
 
 	/**

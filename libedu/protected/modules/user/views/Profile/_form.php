@@ -4,25 +4,14 @@
 /* @var $form CActiveForm */
 ?>
 
-<ul class="tabs">
-    <li>
-        <a href="<?php echo Yii::app()->createUrl('/user/profile/view',array('id'=>Yii::app()->user->id)); ?>" rel="external">我的账号</a>
-    </li>
-    <li class="current">
-        <a href="#tab_one">个人设置</a>
-    </li>
-</ul>
-<div class="tabs">
-    <div id="tab_one" class="tab">
     	<div class="container">
     		<div class="carton col_12">
-    			<h3>个人设置</h3>
+    			<h3>修改头像</h3>
 
-<p class="note">Fields with <span class="required">*</span> are required.</p>
 <div class="form well row">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'profile-form',
+	'id'=>'profile-modify-form',
 	'enableAjaxValidation'=>false,
 )); 
 	//register js file
@@ -33,7 +22,7 @@
 		);
 		$cs->registerScriptFile($baseUrl.'/js/jquery.Jcrop.min.js');
 		$cs->registerScriptFile($baseUrl.'/js/jquery.color.js');
-		$cs->registerCssFile($baseUrl.'/css/jcrop/jquery.Jcrop.min.css');
+		//$cs->registerCssFile($baseUrl.'/css/jcrop/jquery.Jcrop.min.css');
  
 ?>
 
@@ -52,10 +41,11 @@
 		</div>
 		<div class="span7 div-bordered" id="uploadavatardiv">
 			<h5>上传新头像</h5>
+			<div class="col_12">
 		<?php
 			$this->widget('ext.EAjaxUpload.EAjaxUpload',
 			array(
-			        'id'=>'uploadFile',
+			        'id'=>'juploadFile',
 			        'config'=>array(
 
 			               'action'=>Yii::app()->createUrl('user/profile/uploadavatar'),
@@ -117,6 +107,7 @@
 			              )
 			));
 		?>
+	</div>
 		<div id="uploaded_avatar" style="display:none">
 		</div>
 
@@ -124,10 +115,6 @@
 		<div style="clear:both">&nbsp;</div>
 		<?php echo $form->hiddenField($model,'avatar',array('size'=>60,'maxlength'=>255)); ?>
 		<?php echo $form->error($model,'avatar'); ?>
-		
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50,'class'=>'span8')); ?>
-		<?php echo $form->error($model,'description'); ?>
-
 		<div class="container">
 					<div class="content">
 						<button class="turkish col_4 offset_2"><span>修改个人信息</span></button>
@@ -139,5 +126,7 @@
 </div><!-- form -->
 			</div>
 	    </div>
-	</div>
-</div>
+
+	    <script type="text/javascript">
+	    	$(document).unbind('tap');
+	    </script>

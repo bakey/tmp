@@ -1,3 +1,184 @@
+// @PLUGIN Tooltip by Drew Wilson (heavily modified / simplified version)
+(function($){
+	$.fn.tooltip = function(options) {
+		var defaults = { 
+			activation: "hover",
+			keepAlive: false,
+			maxWidth: "240px",
+			title: false,
+			edgeOffset: 3,
+			defaultPosition: "bottom",
+			delay: 0,
+			fadeIn: 100,
+			fadeOut: 100,
+			attribute: "title",
+			theme: false,
+			content: false, // HTML or String to fill tooltip with
+		  	enter: function(){},
+		  	exit: function(){}
+	  	};
+	 	var opts = $.extend(defaults, options);
+	 	
+	 	// Setup tip tip elements and render them to the DOM
+	 	var tooltip;
+	 	var tooltip_content;
+	 	var toggle;
+	 	function render() {
+	 		if($('#tooltip').length>0) {
+	 			if($('#tooltip').hasClass('click')) {
+	 				toggle = true;
+	 			}
+	 			$('#tooltip').remove();
+	 			if(toggle==true) {
+	 				return false;
+	 			}
+	 		}
+	 		tooltip = $('<div id="tooltip" />');
+	 		if(opts.theme!=false) {
+	 			tooltip.addClass(opts.theme);
+	 		}
+	 		
+	 		if(opts.maxWidth!="240px") {
+	 			tooltip.css("max-width", opts.maxWidth);
+	 		}
+			tooltip_content = $('<p />');
+			if(opts.title!=false) {
+				tooltip_content.prepend('<h2>' + opts.title + '</h2>');
+			}
+			$("body").append(tooltip.html(tooltip_content));
+		}
+		
+		return this.each(function(){
+			var org_elem = $(this);
+			if(opts.content){
+				var org_title = opts.content;
+			} else {
+				if(opts.attribute!="title") {
+					var org_title = org_elem.attr(opts.attribute);
+				} else {
+					var org_title = org_elem.data("title");
+				}
+			}
+			if(org_title != ""){
+				if(!opts.content && opts.attribute != "title"){
+					org_elem.removeAttr(opts.attribute); //remove original Attribute
+				}
+				var timeout = false;
+				
+				if(opts.activation == "hover"){
+					org_elem.hover(function(){
+						active_tooltip();
+					}, function(){
+						if(!opts.keepAlive){
+							deactive_tooltip();
+						}
+					});
+					if(opts.keepAlive){
+						tooltip.hover(function(){}, function(){
+							deactive_tooltip();
+						});
+					}
+				} else if(opts.activation == "focus"){
+					org_elem.focus(function(){
+						active_tooltip();
+					}).blur(function(){
+						deactive_tooltip();
+					});
+				} else if(opts.activation == "click"){
+					org_elem.click(function(){
+						active_tooltip();
+						tooltip.addClass("click");
+						return false;
+					}).hover(function(){},function(){
+						if(!opts.keepAlive){
+							deactive_tooltip();
+						}
+					});
+					if(opts.keepAlive){
+						tooltip.hover(function(){}, function(){
+							deactive_tooltip();
+						});
+					}
+				}
+			
+				function active_tooltip() {
+					opts.enter.call(this);
+					render();
+					tooltip_content.append(org_title);
+					
+					var top = parseInt(org_elem.offset()['top']);
+					var left = parseInt(org_elem.offset()['left']);
+					var org_width = parseInt(org_elem.outerWidth());
+					var org_height = parseInt(org_elem.outerHeight());
+					var tip_w = tooltip.outerWidth();
+					var tip_h = tooltip.outerHeight();
+					var w_compare = Math.round((org_width - tip_w) / 2);
+					var h_compare = Math.round((org_height - tip_h) / 2);
+					var marg_left = Math.round(left + w_compare);
+					var marg_top = Math.round(top + org_height + opts.edgeOffset);
+					var t_class = "";
+
+                    t_class = opts.defaultPosition;
+                   	
+					
+					var right_compare = (w_compare + left) < parseInt($(window).scrollLeft());
+					var left_compare = (tip_w + left) > parseInt($(window).width());
+					
+					if((right_compare && w_compare < 0) || (t_class == "right" && !left_compare) || (t_class == "left" && left < (tip_w + opts.edgeOffset + 5))){
+						t_class = "right";
+						marg_left = Math.round(left + org_width + opts.edgeOffset);
+						marg_top = Math.round(top + h_compare);
+					} else if((left_compare && w_compare < 0) || (t_class == "left" && !right_compare)){
+						t_class = "left";
+						marg_left = Math.round(left - (tip_w + opts.edgeOffset + 5));
+						marg_top = Math.round(top + h_compare);
+					}
+
+					var top_compare = (top + org_height + opts.edgeOffset + tip_h + 8) > parseInt($(window).height() + $(window).scrollTop());
+					var bottom_compare = ((top + org_height) - (opts.edgeOffset + tip_h + 8)) < 0;
+					
+					if(top_compare || (t_class == "bottom" && top_compare) || (t_class == "top" && !bottom_compare)){
+						if(t_class == "top" || t_class == "bottom"){
+							t_class = "top";
+						} else {
+							t_class = t_class+"top";
+						}
+						marg_top = Math.round(top - (tip_h + 5 + opts.edgeOffset));
+					} else if(bottom_compare | (t_class == "top" && bottom_compare) || (t_class == "bottom" && !top_compare)){
+						if(t_class == "top" || t_class == "bottom"){
+							t_class = "bottom";
+						} else {
+							t_class = t_class+"bottom";
+						}						
+						marg_top = Math.round(top + org_height + opts.edgeOffset);
+					}
+				
+					if(t_class == "righttop" || t_class == "lefttop"){
+						marg_top = marg_top + 5;
+					} else if(t_class == "rightbottom" || t_class == "leftbottom"){		
+						marg_top = marg_top - 5;
+					}
+					if(t_class == "lefttop" || t_class == "leftbottom"){	
+						marg_left = marg_left + 5;
+					}
+					tooltip.css({"left": marg_left+"px", "top": marg_top+"px"}).addClass(t_class);
+					
+					if (timeout){ clearTimeout(timeout); }
+					timeout = setTimeout(function(){ tooltip.stop(true,true).fadeIn(opts.fadeIn); }, opts.delay);	
+				}
+				
+				function deactive_tooltip(){
+					opts.exit.call(this);
+					if (timeout){ clearTimeout(timeout); }
+					tooltip.fadeOut(opts.fadeOut, function() {
+						$(this).remove();
+					});
+				}
+			}				
+		});
+	}
+})(jQuery);  	
+
 $.initialize = function() {
 	// --------------- Navigation ----------------------------
 	$('a').bind("tap", function(e) {
@@ -252,6 +433,7 @@ $.initialize = function() {
 		}
 	});
 };
+
 
 // Initializing of the Pastel Dashboard!
 $(document).ready(function() {

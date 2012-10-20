@@ -1,6 +1,12 @@
 <?php
 /* @var $this ProfileController */
 /* @var $model Profile */
+$baseUrl = Yii::app()->baseUrl; 
+$cs = Yii::app()->getClientScript();
+$cs->scriptMap=array(
+        'jquery.js'=>false,
+);
+$cs->registerScriptFile($baseUrl.'/js/jquery.jeditable.mini.js');
 
 ?>
 
@@ -10,18 +16,7 @@
         array('label'=>'修改密码', 'url'=>Yii::app()->createUrl('/user/libuser/changepassword',array('id'=>$model->uid))),
     ),
 )); */
-?>
-
-<ul class="tabs">
-    <li class="current">
-        <a href="#tab_one">我的账号</a>
-    </li>
-    <li>
-        <a href="<?php echo Yii::app()->createUrl('/user/profile/update',array('id'=>Yii::app()->user->id)); ?>" rel="external">个人设置</a>
-    </li>
-</ul>
-<div class="tabs">
-    <div id="tab_one" class="tab">
+?>			
     	<div class="container">
     		<div class="carton col_12">
 				<h2><?php echo $model->real_name; ?>的账号</h2>
@@ -52,7 +47,7 @@
 								array(
 									'label'=>'用户头像',
 									'type'=>'raw',
-									'value'=>$avatarCode,
+									'value'=>'<a href="javascript:void(0)" class="libtooltip" title="点击修改头像！" onclick="dochangeavatar()">'.$avatarCode.'</a>',
 								),
 								'real_name',
 								array(
@@ -64,19 +59,47 @@
 									'value'=>$clsstring,
 								),
 								'user_info.email',
-								'user_info.mobile',
-								'description',
+								array(
+									'name'=>'user_info.mobile',
+									'template'=>'<tr><th>{label}</th><td><a class="libtooltip" title="点击就可以修改！" href="javascript:void(0);" id="mobileeditable">{value}</a></td></tr>',
+								),
+								array(
+									'name'=>'user_info.user_profile.description',
+									'template'=>'<tr><th>{label}</th><td><a class="libtooltip" title="点击就可以修改！" href="javascript:void(0);" id="jjeditable">{value}</a></td></tr>',
+								),
 							),
 					)); ?>
 				</div>
 				<div class="container">
 					<div class="content">
-						<a href="<?php echo Yii::app()->createUrl('/user/profile/update',array('id'=>Yii::app()->user->id)); ?>" rel="external"><button class="turkish col_4 offset_2"><span>修改个人信息</span></button></a>
-						<button class="turkish col_4 omega" onclick="$.fn.modal({url: '<?php echo Yii::app()->createUrl('/user/libuser/changepassword',array('id'=>Yii::app()->user->id)) ?>',
+						<button class="turkish col_7 offset_3 omega" onclick="$.fn.modal({url: '<?php echo Yii::app()->createUrl('/user/libuser/changepassword',array('id'=>Yii::app()->user->id)) ?>',
    content: '<div class=\'libajaxloader\'></div>'})"><span>修改密码</span></button>
 					</div>
 				</div>
 			</div>
     </div>
-</div>
-</div>
+
+    <script type="text/javascript">
+
+    	function dochangeavatar(){
+    		$.fn.modal({url: '<?php echo Yii::app()->createUrl('/user/profile/update',array('id'=>Yii::app()->user->id)) ?>',
+   content: '<div class="libajaxloader"></div>'});
+    	}
+    	$(document).ready(function(){
+    		$(".libtooltip").tooltip({edgeOffset:         30,
+    defaultPosition:    "right",});
+    		$('#mobileeditable').editable('<?php echo Yii::app()->createUrl("/user/libuser/updatemobilephone",array("id"=>Yii::app()->user->id,"clicktoedit"=>1)); ?>', {
+		         indicator : '<?php echo CHtml::image(Yii::app()->request->baseUrl."/images/ajax-loader.gif","alt",array()); ?>',
+		         tooltip   : 'Click to edit...',
+		         onblur    : 'submit',
+		         submit    : '修改',
+ 		     });
+    		$('#jjeditable').editable('<?php echo Yii::app()->createUrl("/user/profile/update",array("id"=>Yii::app()->user->id,"clicktoedit"=>1)); ?>', {
+		         indicator : '<?php echo CHtml::image(Yii::app()->request->baseUrl."/images/ajax-loader.gif","alt",array()); ?>',
+		         tooltip   : 'Click to edit...',
+		         type      : 'textarea',
+		         onblur    : 'submit',
+		         submit    : '修改',
+		     });
+    	});
+    </script>

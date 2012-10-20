@@ -182,6 +182,20 @@ class LibUserController extends Controller
 		));
 	}
 
+	public function actionUpdateMobilePhone($id){
+		$cusr = LibUser::model()->findByPk($id);
+		if(isset($_POST['id'])){
+			if($_POST['id']=='mobileeditable'){
+				$cusr->mobile = $_POST['value'];
+				if($cusr->save(false)){
+					echo $_POST['value'];
+				}else{
+					echo 'fail';
+				}
+			}
+		}
+	}
+
 	public function actionResetPassword($aid,$uid){
 	     $model=$this->loadModel($uid);
 	    if(LibUser::model()->validateResetPassword($aid,$uid)){
