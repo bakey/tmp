@@ -9986,3 +9986,7 @@ select.select_problem {
 	border-style : solid;
 	left: 751px;
 }
+.task_student_finish_status {
+	min-height:50px;
+	margin-left:6px;
+}

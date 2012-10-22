@@ -92,7 +92,8 @@ grade int references tbl_grade(grade_index) on delete cascade,
 school_id int references tbl_school(id) on delete cascade,
 name varchar(255) ,
 description text,
-view_count int 
+view_count int ,
+subject int 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table tbl_user_course(

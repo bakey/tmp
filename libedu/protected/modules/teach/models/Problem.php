@@ -17,10 +17,10 @@
  */
 class Problem extends CActiveRecord
 {
-	const SINGLE_CHOICE=0;
-	const MULTIPLE_CHOICE=1;
-	const BLANK=2;
-	const QuAn=3;
+	const SINGLE_CHOICE   = 0;
+	const MULTIPLE_CHOICE = 1;
+	const BLANK           = 2;
+	const QuAn            = 3;
 
 	const A=0;
 	const B=1;
@@ -36,10 +36,10 @@ class Problem extends CActiveRecord
 				4 => "难",
 	);
 	static public $problem_type_map = array(
-			self::SINGLE_CHOICE=>'单项选择',
-			self::MULTIPLE_CHOICE=>'多项选择',
-			self::BLANK=>'填空',
-			self::QuAn=>'问答',);
+			self::SINGLE_CHOICE   => '单项选择',
+			self::MULTIPLE_CHOICE => '多项选择',
+			self::BLANK           => '填空',
+			self::QuAn			   => '问答',);
 	public function getDifficultyLevel()
 	{
 		return Problem::$difficulty_level_map;

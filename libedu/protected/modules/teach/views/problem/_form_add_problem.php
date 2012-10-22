@@ -1,6 +1,6 @@
 
 <div class="form well row" >
-<?php $form=$this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'problem-form',
 		'enableAjaxValidation'=>true,
 		'action'=>'index.php?r=teach/problem/create',

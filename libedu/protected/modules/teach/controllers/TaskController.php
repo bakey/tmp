@@ -33,7 +33,7 @@ class TaskController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','createtaskitemrelation','index','showfinishtask','ajaxcheckanswer','newtaskname','test','publishtask','previewtask','filterproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
+				'actions'=>array('admin','showstudenttaskstatus','createtaskitemrelation','index','showfinishtask','ajaxcheckanswer','newtaskname','test','publishtask','previewtask','filterproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -59,25 +59,19 @@ class TaskController extends Controller
 	}
 	private function create_new_task( $task_model )
 	{
-		$task_model->status = task::STATUS_DRAFT ;
-		$task_model->attributes = $_POST['Task'];
-		if ( !$task_model->save() ) {
-			throw new CHttpException( 500 , "创建测试记录失败");
-		}
-		$problem_selected = $_POST['problem_selected'];
+		$task_model->status = Task::STATUS_PUBLISHED;
+		$task_model->save();
+		$problem_selected = $_POST['Task'];
 		foreach( $problem_selected as $selected )
 		{
 			$task_problem_model = new TaskProblem;
 			$task_problem_model->task_id = $task_model->id ;
 			$task_problem_model->problem_id = (int) $selected ;
-			$task_problem_model->problem_score = 0 ;
+			//$task_problem_model->problem_score = 0 ;
 			$task_problem_model->save();
 		}
-		return $this->create_task_knowledgepoint( $task_model );		
-	}
-	private function preview_task()
-	{
-		
+		return true ;
+		//return $this->create_task_knowledgepoint( $task_model );		
 	}
 	private function check_task_exist( $task_id )
 	{
@@ -173,18 +167,46 @@ class TaskController extends Controller
 		$array_task_data = new CArrayDataProvider( $task_data );
 		return $array_task_data ;		
 	}
+	private function getFastestFinishStudents( $task_id )
+	{
+		$task_records = TaskRecord::model()->findAll( 'task=:task_id and status=:status order by end_time desc' , array( ':task_id' => $task_id , 
+							':status' => TaskRecord::TASK_STATUS_FINISHED  ) );
+		$users = array();
+		foreach ( $task_records as $record )
+		{
+			$users[] = LibUser::model()->findByPk( $record->accepter );			
+		}
+		return $users;		
+	}
+	private function getUnfinishStudents( $task_id )
+	{
+		$task_records = TaskRecord::model()->findAll( 'task=:task_id and status=:status order by end_time desc' , array( ':task_id' => $task_id ,
+				':status' => TaskRecord::TASK_STATUS_UNFINISHED  ) );
+		$users = array();
+		foreach ( $task_records as $record )
+		{
+			$users[] = LibUser::model()->findByPk( $record->accepter );
+		}
+		return $users;
+		
+	}
+	
+	public function actionShowStudentTaskStatus( $task_id )
+	{
+		$course_model = Course::model()->findByPk( Yii::app()->user->course );
+		$total_student = $course_model->getCourseStudentCount();
+		$finish_stu_count = $this->getFinishTaskStuCnt( $task_id );
+		$this->renderPartial( 'student_task_status' , array(
+							  'total_student'    => $total_student ,
+							  'finish_stu_count' => $finish_stu_count,
+							  'fastest_finish_student' => $this->getFastestFinishStudents( $task_id ), 
+							  'unfinish_student'       => $this->getUnfinishStudents( $task_id ),
+						
+				) );				
+	}
 	
 	public function actionTest()
 	{
-		/*$dataProvider = new CActiveDataProvider( 'Problem' );
-		if ( isset( $_POST['select_ans']) )
-		{
-			var_dump( $_POST );
-			exit();
-		}
-		$this->render('test' , array(
-						'problem_data'=>$dataProvider ,
-						));*/
 	}
 
 
@@ -296,23 +318,25 @@ class TaskController extends Controller
 		$course_model  = Course::model()->findByPk( Yii::app()->user->course );
 		if ( $task_model == null ){
 			$this->redirect( array('/teach/task/') , true );
-		}		
-		$dataProvider  = new CActiveDataProvider('Problem');
+		}	
+		$current_subject = $course_model->subject;	
+		$dataProvider  = new CActiveDataProvider( 'Problem' , array ( 'criteria' => array(
+										'condition' => 'subject=' . $current_subject,
+									) 
+				) );
 		
-		/*if( isset($_POST['Task']) )
-		{			
-			if ( isset( $_POST['publish']) || isset($_POST['preview']) ) {
-				//把task model存好，并把task_problem,task_knowledge_point都关联好
-				if ( $this->create_new_task( $task_model ) ) {
-					$this->redirect( array("previewtask" , 'task_id'=>$task_model->id) ) ;
-				}else {
-					throw new CHttpException(500 , "发布测验失败");
-				}
+		if( isset($_POST['Task']) )
+		{
+			if ( $this->create_new_task( $task_model ) ) {
+				$ret = array( 'create_result' => 'success' , 
+						'redir_url' =>  'index.php?r=teach/task/previewtask&task_id=' . $task_id );
+				echo @json_encode( $ret );
+				exit();
+				//$this->redirect( array("previewtask" , 'task_id'=>$task_model->id) ) ;
+			}else {
+				throw new CHttpException(500 , "建立测验失败");
 			}
-			else {
-				throw  new CHttpException( 404 , "未知的测验请求");
-			}
-		}*/
+		}
 
 		$this->render('create_task',array(
 			'task_model'   => $task_model,
@@ -487,8 +511,9 @@ class TaskController extends Controller
 	}
 	
     
-	 /*添加题目
-	   */
+	 /*
+	  *    添加题目
+	  */
     public function actionFilterProblem()
 	{
 		$criteria=new CDbCriteria;
@@ -534,8 +559,7 @@ class TaskController extends Controller
 			
 		}
 		$this->renderPartial('problem_list',
-					array(
-							'problem_data'=>$dataProvider,));
+					array(	'problem_data'=>$dataProvider,) );
 	}
 
     /*创建一条测试记录
@@ -665,8 +689,7 @@ class TaskController extends Controller
 		$dataProvider = new CArrayDataProvider( $problem_data );
 		$this->render( 'viewfinishedtask' , array(
 				'problem_data' => $dataProvider,
-				) );
-		
+				) );		
 	}
 	public function actionAjaxCheckAnswer( $task_id )
 	{

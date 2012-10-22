@@ -36,7 +36,7 @@ class ProblemController extends Controller
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
 				//'actions'=>array('index','create','upload','update','admin','delete'),
-				'actions'=>array('index','create','upload','autosave','update','admin','delete'),
+				'actions'=>array('index','create','upload','autosave','update','admin','delete','showansexplain'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -70,6 +70,16 @@ class ProblemController extends Controller
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
+	}
+	public function actionShowAnsExplain( $problem_id )
+	{
+		$problem = Problem::model()->findByPk( $problem_id );
+		if ( $problem == null ) {
+			echo '无此问题';
+		}
+		else {
+			echo $problem->ans_explain; 
+		}
 	}
 	private function savePrblemKnowledgePoint( /*array*/ $knowledgePoints , $pid )
 	{

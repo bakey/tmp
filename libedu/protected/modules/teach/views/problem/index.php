@@ -13,7 +13,7 @@ $this->menu=array(
 <div class="well">
 <?php 
 
-$this->widget('bootstrap.widgets.TbListView', array(
+$this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
 	'itemView'=>'_view',
 ));

@@ -1,10 +1,19 @@
+<script type="text/javascript">
+function show_ans_explain( element )
+{
+	$.fn.modal({
+		url : '<?php echo Yii::app()->params['index_path']?>?r=teach/problem/showansexplain&problem_id=' + $(element).attr('data-id'),
+    	animation:  "fadeIn"
+	});
+}
+</script>
 <div style="margin-top:10px; margin-left:50px;">
 	<span>
 	<?php
 		echo '难度: ' . $data->getDifficulty() ;
 	?>
 	</span>
-	<span style="margin-left:100px">
+	<span style="margin-left:200px">
 		<?php 
 			echo '知识点:' ;
 			echo '<font style="color: #0064CC">' ; 
@@ -13,14 +22,20 @@
 		?>
 	</span>
 </div>
-<div class>
-	<?php 
-	echo '入库时间:' . $data->create_time . "<br>";
-	
-	echo '使用次数:';	
-?>
+<div style="margin-left:50px">
+	<span>
+		<?php 
+		echo '入库时间:' . $data->create_time ;
+		?>
+	</span>
+	<span style="margin-left:52px">
+		<?php 	
+		echo '使用次数:' .	$data->use_count . "<br>";
+		?>
+	</span>
 </div>
-	<button onclick="select_problem(this); return false;" style="float:right">选择本题</button>
+<div class="horizon_line"></div>
+	<button data-id="<?php echo $data->id; ?>" onclick="select_problem(this); return false;" style="float:right">选择本题</button>
 	<div class>
 	<?php 	
 		$content = $data->content;  
@@ -44,10 +59,5 @@
 		}
 	}
 	?>
-	<br/>
-
-	<?php
-		echo CHtml::label('标准答案:    '. $data->reference_ans ,false);
-		echo CHtml::label('题目类型: ' . $data->getType(),false);
-		
-	?>
+	<div class="horizon_line"></div>
+	<button data-id="<?php echo $data->id; ?>" onclick="show_ans_explain(this); return false;">解析</button>

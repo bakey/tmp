@@ -1,7 +1,24 @@
 <script type="text/javascript">
-function select_item()
+function submit_task_form( task_id )
 {
-	//alert('xxx');
+	var sel_problems = $('#problem_selected').children() ;
+	if( sel_problems.length <= 0 ) {
+		alert("你还没有选择题目");
+		return false ;
+	}
+	
+	$.ajax( 
+			{
+				url : 'index.php?r=teach/task/create&task_id=' + task_id ,
+				data : $("#task-form").serialize(),
+				type : 'post',
+				success: function( resp ) {
+					var submit_ret = eval( '(' + resp + ')' );
+					//alert( submit_ret.redir_url );
+					window.location.href = submit_ret.redir_url;
+				}
+			}
+	 );
 }
 </script>
 <span style="margin-left:50px;font-size:30px">题库选题</span>
@@ -20,7 +37,7 @@ function select_item()
 				<br>您已勾选<span id="choice_problem_cnt">0</span>道选择题
 			</span>
 			<span style="position:absolute;top:22px; left:250px">
-				<button onclick="select_item(); return false;" style="float:right;">下一步</button>
+				<button onclick="submit_task_form(<?php echo $task_model->id; ?>);" style="float:right;">下一步</button>
 			</span>
 		</div>
 		
@@ -33,13 +50,13 @@ function select_item()
 	)); ?>
 
 	<?php echo $form->errorSummary($task_model); ?>		
-			
+	<div id="problem_selected" style="display:none"></div>	
 	<?php
 		$this->renderPartial( 'select_problem' , array(
 			'problem_data' => $problem_data,
 		) );
 	?>
-	<div id="statusID"></div>
+	
 
 	<?php $this->endWidget(); ?>
 

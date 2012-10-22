@@ -35,12 +35,31 @@ function create_task()
 </ul>
  <div class="tabs">
      <div id="tab_one" class="tab mytab" >
-    	 <div class>
-    	 	<button class="subcontent bordered col_3"  onclick="create_task()" style="float:right">
-    	 		<span class="iconclass min">+</span>
-    	 		创建测试
-    	 	</button>
+   
+   <a href="javascript:void(0)" onclick="">
+       	<div class="carton col_3">
+ 			<div class="subcontent bordered">
+   				全部测试
+ 			</div>
 		</div>
+	</a>
+	
+	<a href="javascript:void(0)" onclick="">		
+		<div class="carton col_3">
+ 			<div class="subcontent bordered">
+   				最近测试
+ 			</div>
+		</div>
+	</a>
+		
+		<a href="javascript:void(0)" onclick="create_task()">
+			<div class="carton" style="width:31.3%;float:right">
+ 				<div class="subcontent bordered">
+ 				<span class="iconclass min">+</span>
+    	 			创建测试
+    	 		</div>
+    	 	</div>
+    	 </a>
      <?php
      	$this->renderPartial( 'recent_task_list' , array('recent_task' => $recent_task ) ); 
      ?>
