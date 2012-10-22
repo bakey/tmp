@@ -245,19 +245,9 @@ class TaskController extends Controller
 			$student_models[] = $user_model;
 		}
 		$student_data = new CArrayDataProvider( $student_models );
-		$problems = $task_model->problems;
-		$problem_data = array();
-		foreach( $problems as $problem )
-		{
-			$problem_data[] = array( 'id'         => $problem->id , 
-									  'content'    =>$problem->content,
-									  'difficulty' => $problem->getDifficulty(),
-									  'type'       => $problem->getType(),
-					);
-		}
-		$problemDataProvider = new CArrayDataProvider( $problem_data );
-		$this->render( 'preview',array(
-									'problem_data'    => $problemDataProvider ,
+		$problems = new CArrayDataProvider( $task_model->problems );
+		$this->render( 'problem_list',array(
+									'problem_data'    => $problems,
 									'task_id' 	      => $task_id,
 									'student_data'    => $student_data,
 				) );	
