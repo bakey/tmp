@@ -21,7 +21,7 @@ function submit_and_redirect()
 	}
 	$.ajax(
 			{
-				url : '<?php echo Yii::app()->params['index_path']; ?>?r=teach/task/newtaskname',
+				url : '<?php echo Yii::app()->createUrl('/teach/task/newtaskname'); ?>',
 				data: $("#create_task_name_form").serialize(),
 				type: 'POST',
 				success: function(resp) {
