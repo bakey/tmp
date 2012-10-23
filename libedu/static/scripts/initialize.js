@@ -1,3 +1,26 @@
+(function($){
+	$.fn.checkbox = function() {
+		var self = $(this).clone().wrapAll("<div/>").parent().html();
+		var checkbox = $("<span />").addClass("checkbox");
+		var label = $("<label />").append(self).append('<span class="on">on</span><span class="toggle"></span><span class="off">off</span>'); 
+		
+		if($(this).attr('checked')) { 
+			checkbox.addClass("checked");
+		}
+		
+		if($(this).attr('class')) {
+			checkbox.addClass( $(this).attr("class") );
+		}
+		
+		if($(this).hasClass("rounded")) {
+			checkbox.addClass("rounded");
+		}
+		
+		label.appendTo(checkbox);
+		$(this).replaceWith(checkbox);	
+	}
+})(jQuery);
+
 // @PLUGIN Tooltip by Drew Wilson (heavily modified / simplified version)
 (function($){
 	$.fn.tooltip = function(options) {
