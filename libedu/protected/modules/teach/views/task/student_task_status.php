@@ -45,6 +45,10 @@ function closemodal(){
  	<div class="task_student_stat" > 	
  		<div id="fastest_finish" style="display:none">
  		<?php
+ 			if ( count($fastest_finish_student) <= 0 )
+ 			{
+ 				echo '暂没有学生完成';
+ 			} 
  			foreach( $fastest_finish_student as $student )
  			{
  				echo '<span class="carton" style="margin-left:10px">';
@@ -62,9 +66,9 @@ function closemodal(){
  		?>
  		</div>
  	</div>
-
- 	
+ 	<div class="student_task_stat_cancel_button"> 	
  		<?php
    			echo CHtml::htmlButton('返回' , array('onclick' => 'closemodal()') ) ;
  		?>
+ 	</div>
  

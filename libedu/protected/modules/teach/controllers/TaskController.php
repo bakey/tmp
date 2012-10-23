@@ -234,18 +234,15 @@ class TaskController extends Controller
 			if ( $root == $root_item_id )
 			{
 				$task = Task::model()->findByPk( $ti->task );
-				$resp_arr[] = array( 'id' => $task->id , 'name' => $task->name , 'description' => $task->description );				
+				if ( isset($resp_arr[ $task->id ]) ) 
+				{
+					continue;
+				}
+				$resp_arr[ $task->id ] = array( 'id' => $task->id , 'name' => $task->name , 
+												'description' => $task->description , 'create_time' => $task->create_time );				
 			}			
 		}
-		echo @json_encode( $resp_arr );
-		/*$item_model = Item::model()->findByPk( $item_id );
-		$related_task = $item_model->tasks;
-		$resp_arr = array();
-		foreach ( $related_task as $task )
-		{
-			$resp_arr[] = array( 'id' => $task->id , 'name' => $task->name , 'description' => $task->description );						
-		}
-		echo @json_encode( $resp_arr );*/			
+		echo @json_encode( $resp_arr );			
 	}
 	public function actionConnectItem( $task_id )
 	{

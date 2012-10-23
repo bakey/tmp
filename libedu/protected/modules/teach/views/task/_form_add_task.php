@@ -24,7 +24,8 @@ function submit_task_form( task_id )
 		url : 'index.php?r=teach/task/create&task_id=' + task_id ,
 		data : $("#task-form").serialize(),
 		type : 'post',
-		success: function( resp ) {
+		success: function( resp )
+		{
 			var submit_ret = eval( '(' + resp + ')' );
 			window.location.href = submit_ret.redir_url;
 		}

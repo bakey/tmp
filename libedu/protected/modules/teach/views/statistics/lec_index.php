@@ -46,9 +46,13 @@ function closemodal(){
 function flipUpOthers(){
 	$(".tabheader").siblings().not(".current").fadeOut();
 }
-
+function toggle( element , class_name){
+	$(element).siblings( '.' + class_name ).not('.tabheader').toggle(100);
+}
 $(document).ready(function(){
+	//$(".tabs .current").siblings().each( function(index){ if } ); 
 	$(".tabs .current").siblings().not(".tabheader").fadeOut();
+	//$(".tabs .tabheader").bind( 'click' , function(){ });
 });
 </script>
 
@@ -56,49 +60,49 @@ $(document).ready(function(){
 </div>
 
 <ul class="tabs">
-	<li class="tabheader">
+	<li class="tabheader" onclick="toggle(this , 'course_stat')">
         <h3>课程统计<span class="iconclass min">]</span></h3>
     </li>
-    <li>
+    <li class="course_stat">
         <a href="#tab_one">热点统计</a>
     </li>
-    <li>
+    <li class="course_stat">
         <a href="#tab_one">浏览统计</a>
     </li>
-    <li>
+    <li class="course_stat">
         <a href="#tab_one">共建统计</a>
     </li>
-    <li>
+    <li class="course_stat">
         <a href="#tab_one">来访统计</a>
     </li>
-    <li class="tabheader">
+    <li class="tabheader" onclick="toggle(this , 'task_stat')">
         <h3>测试统计<span class="iconclass min">]</span></h3>
     </li>
-    <li class="current">
+    <li class="current task_stat">
         <a href="#tab_one">热点统计</a>
     </li>
-    <li>
+    <li class="task_stat">
         <a href="#tab_one">得分统计</a>
     </li>
-    <li>
+    <li class="task_stat">
         <a href="#tab_one">错题与知识点统计</a>
     </li>
-    <li>
+    <li class="task_stat">
         <a href="#tab_one">共建统计</a>
     </li>
-    <li class="tabheader">
+    <li class="tabheader" onclick="toggle(this , 'qa_stat')">
         <h3>问答统计<span class="iconclass min">]</span></h3>
     </li>
-    <li>
+    <li class="qa_stat">
         <a href="#tab_one">热点统计</a>
     </li>
-    <li>
+    <li class="qa_stat">
         <a href="#tab_one">知识点统计</a>
     </li>
-    <li>
+    <li class="qa_stat">
         <a href="#tab_one">学生统计</a>
     </li>
-    <li>
+    <li class="qa_stat">
         <a href="#tab_one">章节统计</a>
     </li>
 

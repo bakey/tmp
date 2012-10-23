@@ -2,7 +2,7 @@ body, h2 {
 	margin: 0px;
 }
 body {
-	font: normal 15px HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei';
+	font: normal 15px HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei';
 	-webkit-text-stroke: 1px transparent;
 	overflow-x: hidden;
 	-webkit-backface-visibility: hidden;
@@ -18,10 +18,6 @@ body.hidden {
 }
 a {
 	cursor: pointer;
-}
-
-a, a:visited, a:hover{
-	text-decoration: none !important;
 }
 body.dashboard:before {
 	content: "";
@@ -40,7 +36,7 @@ h1 {
 p {
 	font-size: 14px;
 	line-height: 1.8;
-	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica,'simsun','Microsoft YaHei', Arial, sans-serif;
+	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica,'simhei','Microsoft YaHei', Arial, sans-serif;
 	color: #555;
 }
 p.first:first-letter {
@@ -67,7 +63,7 @@ ol {
 	padding: 0px;
 	font-size: 14px;
 	line-height: 1.8;
-	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei', sans-serif;
+	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei', sans-serif;
 	color: #444;
 }
 ol li {
@@ -212,7 +208,7 @@ label {
 	position: relative;
 }
 #footer h4 span {
-	font-family: HelveticaNeue-Light,HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei', sans-serif;
+	font-family: HelveticaNeue-Light,HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei', sans-serif;
 	font-weight: normal;
 }
 #footer h4 span.theme {
@@ -342,7 +338,7 @@ div.tagsinput input {
 	outline:0px;  
 	margin-right:5px; 
 	margin-bottom:5px; 
-	font-family: HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei',sans-serif;
+	font-family: HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei',sans-serif;
 	line-height: 1.6;
 }
 div.tagsinput div {
@@ -386,7 +382,7 @@ div.tagsinput div {
 	padding: 15px;
 	font-size: 14px;
 	line-height: 1.8;
-	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei', sans-serif;
+	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei', sans-serif;
 }
 #tooltip.small p {
 	padding: 4px;
@@ -947,7 +943,7 @@ button:active, input[type="submit"]:active {
 	background-image: -moz-linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5));
 }
 button span {
-	font-family: HelveticaNeue-Light, Helvetica, Arial, 'simsun','Microsoft YaHei', sans-serif;
+	font-family: HelveticaNeue-Light, Helvetica, Arial, 'simhei','Microsoft YaHei', sans-serif;
 	font-weight: normal;
 }
 .con {
@@ -1681,7 +1677,7 @@ tr:last-child td {
 	background-color: #79BD9A;
 }
 .sail {
-	background-color: #3B8686 !important;
+	background-color: #3B8686;
 }
 .adrift {
 	background-color: #0B486B;
@@ -2446,7 +2442,7 @@ body.welcome #notifications {
 #overlays.info > .wrapper h2 {
 	font-size: 60px;
 	text-align: center;
-	font-family: HelveticaNeue-UltraLight, HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei',sans-serif;
+	font-family: HelveticaNeue-UltraLight, HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei',sans-serif;
 	font-weight: normal;
 }
 #overlays.info > .wrapper .icon {
@@ -2576,7 +2572,7 @@ div.overlay .wrapper h2:first-child {
 	text-shadow: black 0px 2px 2px;
 }
 div.overlay h2 span {
-	font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, 'simsun','Microsoft YaHei',sans-serif;
+	font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, 'simhei','Microsoft YaHei',sans-serif;
 	font-weight: normal;
 }
 #header {
@@ -2604,7 +2600,7 @@ div.overlay h2 span {
 #header ul li {
 	float: left;
 	list-style: none;
-	font: bold 14px/38px HelveticaNeue, Helvetica, Arial,'simsun','Microsoft Yahei';
+	font: bold 14px/38px HelveticaNeue, Helvetica, Arial,'simhei','Microsoft Yahei';
 	color: #828282;
 	text-shadow: rgba(0,0,0,0.8) 0px 1px 1px;
 	padding-left: 20px;
@@ -2778,7 +2774,7 @@ div.overlay h2 span {
 	margin: 0px;
 	border: 0px solid;
 	color: #777777;
-	font: normal 12px HelveticaNeue, Helvetica, Arial,'simsun','Microsoft Yahei';
+	font: normal 12px HelveticaNeue, Helvetica, Arial,'simhei','Microsoft Yahei';
 	-moz-box-shadow: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
@@ -2980,7 +2976,7 @@ a.tile:nth-child(odd) {
 	background: rgba(0, 0, 0, 0.02);
 }
 .tile h2 {
-	font: bold 50px HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei';
+	font: bold 50px HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei';
 	white-space:nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -2991,7 +2987,7 @@ a.tile:nth-child(odd) {
 	margin-left: 40px;
 }
 .tile h2 span {
-	font-family: HelveticaNeue-UltraLight, Helvetica, Arial,'simsun','Microsoft YaHei';
+	font-family: HelveticaNeue-UltraLight, Helvetica, Arial,'simhei','Microsoft YaHei';
 	font-weight: normal;
 }
 .tile span.title {
@@ -3088,7 +3084,7 @@ a.tile:nth-child(odd) {
 	box-shadow: rgba(0,0,0,0.37) 0px 2px 6px;
 	background-color: #3b3b3b;
 	background-color: rgba(59, 59, 59, 0.75);
-	font-family: HelveticaNeue, Helvetica, Arial, 'simsun','Microsoft YaHei', sans-serif;
+	font-family: HelveticaNeue, Helvetica, Arial, 'simhei','Microsoft YaHei', sans-serif;
 }
 
 
@@ -3202,7 +3198,7 @@ a.tile:nth-child(odd) {
 
 #hello ul li.teacher-info a, #hello ul li.student-number a{
 	font-size: 16px;
-	font-family: 'simsun','Microsoft Yahei', Arial, Helvetica, sans-serif !important;
+	font-family: 'simhei','Microsoft Yahei', Arial, Helvetica, sans-serif !important;
 }
 
 #hello ul li a:hover {
@@ -8617,7 +8613,7 @@ pre .dec, code .dec { color: #3387CC; } /* decimal - blue */
 #grid .carton > .content > em {
 	font-style: normal;
 	font-weight: normal;
-	font-family: HelveticaNeue-Light, Helvetica,'simsun','Microsoft YaHei', Arial, sans-serif;
+	font-family: HelveticaNeue-Light, Helvetica,'simhei','Microsoft YaHei', Arial, sans-serif;
 }
 #grid .container:nth-child(2) .carton, #grid .container:nth-child(3) .carton, #grid .container:nth-child(4) .carton {
 	color: #333;
@@ -8863,7 +8859,7 @@ pre .dec, code .dec { color: #3387CC; } /* decimal - blue */
 #docs div.tabs > div.tab ul {
 	padding: 0px;
 	color: #555;
-	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, 'simsun','Microsoft YaHei',Arial;
+	font-family: HelveticaNeue-Light, HelveticaNeue, Helvetica, 'simhei','Microsoft YaHei',Arial;
 	list-style-type: square;
 	line-height: 1.8;
 }
@@ -9713,10 +9709,6 @@ body.feather .map .caption {
 	margin-bottom: 0 !important;
 }
 
-.normalbottommargin{
-	margin-bottom: 20px !important;
-}
-
 .tinyallpadding{
 	padding:15px !important;
 }
@@ -9779,15 +9771,9 @@ body.feather .map .caption {
 .carton.topitemcarton{
 	float:left;
 	margin-left :  10px;
-	margin-top:    10px ;
+	margin-top:    20px ;
 	margin-bottom: 5px;
 	width :       720px;
-}
-.carton.task_list{
-	margin-top: 10px;
-	margin-left: 40px;
-	width      : 750px;
-	height     :  60px;
 }
 .container.topitem{
 	margin-bottom: 6px;
@@ -9816,11 +9802,10 @@ body.feather .map .caption {
 	margin-bottom: 5px;
 	width :       816px;
 	text-align:   center;
-	height:       55px;
 }
 .carton.post_grid{
-	min-height: 800px;
-	min-width:  815px;
+	height: 800px;
+	width:  815px;
 	margin-top: 64px;
 	word-wrap: break-word;
 }
@@ -9868,141 +9853,13 @@ img.img-polaroid{
 }
 /*course add*/
 #draft_box { cursor: pointer;}
-
-ul.tabs li { 
-	cursor: pointer;
-}
-.post_title, .draft_post_update_time{ 
-	height: 25px; 
-	line-height: 25px;
+.iconclass.mid{
+	font-size:50px;
+	line-height: 20px;
+	vertical-align: -14px;
 }
 
-#draft_post .side_bar_word { 
-	height: 50px; padding: 5px 0;
-}
-#draft_post { 
-	height: 487px; 
-	overflow: auto;
-}
-select.select_problem {
-	width: 100px;	
-}
-.carton.col_4.prblem_selected_info {
-	float:right;
-	height: 130px;
-	margin-right:0px;
-	margin-bottom:0px;
-	position : absolute;
-    top : 19px;
-	right : 0px;
-}
-.horizon_dotted_line{
-	height:1px; 
-	width: 750px;
-	border-bottom:2px dashed #C7D2D2;
-	margin-top : 5px;
-	margin-bottom: 5px;
-}
-.horizon_line {
-	border-bottom : 1px solid #3b8686;
-	margin:10px 0;
-	clear:both;
-}
-.content.post_title{
-	word-wrap: break-word;
-}
-.problem_filter {
-	margin-left: 50px;
-}
-.carton.col_4.problem_des {
-	margin-top:20px;
-	margin-left:50px;
-	width:700px;
-}
-.course_square_body {
-	margin-top:80px;
-	min-height:800px;
-}
-.course_square_content_body {
-	min-height:800px;
-	padding-left:180px;
-}
-
-.carton .task_info {
-	margin-top:  10px;
-	margin-left: 30px;
-	width      : 200px;
-	text-align:  center;
-}
-.add_problem_circle {
-           list-style-type:circle;	
-}
-
-.jetext input{
-	border: 1px solid #bbb; 
-	background: -webkit-linear-gradient(rgba(255,255,255,0.2), white);
-	background: -moz-linear-gradient(rgba(255,255,255,0), white);
-	height: 40px !important;
-	width: 200px !important;
-	color: #888;
-	border-radius: 2px;
-	font-size: 12px;
-	-webkit-box-shadow: 0px 1px 0px white, rgba(0, 0, 0, .35) 0px 4px 5px -5px inset;
-	-moz-box-shadow: 0px 1px 0px white, rgba(0, 0, 0, .35) 0px 4px 5px -5px inset;
-	box-shadow: 0px 1px 0px white, rgba(0, 0, 0, .35) 0px 4px 5px -5px inset;
-	display: block;
-	width: 100%;
-	font: normal 12px HelveticaNeue, Helvetica, Arial;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-ms-box-sizing: border-box;
-	box-sizing: border-box;
-	padding-left: 10px;
-	padding-right: 10px;
-}
-
-.videoitemcontrol p{
-	font-size: 19px;
-	font-weight: bold;
-}
-
-.videoitemcontrol p span{
-	font-size: 11px;
-	line-height: 16px;
-	display: inline-block;
-	margin-left: 20px;
-	display: none;
-}
-
-.videoitemcontrol p:hover span{
-	display: inline-block;
-}
-.check_task_btn {
-	margin-top:8px;
-	float:right;	
-}
-.vertical_line {
-	width:0px;
-	height: 1061px;
-	position : absolute;
-	border-style : solid;
-	left: 751px;
-}
-.task_student_finish_status {
-	min-height:50px;
-	margin-left:6px;
-}
-.task_student_stat{
-	display:block; 
-	height:130px;
-	width:150px;
-	margin-top:80px;
-}
-.student_task_stat_cancel_button{
-	margin-left: 400px;
-}
-.item_task_list {
-	margin-left: 150px;
-	width : 640px;
-	height: 57px
-}
+ul.tabs li { cursor: pointer;}
+.post_title, .draft_post_update_time { height: 25px; line-height: 25px;} 
+#draft_post .side_bar_word { height: 50px; padding: 5px 0;}
+#draft_post { height: 487px; overflow: auto;}

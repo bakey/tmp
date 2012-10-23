@@ -20,7 +20,7 @@
 				<a href="#" rel="external"><span class="icon">1</span> 个人中心</a>
 			</li>
 			<li>
-				<a href="#" rel="external"><span class="icon">|</span>课程广场</a>
+				<a href="course_square/index.html" rel="external"><span class="icon">|</span>课程广场</a>
 			</li>		
 			<li class="avatar">
 				<?php

@@ -1,19 +1,48 @@
 <script type="text/javascript">
-function fetch_task( event , item_id )
+function fetch_task( element , item_id )
 {
+	var items = $( element ).next('div.carton.col_4.item_task_list');
+	if ( items.length > 0 )
+	{
+		items.fadeOut(300);
+		items.remove();
+		return ;		
+	}
 	$.ajax(
 			{
 				url: '<?php echo Yii::app()->createUrl( '/teach/task/loadtaskbyitem&item_id=') ;?>' + item_id ,
 				type: 'post',
 				success : function( resp ) {
-					var task_list = eval( '(' + resp + ')' );
-					for( var i = 0 ; i < task_list.length ; i ++ )
+					var task_list = eval( '(' + resp + ')' );			
+					var insert_cnt = 0;
+					for( var i in task_list )
 					{
-						var task_node_div = '<div class="carton col_4" style="margin-left:150px;">';
-						task_node_div += task_list[i].name ;
+						var task_node_div = '<div class="carton col_4 item_task_list">';
+						task_node_div += '<span class="check_task_btn">';
+						task_node_div += '<button onclick="window.location.href=\'<?php echo Yii::app()->createUrl("/teach/task/previewtask&task_id=");?>' + task_list[i].id + '\'">查看练习</button>';
+						task_node_div += '<button>查看学生完成情况</button>';
+						task_node_div += '</span>';
+						task_node_div += '<div style="margin-top:10px">';
+						task_node_div += task_list[i].name + '<br>';
 						task_node_div += '</div>';
-						$( task_node_div ).insertAfter( $( event.target ).parent('a') );
+						task_node_div += task_list[i].create_time ;
+						task_node_div += '</div>';
+						$( task_node_div ).insertAfter( $( element ) );
+						++ insert_cnt;
 					} 
+					if ( insert_cnt <= 0 )
+					{
+						if ( task_list.length <= 0 )
+						{
+							$.notification ( 
+								  {
+								        title:      '此章节下暂无测试',
+								        content:    ''
+								  }
+							);
+							return ;
+						}
+					}
 					
 					
 				}
@@ -24,7 +53,7 @@ function fetch_task( event , item_id )
 <?php
 foreach( $top_items as $item )
 {
-	$open_tag = sprintf('<a href="javascript:void(0)" onclick="fetch_task(event , %d)">' , $item->id );
+	$open_tag = sprintf('<a href="javascript:void(0)" onclick="fetch_task(this , %d)">' , $item->id );
 	echo $open_tag;
 	echo '<div class="carton col_4 task_list">';
 	echo '<div class="task_info">';
