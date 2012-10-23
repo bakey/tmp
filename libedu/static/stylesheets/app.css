@@ -9904,7 +9904,9 @@ select.select_problem {
 	margin-bottom: 5px;
 }
 .horizon_line {
-	border-bottom : solid;
+	border-bottom : 1px solid #3b8686;
+	margin:10px 0;
+	clear:both;
 }
 .content.post_title{
 	word-wrap: break-word;

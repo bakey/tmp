@@ -33,49 +33,94 @@ function submit_task_form( task_id )
 	
 	
 }
-</script>
-<span style="margin-left:50px;font-size:30px">题库选题</span>
-<span style="margin-left:30px">收藏的题</span>
-<span style="margin-left:30px">自己出题</span>
-<span style="margin-left:30px">测试过的试卷</span>
-<span>
-<div class="horizon_dotted_line"></div>
-<div class="vertical_line"></div>
-</span>
-<span class="carton col_4 prblem_selected_info">
 
-		<div style="margin-top:30px; margin-left:10px">
+function changeToTabByIndex(event,targettabindex) {
+	var index = $(event.target).index();
+	index = targettabindex;
+	var carton = $(event.target).parent().parent().parent().parent();
+	
+	carton.children("ul").children("li.current").removeClass("current");
+	carton.children("ul").children("li").eq(index).addClass("current");
+	
+	carton.children(".content.current").removeClass("current");
+	carton.children(".content").eq(index).addClass("current");
+	carton.slideDown();
+	$(event.target).parent().parent().siblings().children(".carton").children(".subcontent").removeClass('sail');
+	$(event.target).addClass('sail');
+}
+</script>
+
+<div class="container tinytinyallpadding">
+	<div class="carton nobackground col_8">
+		<div class="container dotbottom normaltoppadding">
+						<a href="javascript:void(0);" onclick="changeToTabByIndex(event,0)" rel="external"><div class="carton col_3">
+							<div class="subcontent bordered sail">
+								题库选题
+							</div>
+						</div></a>
+
+						<a href="javascript:void(0);" onclick="changeToTabByIndex(event,1)" rel="external"><div class="carton col_3">
+							<div class="subcontent bordered">
+								收藏的题
+							</div>
+						</div></a>
+
+						<a href="javascript:void(0);" onclick="changeToTabByIndex(event,1)" rel="external"><div class="carton col_3">
+							<div class="subcontent bordered">
+								自己出题
+							</div>
+						</div></a>
+
+						<a href="javascript:void(0);" onclick="changeToTabByIndex(event,1)" rel="external"><div class="carton col_3">
+							<div class="subcontent bordered">
+								测试过的试卷
+							</div>
+						</div></a>
+					</div>
+				<div class="content animated fadeInLeft tinytinyallpadding" id="recentquestions" style="min-height:200px;">
+					
+
+<div class="form">
+						<?php $form=$this->beginWidget('CActiveForm', array(
+							'id'=>'task-form',
+							'enableAjaxValidation'=>false,
+						)); ?>
+						
+						<?php echo $form->errorSummary($task_model); ?>		
+						<div id="problem_selected" style="display:none"></div>	
+						<?php
+							$this->renderPartial( 'select_problem' , array(
+								'problem_data' => $problem_data,
+							) );
+						?>
+						
+						<div id="item_selected" style="display:none"></div>
+						
+
+						<?php $this->endWidget(); ?>
+
+					</div><!-- form -->
+				</div>
+				<div class="content animated fadeInLeft tinyallpadding" id="recentquestions" style="min-height:200px;">
+					dsafs
+				</div>
+
+
+	</div>
+
+	<div class="col_4">
+		<div class="col_12">
 			<span class>
 			               测试名: &nbsp; <?php echo $task_model->name ; ?>
 				<br>您已勾选<span id="choice_problem_cnt">0</span>道选择题
 			</span>
-			<span style="position:absolute;top:22px; left:250px">
+			<span style="">
 				<button onclick="connect_with_item(<?php echo $task_model->id; ?>);" style="float:right;">下一步</button>
 			</span>
 		</div>
-		
-</span>
+	</div>
+</div>
 
-<div class="form">
-	<?php $form=$this->beginWidget('CActiveForm', array(
-		'id'=>'task-form',
-		'enableAjaxValidation'=>false,
-	)); ?>
-	
-	<?php echo $form->errorSummary($task_model); ?>		
-	<div id="problem_selected" style="display:none"></div>	
-	<?php
-		$this->renderPartial( 'select_problem' , array(
-			'problem_data' => $problem_data,
-		) );
-	?>
-	
-	<div id="item_selected" style="display:none"></div>
-	
-
-	<?php $this->endWidget(); ?>
-
-</div><!-- form -->
 	<script type="text/javascript">
 		function select_item( cid ){	
 			$('#selected_item').val(cid);	
