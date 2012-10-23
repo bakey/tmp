@@ -95,7 +95,7 @@ function closemodal(){
 								<p class="sail roundbordered" style="text-align:center">正常 <span><a href="javascript:void(0);">取消</a></span></p>
 							</div>
 							<div class="col_2 normaltoppadding">
-								<a href="<?php echo Yii::app()->createUrl('/teach/video/view');?>"><button>进入教室</button></a>
+								<a href="<?php echo Yii::app()->createUrl('/teach/video/view');?>" rel="external"><button>进入教室</button></a>
 							</div>
 						</div>
 

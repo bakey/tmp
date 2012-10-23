@@ -16,6 +16,10 @@ class VideoController extends Controller
 	{
 		$this->render('test');
 	}
+	
+	public function actionView(){
+		$this->render('view');
+	}
 
 	// Uncomment the following methods and override them if needed
 	/*
