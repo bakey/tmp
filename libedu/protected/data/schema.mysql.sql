@@ -215,6 +215,11 @@ create table if not exists tbl_task_kp(
 	`kp` int not null references tbl_knowledge_point(id) on delete cascade
 )engine=innodb default charset=utf8;
 
+create table if not exists tbl_task_item(
+	`task` int not null references tbl_task(id) on delete cascade,
+	`item` int not null references tbl_item(id) on delete cascade	
+)engine=innodb default charset=utf8;
+
 create table if not exists tbl_school(
 	`id` int(11) not null auto_increment primary key,
 	`name` varchar(255) not null ,

@@ -1,24 +1,37 @@
 <script type="text/javascript">
-function submit_task_form( task_id )
+function connect_with_item( task_id )
 {
-	var sel_problems = $('#problem_selected').children() ;
-	if( sel_problems.length <= 0 ) {
+	if( $('#problem_selected').children().length <= 0 ) {
 		alert("你还没有选择题目");
 		return false ;
 	}
-	
+	$.fn.modal({
+		url : '<?php echo Yii::app()->params['index_path']?>?r=teach/task/connectitem&task_id=' + task_id ,
+    	///theme:      "dark",
+    	width:      480,
+    	height:     360,
+    	/*layout:     "elastic",
+    	url:        undefined,
+    	content:    "<strong>HTML</strong> content",
+    	padding:    "100px",*/
+    	animation:  "fadeIn"
+	});
+}
+function submit_task_form( task_id )
+{
 	$.ajax( 
-			{
-				url : 'index.php?r=teach/task/create&task_id=' + task_id ,
-				data : $("#task-form").serialize(),
-				type : 'post',
-				success: function( resp ) {
-					var submit_ret = eval( '(' + resp + ')' );
-					//alert( submit_ret.redir_url );
-					window.location.href = submit_ret.redir_url;
-				}
-			}
-	 );
+	{
+		url : 'index.php?r=teach/task/create&task_id=' + task_id ,
+		data : $("#task-form").serialize(),
+		type : 'post',
+		success: function( resp ) {
+			var submit_ret = eval( '(' + resp + ')' );
+			window.location.href = submit_ret.redir_url;
+		}
+	}
+);
+	
+	
 }
 </script>
 <span style="margin-left:50px;font-size:30px">题库选题</span>
@@ -37,7 +50,7 @@ function submit_task_form( task_id )
 				<br>您已勾选<span id="choice_problem_cnt">0</span>道选择题
 			</span>
 			<span style="position:absolute;top:22px; left:250px">
-				<button onclick="submit_task_form(<?php echo $task_model->id; ?>);" style="float:right;">下一步</button>
+				<button onclick="connect_with_item(<?php echo $task_model->id; ?>);" style="float:right;">下一步</button>
 			</span>
 		</div>
 		
@@ -48,7 +61,7 @@ function submit_task_form( task_id )
 		'id'=>'task-form',
 		'enableAjaxValidation'=>false,
 	)); ?>
-
+	
 	<?php echo $form->errorSummary($task_model); ?>		
 	<div id="problem_selected" style="display:none"></div>	
 	<?php
@@ -56,6 +69,8 @@ function submit_task_form( task_id )
 			'problem_data' => $problem_data,
 		) );
 	?>
+	
+	<div id="item_selected" style="display:none"></div>
 	
 
 	<?php $this->endWidget(); ?>

@@ -33,7 +33,7 @@ class TaskController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','showstudenttaskstatus','createtaskitemrelation','index','showfinishtask','ajaxcheckanswer','newtaskname','test','publishtask','previewtask','filterproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
+				'actions'=>array('admin','connectitem','showstudenttaskstatus','createtaskitemrelation','index','showfinishtask','ajaxcheckanswer','newtaskname','test','publishtask','previewtask','filterproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -45,15 +45,15 @@ class TaskController extends Controller
 			),
 		);
 	}
-	private function create_task_knowledgepoint( $task_model )
+	private function create_task_item( $task_model )
 	{
-		$selected_kp = $_POST['Task']['kp'];
-		foreach( $selected_kp as $kp )
+		$selected_item = $_POST['Item'];
+		foreach( $selected_item as $item )
 		{
-			$task_kp_model = new TaskKp;
-			$task_kp_model->task = $task_model->id;
-			$task_kp_model->kp = $kp;
-			$task_kp_model->save();
+			$task_item = new TaskItem();
+			$task_item->task = $task_model->id;
+			$task_item->item = $item;
+			$task_item->save();
 		}
 		return true;
 	}
@@ -67,11 +67,13 @@ class TaskController extends Controller
 			$task_problem_model = new TaskProblem;
 			$task_problem_model->task_id = $task_model->id ;
 			$task_problem_model->problem_id = (int) $selected ;
-			//$task_problem_model->problem_score = 0 ;
 			$task_problem_model->save();
 		}
-		return true ;
-		//return $this->create_task_knowledgepoint( $task_model );		
+		if ( !$this->create_task_item( $task_model ) ) 
+		{
+			return false;
+		}		
+		return $this->create_task_record( $task_model );
 	}
 	private function check_task_exist( $task_id )
 	{
@@ -180,15 +182,37 @@ class TaskController extends Controller
 	}
 	private function getUnfinishStudents( $task_id )
 	{
-		$task_records = TaskRecord::model()->findAll( 'task=:task_id and status=:status order by end_time desc' , array( ':task_id' => $task_id ,
-				':status' => TaskRecord::TASK_STATUS_UNFINISHED  ) );
+		$task_records = TaskRecord::model()->findAll( 'task=:task_id and status=:status' ,
+				 array( ':task_id' => $task_id ,
+				 		 ':status' => TaskRecord::TASK_STATUS_UNFINISHED  ) );
 		$users = array();
 		foreach ( $task_records as $record )
 		{
 			$users[] = LibUser::model()->findByPk( $record->accepter );
 		}
-		return $users;
+		return $users;		
+	}
+	private function create_task_record( $task_model )
+	{
+		//获取本课程的所有学生
+		$course_model = Course::model()->findByPk( Yii::app()->user->course );
+		$students = $course_model->getCourseStudentsModel();
 		
+		foreach ( $students as $user )
+		{
+			$task_record = new TaskRecord();
+			$task_record->task = $task_model->id;
+			$task_record->accepter = $user->id;
+			$task_record->status = TaskRecord::TASK_STATUS_UNFINISHED;
+			$task_record->save();
+		}
+		return true;
+	}
+	public function actionConnectItem( $task_id )
+	{
+		$course_model = Course::model()->findByPk( Yii::app()->user->course );
+		$edi_model    = $course_model->edition;
+		$this->renderPartial( 'show_item' , array( 'edi_model' => $edi_model , 'task_id' => $task_id ) , false , true );
 	}
 	
 	public function actionShowStudentTaskStatus( $task_id )
@@ -196,11 +220,13 @@ class TaskController extends Controller
 		$course_model = Course::model()->findByPk( Yii::app()->user->course );
 		$total_student = $course_model->getCourseStudentCount();
 		$finish_stu_count = $this->getFinishTaskStuCnt( $task_id );
+		//var_dump( $this->getUnfinishStudents() );
+		//exit(); 
 		$this->renderPartial( 'student_task_status' , array(
-							  'total_student'    => $total_student ,
-							  'finish_stu_count' => $finish_stu_count,
-							  'fastest_finish_student' => $this->getFastestFinishStudents( $task_id ), 
-							  'unfinish_student'       => $this->getUnfinishStudents( $task_id ),
+							  	'total_student'    => $total_student ,
+							  	'finish_stu_count' => $finish_stu_count,
+							  	'fastest_finish_student' => $this->getFastestFinishStudents( $task_id ), 
+							  	'unfinish_student'       => $this->getUnfinishStudents( $task_id ),
 						
 				) );				
 	}
@@ -232,25 +258,13 @@ class TaskController extends Controller
 		if ( null == $task_model ) {
 			throw new CHttpException( 404 , "no this task ");
 		}
-		//获取该老师当前课程的所有学生
-		$user_course_model = UserCourse::model()->findAll( 'role=:role and course_id=:course_id',
-					array(
-						':role'      =>Yii::app()->params['user_role_student'],
-						':course_id' =>Yii::app()->user->course,							
-					) );
-		$student_models = array();
-		foreach( $user_course_model as $uc )
-		{
-			$user_model = LibUser::model()->findByPk( $uc->user_id );
-			$student_models[] = $user_model;
-		}
-		$student_data = new CArrayDataProvider( $student_models );
 		$problems = new CArrayDataProvider( $task_model->problems );
-		$this->render( 'problem_list',array(
+		
+		
+		$this->render( 'preview_problem',array(
 									'problem_data'    => $problems,
-									'task_id' 	      => $task_id,
-									'student_data'    => $student_data,
-				) );	
+									'task_model' 	  => $task_model,
+		) );	
 	}
 	public function actionPublishTask( $task_id )
 	{
@@ -317,15 +331,16 @@ class TaskController extends Controller
 		
 		if( isset($_POST['Task']) )
 		{
+			$create_ret = array();
 			if ( $this->create_new_task( $task_model ) ) {
-				$ret = array( 'create_result' => 'success' , 
-						'redir_url' =>  'index.php?r=teach/task/previewtask&task_id=' . $task_id );
-				echo @json_encode( $ret );
-				exit();
+				$create_ret['create_result'] = 'success';
+				$create_ret['redir_url'] = 'index.php?r=teach/task/previewtask&task_id=' . $task_id;
 				//$this->redirect( array("previewtask" , 'task_id'=>$task_model->id) ) ;
 			}else {
-				throw new CHttpException(500 , "建立测验失败");
+				$create_ret['create_result'] = 'failed';
 			}
+			echo @json_encode( $create_ret );
+			exit();
 		}
 
 		$this->render('create_task',array(
@@ -426,6 +441,11 @@ class TaskController extends Controller
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
+	private function getTopItems()
+	{
+		$edition_id = Course::model()->findByPk( Yii::app()->user->course )->edition_id ;
+		return Item::model()->findAll( 'edition=:edition and level=1', array( ':edition' => $edition_id, ) );
+	}
 
 	/**
 	 * Lists all models.
@@ -439,7 +459,8 @@ class TaskController extends Controller
 		{
 			$this->render('teacher_task_index',array(
 					'dataProvider' => $this->getTaskInfoData( $user_model ),
-					'recent_task' =>  $this->getRecentTaskRecord( Yii::app()->user->id ),
+					'recent_task'  =>  $this->getRecentTaskRecord( Yii::app()->user->id ),
+					'top_items'    => $this->getTopItems(),
 			));
 		}
 		else if ( LibUser::is_student() )
@@ -506,7 +527,9 @@ class TaskController extends Controller
 	  */
     public function actionFilterProblem()
 	{
-		$criteria=new CDbCriteria;
+		$course_model = Course::model()->findByPk( Yii::app()->user->course );
+		$criteria = new CDbCriteria;
+		$criteria->condition = 'subject = ' . $course_model->getCourseSubject(); 
 		if ( isset($_POST['problem_type']) ) {
 			$criteria->compare('type',$_POST['problem_type']);			
 		}
@@ -777,7 +800,7 @@ class TaskController extends Controller
 		);
 		
 	}
-	public function actionAjaxLoadItem()
+	public function actionAjaxLoadItem( $edition_id )
 	{
 		// accept only AJAX request (comment this when debugging)
 		/*if (!Yii::app()->request->isAjaxRequest) {
@@ -802,12 +825,15 @@ class TaskController extends Controller
 				$levelCondition = " level <=> 1 ";
 			}
 		}
+		$is_top = false;
 		$condition = "edition=:edition ";
 		if ( $parentId != null ) {
 			$condition .= "and level > 1 ";
 		}
 		else {
 			$condition .= "and level = 1 ";
+			$is_top = true ;
+			
 		}
 		$children = array();
 		$items = Item::model()->findAll(
@@ -825,6 +851,7 @@ class TaskController extends Controller
 			}
 			$info['text'] = $it->content;
 			$info['id']	= $it->id;
+			$info['top'] = $is_top;
 			if ( $parentId == null ) {
 				$children[] = $info;
 			}else if ( count($parent) > 0 && $parent[0]->id == $parentId ) {
@@ -839,36 +866,36 @@ class TaskController extends Controller
 		//$sql_cmd = sprintf("SELECT %s.id, %s.content AS text, max(%s.id<=>%s.parent) AS hasChildren FROM %s join %s where %s.edition <=> %s ",
 		//	self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , self::TBL_ITEM_LEVEL , self::TBL_ITEM , $editionId );
 	
-	
-	
-	
-		// read the data (this could be in a model)
-		//$children = Yii::app()->db->createCommand( $sql_cmd )->queryAll();
-	
-	
 		$treedata=array();
-		foreach($children as $child){
-			$select_item_js = sprintf('select_item(%d);',$child['id']);
+		foreach($children as $child)
+		{
+			$select_item_js = sprintf('select_item(event , %d);',$child['id']);
 			$options=array(
 						'href'=>'#',
 						'id'=>$child['id'],
 						'class'=>'treenode',
-						'onclick' => $select_item_js,
+						//'onclick' => $select_item_js,
 				);
-			$nodeText = CHtml::openTag('a', $options);
-			$nodeText .= $child['text'];
-			$nodeText.= CHtml::closeTag('a')."\n";
+			if ( !$child['top'] ) 
+			{	
+				$options['onclick'] = $select_item_js;
+				$nodeText    = CHtml::openTag('a', $options);
+				$nodeText   .= $child['text'];
+				$nodeText   .= CHtml::closeTag('a')."\n";
+			}
+			else
+			{
+				$nodeText = $child['text'];
+			}			
+			
 			$child['text'] = $nodeText;
-			$treedata[]=$child;
+			$treedata[]  = $child;
 		}
-		//var_dump( $treedata );
-		//exit();
 	
 		echo str_replace(
 				'"hasChildren":"0"',
 				'"hasChildren":false',
 				CTreeView::saveDataAsJson($treedata)
-				//CTreeView::saveDataAsJson($children)
 		);
 	}
 	/**

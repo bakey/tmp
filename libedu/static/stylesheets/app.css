@@ -9990,3 +9990,9 @@ select.select_problem {
 	min-height:50px;
 	margin-left:6px;
 }
+.task_student_stat{
+	display:block; 
+	height:130px;
+	width:150px;
+	margin-top:80px;"
+}

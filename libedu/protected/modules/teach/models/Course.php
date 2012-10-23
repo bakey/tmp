@@ -118,7 +118,28 @@ class Course extends CActiveRecord
 		{
 			return null;
 		}
-		return UserCourse::model()->count( 'course_id=:cid and role=:role' , array( 'cid' => $this->id ,
-				':role' => Yii::app()->params['user_role_student']) );
+		return UserCourse::model()->count( 'course_id=:cid and role=:role' , 
+				array( ':cid' => $this->id ,
+						':role' => Yii::app()->params['user_role_student']) );
+	}
+	public function getCourseStudentsModel()
+	{
+		if ( !isset($this->id) )
+		{
+			return null;
+		}
+		$user_courses = UserCourse::model()->findAll( 'course_id=:cid and role=:role' , 
+				array( ':cid' => $this->id , 
+						':role' => Yii::app()->params['user_role_student']) );
+		$user_model = array();
+		foreach( $user_courses as $uc )
+		{
+			$user_model[] = LibUser::model()->findByPk( $uc->user_id );			
+		}
+		return $user_model;		
+	}
+	public function getCourseSubject()
+	{
+		return $this->subject;
 	}
 }
