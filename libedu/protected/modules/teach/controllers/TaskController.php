@@ -208,16 +208,44 @@ class TaskController extends Controller
 		}
 		return true;
 	}
+	private function findRootItem( $item_id )
+	{
+		//后面考虑直接使用sql语句来实现
+		$current = $item_id;
+		while ( true )
+		{
+			//query itemItem record,如果找不到，证明此id就是root，返回。否则用ii_record中的parent id继续找
+			$ii_record = ItemItem::model()->find( 'child=' . $current );
+			if ( $ii_record == null ) {
+				return $current ;
+			}			
+			$current = $ii_record->parent;
+		}
+		
+	}
 	public function actionLoadTaskByItem( $item_id )
 	{
-		$item_model = Item::model()->findByPk( $item_id );
+		$root_item_id = $this->findRootItem( $item_id );
+		$task_item_models = TaskItem::model()->findAll();
+		$resp_arr = array();
+		foreach ( $task_item_models as $ti )
+		{
+			$root = $this->findRootItem( $ti->item );
+			if ( $root == $root_item_id )
+			{
+				$task = Task::model()->findByPk( $ti->task );
+				$resp_arr[] = array( 'id' => $task->id , 'name' => $task->name , 'description' => $task->description );				
+			}			
+		}
+		echo @json_encode( $resp_arr );
+		/*$item_model = Item::model()->findByPk( $item_id );
 		$related_task = $item_model->tasks;
 		$resp_arr = array();
 		foreach ( $related_task as $task )
 		{
 			$resp_arr[] = array( 'id' => $task->id , 'name' => $task->name , 'description' => $task->description );						
 		}
-		echo @json_encode( $resp_arr );			
+		echo @json_encode( $resp_arr );*/			
 	}
 	public function actionConnectItem( $task_id )
 	{
