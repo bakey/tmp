@@ -26,7 +26,7 @@ function submit_and_redirect()
 				type: 'POST',
 				success: function(resp) {
 					var ret = eval( '(' + resp + ')' );
-					window.location.href = '<?php echo Yii::app()->params['index_path']; ?>?r=teach/task/create&task_id=' + ret.task_id ;					
+					window.location.href = '<?php echo Yii::app()->createUrl("teach/task/create");?>' + "&task_id=" + ret.task_id ;					
 				}			
 			}
 		);

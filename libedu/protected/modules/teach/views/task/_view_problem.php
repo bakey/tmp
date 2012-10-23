@@ -7,32 +7,32 @@ function show_ans_explain( element )
 	});
 }
 </script>
-<div style="margin-top:10px; margin-left:50px;">
-	<span>
+<div class="col_4 offset_3">
+	<p>
 	<?php
 		echo '难度: ' . $data->getDifficulty() ;
 	?>
-	</span>
-	<span style="margin-left:200px">
+	</p>
+	<p>
 		<?php 
 			echo '知识点:' ;
 			echo '<font style="color: #0064CC">' ; 
 			echo $data->getKnowledgePoint();
 			echo '</font>';
 		?>
-	</span>
+	</p>
 </div>
-<div style="margin-left:50px">
-	<span>
+<div class="col_4">
+	<p>
 		<?php 
 		echo '入库时间:' . $data->create_time ;
 		?>
-	</span>
-	<span style="margin-left:52px">
+	</p>
+	<p style="margin-left:52px">
 		<?php 	
 		echo '使用次数:' .	$data->use_count . "<br>";
 		?>
-	</span>
+	</p>
 </div>
 <div class="horizon_line"></div>
 	<button data-id="<?php echo $data->id; ?>" onclick="select_problem(this); return false;" style="float:right">选择本题</button>
