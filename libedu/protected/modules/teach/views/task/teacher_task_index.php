@@ -7,7 +7,7 @@ Yii::app()->getClientScript()->scriptMap=array(
 function create_task()
 {
 	$.fn.modal({
-		url : '<?php echo Yii::app()->params['index_path']?>?r=teach/task/newtaskname',
+		url : '<?php echo Yii::app()->createUrl('/teach/task/newtaskname');?>',
     	/*theme:      "dark",
     	width:      80,
     	height:     40,
