@@ -33,7 +33,7 @@ class TaskController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','connectitem','showstudenttaskstatus','createtaskitemrelation','index','showfinishtask','ajaxcheckanswer','newtaskname','test','publishtask','previewtask','filterproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
+				'actions'=>array('admin','connectitem','loadtaskbyitem','showstudenttaskstatus','createtaskitemrelation','index','showfinishtask','ajaxcheckanswer','newtaskname','test','publishtask','previewtask','filterproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -207,6 +207,17 @@ class TaskController extends Controller
 			$task_record->save();
 		}
 		return true;
+	}
+	public function actionLoadTaskByItem( $item_id )
+	{
+		$item_model = Item::model()->findByPk( $item_id );
+		$related_task = $item_model->tasks;
+		$resp_arr = array();
+		foreach ( $related_task as $task )
+		{
+			$resp_arr[] = array( 'id' => $task->id , 'name' => $task->name , 'description' => $task->description );						
+		}
+		echo @json_encode( $resp_arr );			
 	}
 	public function actionConnectItem( $task_id )
 	{

@@ -20,23 +20,23 @@ function create_task()
 }
 function show_total_task_list(event)
 {
-	$('#recent_task_list').fadeOut( 100 );
-	//$( event.target ).children().children('.subcontent .bordered').removeClass('sail');
+	$('#recent_task_list').fadeOut( 200 );
+	$('#recent_task_tab').removeClass( 'sail' );
 	
-	$('#total_task_list').fadeIn( 100 );
+	$('#total_task_list').fadeIn( 200 );
 	$(event.target).addClass('sail');
 }
 function show_recent_task_list(event)
 {
 	if ( $('#total_task_list').css('display') != 'none' )
 	{
-		$('#total_task_list').fadeOut( 100 );
-		$(event.target).removeClass('sail');
+		$('#total_task_list').fadeOut( 200 );
+		$('#total_task_tab').removeClass('sail');
 	}
 	if ( $('#recent_task_list').css('display') == 'none' )
 	{
-		$('#recent_task_list').fadeIn( 100 );
-		$(event.target).addClass('sail');
+		$('#recent_task_list').fadeIn( 200 );
+		$('#recent_task_tab').addClass( 'sail' );
 	}
 }
 </script>
@@ -59,14 +59,14 @@ function show_recent_task_list(event)
      
      	<a href="javascript:void(0)" onclick="show_recent_task_list(event)">		
 			<div class="carton col_3">
- 				<div class="subcontent bordered sail">
+ 				<div id="recent_task_tab" class="subcontent bordered sail">
    				最近测试
  				</div>
 			</div>
 		</a>   
    		<a href="javascript:void(0)" onclick="show_total_task_list(event)">
        		<div class="carton col_3">
- 				<div class="subcontent bordered">
+ 				<div id="total_task_tab" class="subcontent bordered">
    				全部测试
  				</div>
 			</div>

@@ -61,6 +61,7 @@ class Item extends CActiveRecord
 				//找到本item的所有父亲节点
 				'level_parent'=>array(self::MANY_MANY , 'Item' , 'tbl_item_item(child,parent)'),
 				'relate_kps' => array(self::MANY_MANY , 'KnowledgePoint' , 'tbl_Item_kp(item,knowledge_point)' ),
+				'tasks'   => array( self::MANY_MANY , 'Task' , 'tbl_task_item(item,task)'),
 		);
 	}
 
