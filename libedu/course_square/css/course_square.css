@@ -1,6 +1,5 @@
 ﻿html,body,div,p,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,object,iframe,form,blockquote,fieldset,input,textarea,code,address,caption,cite,code,em,i,ins{margin:0;padding:0;font-style:normal;font-size:12px; color:#4C4C4C; font-family: \5B8B\4F53;}
 ul,ol{list-style:none} fieldset,img{border:none} caption,th{text-align:left} table{border-collapse:collapse;border-spacing:0}
-body {}
 a:link{color:#000;text-decoration:none;}
 a:visited{color:#000;text-decoration:none;}
 a:hover{color:#000;text-decoration:underline;}
@@ -49,14 +48,16 @@ a.btn:active { background-image: -webkit-linear-gradient(rgba(0,0,0,0.3), rgba(0
 .section_cs { width: 810px; margin-top: 60px;}
 .recommend { position: relative; margin-bottom: 40px; padding-top: 20px; height: 225px;overflow: hidden;}
 .pic_list { width: 9999em; height: 225px;}
-.pic_list li { display: inline; width: 810px; height: 225px;}
+.pic_list li { display: inline-block; position: relative; width: 810px; height: 225px;}
 .pic_list a { display: block; height: 225px;}
 
 .thumb { position: absolute; left: 50%; bottom: 20px; width: 150px; margin-left: -75px; text-align: center;}
-.thumb li { display: inline;}
-.thumb span { cursor: pointer; color: #fff;}
+.thumb li { display: inline-block; margin: 0 3px; width: 15px; height: 15px;}
+.thumb span { cursor: pointer; display: block; width: 15px; height: 15px; background-color: #fff; -moz-border-radius: 40px; -webkit-border-radius: 40px; border-radius: 40px; }
+.thumb span:hover, .thumb span.cur{ background: #222; background: -webkit-linear-gradient(#333, #111); background: -moz-linear-gradient(#333, #111); }
 
 .hot_course { margin-bottom: 15px;}
+.cs_main .pt dt, .cs_main .pt dd { height: 18px; line-height: 18px;}
 /*show*/
 .show { position: relative; width: 58%; }
 .lib_tab, .show_con_tab { width: 100%;}
@@ -96,9 +97,9 @@ a.btn:active { background-image: -webkit-linear-gradient(rgba(0,0,0,0.3), rgba(0
 .resource_nav dl { height: 28px; line-height: 28px;}
 .resource_nav dt { display: inline; font-weight: bold;}
 .resource_nav dd { display: inline; padding: 0 10px;}
-.resource_nav ul.sort { position: relative; margin-left: 55px; width: 30%; overflow: visible;}
-.resource_nav ul.sort li { padding: 0 10%; width: 28%; text-align: center;}
-.resource_nav ul.sort li.sort_dt { position: absolute; left: -58px; padding: 0; width: 22%; font-weight: bold;}
+.resource_nav .sort { position: relative; margin-left: 55px; width: 30%; overflow: visible;}
+.resource_nav .sort li { padding: 0 10%; width: 28%; text-align: center;}
+.resource_nav .sort_dt { position: absolute; left: -55px; top: 10px; padding: 0; width: 22%; font-weight: bold;}
 
 .resource_con { margin: 0 0 25px 25px; width: 88%; border: 1px solid #9eabab; overflow: hidden;}
 .resource_scroll { width: 9999em; }

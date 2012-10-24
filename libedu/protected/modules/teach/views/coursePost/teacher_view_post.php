@@ -7,6 +7,13 @@
  {
 	 $("#edit_icon").fadeOut();
  }
+ function full_screen()
+ {
+	 var box = '<div class="redactor_box_fullscreen"><a></a></div>';
+	 box.prepend( $('#tab_one') );
+	 alert( $(box).html() );
+	 $(document.body).prepend( $(box) ).css('overflow', 'hidden');
+ }
  </script>
  <?php
  if ( $post_model != null )
@@ -14,7 +21,7 @@
  	$reedit_url = Yii::app()->params['index_path'] . '?r=teach/coursepost/reedit&post_id=' . $post_model->id . '&course_id='. $course_id ;
  } 
  ?>
-
+<button style="margin-left:2000x; float:right" onclick="full_screen()">full</button>
  <div id="tab_one" class="tab mytab current" >
  <?php
  	if ( $post_model != null )

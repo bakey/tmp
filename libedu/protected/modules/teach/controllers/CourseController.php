@@ -90,7 +90,6 @@ class CourseController extends Controller
 		$current_item_info = $this->get_current_item_info( $user_model , $top_item_model[0] , $course_id );
 		$top_level_models = Item::model()->findAll( 'edition=:edition and level=1', array(
 				':edition' => $edition_id, ) );
-		//var_dump( count($top_level_models) ); 
 		
 		$total_items = $this->collectTotalItem( $edition_id );
 		$this->render('update_teacher_course' , array(
@@ -111,14 +110,13 @@ class CourseController extends Controller
 		$top_item_model = $teacher_model->trace_item ;
 
 		$tracing_item_info = $this->get_current_item_info( $teacher_model , $top_item_model[0] , $course_id );
-		$edition_first_level_items = Item::model()->findAll( 'edition=:edition and level=1', array(
+		$top_level_models = Item::model()->findAll( 'edition=:edition and level=1', array(
 				':edition' => $edition_id, ) );		
 		$this->render('update_student_course' , array(
-				'top_item'        => $top_item_model[0],
-				'tracing_item'    => $tracing_item_info,
-				'level_one_items' => $edition_first_level_items,
-		
-				//'ajax_load_url' => $url ,
+				'current_item'        => $top_item_model[0],
+				'item_info'    		  => $tracing_item_info,
+				'top_level_items' 	  => $top_level_models,
+				'course_id'			  =>  $course_id,
 		));		
 	}
 	/*

@@ -262,11 +262,14 @@ class EditionController extends Controller
 		$currentRow = 1;
 		$currentCol = 0;
 			
+		//教材名
 		$edition_name = $sheet->getCellByColumnAndRow( $currentCol , $currentRow )->getValue();
+		//此教材的简述
 		$description = $sheet->getCellByColumnAndRow( $currentCol+1 , $currentRow )->getValue();
 		if ( $description == '' ) {
 			$description = $edition_name;
 		}
+		//出版社
 		$publisher = $sheet->getCellByColumnAndRow( $currentCol+2 , $currentRow)->getValue();
 		
 		$edition_info = array(

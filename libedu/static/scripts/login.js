@@ -312,7 +312,7 @@ $.initializeLogin = function() {
 	
 	// Reveal login form when an avatar is clicked
 	$(".avatar").live("tap", function() {
-		$.notification( 
+		/*$.notification( 
 			{
 				title: "Hi, 亲爱的用户",
 				content: "欢迎来到我们的云校园",
@@ -320,7 +320,7 @@ $.initializeLogin = function() {
 				fill: true,
 				showTime: true
 			}
-		);
+		);*/
 		$("#password .input.username .avatar").remove();
 		var avatar = $(this).clone().wrap('<div>').parent().html();
 		

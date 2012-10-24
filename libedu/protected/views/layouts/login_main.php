@@ -15,6 +15,7 @@
 	<div id="welcome">
 		<div id="users">
 			<a href="#" class="plus">Add a user</a>
+			<a href="#" class="plus">Add a user</a>
 			<div id="avatars">
 				<a data-avatar="static/images/boy_avatar.jpg" href="#" class="avatar pin"></a>
 			</div>

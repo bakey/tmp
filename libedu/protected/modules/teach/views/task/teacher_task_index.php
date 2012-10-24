@@ -44,16 +44,16 @@ function show_recent_task_list(event)
 }
 </script>
 <ul class="tabs">
-	<li class="active_tab">
+	<li class="side_bar_head active_tab">
 	我发布的测试
 	</li>
-	<li class="active_tab">
+	<li class="side_bar_head active_tab">
 	学生共建测试
 	</li>
-	<li class="active_tab">
+	<li class="side_bar_head active_tab">
 	热门试卷
 	</li>
-	<li class="active_tab">
+	<li class="side_bar_head active_tab">
 	收藏的试卷
 	</li>
 </ul>
@@ -79,7 +79,7 @@ function show_recent_task_list(event)
 		
 		<a href="javascript:void(0)" onclick="create_task()">
 			<div class="carton" style="width:31.3%;float:right">
- 				<div class="subcontent bordered">
+ 				<div class="subcontent bordered adrift">
  					<span class="iconclass min">+</span>
     	 			创建测试
     	 		</div>

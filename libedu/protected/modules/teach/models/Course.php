@@ -55,7 +55,7 @@ class Course extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-				'edition'=>array(self::BELONGS_TO , 'CourseEdition','edition_id'),
+				'edition'		 => array(self::BELONGS_TO , 'CourseEdition','edition_id'),
 		);
 	}
 

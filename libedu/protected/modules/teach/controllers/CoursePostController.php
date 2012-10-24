@@ -421,8 +421,9 @@ class CoursePostController extends Controller
 		$multimedia->save();	
 		return $multimedia;	
 	}
-	private function renderTeacherPostIndex( $cur_user , $item_id , $item_model )
+	private function renderTeacherPostIndex( $cur_user  , $item_model )
 	{
+		$item_id = $item_model->id;
 		$my_post_data = new CActiveDataProvider('CoursePost',array(
 				'criteria'=>array(
 						'condition'=> ('author='.$cur_user.' and item_id='.$item_id . ' and status = ' . Yii::app()->params['course_post_status_published']),
@@ -454,6 +455,66 @@ class CoursePostController extends Controller
 				'item_model'  	     => $item_model,
 				'course_id'   		 => Yii::app()->user->course,
 		));		
+	}
+	private function renderStudentPostIndex( $cur_user , $item_model )
+	{
+		$item_id       = $item_model->id;
+		$course_model  = Course::model()->findByPk( Yii::app()->user->course ); 
+		$teacher_model = $course_model->getCourseTeacher();
+		
+		$course_teacher_post_data = new CActiveDataProvider('CoursePost',array(
+				'criteria'=>array(
+						'condition'=> ('author=:uid and item_id=:iid and status=:status' ),
+						'params'   => array( ':uid' => $teacher_model->id , 
+											  ':iid' => $item_id , 
+											  ':status' => Yii::app()->params['course_post_status_published'] ),
+						'order'    => 'update_time DESC',
+				),
+				'pagination' => false,
+		));
+		$other_teacher_post_data = new CActiveDataProvider('CoursePost',array(
+				'criteria'=>array(
+						'join'      => 'join tbl_user_course on author = tbl_user_course.user_id',
+						'condition' => ( 'tbl_user_course.role=:role and author != :uid and item_id=:iid' ),
+						'params'    => array( ':role' => Yii::app()->params['user_role_teacher'] , 
+											   ':uid' => $teacher_model->id  , 
+											   ':iid' => $item_id ),
+						'order'     => 'update_time DESC',
+				),
+				'pagination' => false,
+		));
+		$my_post_data = new CActiveDataProvider('CoursePost',array(
+				'criteria'=>array(
+						'condition'=> ('author=:uid and item_id=:iid and status=:status' ),
+						'params'   => array( ':uid' => $cur_user ,
+											  ':iid' => $item_id ,
+											  ':status' => Yii::app()->params['course_post_status_published'] ),
+						'order'    => 'update_time DESC',
+				),
+				'pagination' => false,
+		));
+		$other_student_post_data = new CActiveDataProvider( 'CoursePost' , array(
+				'criteria' => array(
+						'join'      => 'join tbl_user_course on author = tbl_user_course.user_id',
+						'condition' => ( 'tbl_user_course.role=:role and item_id=:iid and tbl_course_post.author != :uid and status=:status'  ),
+						'params'    => array( ':role' => Yii::app()->params['user_role_student'] , 
+											   ':iid'  => $item_id ,		
+											   ':uid'  => $cur_user,
+											   ':status' => Yii::app()->params['course_post_status_published'],
+								),
+						'order'     => 'update_time DESC',
+				),
+				'pagination' => false,
+		));
+		$this->render('index_student_coursepost',array(
+				'course_teacher_post_data'    => $course_teacher_post_data,
+				'other_teacher_post_data'     => $other_teacher_post_data ,
+				'my_post_data'				  => $my_post_data,
+				'other_student_post_data' 	  => $other_student_post_data,
+				'item_model'  	     => $item_model,
+				'course_id'   		 => Yii::app()->user->course,
+		));
+		
 	}
 	public function actionPreviewPost( $post_id )
 	{
@@ -692,16 +753,11 @@ class CoursePostController extends Controller
 		
 		if ( LibUser::is_student() )
 		{
-		
-			$this->render('index_student_coursepost',array(
-				'dataProvider'=> $this->getCoursePostAsStudent( $item_id ),
-				'item_id'     => $item_id,
-				'course_id'   => Yii::app()->user->course,
-			));
+			$this->renderStudentPostIndex( $cur_user , $item_model );
 		}
 		else if ( LibUser::is_teacher() )
 		{
-			$this->renderTeacherPostIndex( $cur_user , $item_id , $item_model );		
+			$this->renderTeacherPostIndex( $cur_user , $item_model );		
 		}
 	}
 

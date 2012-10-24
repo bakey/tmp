@@ -9,31 +9,33 @@ $this->pageTitle=Yii::app()->name;
   <h1><?php echo $cschool->name; ?> <small> 欢迎 <?php echo Yii::app()->user->real_name; ?>同学</small></h1>
 </div>
 
-<ul class="thumbnails">
-  <li class="span3">
-    <div class="thumbnail linkthumbnail">
-      <a href="<?php echo Yii::app()->createUrl('/user/libuser/home'); ?>"><div class="caption">
-        <h3>个人中心</h3>
-        <p>个人中心的介绍 blah blah blah blah blah blah blah blah blah....</p>
-      </div></a>
-    </div>
-  </li>
-</ul>
+<div class="container">
+  <a href="#" rel="external">
+  <div class="carton col_4">
+    <h2>个人中心</h2>
+    <div class="content"><p><?php echo LibUser::model()->findByPk(Yii::app()->user->id)->user_profile->description; ?></p></div>
+  </div></a>
+</div>
+
 
 <hr class="darkhr" />
 
 
-<ul class="thumbnails">
+<div class="container">
 <?php 
 	foreach($courselist as $singlecourse){
-		echo '<li class="span3">
-    <div class="thumbnail linkthumbnail">
-      <a href="'.Yii::app()->createUrl('/teach/course/update',array('course_id'=>$singlecourse->id)).'"><div class="caption">
-        <h3>'.$singlecourse->name.'</h3>
-        <p>'.$singlecourse->description.'</p>
-      </div></a>
-    </div>
-  </li>';
+		echo '<a href="'.Yii::app()->createUrl('/teach/course/update',array('course_id'=>$singlecourse->id)).'" rel="external">
+  <div class="carton col_3 coursecarton">
+    <h2>'.$singlecourse->name.'</h2>
+    <div class="content"><p>'.$singlecourse->description.'</p></div>
+  </div></a>';
 	}
 ?> 
-</ul>
+
+<a href="#" rel="external">
+  <div class="carton col_3 coursecarton">
+    <h2>添加课程</h2>
+    <div class="content"><p><span class="iconclass min offset_5">+</span></p></div>
+  </div></a>
+
+</div>

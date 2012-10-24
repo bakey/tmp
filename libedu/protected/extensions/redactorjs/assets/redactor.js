@@ -1139,6 +1139,7 @@ var RTOOLBAR = {};
 				this.height = this.$frame.css('height');
 				this.width = (this.$box.width() - 2) + 'px';
 				
+				
 				html = this.getCode();
 	
 				this.tmpspan = $('<span></span>');

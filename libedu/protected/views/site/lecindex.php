@@ -15,6 +15,7 @@ Yii::app()->getClientScript()->scriptMap=array(
     <div class="content"><p><?php echo LibUser::model()->findByPk(Yii::app()->user->id)->user_profile->description; ?></p></div>
   </div></a>
 </div>
+
 <p class="offset_6">横向时间轴占位</p>
 <hr />
 <p class="offset_6">横向时间轴占位</p>

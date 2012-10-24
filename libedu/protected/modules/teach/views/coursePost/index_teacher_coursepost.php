@@ -20,15 +20,20 @@ Yii::app()->getClientScript()->scriptMap=array(
 	}
 	$this->renderPartial( 'my_course_post_list' , array( 'self_post_data' => $self_post_data , 'course_id' => $course_id , 'item_model' => $item_model ) );
 ?>
-		<div style="text-align:center">其他老师的课程资料</div>	
+	<li class="side_bar_head redconfetti">
+		其他老师的课程资料
+	</li>	
 	<li class>
 	<?php
 		$this->renderPartial( 'other_teacher_post_list' , array( 'other_teacher_data' => $other_teacher_data , 'course_id' => $course_id , 
 								'item_model' => $item_model) );
 	?>
 	</li>
-
-	<div style="text-align:center">学生贡献的课程资料</div>
+	<li class="side_bar_head">
+		<div class="redconfetti">
+		学生贡献的课程资料
+		</div>
+	</li>
 	<li class>
 	<?php
 		$this->renderPartial( 'student_post_list' , array( 'student_post_data' => $student_post_data , 'course_id' => $course_id ,

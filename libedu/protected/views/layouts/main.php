@@ -42,6 +42,12 @@
 					<li>
 						<a href="'.Yii::app()->createUrl('/user/profile/view',array('id'=>$model->id)).'" rel="external">
 							<h4>'.$model->user_profile->real_name;
+					if ( LibUser::is_teacher() ) {
+						echo '老师';
+					}
+					else if ( LibUser::is_student() ) {
+						echo '同学';
+					}
 				?>老师
 							</h4>
 						</a>
@@ -102,7 +108,10 @@
 				?>
 					</li>
 					<li class="teacher-info">
-						<a href="#" rel="external"><?php echo Yii::app()->user->real_name ; ?>老师</a>
+						<a href="#" rel="external">
+						<?php
+							echo $teacher_user_model->user_profile->real_name . '老师';						
+						?></a>
 					</li>
 					<li class="student-number">
 						<a href="#" rel="external">学生 
@@ -128,8 +137,10 @@
 				}	
 				echo $anchor;
 			?>
-				<span class="vector">'</span>
-				<span class="title"><strong>课程</strong> </span>
+				<span class="vector count" data-count="7">'</span>
+				<span class="title">
+					<strong>课程</strong> 
+				</span>
 			</a>
 			<?php
 			if ( $this->getId() == 'task' ) {
@@ -139,7 +150,8 @@
 				echo '<a data-href="index.php?r=teach/task" class="tile" rel="external" >' ;
 			}
 			?>
-				<span class="vector">C</span>
+				
+				<span class="vector count" data-count="4">C</span>
 				<span class="title"><strong>测试</strong> </span>
 			</a>
 			<?php
@@ -150,7 +162,7 @@
 					echo '<a href="index.php?r=teach/question/myquestion" class="tile" rel="external" >' ;
 				}
 			?>
-				<span class="vector">f</span>
+				<span class="vector count" data-count="8">f</span>
 				<span class="title"><strong>问答</strong> </span>
 			</a>
 				<?php
@@ -173,7 +185,7 @@
 					echo '<a href="index.php?r=teach/video" class="tile" rel="external">' ;
 				}
 			?>
-				<span class="vector">F</span>
+				<span class="vector count" data-count="10">F</span>
 				<span class="title"><strong>视频</strong> </span>
 			</a>
 			<?php

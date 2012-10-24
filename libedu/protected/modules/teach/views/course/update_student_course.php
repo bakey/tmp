@@ -1,81 +1,57 @@
 <?php
-/* @var $this CourseController */
+Yii::app()->getClientScript()->scriptMap=array(
+'jquery.js'=>false,
+); 
+?>
+<script type="text/javascript">
+function show_total_item()
+{
+	$("#show_item_list").html( $("#total_item_list").html() );
+	$('#show_item_list a').bind("tap",function(e){window.location.href = $(this).attr("data-href")});
+	$('#total_course').addClass('sail');
+	$('#recent_course').removeClass('sail');
+}
+function show_current_item()
+{
+	$('#show_item_list').html( $("#current_item_list").html() ) ;
+	$('#show_item_list a').bind("tap",function(e){window.location.href = $(this).attr("data-href")});
+	$('#recent_course').addClass('sail');
+	$('#total_course').removeClass('sail');
+}
 
-$this->breadcrumbs=array(
-	'课程管理'=>array('/teach/course/admin'),
-	'Update',
-);
-?>
-<link rel="stylesheet" type="text/css" href="/dev/libedu/css/my.css" />
-<?php
-echo"<div id=\"stitle\"><h3>第" . $top_item->edi_index . "章:" . $top_item->content . "<h3></div><br>";
-$this->renderPartial( '_show_student_item' , array('dataProvider' => $tracing_item) );
-/*$this->widget('bootstrap.widgets.TbGridView', array(
-		'dataProvider' => $tracing_item,
-		'type' => 'bordered striped',
-		'columns'=>array(
-				array(
-						'name'=>'第几节',
-						'value'=>'$data["item_index"]',
-						'type'=>'raw',
-				),
-				array(
-						'name'=>'内容',
-						'value'=>'$data["content"]',
-						'type'=>'raw',
-				),
-				array(
-						'name'=>'新建',
-						'value'=>'CHtml::link($data["new_post"] , $data["new_url"])',
-						'type' => 'raw',
-				),
-				array(	
-						'name' => '浏览',
-						'value' => 'CHtml::link($data["view_post"] , $data["view_url"])',
-						'type' => 'raw',
-				),
-		),
-));*/
-/*
-foreach( $tracing_item as $item )
-{
-	$text = sprintf("第%d节 : %s" , $item['item_index'] , $item['content']);
-	echo CHtml::link( $text , $item['url'] );
-	echo "<br>";
-} 
-*/
-/*$this->widget(
-	    'CTreeView',
-		array(
-            'animated'=>'fast', //quick animation
-            'collapsed' => false,
-            'url' => array( $ajax_load_url ), 
-		)
-);
-*/
-?>
-<div id="stitle"><h3>全部课程</h3></div>
-<h3>
-<?php
-foreach( $level_one_items as $single_item )
-{
-	echo "第" . $single_item->edi_index . "章   " . $single_item->content ;
-	$item_table_id = "item-table-" . $single_item->id;	
-	/*echo CHtml::image('images/show_item.jpg' , '' , array('href'=>'#' , 'ajax'=>array(
-						'type'=>'POST',
-						'url' => array('update'),
-						//'data' => array('item'=>$single_item->id),
-						'update' => '#item-table-' . $single_item->id ,
-				) ) );*/
-$html_options = array( 'onclick' => 'javascript:$.ajax( {
-			url:"index.php?r=teach/course/loadchilditemastable&item=' . $single_item->id . '",
-			success:function(response){
-				$(\'#item-table-' . $single_item->id . '\').append( response );		  		
-		  	},
-		})' );
-echo CHtml::image('images/show_item.jpg' , '' , $html_options );
-echo '<h5><div id="' . $item_table_id . '"></div></h5>';
-	echo "<br>";
-} 
-?>
-</h3>
+$(document).ready(function(){
+	show_current_item();
+});
+</script>
+<ul class="tabs">
+	<li class="active_tab">
+	课程首页
+	</li>
+</ul>
+ <div class="tabs">
+     <div id="tab_one" class="tab mytab" >
+     	<?php
+			$current_content = '<div class="carton col_3"><div class="subcontent bordered" id="recent_course">最近课程</div></div>';
+			echo CHtml::link( $current_content , '#' , array( 'onclick' => 'show_current_item()') );
+			
+			$content = '<div class="carton col_3"><div class="subcontent bordered" id="total_course">全部课程</div></div>';
+			echo CHtml::link( $content , '#' , array( 'onclick' => 'show_total_item();') );	 
+		?>					
+		<div id="show_item_list"></div>
+		<div id="current_item_list" style="display:none" >
+		<?php
+			$this->renderPartial( '_current_item_list' , array( 
+									'current_item' => $current_item , 
+									'item_info'	   => $item_info,
+									'course_id'    => $course_id,
+					) ); 
+		?>
+		</div>
+		<div id="total_item_list"  style="display:none">
+		<?php 
+			$this->renderPartial( '_total_item_list' , array( 'top_items' => $top_level_items , 
+															  'course_id' => $course_id) );
+		?>
+		</div>
+	</div>
+</div>   

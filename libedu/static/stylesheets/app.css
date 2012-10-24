@@ -10006,3 +10006,15 @@ select.select_problem {
 	width : 640px;
 	height: 57px
 }
+ul.tabs li.side_bar_head {
+	text-align: center;
+}
+body .redactor_box_fullscreen {
+    border: medium none !important;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 2000;
+}
