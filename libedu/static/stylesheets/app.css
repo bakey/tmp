@@ -3193,6 +3193,8 @@ a.tile:nth-child(odd) {
 
 #hello ul li.student-number{
 	width:30% !important;
+	padding-left:12px;
+	padding-top : 10px;
 }
 
 #hello ul li.student-number a{
@@ -10093,4 +10095,6 @@ body .redactor_box_fullscreen {
 	position: absolute;
 	top:-20px; right:-10px;
 }
-
+.recent_task_tab {
+	margin-left:40px;
+}

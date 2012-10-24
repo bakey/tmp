@@ -1,7 +1,7 @@
 <script type="text/javascript">
 function checkPost()
 {
-	if ( $('#CoursePost_title').text() == "" || $('#CoursePost_post').text() == "" )  {
+	if ( $('#CoursePost_title').val() == "" || $('#CoursePost_post').getText() == "" )  {
 		alert('课程资料题目和课程内容都不能为空');
 		return false;
 	}
