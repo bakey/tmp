@@ -9911,9 +9911,6 @@ select.select_problem {
 .content.post_title{
 	word-wrap: break-word;
 }
-.problem_filter {
-	margin-left: 50px;
-}
 .carton.col_4.problem_des {
 	margin-top:20px;
 	margin-left:50px;
@@ -9997,4 +9994,81 @@ select.select_problem {
 	height:130px;
 	width:150px;
 	margin-top:80px;"
+}
+
+
+.problemcarton h2 div p{
+	position: relative;
+	top:10px;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 0 !important;
+}
+
+.problemcarton{
+	font-size: 14px !important;
+}
+
+.problemcarton .problearea{
+	padding-left: 20px;
+}
+
+.problemcarton .problearea p{
+	font-size: 14px !important;
+}
+
+.problemcarton .btnarea{
+	min-height: 130px;
+}
+
+.problemcarton .btnarea button{
+	position: relative;
+	top: 80px;
+}
+
+.problemcarton .btnarea img{
+	position: absolute;
+	top:-20px; right:-10px;
+}
+
+
+
+.problemcarton.chosen h2{
+	height: 65px !important;
+}
+
+.problemcarton.chosen h2 div p{
+	position: relative;
+	top:-10px;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 0 !important;
+}
+
+.problemcarton.chosen{
+	font-size: 12px !important;
+}
+
+.problemcarton.chosen .problearea{
+	padding-left: 20px;
+}
+
+.problemcarton.chosen .problearea p{
+	font-size: 12px !important;
+}
+
+.problemcarton.chosen .btnarea{
+	min-height: 130px;
+}
+
+.problemcarton.chosen .btnarea button{
+	position: relative;
+	top: 80px;
+}
+
+.problemcarton.chosen .btnarea img{
+	position: absolute;
+	top:-20px; right:-10px;
 }

@@ -6,7 +6,7 @@ function connect_with_item( task_id )
 		return false ;
 	}
 	$.fn.modal({
-		url : '<?php echo Yii::app()->params['index_path']?>?r=teach/task/connectitem&task_id=' + task_id ,
+		url : '<?php echo Yii::app()->createUrl("teach/task/connectitem");?>&task_id=' + task_id ,
     	///theme:      "dark",
     	width:      480,
     	height:     360,
@@ -21,7 +21,7 @@ function submit_task_form( task_id )
 {
 	$.ajax( 
 	{
-		url : 'index.php?r=teach/task/create&task_id=' + task_id ,
+		url : '<?php echo Yii::app()->createUrl("teach/task/create");?>&task_id=' + task_id ,
 		data : $("#task-form").serialize(),
 		type : 'post',
 		success: function( resp ) {
@@ -108,19 +108,16 @@ function changeToTabByIndex(event,targettabindex) {
 
 	</div>
 
-	<div class="col_4">
-		<div class="col_12">
-			<span class>
-			               测试名: &nbsp; <?php echo $task_model->name ; ?>
-				<br>您已勾选<span id="choice_problem_cnt">0</span>道选择题
-			</span>
-			<span style="">
-				<button onclick="connect_with_item(<?php echo $task_model->id; ?>);" style="float:right;">下一步</button>
-			</span>
+	<div class="col_4 normaltoppadding">
+		<div id="chosenlist" class="col_11" style="border-left:2px solid #3b8686; padding-left:15px; height:100%; margin-left:20px; min-height:800px;">
+			<div class="carton col_12 normalbottommargin">
+				<h2>测试名: &nbsp; <?php echo $task_model->name ; ?></h2>
+				<h4 style="padding:15px;">您已勾选<span id="choice_problem_cnt">0</span>道选择题</h4>
+				<button class="col_4 offset_7" onclick="connect_with_item(<?php echo $task_model->id; ?>);">下一步</button>
+			</div>
 		</div>
 	</div>
 </div>
-
 	<script type="text/javascript">
 		function select_item( cid ){	
 			$('#selected_item').val(cid);	
