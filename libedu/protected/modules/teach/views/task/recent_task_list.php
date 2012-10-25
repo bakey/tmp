@@ -16,7 +16,9 @@ function show_task_status( task_id )
 		<span class="check_task_btn">
 		<?php echo CHtml::htmlButton('查看练习' , array('onclick' => 'window.location.href="index.php?r=teach/task/previewtask&task_id=' . $task->id . '"' , 
 							'class' => 'sunlit') ); ?>
-		<?php echo CHtml::htmlButton('查看学生完成情况' , array('onclick' => 'show_task_status(' .$task->id . ')' , 'class' => 'sugar') );?>
+		<?php
+				echo CHtml::htmlButton('查看学生完成情况' , array('onclick' => 'show_task_status(' .$task->id . ')' , 'class' => 'sugar') );
+		?>
 		</span>
 
 		<div class="task_info">

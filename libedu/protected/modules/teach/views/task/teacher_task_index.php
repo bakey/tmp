@@ -44,21 +44,25 @@ function show_recent_task_list(event)
 }
 </script>
 <ul class="tabs">
+	<a href="index.php?r=teach/task" rel="external">
+		<li class="side_bar_head active_tab sail">
+		我的练习
+		</li>
+	</a>
 	<li class="side_bar_head active_tab">
-	我发布的测试
+	共建练习
 	</li>
 	<li class="side_bar_head active_tab">
-	学生共建测试
+	热门练习
 	</li>
 	<li class="side_bar_head active_tab">
-	热门试卷
-	</li>
-	<li class="side_bar_head active_tab">
-	收藏的试卷
+	我的收藏
 	</li>
 </ul>
  <div class="tabs">
      <div id="tab_one" class="tab mytab" >
+     
+     <div class="dotbottom col_12">
      
      	<a href="javascript:void(0)" onclick="show_recent_task_list(event)">		
 			<div class="carton col_3 recent_task_tab" >
@@ -73,18 +77,16 @@ function show_recent_task_list(event)
    				全部练习
  				</div>
 			</div>
-		</a>
-	
-
-		
+		</a>		
 		<a href="javascript:void(0)" onclick="create_task()">
-			<div class="carton" style="width:31.3%;float:right;margin-right:15px">
- 				<div class="subcontent bordered adrift">
+			<div class="carton col_3"  style="width:269px;float:right;margin-right:15px">
+ 				<div class="subcontent bordered">
  					<span class="iconclass min">+</span>
-    	 			创建测试
+    	 			创建练习
     	 		</div>
     	 	</div>
     	 </a>
+    	 </div>
     	<div id="recent_task_list">	 
      		<?php
      			$this->renderPartial( 'recent_task_list' , array('recent_task' => $recent_task ) ); 

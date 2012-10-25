@@ -74,7 +74,8 @@ class SiteController extends Controller
 	{
 		$course_model = Course::model()->findByPk( Yii::app()->user->course );
 		//echo $course_model->getCourseStudentCount();
-		echo "<br>";
+		echo Yii::app()->getRequest()->getHostInfo('http');
+		exit();
 		echo count( $course_model->getCourseStudentsModel() );
 		//echo md5( "1234" . "123456" );
 		//echo urldecode('http%2F%2FFai.wenku.baidu.com%252Fplay%26docid%3D5f34b8c55fbfc77da269b1d9%26fpn%3D5%26npn%3D5%26bookmark%3D0%257C0%26ext%3Ddoc%26readertype%3Dinternal%26newmark%3D0%257C0%26catal%3D0%26cdnurl%3Dhttp%253A%252F%252Fai.wenku.baidu.com%252Fplay%26cid%3D62%26cid1%3D1%26cid2%3D2%26cid3%3D62%26isChrome%3D1%26title%3D%25E6%25B3%25A8%25E5%2586%258C%25E7%2594%25B5%25E6%25B0%2594%25E5%25B7%25A5%25E7%25A8%258B%25E5%25B8%2588%25E5%25A4%258D%25E4%25B9%25A0%25E5%25BF%2583%25E5%25BE%2597');
