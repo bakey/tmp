@@ -609,6 +609,7 @@ div.tagsinput div {
 	padding: 10px;
 	text-align: center !important;
 }
+
 .carton.padding .content {
 	padding: 0px;
 }
@@ -2716,7 +2717,7 @@ div.overlay h2 span {
 #header > ul > li.messages:hover > span, #header > ul > li.messages.active > span {
 	background: url(../images/icon-messages-white.png) center left no-repeat;
 }
-#header ul li.avatar {
+#header ul li.avatar{
 	position: absolute;
 	right: 0px;
 	padding: 0px;
@@ -2733,6 +2734,14 @@ div.overlay h2 span {
 	box-shadow: rgba(255,255,255,0.5) 0px -1px 0px inset, black 0px 2px 10px;
 	background-size: 100%;
 }
+#header ul li.userhome{
+	position: absolute;
+	right: 50px;
+	padding: 0px;
+	height: 34px;
+	top: 50%;
+	margin-top: -22px;
+}
 #header ul li.avatar img {
 	height: 30px;
 	width: 100%;
@@ -2743,7 +2752,7 @@ div.overlay h2 span {
 }
 #header ul li.search {
 	position: absolute;
-	right: 54px;
+	right: 154px;
 	width: 126px;
 	height: 34px;
 	top: 50%;
@@ -9771,7 +9780,9 @@ body.feather .map .caption {
 
 .carton.coursecarton{
 	height:150px;
+	margin-bottom: 20px;
 }
+
 .home_board .section.current {
 	overflow : auto;
 	min-height : 800px;	
@@ -9923,6 +9934,15 @@ select.select_problem {
 .course_square_content_body {
 	min-height:800px;
 	padding-left:180px;
+}
+
+.content.current.courseitemcontent{
+	padding: 0 !important;
+}
+
+.content.current.courseitemcontent p{
+	margin: 1px 0 !important;
+	text-align: center;
 }
 
 .carton .task_info {
@@ -10094,3 +10114,83 @@ body .redactor_box_fullscreen {
 	top:-20px; right:-10px;
 }
 
+
+.topansweritem{
+	background: url(../../images/answerarrow.png) bottom left no-repeat;
+}
+
+.stepindicator{
+	background: url(../../images/bigdot.gif) center repeat-x;
+}
+
+.stepitem{
+	height:120px;
+	background: url(../../images/stepbgnotselected.png) center no-repeat;
+}
+
+.stepitem.selected{
+	background: url(../../images/stepbg.png) center no-repeat;
+}
+
+.stepitem p{
+	color: #fff;
+	margin-top:50px;
+	text-align: center;
+}
+
+
+.stepoutercontainer{
+	overflow:auto;
+}
+
+.stepoutercontainer button{
+	padding:10px 0 !important;
+}
+
+.stepoutercontainer p{
+	margin: 0 !important;
+	display: block;	
+	padding-left:15px;
+	cursor: pointer;
+}
+
+.stepoutercontainer span{
+	margin: 0 !important;
+	display: block;	
+	padding-left:15px;
+	cursor: pointer;
+}
+
+.stepoutercontainer span:hover{
+	color:#e84a5f;
+}
+
+.stepoutercontainer ul{
+	list-style: none;
+}
+
+.stepoutercontainer ul li{
+	display: block;
+	border:1px solid #cecece !important;
+	margin:2px 5px !important;
+	padding:2px;
+}
+
+
+.stepoutercontainer ul li p{
+	color:#fff;
+	background: #3b8686;
+	line-height:35px;
+}
+
+.stepoutercontainer ul li ul li p{
+	color: #000;
+	background: none;
+	line-height:25px;
+}
+
+.stepoutercontainer ul li ul li{
+	border:1px solid #cecece !important;
+	margin:2px 5px !important;
+	padding:2px;
+}

@@ -7,11 +7,14 @@
 	array('label'=>'Manage Question', 'url'=>array('admin')),
 );*/
 
+
 Yii::app()->getClientScript()->scriptMap=array(
 										'jquery.js'=>false,
 										'styles.css'=>false,
 										//'pager.css'=>false,
 								);
+
+
 ?>
 
 <script type="text/javascript">
@@ -29,8 +32,8 @@ function changeToTabByIndex(event,targettabindex) {
 	$(event.target).parent().parent().siblings().children(".carton").children(".subcontent").removeClass('sail');
 	$(event.target).addClass('sail');
 
-	if(targettabindex == 0){
-		var refreshurl = '<?php echo Yii::app()->createUrl("/teach/question/myquestion",array("refreshafteraddquestion"=>1)); ?>';
+	/*if(targettabindex == 0){
+		var refreshurl = '<?php echo Yii::app()->createUrl("/teach/question/allmyansweredquestion",array("refreshafteraddquestion"=>1)); ?>';
 	    $('#recentquestions').html('<div class="libajaxloader"></div>');
 	    $('#recentquestions').load(refreshurl).hide().fadeIn(300);
 	    $('#questiongroupbyitem').hide().html(' ');
@@ -38,7 +41,7 @@ function changeToTabByIndex(event,targettabindex) {
 
 	if(targettabindex == 1){
 		$('#recentquestions').hide().html(' ');
-	}
+	}*/
 
 }
 
@@ -123,7 +126,7 @@ $(document).ready(function(){
     <li>
         <a href="<?php echo Yii::app()->createUrl('/teach/question/questionnotanswered'); ?>" rel="external">未回答问题</a>
     </li>
-    <li class="current">
+    <li  class="current">
         <a href="#tab_one">所有回答</a>
     </li>
     <li>
@@ -140,18 +143,37 @@ $(document).ready(function(){
     <div id="tab_one" class="tab padding">
     	<div class="container" rel="2">
     		<div class="carton col_12 nobackground">
+    			<div class="container dotbottom normaltoppadding">
+						<a href="javascript:void(0);" onclick="changeToTabByIndex(event,0)" rel="external"><div class="carton col_3">
+							<div class="subcontent bordered sail">
+								我的回答
+							</div>
+						</div></a>
+
+						<a href="javascript:void(0);" onclick="changeToTabByIndex(event,1)" rel="external"><div class="carton col_3">
+							<div class="subcontent bordered">
+								对我的问题的回答（需要想个短点的说法）
+							</div>
+						</div></a>
+					</div>
 				<div class="content animated fadeInLeft tinyallpadding" id="recentquestions" style="min-height:200px;">
 					
 
 					<?php 
 					$this->widget('zii.widgets.CListView', array(
 						'dataProvider'=>$dataProvider,
-						'itemView'=>'_view',
+						'itemView'=>'_answertopview',
 						 'summaryText'=>'',
 						 'id'=>'myrecentquestions',
         				'ajaxUpdate'=>true,
         				'pager'=>array('pageSize'=>5),
 					)); ?>
+				</div>
+				<div class="content animated fadeInLeft tinytinyallpadding">
+					<div class="container">
+						haha
+					</div>
+
 				</div>
 			</div>
     </div>

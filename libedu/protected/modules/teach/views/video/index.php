@@ -45,6 +45,48 @@ function closemodal(){
 
 </script>
 
+<div id="changecoursecontent" class="col_12" style="display:none">
+		<h3>修改课程内容</h3>
+		<p class="col_6">
+			<label for="coursename">课程名</label>
+			<input type="text" name="coursename" />
+		</p>
+		<p class="col_6">
+			<label for="coursename">课程描述</label>
+			<input type="text" name="coursedescription" />
+		</p>
+		<p class="col_12">
+			 公开 <input type="checkbox" class="modalcheckbox sunlit"> | 
+		
+			
+			 仅限本班学生 <input type="checkbox" class="modalcheckbox sunlit"> | 
+		
+		
+			 密码 <input type="checkbox" class="modalcheckbox sunlit pwdtoogle" > 
+		</p>
+		<p  style="display:none" class="pwdinput" >
+			<input type="text"/>
+		</p>
+
+		<p class="col_5">
+			<label>课程日期</label>
+			<input type="text" />
+		</p>
+		<p class="col_3">
+			<label>从</label>
+			<input type="text" />
+		</p>
+		<p class="col_3 offset_1">
+			<label>到</label>
+			<input type="text" />
+		</p>
+		<p class="col_12" style="text-align:right;">
+			<button class="sugar" onclick="window.location='<?php echo Yii::app()->createUrl('teach/video/view',array('id'=>13)); ?>';">确认</button>
+			<button class="sugar" onclick="closemodal();">取消</button>
+		</p>
+</div>
+
+
 <div id="chapterlistforquestion" style="display:none;">
 </div>
 
@@ -76,6 +118,12 @@ function closemodal(){
 						<a href="javascript:void(0);" onclick="changeToTabByIndex(event,1)" rel="external"><div class="carton col_3">
 							<div class="subcontent bordered">
 								所有视频面授
+							</div>
+						</div></a>
+
+						<a href="javascript:void(0);" onclick="$('#changecoursecontent').modal();initcheckbox();" rel="external"><div class="carton col_3 offset_3">
+							<div class="subcontent bordered">
+								<span class="iconclass min" style="line-height:12px; font-size:24px;">+</span>创建视频面授
 							</div>
 						</div></a>
 					</div>
@@ -186,5 +234,29 @@ function closemodal(){
 
 
 
-
-
+<script type="text/javascript">
+	function initcheckbox(){
+		$(".checkbox").click(function () {
+			if($(this).hasClass('checked')){
+				$(this).removeClass('checked');
+				if($(this).hasClass('pwdtoogle')){
+					$('.pwdinput').fadeOut();
+				}
+			}else{
+				$(this).addClass('checked');
+				if($(this).hasClass('pwdtoogle')){
+					$('.pwdinput').fadeIn();
+				}else{
+					$('.pwdinput').fadeOut();
+				}
+				$(this).siblings('span.checked').removeClass('checked');
+				
+			}
+		});
+	}
+	$(document).ready(function(){
+		$("input:checkbox").each(function () {
+			$(this).checkbox();	
+		});
+	});
+</script>

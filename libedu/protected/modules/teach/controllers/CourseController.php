@@ -366,6 +366,11 @@ class CourseController extends Controller
 		);
 		
 	}
+
+	public function actionCreatePersonalCourse(){
+		$res = Subject::model()->findAll();
+		$this->renderPartial('createpersonalcourse',array('subject'=>$res),false,true);
+	}
 	
 	public function filters()
 	{
@@ -381,7 +386,7 @@ class CourseController extends Controller
 						'users'=>array('@'),
 						),
 				array('allow', // allow authenticated user to perform 'create' and 'update' actions
-						'actions'=>array('admin','loadchilditemastable','loadtoplevelitem'),
+						'actions'=>array('admin','loadchilditemastable','loadtoplevelitem','createpersonalcourse'),
 						'users'=>array('@'),
 				),
 				array('deny',  // deny all users

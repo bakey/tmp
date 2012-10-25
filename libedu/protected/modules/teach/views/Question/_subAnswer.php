@@ -5,7 +5,7 @@
 	<div class="col_10">
 		<div class="col_12 roundbordered tinytinyallpadding">
 
-				<p><?php echo $data->level; echo CHtml::encode($data->owner_info->user_profile->real_name); ?> 于 <?php echo CHtml::encode($data->create_time); ?> <?php 
+				<p><?php echo CHtml::encode($data->owner_info->user_profile->real_name); ?> 于 <?php echo CHtml::encode($data->create_time); ?> <?php 
 					   $anstype = ''; 
 						if($data->type == 1){
 							$anstype= '追问';

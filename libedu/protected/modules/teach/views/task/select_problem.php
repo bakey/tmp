@@ -17,7 +17,7 @@ function select_problem( element, pid )
 	var newelement = $('#singleproblem'+pid).clone();
 	$(newelement).attr('id','singlechosenproblem'+pid).hide();
 	$('#chosenlist').append($(newelement));
-	$('#singlechosenproblem'+pid).find('.problemcontrol'+pid).attr('src','<?php echo Yii::app()->baseUrl."/images/cross.png"; ?>').parent().attr('onclick','$("#singlechosenproblem'+pid+'").fadeOut().remove();$("#singleproblem'+pid+'").fadeIn();$("#probleminput'+pid+'").remove();');
+	$('#singlechosenproblem'+pid).find('.problemcontrol'+pid).attr('src','<?php echo Yii::app()->baseUrl."/images/cross.png"; ?>').parent().attr('onclick','$("#singlechosenproblem'+pid+'").fadeOut().remove();$("#singleproblem'+pid+'").fadeIn();$("#probleminput'+pid+'").remove();$("#choice_problem_cnt").text(parseInt($("#choice_problem_cnt").text())-1);');
 	$('#singlechosenproblem'+pid).addClass('chosen').removeClass('col_12').addClass('col_11').fadeIn();
 }
 
