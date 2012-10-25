@@ -61,16 +61,16 @@ function show_recent_task_list(event)
      <div id="tab_one" class="tab mytab" >
      
      	<a href="javascript:void(0)" onclick="show_recent_task_list(event)">		
-			<div class="carton col_3">
+			<div class="carton col_3 recent_task_tab" >
  				<div id="recent_task_tab" class="subcontent bordered sail">
-   				最近测试
+   				最近练习
  				</div>
 			</div>
 		</a>   
    		<a href="javascript:void(0)" onclick="show_total_task_list(event)">
        		<div class="carton col_3">
  				<div id="total_task_tab" class="subcontent bordered">
-   				全部测试
+   				全部练习
  				</div>
 			</div>
 		</a>
@@ -78,7 +78,7 @@ function show_recent_task_list(event)
 
 		
 		<a href="javascript:void(0)" onclick="create_task()">
-			<div class="carton" style="width:31.3%;float:right">
+			<div class="carton" style="width:31.3%;float:right;margin-right:15px">
  				<div class="subcontent bordered adrift">
  					<span class="iconclass min">+</span>
     	 			创建测试

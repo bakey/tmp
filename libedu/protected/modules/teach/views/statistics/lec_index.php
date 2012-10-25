@@ -1,13 +1,3 @@
-<?php
-/* @var $this StatisticsController */
-/* @var $this QuestionController */
-/* @var $dataProvider CActiveDataProvider */
-
-/*$this->menu=array(
-	array('label'=>'Create Question', 'url'=>array('create')),
-	array('label'=>'Manage Question', 'url'=>array('admin')),
-);*/
-?>
 
 <script type="text/javascript">
 function changeToTabByIndex(event,targettabindex) {
@@ -47,66 +37,27 @@ function flipUpOthers(){
 	$(".tabheader").siblings().not(".current").fadeOut();
 }
 function toggle( element , class_name){
-	$(element).siblings( '.' + class_name ).not('.tabheader').toggle(100);
+	$(element).siblings( '.' + class_name ).not('.tabheader').toggle();
+	if ( $(element).children().children('.iconclass.min').text() == '[' )
+	{
+		$(element).children().children('.iconclass.min').text(']');
+	}
+	else
+	{
+		$(element).children().children('.iconclass.min').text('[');
+	}
 }
-$(document).ready(function(){
-	//$(".tabs .current").siblings().each( function(index){ if } ); 
+$(document).ready(function(){ 
 	$(".tabs .current").siblings().not(".tabheader").fadeOut();
-	//$(".tabs .tabheader").bind( 'click' , function(){ });
+	//toggle( $('.task_stat.tabheader') , 'task_stat');
 });
 </script>
 
 <div id="chapterlistforquestion" style="display:none;">
 </div>
-
-<ul class="tabs">
-	<li class="tabheader" onclick="toggle(this , 'course_stat')">
-        <h3>课程统计<span class="iconclass min">]</span></h3>
-    </li>
-    <li class="course_stat">
-        <a href="#tab_one">热点统计</a>
-    </li>
-    <li class="course_stat">
-        <a href="#tab_one">浏览统计</a>
-    </li>
-    <li class="course_stat">
-        <a href="#tab_one">共建统计</a>
-    </li>
-    <li class="course_stat">
-        <a href="#tab_one">来访统计</a>
-    </li>
-    <li class="tabheader" onclick="toggle(this , 'task_stat')">
-        <h3>测试统计<span class="iconclass min">]</span></h3>
-    </li>
-    <li class="current task_stat">
-        <a href="#tab_one">热点统计</a>
-    </li>
-    <li class="task_stat">
-        <a href="#tab_one">得分统计</a>
-    </li>
-    <li class="task_stat">
-        <a href="#tab_one">错题与知识点统计</a>
-    </li>
-    <li class="task_stat">
-        <a href="#tab_one">共建统计</a>
-    </li>
-    <li class="tabheader" onclick="toggle(this , 'qa_stat')">
-        <h3>问答统计<span class="iconclass min">]</span></h3>
-    </li>
-    <li class="qa_stat">
-        <a href="#tab_one">热点统计</a>
-    </li>
-    <li class="qa_stat">
-        <a href="#tab_one">知识点统计</a>
-    </li>
-    <li class="qa_stat">
-        <a href="#tab_one">学生统计</a>
-    </li>
-    <li class="qa_stat">
-        <a href="#tab_one">章节统计</a>
-    </li>
-
-</ul>
+<?php
+	$this->renderPartial( '_side_bar' ); 
+?>
 <div class="tabs">
     <div id="tab_one" class="tab padding">
     	<div class="container" rel="2">

@@ -71,10 +71,8 @@ class CoursePostController extends Controller
 		else if ( LibUser::is_student() ) 
 		{
 			$this->renderPartial('student_view_post',array(
-					'model'                => $this->loadModel($post_id),
-					'draft_to_publish_url' => $draft_to_publish_url,
-					'reedit_url'           => $reedit_url,
-					'item_id'			   => $item_id,
+					'post_model'   => $this->loadModel($post_id),
+					'course_id'    => $course_id,
 			));			
 		}		
 	}
@@ -336,7 +334,6 @@ class CoursePostController extends Controller
 			if ( $new_post_id > 0 )
 			{
 				$this->savePostMediaRelation( $new_post_id );
-				$this->moveTracingItem( $item_id );
 				
 				if ( isset( $_POST['draft']) ) 
 				{
@@ -368,7 +365,10 @@ class CoursePostController extends Controller
 			$new_post_id =  $this->saveCoursePost($course_post_model , $item_id , $status , $post_id) ;
 			if( $new_post_id > 0 ) 
 			{
-				$this->moveTracingItem( $item_id );
+				if ( LibUser::is_teacher() )
+				{
+					$this->moveTracingItem( $item_id );
+				}
 				$this->savePostMediaRelation( $new_post_id );
 				$this->redirect(array('index', 'item_id'=>$item_id));
 			}
@@ -496,7 +496,7 @@ class CoursePostController extends Controller
 		$other_student_post_data = new CActiveDataProvider( 'CoursePost' , array(
 				'criteria' => array(
 						'join'      => 'join tbl_user_course on author = tbl_user_course.user_id',
-						'condition' => ( 'tbl_user_course.role=:role and item_id=:iid and tbl_course_post.author != :uid and status=:status'  ),
+						'condition' => ( 'tbl_user_course.role=:role and item_id=:iid and author != :uid and status=:status'  ),
 						'params'    => array( ':role' => Yii::app()->params['user_role_student'] , 
 											   ':iid'  => $item_id ,		
 											   ':uid'  => $cur_user,

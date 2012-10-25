@@ -48,7 +48,7 @@
 					else if ( LibUser::is_student() ) {
 						echo '同学';
 					}
-				?>老师
+				?>
 							</h4>
 						</a>
 					</li>
@@ -75,7 +75,7 @@
 	<div id="stream">
 		<div class="con">
 			<div class="tile" id="hello">
-			<a rel="external" href="index.php?r=teach/course/update&course_id=<?php echo $course_model->id ; ?>">
+			<a rel="external" href="index.php?r=teach/course/update&course_id=<?php if ( $course_model != null ) { echo $course_model->id ; } ?>">
 				<h2><span style="text-decoration:none !important;">
 				<?php
 				if ( null != $course_model )
@@ -108,19 +108,28 @@
 				?>
 					</li>
 					<li class="teacher-info">
-						<a href="#" rel="external">
 						<?php
-							echo $teacher_user_model->user_profile->real_name . '老师';						
-						?></a>
-					</li>
-					<li class="student-number">
-						<a href="#" rel="external">学生 
-						<?php
-							$course_model = Course::model()->findByPk( Yii::app()->user->course );
-							echo $course_model->getCourseStudentCount();
+							if ( LibUser::is_teacher() )
+							{
+								echo $teacher_user_model->user_profile->real_name . '老师';
+							}
+							else if ( LibUser::is_student() )
+							{
+								echo '任课老师<br>' . $teacher_user_model->user_profile->real_name ;
+							}						
 						?>
-						</a>
 					</li>
+					<li class="student-number" style="text-align:center">
+						学生 : 
+						<?php
+							if ( isset( Yii::app()->user->course ) )
+							{
+								$course_model = Course::model()->findByPk( Yii::app()->user->course );
+								echo $course_model->getCourseStudentCount();
+							}
+						?>
+					</li>
+					
 				</ul>
 			</div>
 
@@ -139,7 +148,7 @@
 			?>
 				<span class="vector count" data-count="7">'</span>
 				<span class="title">
-					<strong>课程</strong> 
+					<strong>资料</strong> 
 				</span>
 			</a>
 			<?php
@@ -152,7 +161,7 @@
 			?>
 				
 				<span class="vector count" data-count="4">C</span>
-				<span class="title"><strong>测试</strong> </span>
+				<span class="title"><strong>练习</strong> </span>
 			</a>
 			<?php
 				if ( $this->getId() == 'question' ) {

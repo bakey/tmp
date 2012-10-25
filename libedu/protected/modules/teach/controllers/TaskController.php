@@ -136,6 +136,26 @@ class TaskController extends Controller
 		
 		return Task::model()->findAll( $criteria->condition , $criteria->params );				
 	}
+	private function getStudentRecentTaskRecord( $student_user )
+	{
+		$current_course = Yii::app()->user->course;
+		$criteria=new CDbCriteria;
+		$criteria->condition='accepter=:user';
+		$criteria->params=array(':user'=> $student_user );
+		
+		$task_records = TaskRecord::model()->findAll( $criteria->condition , $criteria->params );
+		
+		$task_models = array();
+		foreach( $task_records as $record )
+		{
+			$task_models[] = Task::model()->findByPk( $record->task );
+		}
+		return (new CArrayDataProvider( $task_models , array(
+				'sort' => array(
+						'attributes' => array( 'creae_time' => 'desc' ), ),
+				)))->getData();
+		//	return $task_models;		
+	}
 	private function getTaskInfoData( $teacher )
 	{
 		$tasks = $teacher->task_as_teacher;
@@ -501,42 +521,10 @@ class TaskController extends Controller
 		}
 		else if ( LibUser::is_student() )
 		{
-			$tasks = $user_model->task_as_student;
-			$finished_tasks = $unfinished_tasks = array();
-			foreach( $tasks as $task )
-			{
-				$task_rec = TaskRecord::model()->find(
-						'task=:tid and accepter=:uid and status=:status',
-						array(
-							':tid' => $task->id,
-							':uid' => $user_model->id,
-							':status' => TaskRecord::TASK_STATUS_UNFINISHED , 
-							  )
-						);
-				$info = array(
-						'item' => $task->item,
-						'name'    => $task->name,
-						'id'      => $task->id,
-						'author' => $task->author,
-						'create_time' => $task->create_time,
-						);
-				if ( null == $task_rec ) {
-					$info['status'] = TaskRecord::TASK_STATUS_FINISHED;
-					$finished_tasks[] = $info ;
-				} else {
-					$info['status'] = TaskRecord::TASK_STATUS_UNFINISHED ;
-					$unfinished_tasks[] = $info ;
-				}
-			}
-			$finished_task_data = new CArrayDataProvider( $finished_tasks ,
-					array( 'sort'=>array(
-							'defaultOrder' => 'create_time DESC',))
-					);
-			$unfinished_tasks = new CArrayDataProvider( $unfinished_tasks , array( 'sort'=>array(
-							'defaultOrder' => 'create_time DESC',)));
 			$this->render('studetn_task_index',array(
-					'finished_task_data'   => $finished_task_data,
-					'unfinished_task_data' => $unfinished_tasks,
+						'dataProvider' => $this->getTaskInfoData( $user_model ),
+						'recent_task'  =>  $this->getStudentRecentTaskRecord( Yii::app()->user->id ),
+						'top_items'    => $this->getTopItems(),
 			));
 		}
 		

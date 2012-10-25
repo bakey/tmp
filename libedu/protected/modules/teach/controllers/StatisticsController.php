@@ -119,8 +119,25 @@ class StatisticsController extends Controller
 		}
 		$this->render('stat' , array(
 				'options' => $this->getStudentWrongRate( $task_id , $class_ids ),
-		));
+		));		
+	}
+	private function getItemQAStat( $course_id )
+	{
+		$course_model = Course::model()->findByPk( $course_id );
+		$edition_id = $course_model->edition_id;
 		
+		//找level 1 的item
+		$top_level_item = Item::model()->findAll( 'level=1 and edition=' . $edition_id );
+		$item_data = array();
+		foreach( $top_level_item as $item )
+		{
+			$node = array();
+			$node['model']    = $item;
+			$node['children'] = $item->level_child; 
+			
+			$item_data[] = $node;
+		}		
+		return $item_data;
 	}
 	public function actionOldIndex()
 	{
@@ -185,6 +202,13 @@ class StatisticsController extends Controller
 			//echo $singletask->name.' '.$singletask->numberoftaken.' <br />';
 		}
 		$this->render('lec_index', array('xaxisarray' => $xAxisArray, 'dataarray' => $dataArray, 'ctask'=>$ctask));
+	}
+	public function actionGetItemStat()
+	{
+		if ( isset( Yii::app()->user->course ) )
+		{
+			$this->render( 'item_stat' , array('data' => $this->getItemQAStat(Yii::app()->user->course)) );
+		}		
 	}
 
 

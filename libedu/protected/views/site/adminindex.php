@@ -30,7 +30,7 @@ Yii::app()->getClientScript()->scriptMap=array(
 <hr class="darkhr" />
 
 
-<a href="www.baidu.com" rel="external">
+<a href="index.php?r=teach/edition/admin" rel="external">
   <div class="carton col_3 coursecarton">
     <h2>行政管理</h2>
     <div class="content">

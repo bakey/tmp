@@ -1,12 +1,12 @@
 <?php
-$other_post = $other_teacher_data->getData();
+$other_post = $other_student_post_data->getData();
 if ( count( $other_post) == 0 )
 {
-	echo "<li class>其他老师暂未在该章节下发表资料</li>";
+	echo "<li class>其他学生暂未在该章节下发表资料</li>";
 }
 else
 {
-	echo '<div style="text-align:center">其他老师的课程资料</div>';
+	echo '<div style="text-align:center">其他学生贡献的课程资料</div>';
 	$max_show_num = Yii::app()->params['max_column_show_post_num'];
 	$show_cnt = 0;
 	$tot_post_cnt = count( $other_post );
