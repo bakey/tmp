@@ -1,17 +1,17 @@
 <?php
 	$my_post = $self_post_data->getData();
 
-	if ( count( $my_post) == 0 )
-	{
-		$create_url = sprintf("index.php?r=teach/coursepost/create&item_id=%d&course_id=%d", $item_model->id, $course_id );
-		$li_content = '<li class="side_bar_word">' . '我还没贡献内容，现在创建？' . '<span class="iconclass min">+</span></li>';
-		
+	$my_post_cnt = count( $my_post );
+	$create_url = sprintf("index.php?r=teach/coursepost/create&item_id=%d&course_id=%d", $item_model->id, $course_id );
+	if ( $my_post_cnt == 0 )
+	{		
+		$li_content = '<li class="side_bar_word">' . '我还没贡献内容，现在创建？' . '<span class="iconclass min">+</span></li>';		
 		echo CHtml::link( $li_content , $create_url , array('rel'=>'external') );
 		//echo "<li style='text-align:center'>我暂未有贡献课程资料，马上贡献?</li>";
 	}
 	else
 	{
-		echo '<div style="text-align:center">我贡献的课程资料</div>';
+		echo '<li class="side_bar_head side_bar_word current">我贡献的课程资料</li>';
 		$tot_post_cnt = count( $my_post );
 		$insert_js = 'function hide_post_title(){ var tot_post = ' . $tot_post_cnt . '; for ( i = 5; i < tot_post; i ++){ var sel_id = "#yt"+i ;  $(sel_id).children().hide(); }';
 		$insert_js .= 'var prev_ele = $("#post_toggle").prev();  $("#post_toggle").remove(); ';
@@ -66,9 +66,9 @@
 			echo CHtml::link( $li_content , 'javascript:void(0)' , array('rel' => 'external' ,  'onclick' => 'insert_post_title();' , 'id'=>'post_toggle') );
 		}
 	}
-
-	//$create_url = sprintf("index.php?r=teach/coursepost/create&item_id=%d&course_id=%d", $item_model->id, $course_id );
-	//$li_content = '<li class="side_bar_word">' . '创建新内容' . '<span class="iconclass min">+</span></li>';
-
-	//echo CHtml::link( $li_content , $create_url , array('rel'=>'external') );
+	if ( $my_post_cnt > 0 )
+	{
+		$li_content = '<li class="side_bar_word">' . '创建新内容' . '<span class="iconclass min">+</span></li>';
+		echo CHtml::link( $li_content , $create_url , array('rel'=>'external') );
+	}
 ?>

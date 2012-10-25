@@ -10,7 +10,6 @@ Yii::app()->getClientScript()->scriptMap=array(
 			<?php echo "第" . $item_model->edi_index . "节: " . $item_model->content; ?>
 		</div>
 	</h3>
-	<div class="side_bar_word">课程资料</div>
 <?php
 	$post_data = $self_post_data->getData();
 	$post_model = null;
@@ -20,7 +19,7 @@ Yii::app()->getClientScript()->scriptMap=array(
 	}
 	$this->renderPartial( 'my_course_post_list' , array( 'self_post_data' => $self_post_data , 'course_id' => $course_id , 'item_model' => $item_model ) );
 ?>
-	<li class="side_bar_head redconfetti">
+	<li class="side_bar_head current">
 		其他老师的课程资料
 	</li>	
 	<li class>
@@ -29,10 +28,8 @@ Yii::app()->getClientScript()->scriptMap=array(
 								'item_model' => $item_model) );
 	?>
 	</li>
-	<li class="side_bar_head">
-		<div class="redconfetti">
+	<li class="side_bar_head current">
 		学生贡献的课程资料
-		</div>
 	</li>
 	<li class>
 	<?php

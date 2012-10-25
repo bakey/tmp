@@ -65,7 +65,7 @@ function file_upload_callback( obj , resp ){
 	}
 	if ( !is_image )
 	{
-		$('#CoursePost_post').insertHtml('<img src="http://<?php echo Yii::app()->params['web_host']; ?>/dev/libedu/static/images/converting.png" class="doc_placeholder"></img>');
+		$('#CoursePost_post').insertHtml('<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http');?>/dev/libedu/static/images/converting.png" class="doc_placeholder"></img>');
 		var media_node = '<input name="mid[]" style="display:none" value="' + upload_ret.mid + '">';
 		$( media_node ).insertAfter( '#CoursePost_title' );
 	}	

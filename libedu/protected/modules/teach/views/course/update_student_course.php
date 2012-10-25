@@ -24,8 +24,14 @@ $(document).ready(function(){
 });
 </script>
 <ul class="tabs">
-	<li class="active_tab">
-	课程首页
+	<li class="active_tab" style="text-align:center">
+	资料中心
+	</li>
+	<li class="active_tab" style="text-align:center">
+	我的收藏
+	</li>
+	<li class="active_tab" style="text-align:center">
+	热门资料
 	</li>
 </ul>
  <div class="tabs">

@@ -107,14 +107,15 @@
 						echo $avatarCode;
 				?>
 					</li>
-					<li class="teacher-info">
 						<?php
 							if ( LibUser::is_teacher() )
 							{
+								echo '<li class="teacher-info">';
 								echo $teacher_user_model->user_profile->real_name . '老师';
 							}
 							else if ( LibUser::is_student() )
 							{
+								echo '<li class="student-info">';
 								echo '任课老师<br>' . $teacher_user_model->user_profile->real_name ;
 							}						
 						?>

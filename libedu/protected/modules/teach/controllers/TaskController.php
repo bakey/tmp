@@ -33,7 +33,7 @@ class TaskController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('admin','connectitem','loadtaskbyitem','showstudenttaskstatus','createtaskitemrelation','index','showfinishtask','ajaxcheckanswer','newtaskname','test','publishtask','previewtask','filterproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
+				'actions'=>array('admin','connectitem','loadtaskbyitemasstudent','loadtaskbyitem','showstudenttaskstatus','createtaskitemrelation','index','showfinishtask','ajaxcheckanswer','newtaskname','test','publishtask','previewtask','filterproblem','viewtopics','ajaxloadkp','ajaxloaditem','create','update','topics','createTaskProblem','addExaminee','addTaskRecord','participateTask','createTaskRecord'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -150,11 +150,23 @@ class TaskController extends Controller
 		{
 			$task_models[] = Task::model()->findByPk( $record->task );
 		}
-		return (new CArrayDataProvider( $task_models , array(
+		$dp = new CArrayDataProvider( $task_models , array(
 				'sort' => array(
-						'attributes' => array( 'creae_time' => 'desc' ), ),
-				)))->getData();
-		//	return $task_models;		
+						'defaultOrder' => 'create_time desc') , )
+				);
+		$task_data = array();
+		foreach( $dp->getData()  as $data )
+		{
+			$tmp = array(
+					'model' => $data,
+					);
+			$tr = TaskRecord::model()->find( 'task=:tid and accepter=:uid' , array( ':tid' => $data->id , ':uid' => $student_user ) );
+			$tmp['status'] = $tr->status;
+			$task_data[] = $tmp;			
+		}
+		return $task_data;
+		
+		//return $task_models;		
 	}
 	private function getTaskInfoData( $teacher )
 	{
@@ -263,6 +275,28 @@ class TaskController extends Controller
 			}			
 		}
 		echo @json_encode( $resp_arr );			
+	}
+	public function actionLoadTaskByItemAsStudent( $item_id , $user_id )
+	{
+		$root_item_id = $this->findRootItem( $item_id );
+		$task_item_models = TaskItem::model()->findAll();
+		$resp_arr = array();
+		foreach ( $task_item_models as $ti )
+		{
+			$root = $this->findRootItem( $ti->item );
+			if ( $root == $root_item_id )
+			{
+				$task = Task::model()->findByPk( $ti->task );
+				if ( isset($resp_arr[ $task->id ]) )
+				{
+					continue;
+				}
+				$task_record = TaskRecord::model()->find( 'task=' . $task->id . ' and accepter=' . $user_id );
+				$resp_arr[ $task->id ] = array( 'id' => $task->id , 'name' => $task->name ,
+						'description' => $task->description , 'create_time' => $task->create_time , 'status' => $task_record->status );
+			}
+		}
+		echo @json_encode( $resp_arr );
 	}
 	public function actionConnectItem( $task_id )
 	{

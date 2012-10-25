@@ -1,15 +1,17 @@
 <ul class="tabs">
-	<li class="active_tab">
-	我发布的测试
+	<a href="index.php?r=teach/task" rel="external">
+		<li class="active_tab side_bar_word sail">
+		我的练习
+		</li>
+	</a>
+	<li class="active_tab side_bar_word">
+	共建练习
 	</li>
-	<li class="active_tab">
-	学生共建测试
+	<li class="active_tab side_bar_word">
+	热门练习
 	</li>
-	<li class="active_tab">
-	热门试卷
-	</li>
-	<li class="active_tab">
-	收藏的试卷
+	<li class="active_tab side_bar_word">
+	我的收藏
 	</li>
 </ul>
  <div class="tabs">

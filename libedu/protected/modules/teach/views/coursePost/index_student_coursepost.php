@@ -10,8 +10,9 @@ Yii::app()->getClientScript()->scriptMap=array(
 			<?php echo "第" . $item_model->edi_index . "节: " . $item_model->content; ?>
 		</div>
 	</h3>
-	<li>
-		<div class="side_bar_word">课程资料</div>
+	<li class="side_bar_word current">
+		课程资料
+	</li>
 <?php
 	$post_data = $course_teacher_post_data->getData();
 	$post_model = null;

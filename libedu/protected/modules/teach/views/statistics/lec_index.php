@@ -38,13 +38,13 @@ function flipUpOthers(){
 }
 function toggle( element , class_name){
 	$(element).siblings( '.' + class_name ).not('.tabheader').toggle();
-	if ( $(element).children().children('.iconclass.min').text() == '[' )
+	if ( $(element).children().children('.iconclass.min').text() == 'H' )
 	{
-		$(element).children().children('.iconclass.min').text(']');
+		$(element).children().children('.iconclass.min').text('I');
 	}
 	else
 	{
-		$(element).children().children('.iconclass.min').text('[');
+		$(element).children().children('.iconclass.min').text('H');
 	}
 }
 $(document).ready(function(){ 

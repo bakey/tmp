@@ -3189,6 +3189,11 @@ a.tile:nth-child(odd) {
 
 #hello ul li.teacher-info{
 	width:50% !important;
+	padding-top:13px;
+}
+#hello ul li.student-info{
+	width:50% !important;
+	padding-top:5px;
 }
 
 #hello ul li.student-number{
@@ -3206,7 +3211,10 @@ a.tile:nth-child(odd) {
 	font-size: 16px;
 	font-family: 'simsun','Microsoft Yahei', Arial, Helvetica, sans-serif !important;
 }
-
+#hello ul li.student-info a, #hello ul li.student-number a{
+	font-size: 16px;
+	font-family: 'simsun','Microsoft Yahei', Arial, Helvetica, sans-serif !important;
+}
 #hello ul li a:hover {
 	color: rgba(0,0,0,0.7);
 }
