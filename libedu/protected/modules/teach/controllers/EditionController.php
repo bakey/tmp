@@ -2,6 +2,7 @@
 
 class EditionController extends Controller
 {
+	public $layout = '//layouts/admin_column';
 	const ITEM_LEVEL_TOP = 1;
 	const TBL_ITEM = "tbl_item";
 	const TBL_ITEM_LEVEL = "tbl_item_item";
@@ -215,9 +216,14 @@ class EditionController extends Controller
 				return array( 'row'=>$row, 'col'=>0 , 'level'=>1 );
 			}
 		}
-		else
+		else if (  $sheet->getCellByColumnAndRow( $col+1 , $row )->getValue() == '' )
 		{
-			return array( 'row'=>$row , 'col'=>$col , 'level'=>$level );
+			//处理一个小节结束的情况
+			return array( 'row' => $row , 'col' => $col-1 , 'level' => $level - 1 );
+		}
+		else 
+		{
+			return array( 'row'=>$row , 'col'=>$col , 'level'=>$level );			
 		}
 	}
 	private function getPHPExcelInstance( $fname )
@@ -257,8 +263,8 @@ class EditionController extends Controller
 			//默认每个模板都放在sheet 0
 		$sheet = $PHPExcel->getSheet( 0 );
 		
-		$topColumn = $sheet->getHighestColumn();
-		$topRow    =  $sheet->getHighestRow();
+		$topColumn  = $sheet->getHighestColumn();
+		$topRow     =  $sheet->getHighestRow();
 		$currentRow = 1;
 		$currentCol = 0;
 			
@@ -271,12 +277,18 @@ class EditionController extends Controller
 		}
 		//出版社
 		$publisher = $sheet->getCellByColumnAndRow( $currentCol+2 , $currentRow)->getValue();
+		//科目
+		$subject = $sheet->getCellByColumnAndRow( $currentCol+3 , $currentRow )->getValue() ;
+		//年级
+		$grade   = $sheet->getCellByColumnAndRow( $currentCol+4 , $currentRow )->getValue() ;
 		
 		$edition_info = array(
-				'name'=>$edition_name,
-				'description'=>$description,
-				'uploader'=>$uid,
-				'publisher'=>$publisher,
+				'name'        => $edition_name,
+				'description' => $description,
+				'uploader'    => $uid,
+				'publisher'   => $publisher,
+				'subject'     => $subject,
+				'grade'       => $grade,
 				);
 		
 		$return_data = array();
@@ -383,10 +395,12 @@ class EditionController extends Controller
 	private function saveEditionData( $edi_info )
 	{
 		$edition_model = new CourseEdition;
-		$edition_model->name = $edi_info['name'];
+		$edition_model->name 		= $edi_info['name'];
 		$edition_model->description = $edi_info['description'];
-		$edition_model->uploader = $edi_info['uploader'];
-		$edition_model->publisher = $edi_info['publisher'];
+		$edition_model->uploader 	= $edi_info['uploader'];
+		$edition_model->publisher 	= $edi_info['publisher'];
+		$edition_model->subject  	= $edi_info['subject'];
+		$edition_model->grade    	= $edi_info['grade'];
 		$edition_model->save();		
 		return $edition_model;
 	}
@@ -443,33 +457,24 @@ class EditionController extends Controller
 				$item_item_model->parent = $ed['parent'];
 				$item_item_model->child = $ed['id'];
 				if ( !$item_item_model->save() ){
-					echo("save item_item model failed ");
+					echo("save item_item model failed : " . $item_item_model->getErrors() );
 				}
-				/*$str = sprintf("parent = %d , child = %d<br>" , $ed['parent'],
-						$ed['id'] );
-				echo $str;*/
 			}
 		}	
 		echo '<h4>教材列表导入结果</h4><ul><li>成功导入 <strong>' . $succ . '</strong> 条记录</li>';
 	}
 	public function actionLoadEdition()
 	{
-		$cid = -1;
 		if(!$_REQUEST['fname']){
 			$fname = null;
 		}else{
 			$fname = $_REQUEST['fname'];
 		}
-		if ( isset($_GET['course_id']) ) {
-			$cid = (int) $_GET['course_id'];
-		}
 		$edition = $this->getEditionFromExcelFile( $fname );
 		
 		$dataProvider=new CArrayDataProvider( $edition ['edition_item'], array(
 				'id'=>'loadededition',
-				'pagination'=>array(
-						'pageSize'=>15,
-				),
+				'pagination'=>false,
 		));
 		
 		$this->renderPartial('_show_new_edition' , array(

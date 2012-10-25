@@ -1,32 +1,48 @@
-<?php
-/* @var $this CoursePostController */
-/* @var $model CoursePost */
+ <script type="text/javascript">
+ function show_edit_icon()
+ {
+ 	$("#edit_icon").fadeIn();
+ }
+ function hide_edit_icon()
+ {
+	 $("#edit_icon").fadeOut();
+ }
+ </script>
+ <?php
+ if ( $post_model != null )
+ {
+ 	$reedit_url = Yii::app()->params['index_path'] . '?r=teach/coursepost/reedit&post_id=' . $post_model->id . '&course_id='. $course_id ;
+ } 
+ ?>
 
-$this->breadcrumbs=array(
-	'课程管理'=>array('course/admin'),
-	'课程浏览'=>array('coursepost/index&item_id='.$model->item_id),
-	$model->id,
-);
-/*
-$this->menu=array(
-	array('label'=>'List CoursePost', 'url'=>array('index')),
-	array('label'=>'Create CoursePost', 'url'=>array('create')),
-	array('label'=>'Update CoursePost', 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>'Delete CoursePost', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage CoursePost', 'url'=>array('admin')),
-);
-*/
-?>
+ <div id="tab_one" class="tab mytab current" >
+ <?php
+ 	if ( $post_model != null )
+ 	{
+ 		if ( $post_model->author == Yii::app()->user->id )
+ 		{
+ 			echo CHtml::link( '<span class="iconclass mid"  style="position:absolute; top:0; z-index:999;" id="edit_icon">C</span>' , $reedit_url , 
+ 				array('rel' => 'external') );
+ 		}
+ 	} 
+ ?>
+ 	<div class="carton col_4 topitemcarton post_title" >
+ 		<div class="content post_title" >
+    <?php
+    	if ( $post_model != null ) 
+		{
+ 			echo $post_model->title ;
+		} 
+ 	?>
+  		</div>
+	</div>
+	<div class="carton post_grid" >
+		<?php 
+			if ( $post_model != null )
+			{
+				echo $post_model->post;
+			}
+		?>
+	</div>
+</div>
 
-<h1>View CoursePost #<?php echo $model->id; ?></h1>
-
-<?php 
-
-$this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'post:html',
-	),
-));
-
-?>

@@ -75,7 +75,7 @@
 	<div id="stream">
 		<div class="con">
 			<div class="tile" id="hello">
-			<a rel="external" href="index.php?r=teach/course/update&course_id=<?php echo $course_model->id ; ?>">
+			<a rel="external" href="index.php?r=teach/course/update&course_id=<?php if ( $course_model != null ) { echo $course_model->id ; } ?>">
 				<h2><span style="text-decoration:none !important;">
 				<?php
 				if ( null != $course_model )
@@ -113,7 +113,7 @@
 							{
 								echo $teacher_user_model->user_profile->real_name . '老师';
 							}
-							else
+							else if ( LibUser::is_student() )
 							{
 								echo '任课老师<br>' . $teacher_user_model->user_profile->real_name ;
 							}						
@@ -122,8 +122,11 @@
 					<li class="student-number" style="text-align:center">
 						学生 : 
 						<?php
-							$course_model = Course::model()->findByPk( Yii::app()->user->course );
-							echo $course_model->getCourseStudentCount();
+							if ( isset( Yii::app()->user->course ) )
+							{
+								$course_model = Course::model()->findByPk( Yii::app()->user->course );
+								echo $course_model->getCourseStudentCount();
+							}
 						?>
 					</li>
 					

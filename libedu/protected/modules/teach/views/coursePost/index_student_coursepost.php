@@ -19,30 +19,37 @@ Yii::app()->getClientScript()->scriptMap=array(
 	{
 		$post_model = CoursePost::model()->findByPk( $post_data[0]['id'] );
 	}
-	$this->renderPartial( 'my_course_post_list' , array( 'self_post_data' => $course_teacher_post_data , 'course_id' => $course_id , 'item_model' => $item_model ) );
+	$this->renderPartial( 'course_teacher_post_list' , array( 'course_teacher_post_data' => $course_teacher_post_data , 'course_id' => $course_id , 
+															  'item_model' => $item_model ) );
 ?>
 	</li>
 	<li class>
-	<div style="text-align:center">我贡献的课程资料</div>
 	
 	<?php
 		$this->renderPartial( 'my_course_post_list' , array(  'self_post_data' => $my_post_data , 'course_id' => $course_id ,
 							  'item_model' => $item_model) );
 	?>
 	</li>
-	<li>
 	
-	<div style="text-align:center">其他老师的课程资料</div>	
+	<li>	
 	<?php
 		$this->renderPartial( 'other_teacher_post_list' , array( 'other_teacher_data' => $other_teacher_post_data , 'course_id' => $course_id , 
 								'item_model' => $item_model) );
 	?>
 	</li>
+	
+	<li>
+		<?php
+			$this->renderPartial( 'other_student_post_list' , array( 'other_student_post_data' => $other_student_post_data , 'item_model' => $item_model,
+																	  'course_id' => $course_id,
+			) ); 
+		?>
+	</li>
 
 	
 </ul>
-<div class="tabs" id="post_content" allowFullScreen="allowFullScreen">
+<div class="tabs" id="post_content" >
 	<?php  
-		$this->renderPartial( 'teacher_view_post' , array('post_model' => $post_model , 'course_id' => $course_id ) );
+		$this->renderPartial( 'student_view_post' , array('post_model' => $post_model , 'course_id' => $course_id ) );
 	?>
 </div>

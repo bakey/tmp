@@ -1,4 +1,8 @@
-
+<?php
+Yii::app()->getClientScript()->scriptMap=array(
+'jquery.js'=>false,
+);
+?>
 <h1>导入知识点</h1>
 
 <h3 id="subtitle">请选择要导入的文件（只支持.xls 和 .xlsx 文件）</h3>
