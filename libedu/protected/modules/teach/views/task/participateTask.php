@@ -1,17 +1,24 @@
-<div class="well">
-	<?php
-	$ajax_callback_js = 'function(data , status , jq_obj ){
+<script type="text/javascript">
+function submite_callback(data)
+{
+	alert( data );
+	return ;
 				var task_res = eval(data);
-				$.each( task_res ,function(name,value) {
+				$.each( task_res ,function(name,value) 
+				{
 					var element_obj = eval( value );
-					$.each( element_obj, function(n,v){
+					$.each( element_obj, function(n,v)
+					{
 						var text = "";
 						show_right_id = "problem_id_" + n + "_right";
 						show_wrong_id = "problem_id_" + n + "_wrong";
-						if ( v > 0 ) {							
+						if ( v > 0 )
+						{							
 							$("#" + show_right_id ).show();
 							$("#" + show_wrong_id ).hide();							
-						}else {
+						}
+						else 
+						{
 							$("#" + show_right_id ).hide();
 							$("#" + show_wrong_id ).show();	
 						}							 
@@ -20,31 +27,51 @@
 					$("#taskResetBtn").hide();
 					$("#returnLink").show();
        			});
-			}';
-		$alert_js = 'function( xhr ){
-       			if ( confirm("确定提交?") ) return true;
-       			else return false;
-			}';
-		echo CHtml::beginForm( 
-				CController::createUrl('/teach/task/ajaxcheckanswer') . "&task_id=" . $task_id  ,
-				'post',
-				array()
-			);
-    		$this->widget('bootstrap.widgets.TbListView', array(
-    				'dataProvider'=>$problem_data,
-    				'itemView'=>'_view_answer_problem',
-    	));
-    	echo CHtml::ajaxSubmitButton(
-    				'提交' , 
-    				 CController::createUrl('/teach/task/ajaxcheckanswer') . "&task_id=" . $task_id ,
+}
+function submit_answer()
+{
+	$.ajax(
+			{
+				url: '<?php echo CController::createUrl('/teach/task/ajaxcheckanswer') . "&task_id=" . $task_model->id ;?>',
+				data: $('#run-task-form').serialize(),
+				type: 'post',
+				success: submite_callback,
+			}
+	);
+}
+</script>
+		<div style="padding-top:20px; margin-left:140px">
+			<div>测试名: <?php echo $task_model->name; ?></div>
+			备注: <?php echo $task_model->description; ?>
+		</div>
+		<div style="margin-left:680px">
+		<button onclick="submit_answer();">交卷</button>
+		</div>
+		<?php 
+			/*echo CHtml::button(
+    				 CController::createUrl('/teach/task/ajaxcheckanswer') . "&task_id=" . $task_model->id ,
     				 array(
     				 	'beforeSend' => $alert_js,
     				 	'success' => $ajax_callback_js , 
     				 ),
     				array('id'=>'taskSubmitBtn')
-    			);
-    	echo CHtml::resetButton('清除答案' , array('id' => 'taskResetBtn') );
-    	echo CHtml::link('返回我的测验',   CController::createUrl('/teach/task'), array('id'=>'returnLink','style'=>'display:none'));
+    			);*/
+	?>
+		<?php 
+		echo CHtml::beginForm( 
+				CController::createUrl('/teach/task/ajaxcheckanswer') . "&task_id=" . $task_model->id   ,
+				'post',
+				array( 'id' => 'run-task-form')
+			);
+    		/*$this->widget('zii.widgets.CListView', array(
+    				'dataProvider'=>$problem_data,
+    				'itemView'=>'_view_answer_problem',
+    	));*/
+		foreach( $problem_data->getData() as $problem )
+		{
+			echo '<div class="carton col_4 problem_des">';
+			$this->renderPartial( '_view_running_task' , array('data' => $problem ) );
+			echo '</div>';
+		}
     	echo CHtml::endForm();
     	?>
-</div>

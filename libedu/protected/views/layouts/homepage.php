@@ -63,26 +63,6 @@
 			</li>
 			<li class="search">
 				<input type="text" placeholder="Search" />
-				<ul>
-					<li>
-						<a href="#">
-							<h4>Jens Alba</h4>
-							<p>Lorem ipsum dolor sit imet smd ddm lksdm lkdsm</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h4>Jens Alba</h4>
-							<p>Lorem ipsum dolor sit imet smd ddm lksdm lkdsm</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h4>Jens Alba</h4>
-							<p>Lorem ipsum dolor sit imet smd ddm lksdm lkdsm</p>
-						</a>
-					</li>
-				</ul>
 			</li>
 		</ul>
 	</div>
