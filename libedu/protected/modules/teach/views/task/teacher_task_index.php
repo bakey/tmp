@@ -81,7 +81,7 @@ function show_recent_task_list(event)
 		<a href="javascript:void(0)" onclick="create_task()">
 			<div class="carton col_3"  style="width:269px;float:right;margin-right:15px">
  				<div class="subcontent bordered">
- 					<span class="iconclass min">+</span>
+ 					<span class="iconclass min" style="line-height:17px; font-size:22px;">+</span>
     	 			创建练习
     	 		</div>
     	 	</div>
@@ -92,7 +92,7 @@ function show_recent_task_list(event)
      			$this->renderPartial( 'recent_task_list' , array('recent_task' => $recent_task ) ); 
      		?>	
      	</div>
-     	<div id="total_task_list" style="display:none">
+     	<div id="total_task_list" style="display:none;">
      	<?php
      		$this->renderPartial( 'total_task_list' , array( /*'total_task' => $total_task ,*/ 'top_items' => $top_items ) ); 
      	?>
