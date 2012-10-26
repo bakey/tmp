@@ -13,7 +13,7 @@
 <body>
 	<div id="header">
 		<ul class="con">
-			<li class="siteindex">
+			<li class="dashboard siteindex">
 				<a href="<?php echo Yii::app()->createUrl('/site/index'); ?>" data-href="#home" rel="external"><?php echo Yii::app()->params['currentSchoolName']; ?>云校园</a>
 			</li>
 
