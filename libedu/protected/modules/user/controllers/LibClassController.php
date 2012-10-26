@@ -6,7 +6,7 @@ class LibClassController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout = '//layouts/admin_main';
 
 	/**
 	 * @return array action filters
@@ -46,16 +46,14 @@ class LibClassController extends Controller
 	}
 
 	public function actionClassAdmin(){
-		$dataProvider=new CActiveDataProvider('LibClass');
+		$dataProvider = new CActiveDataProvider('LibClass');
+	
 		$this->render('classadmin',array(
-			'dataProvider'=>$dataProvider,
+				'dataProvider'=>$dataProvider,
 		));
 	}
 
-	public function actionLoadClassInfo($cid = null){
-		if($cid == null){
-			throw new CHttpException(403,'Bad Request~~~~~~~');
-		}else{
+	public function actionLoadClassInfo( $cid ){	
 			$ccls = LibClass::model()->findByPk($cid);
 			if(!$ccls){
 				throw new CHttpException(404,'Class Not Found!');
@@ -71,7 +69,6 @@ class LibClassController extends Controller
 				));
 				$this->renderPartial('_classcourseinfo',array('classcourse'=>$classcourseProvider),false,true);
 			}
-		}
 	}
 	
 	public function actionGetClassStudent()
@@ -241,8 +238,7 @@ class LibClassController extends Controller
 	 * Manages all models.
 	 */
 	public function actionAdmin()
-	{
-		//$this->layout = '//layouts/column1';		
+	{		
 		$uid = Yii::app()->user->id;		
 		$user_model = LibUser::model()->findByPk( $uid );
 		$classes = $user_model->teacher_class;

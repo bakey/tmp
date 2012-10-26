@@ -76,17 +76,7 @@ function show_recent_task_list(event)
  				</div>
 			</div>
 		</a>
-	
 
-		
-		<a href="javascript:void(0)" onclick="create_task()">
-			<div class="carton" style="width:31.3%;float:right;margin-right:15px">
- 				<div class="subcontent bordered adrift">
- 					<span class="iconclass min">+</span>
-    	 			创建测试
-    	 		</div>
-    	 	</div>
-    	 </a>
     	<div id="recent_task_list">	 
      		<?php
      			$this->renderPartial( 'student_recent_task_list' , array('recent_task' => $recent_task ) ); 

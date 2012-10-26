@@ -22,10 +22,10 @@ function show_total_task_list(event)
 {
 	//$('#recent_task_list').fadeOut( 300 );
 	$('#recent_task_list').hide();
-	$('#recent_task_tab').removeClass( 'current' );
+	$('#recent_task_tab').removeClass( 'sail' );
 	
 	$('#total_task_list').show();
-	$(event.target).addClass('current');
+	$(event.target).addClass('sail');
 }
 function show_recent_task_list(event)
 {
@@ -33,13 +33,13 @@ function show_recent_task_list(event)
 	{
 		//$('#total_task_list').fadeOut( 200 );
 		$('#total_task_list').toggle();
-		$('#total_task_tab').removeClass('current');
+		$('#total_task_tab').removeClass('sail');
 	}
 	if ( $('#recent_task_list').css('display') == 'none' )
 	{
 		//$('#recent_task_list').fadeIn( 200 );
 		$('#recent_task_list').toggle();
-		$('#recent_task_tab').addClass( 'current' );
+		$('#recent_task_tab').addClass( 'sail' );
 	}
 }
 </script>
@@ -66,7 +66,7 @@ function show_recent_task_list(event)
      
      	<a href="javascript:void(0)" onclick="show_recent_task_list(event)">		
 			<div class="carton col_3 recent_task_tab" >
- 				<div id="recent_task_tab" class="subcontent bordered current">
+ 				<div id="recent_task_tab" class="subcontent bordered sail">
    				最近练习
  				</div>
 			</div>

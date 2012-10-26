@@ -1,5 +1,5 @@
 
- <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+ <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/20121026105206.png'; ?>" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -26,7 +26,7 @@
             </div>
           </a>
           
-           <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+           <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/201210261054132.png'; ?>" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -55,7 +55,7 @@
             </div>
           </a>
           
-          <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+          <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/201210261054133.png'?>" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -84,7 +84,7 @@
             </div>
           </a>
           
-         <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+         <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/201210261054133.png'?>" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -113,7 +113,7 @@
             </div>
           </a>
 
-            <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+            <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/201210261054134.png'; ?>" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -142,7 +142,7 @@
             </div>
           </a>
           
-           <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+           <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/201210261054135.png';?>" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -171,7 +171,7 @@
             </div>
           </a>
           
-           <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+           <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/201210261054136.png';?>" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -200,7 +200,7 @@
             </div>
           </a>
           
-           <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+           <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/20121026105413.png';?>" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -228,7 +228,8 @@
              </div>
             </div>
           </a>
-           <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+          
+           <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="http://localhost/dev/libedu/static/images/libstore/201210261054132.png" width="320px" height="120px" />
               <div class="content current courseitemcontent">

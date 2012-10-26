@@ -57,21 +57,20 @@ class EditionController extends Controller
 	}
 	public function actionAdmin()
 	{
-		$course_edition_model=new CourseEdition('search');
+		$course_edition_model = new CourseEdition('search');
 		$course_edition_model->unsetAttributes();
-		
-		$subjects = Subject::model()->findAll();
-		$grades = Grade::model()->findAll();
-		$subject_list = CHtml::listData($subjects, 'id', 'name');
-		$grade_list = CHtml::listData($grades , 'grade_index' , 'grade_name' );
-		
+	
+		$total_courses = Course::model()->findAll();
+		$course_edi = array();
+		foreach( $total_courses as $course )
+		{			
+			$course_edi[ $course->grade ][] = array( 'course' => $course , 'edition' => CourseEdition::model()->findByPk( $course->edition_id ) );
+		}
 		if ( isset( $_POST['subject']) )
 		{
 			//ajax filter edition
 			$subject_id = $_POST['subject'];
-			$grade_id = $_POST['grade'];
-			
-			
+			$grade_id   = $_POST['grade'];			
 			
 			$condition = "subject=" . $subject_id . " and grade=" . $grade_id; 
 			$dataProvider=new CActiveDataProvider('CourseEdition',array(
@@ -81,23 +80,20 @@ class EditionController extends Controller
 					'pagination'=>array('pageSize'=>15),
 			));
 			$cnt = count($dataProvider->getData());
-			$str = @sprintf("subject=%d , grade = %d , count = %d" ,
-					 $subject_id,$grade_id , $cnt );
+			$str = @sprintf("subject=%d , grade = %d , count = %d" ,$subject_id,$grade_id , $cnt );
 			Yii::log( $str , 'debug' );
 			$this->renderPartial( '_form_show_edition' , 
-						array('dataProvider' => $dataProvider,
-							  // 'model'=>$course_edition_model,
-								));
+						array('dataProvider' => $dataProvider,	));
 			
-		}else {
+		}
+		else
+		{
 			$dataProvider=new CActiveDataProvider('CourseEdition',array(
 					'pagination'=>array('pageSize'=>15),
 			));
 			$this->render('admin' , array(
-				'model'=>$course_edition_model ,
-				'dataProvider'=>$dataProvider, 
-				'subject_list' => $subject_list,
-				'grade_list' => $grade_list,
+					'dataProvider'  => $dataProvider, 
+					'course_edi' => $course_edi ,
 				));
 		}
 	}

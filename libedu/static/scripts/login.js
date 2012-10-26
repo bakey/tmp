@@ -289,7 +289,7 @@ $.initializeLogin = function() {
 	$.notification( 
 		{
 			title: "欢迎来到人大附中云校园",
-			content: "请登陆使用!",
+			content: "",
 			img: "static/demo/cloud.png",
 			border: false
 		}

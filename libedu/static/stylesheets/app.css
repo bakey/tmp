@@ -10229,3 +10229,8 @@ body .redactor_box_fullscreen {
 	width:120px;
 	height:30px;
 }
+.dotbottom.course_name{
+	margin-left: 10px;
+	padding-left:40px;
+	margin-top: 15px;
+}

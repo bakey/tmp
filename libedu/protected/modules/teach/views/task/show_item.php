@@ -5,6 +5,12 @@ function select_item( event , item_id )
 	input_node += '</input>';
 	$('#item_selected').append( input_node );
 	$('#item_select_hint').html('您选择了章节：' + $('#item_selected').text());
+	
+}
+function closemodal(){
+	$('#overlays .modal').fadeOut(100);
+	$('#overlays').removeClass();
+	$(document).unbind('keyup');	
 }
 </script>
 <div class="carton tinyallpadding animated fadeIn">

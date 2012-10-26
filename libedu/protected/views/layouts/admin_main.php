@@ -75,20 +75,18 @@
 	<div id="stream">
 		<div class="con">
 			<div class="tile" id="hello">
-			<a rel="external" href="index.php?r=teach/course/update&course_id=<?php if ( $course_model != null ) { echo $course_model->id ; } ?>">
+			
+			<a href="javascript:void(0)">
 				<h2><span style="text-decoration:none !important;">
-				<?php
-				if ( null != $course_model )
-				{
-					echo $course_model->name;
-				}
-				else if ( LibUser::is_school_admin() )
-				{
+				<?php			
 					echo '行政管理';
-				}
 				?>
 				</span> </h2>
 				</a>
+				
+				
+				
+				
 				<ul class="nav">
 					<li class="teacher-avatar">
 						<?php
@@ -131,32 +129,13 @@
 				</ul>
 			</div>
 
-			<?php
-				if ( isset( Yii::app()->user->course) ) {
-					if ( $this->getId() == "course" || $this->getId() == "coursepost")
-						$anchor = sprintf('<a data-href="index.php?r=teach/course/update&course_id=%d" class="tile sail" rel="external">' , Yii::app()->user->course);
-					else 
-						$anchor = sprintf('<a data-href="index.php?r=teach/course/update&course_id=%d" class="tile" rel="external">' , Yii::app()->user->course);
-					
-				}
-				else {
-					$anchor = sprintf('<a data-href="index.php?r=teach/course/admin" class="tile" rel="external">');
-				}	
-				echo $anchor;
-			?>
+			<a href="javascript:void(0)" class="tile">
 				<span class="vector count" data-count="7">f</span>
 				<span class="title">
 					<strong>人员</strong> 
 				</span>
-			</a>
-			<?php
-			if ( $this->getId() == 'task' ) {
-				echo '<a data-href="index.php?r=teach/task" class="tile sail" rel="external" >' ;
-			} 
-			else {
-				echo '<a data-href="index.php?r=teach/task" class="tile" rel="external" >' ;
-			}
-			?>
+			
+		<a href="<?php echo Yii::app()->createUrl('/user/libclass/classadmin'); ?>" class="tile" rel="external">
 				
 				<span class="vector count" data-count="4">p</span>
 				<span class="title"><strong>班级</strong> </span>
@@ -172,18 +151,13 @@
 				<span class="vector count" data-count="8">'</span>
 				<span class="title"><strong>教材</strong> </span>
 			</a>
-				<?php
-				if ( $this->getId() == 'statistics' ) {
-					echo '<a href="index.php?r=teach/statistics" class="tile sail" rel="external">' ;
-				} 
-				else {
-					echo '<a href="index.php?r=teach/statistics" class="tile" rel="external">' ;
-				}
-			?>
 			
-				<span class="vector">M</span>
-				<span class="title"><strong>存档</strong> </span>
-			</a>
+				<a href="javascript:void(0)" class="tile">
+					<span class="vector">M</span>
+					<span class="title">
+						<strong>存档</strong> 
+					</span>
+				</a>
 			<?php
 				if ( $this->getId() == 'video' ) {
 					echo '<a href="index.php?r=teach/video" class="tile sail" rel="external">' ;

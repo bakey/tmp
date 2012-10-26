@@ -11,7 +11,7 @@
  <?php
  if ( $post_model != null )
  {
- 	$reedit_url = Yii::app()->params['index_path'] . '?r=teach/coursepost/reedit&post_id=' . $post_model->id . '&course_id='. $course_id ;
+ 	$reedit_url = Yii::app()->createUrl('/teach/coursepost/reedit' , array( 'post_id' => $post_model->id , 'course_id' => $course_id ) ) ;
  } 
  ?>
 
@@ -27,7 +27,7 @@
  	} 
  ?>
  	<div class="carton col_4 topitemcarton post_title" >
- 		<div class="content post_title" >
+ 		<div class="content ">
     <?php
     	if ( $post_model != null ) 
 		{

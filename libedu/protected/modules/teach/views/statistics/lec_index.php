@@ -47,13 +47,13 @@ function toggle( element , class_name){
 		$(element).children().children('.iconclass.min').text('H');
 	}
 }
-$(document).ready(function(){ 
-	$(".tabs .current").siblings().not(".tabheader").fadeOut();
+$(document).ready(function(){
+	$(".task_stat.side_bar_word.tabheader").siblings('.side_bar_word.task_stat"').first().addClass('current');
+	//$(".tabs").children().not(".tabheader").fadeOut();
+	//$(".tabs").siblings().not(".tabheader").fadeOut();
 	//toggle( $('.task_stat.tabheader') , 'task_stat');
 });
 </script>
-
-<div id="chapterlistforquestion" style="display:none;">
 </div>
 <?php
 	$this->renderPartial( '_side_bar' ); 

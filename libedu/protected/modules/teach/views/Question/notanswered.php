@@ -114,25 +114,25 @@ $(document).ready(function(){
 </div>
 
 <ul class="tabs">
-    <li>
+    <li class="side_bar_word">
         <a href="<?php echo Yii::app()->createUrl('/teach/question/myquestion'); ?>" rel="external">问答首页</a>
     </li>
-    <li>
+    <li class="side_bar_word">
         <a href="<?php echo Yii::app()->createUrl('/teach/question/questionfromme'); ?>" rel="external">我的提问</a>
     </li>
-    <li  class="current">
+    <li  class="current side_bar_word">
         <a href="#tab_one">未回答问题</a>
     </li>
-    <li>
+    <li class="side_bar_word">
         <a href="<?php echo Yii::app()->createUrl('/teach/question/allmyansweredquestion'); ?>" rel="external">所有回答</a>
     </li>
-    <li>
+    <li class="side_bar_word">
         <a href="#" rel="external">所有追问</a>
     </li>
-    <li>
+    <li class="side_bar_word">
         <a href="#" rel="external">问题收藏</a>
     </li>
-    <li>
+    <li class="side_bar_word">
         <a href="#" rel="external">我喜欢的问题</a>
     </li>
 </ul>

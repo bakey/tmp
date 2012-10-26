@@ -1,5 +1,5 @@
 
- <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+<a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/20121026105429.png';?>"" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -10,7 +10,7 @@
             </div>
           </a>
           
-           <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+           <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/20121026105458.png';?>"" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -21,7 +21,7 @@
             </div>
           </a>
           
-           <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+           <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/20121026105511.png';?>"" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -54,7 +54,7 @@
             </div>
           </a>
           
-           <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+           <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/20121026105528.png';?>" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -65,7 +65,7 @@
             </div>
           </a>
 
-            <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+            <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/20121026105543.png';?>" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -75,7 +75,7 @@
              </div>
             </div>
           </a>
-            <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+            <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -85,7 +85,7 @@
              </div>
             </div>
           </a>
-            <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+            <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
               <div class="content current courseitemcontent">
@@ -95,9 +95,9 @@
              </div>
             </div>
           </a>
-            <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+            <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
-            	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
+            	<img src="<?php echo Yii::app()->getRequest()->getHostInfo('http').'/dev/libedu/static/images/libstore/20121026105413.png';?>" width="320px" height="120px" />
               <div class="content current courseitemcontent">
               		<span class="">正弦函数  基本定义</span>
               		<HR align=left width=318 color=#990099 SIZE=1 noShade>
@@ -105,7 +105,8 @@
              </div>
             </div>
           </a>
-            <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
+          
+            <a href="javascript:void(0)" onclick="" rel="external">
             <div class="carton col_4 app_carton">
             	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
               <div class="content current courseitemcontent">
