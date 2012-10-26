@@ -58,6 +58,17 @@ function doselectchapter(event,cid){
 	}
 }
 
+function doopentopchapter(event,cid){
+	$('#topchaptercontainer'+cid).siblings().children('.col_12').fadeOut();
+	if($('#subchaptercontainer'+cid).css('display') != 'none'){
+		$('#subchaptercontainer'+cid).fadeOut();
+		$('#questionlistcontainer'+cid).fadeOut();	
+	}else{
+		$('#subchaptercontainer'+cid).fadeIn();
+		$('#questionlistcontainer'+cid).fadeIn();
+	}
+}
+
 function selectChapterForQuestion(){
 	$.fn.modal({
 		'url':'<?php echo Yii::app()->createUrl("/teach/question/getchapterfromcourse"); ?>',
@@ -195,29 +206,33 @@ $(document).ready(function(){
 					)); ?>
 				</div>
 				<div class="content animated fadeInLeft tinytinyallpadding">
-					<div class="container">
-						<div class="col_2 roundbordered carton">
-							<h2>选择章节</h2>
-							<?php
-							/* @var $this UserController */
-							/* @var $data User */
-								$url = 'question/ajaxFillTree&edition_id='.$eid;
-									$this->widget(
-										    'CTreeView',
-											array(
-									            'animated'=>'fast', //quick animation
-									            'collapsed' => false,
-									            'url' => array( $url ),
-											)
-									);
-							?>
-
-
+					<?php 
+						foreach ($toplevelchapter as $singlechapter) {
+							echo '<div class="carton col_12 normalbottommargin" id="topchaptercontainer'.$singlechapter->id.'">
+						<h2 style="cursor:pointer;"  onclick="doopentopchapter(event,'.$singlechapter->id.')">'.$singlechapter->content.'</h2>
+						<div class="col_12 dotbottom normalbottommargin" style="display:none; padding-bottom:0 !important;" id="subchaptercontainer'.$singlechapter->id.'">
+							<ul class="subchapter">
+								<li class="selected"><a href="javascript:void(0)">Chapter1</a></li>
+								<li><a href="javascript:void(0)">Chapter2</a></li>
+								<li><a href="javascript:void(0)">Chapter3</a></li>
+							</ul>
 						</div>
-						<div class="col_9 roundbordered carton" id="questiongroupbyitem" style="display:none;">
-							&nbsp;
+						<div class="col_12" style="display:none" id="questionlistcontainer'.$singlechapter->id.'">';
+							
+					$this->widget('zii.widgets.CListView', array(
+						'dataProvider'=>$dataProvider,
+						'itemView'=>'_view',
+						 'summaryText'=>'',
+						 'id'=>'myrecentquestions',
+        				'ajaxUpdate'=>true,
+        				'pager'=>array('pageSize'=>5),
+					)); 
+						echo '
 						</div>
-					</div>
+					</div>';
+						}
+					?>
+					
 
 				</div>
 			</div>

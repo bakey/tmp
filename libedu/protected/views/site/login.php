@@ -6,6 +6,7 @@
 	<div class="input password">
 		<input id="LoginForm_password" name="LoginForm[password]" type="password"  placeholder="密码" />
 	</div>
+	<a href="#" class="back">Back</a>
 	<?php 
 	echo CHtml::htmlButton('登陆' , array(
 				'ajax' => array(

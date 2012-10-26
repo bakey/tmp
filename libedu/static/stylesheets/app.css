@@ -10137,6 +10137,7 @@ body .redactor_box_fullscreen {
 
 .stepindicator{
 	background: url(../../images/bigdot.gif) center repeat-x;
+	margin-top:-16px;
 }
 
 .stepitem{
@@ -10210,6 +10211,16 @@ body .redactor_box_fullscreen {
 	margin:2px 5px !important;
 	padding:2px;
 }
+
+.stepoutercontainer h4{
+	-webkit-margin-before: 5px !important;
+	-webkit-margin-after: 5px !important;
+}
+
+.stepoutercontainer input{
+	height:30px !important;
+}
+
 .libstore_header{
 	margin-left: 370px;
 	margin-top:50px;
@@ -10229,8 +10240,36 @@ body .redactor_box_fullscreen {
 	width:120px;
 	height:30px;
 }
+
 .dotbottom.course_name{
 	margin-left: 10px;
 	padding-left:40px;
 	margin-top: 15px;
 }
+
+
+ul.subchapter{
+	list-style: none;
+	padding-left: 0;
+}
+
+ul.subchapter li{
+	display:inline-block;
+	margin-left:3%;
+	border: 1px solid;
+	border-color:transparent;
+	padding:5px;
+	border-bottom:1px dotted #3b8686;
+	border-bottom-color: #3b8686;
+}
+
+ul.subchapter li:hover{
+	border: 1px solid;
+	border-color:#3b8686;
+}
+
+ul.subchapter li.selected{
+	border: 1px solid;
+	border-color:#3b8686;
+}
+

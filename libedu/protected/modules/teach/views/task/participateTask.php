@@ -1,40 +1,48 @@
 <script type="text/javascript">
 function submite_callback(data)
 {
-	alert( data );
-	return ;
-				var task_res = eval(data);
-				$.each( task_res ,function(name,value) 
+	var task_res = eval(data);
+	$.each( task_res ,function(name,value) 
+	{
+		var element_obj = eval( value );
+			$.each( element_obj, function(n,v)
+			{
+				var text = "";
+				show_right_id = "problem_id_" + n + "_right";
+				show_wrong_id = "problem_id_" + n + "_wrong";
+				if ( v.res > 0 )
+				{							
+					$("#" + show_right_id ).fadeIn();
+					$("#" + show_wrong_id ).hide();							
+				}
+				else 
 				{
-					var element_obj = eval( value );
-					$.each( element_obj, function(n,v)
-					{
-						var text = "";
-						show_right_id = "problem_id_" + n + "_right";
-						show_wrong_id = "problem_id_" + n + "_wrong";
-						if ( v > 0 )
-						{							
-							$("#" + show_right_id ).show();
-							$("#" + show_wrong_id ).hide();							
-						}
-						else 
-						{
-							$("#" + show_right_id ).hide();
-							$("#" + show_wrong_id ).show();	
-						}							 
-					} )
-					$("#taskSubmitBtn").hide();
-					$("#taskResetBtn").hide();
-					$("#returnLink").show();
-       			});
+					$("#" + show_right_id ).hide();
+					$('#correctans'+n).text(' '+v.sans+' 。');
+					$("#" + show_wrong_id ).fadeIn();
+					$('#pexplain'+n).fadeIn();
+				}							 
+			} )
+		});
 }
+
+function show_ans_explain(pid)
+{
+	$.fn.modal({
+		url : '<?php echo Yii::app()->createUrl("teach/problem/showansexplain");?>&problem_id=' + pid,
+    	animation:  "fadeIn"
+	});
+}
+
+
 function submit_answer()
 {
+	$('#submitansbtn').fadeOut();
 	$.ajax(
 			{
 				url: '<?php echo CController::createUrl('/teach/task/ajaxcheckanswer') . "&task_id=" . $task_model->id ;?>',
 				data: $('#run-task-form').serialize(),
-				type: 'post',
+				type: 'POST',
 				success: submite_callback,
 			}
 	);
@@ -45,7 +53,7 @@ function submit_answer()
 			备注: <?php echo $task_model->description; ?>
 		</div>
 		<div style="margin-left:680px">
-		<button onclick="submit_answer();">交卷</button>
+		<button onclick="submit_answer();" id="submitansbtn">交卷</button>
 		</div>
 		<?php 
 			/*echo CHtml::button(
