@@ -774,20 +774,22 @@ class TaskController extends Controller
 			$problem_info = array();
 			foreach( $_POST['select_ans'] as $problem_id=>$user_ans )
 			{
-				$problem_model = Problem::model()->findByPk( $problem_id );
-				$ans = chr( $user_ans+ord('A') );
+				$cpid = $problem_id;
+				$cpans = $user_ans; 
+				$problem_model = Problem::model()->findByPk( $cpid );
+				$ans = $cpans;
 				$ref_ans = $problem_model->reference_ans;
 				$check_ans = 0;
 		
 				if ( $ans == $ref_ans ) {
-					$check_ret[] = array( $problem_id => 1 );
+					$check_ret[] = array( $cpid => array('res'=>1, 'sans'=> $ref_ans));
 					$check_ans = 1;
 				}else {
-					$check_ret[] = array( $problem_id => 0 );
+					$check_ret[] = array( $cpid => array('res'=>0, 'sans'=> $ref_ans));
 					$check_ans = 0;
 				}
 				$problem_info[] = array(
-						'id' => $problem_id,
+						'id' => $cpid,
 						'user_ans' => $ans,
 						'check_ans' => $check_ans, 
 						);
