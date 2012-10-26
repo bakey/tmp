@@ -152,6 +152,9 @@ function closemodal(){
 <div class="content animated fadeInLeft tinyallpadding" id="recentquestions" style="min-height:200px;">
 					<div class="container tinytinyallpadding">
 						<img id="courseimage" src="<?php echo $baseUrl;?>/images/sin.jpg" />
+						<?php 
+								$this->widget('application.modules.teach.components.videoWidget',array('options'=>array('method'=>'record')));
+							?>
 					</div>
 				</div>
 				<div class="content animated fadeInLeft tinytinyallpadding">

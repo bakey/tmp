@@ -92,9 +92,9 @@
 	});
 
 	function changedisplayname(event){
-		alert($(event.target).text());
-		//var newtext = window.prompt()
-		//$(event.target).text(newtext)；
+		//alert($(event.target).text());
+		var newt = window.prompt('a','b');
+		$(event.target).text(newt);
 	}
 
 	function changetonextstep(){
