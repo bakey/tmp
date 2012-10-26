@@ -82,10 +82,10 @@ function closemodal(){
             </div></a>
         </div>
         <div class="content animated fadeInLeft tinytinyallpadding">
-           <div class="screencenter">
-             <div class="carton col_5">
+           <div class="screencenter" style="height:400px;">
+             <div class="carton col_5 offset_4" style="margin-top:100px">
                 <h2>提示</h2>
-                <h4>您还没有学任何课程，赶紧去<a href="#">LibStore看看吧~</a></h4>
+                <h4 style="margin:20px;">您还没有学任何课程，赶紧去<a href="#">LibStore看看吧~</a></h4>
              </div>
            </div>
         </div>
