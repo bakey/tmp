@@ -10211,7 +10211,6 @@ body .redactor_box_fullscreen {
 	margin:2px 5px !important;
 	padding:2px;
 }
-<<<<<<< HEAD
 
 .stepoutercontainer h4{
 	-webkit-margin-before: 5px !important;
@@ -10220,7 +10219,8 @@ body .redactor_box_fullscreen {
 
 .stepoutercontainer input{
 	height:30px !important;
-=======
+}
+
 .libstore_header{
 	margin-left: 370px;
 	margin-top:50px;
@@ -10239,5 +10239,30 @@ body .redactor_box_fullscreen {
 .app_filter{
 	width:120px;
 	height:30px;
->>>>>>> origin/DEV
+}
+
+
+ul.subchapter{
+	list-style: none;
+	padding-left: 0;
+}
+
+ul.subchapter li{
+	display:inline-block;
+	margin-left:3%;
+	border: 1px solid;
+	border-color:transparent;
+	padding:5px;
+	border-bottom:1px dotted #3b8686;
+	border-bottom-color: #3b8686;
+}
+
+ul.subchapter li:hover{
+	border: 1px solid;
+	border-color:#3b8686;
+}
+
+ul.subchapter li.selected{
+	border: 1px solid;
+	border-color:#3b8686;
 }

@@ -767,6 +767,10 @@ class QuestionController extends Controller
             ),
 	    	));
 		}
+
+
+		$toplevelchapter = Item::model()->findAllByAttributes(array('edition'=>$edition->id,'level'=>1),array('order'=>'edi_index ASC'));
+
 		if(isset($_REQUEST['refreshafteraddquestion'])){
 			$this->renderPartial('myquestionrefresh',array(
 				'dataProvider'=>$dataProvider,
@@ -778,6 +782,7 @@ class QuestionController extends Controller
 				'dataProvider'=>$dataProvider,
 				'ccourse' =>$ccourse,
 				'eid'=>$edition->id,
+				'toplevelchapter'=>$toplevelchapter,
 			));
 		}
 	}
