@@ -1,4 +1,4 @@
-<div class="carton col_12">
+<div class="carton col_12" id="createcoursewizard">
 	<h2>创建课程</h2>
 	<div class="col_8 offset_2 stepindicator" style="padding-left:30px" id="stepcontainer">
 		<div class="col_4 stepitem selected">
@@ -89,6 +89,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$('#step-3.stepoutercontainer p').bind('click',function(event){changedisplayname(event)});
+		$("#overlays .modal").css("height",parseInt($("#createcoursewizard").height())+10+"px");
 	});
 
 	function changedisplayname(event){
@@ -109,6 +110,7 @@
 			$('#nextbtn').attr('onclick','closemodal()');
 			$('#nextbtn').html('完成');
 		}
+		$("#overlays .modal").css("height",parseInt($("#createcoursewizard").height())+50+"px");
 	}
 
 	function choosecourseoption(event){
@@ -118,5 +120,6 @@
 		$(event.target).addClass('sugar');
 		$(event.target).siblings('.coursefeeoption').hide();
 		$(event.target).siblings('.coursefeeoption').eq(cindex).fadeIn();
+		$("#overlays .modal").css("height",parseInt($("#createcoursewizard").height())+50+"px");
 	}
 </script>

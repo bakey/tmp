@@ -10134,6 +10134,7 @@ body .redactor_box_fullscreen {
 
 .stepindicator{
 	background: url(../../images/bigdot.gif) center repeat-x;
+	margin-top:-16px;
 }
 
 .stepitem{
@@ -10206,4 +10207,25 @@ body .redactor_box_fullscreen {
 	border:1px solid #cecece !important;
 	margin:2px 5px !important;
 	padding:2px;
+}
+
+.stepoutercontainer h4{
+	-webkit-margin-before: 5px !important;
+	-webkit-margin-after: 5px !important;
+}
+
+.stepoutercontainer input{
+	height:30px !important;
+}
+
+
+.screencenter{
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:0;
+	right:0;
+	z-index: 9999999;
 }

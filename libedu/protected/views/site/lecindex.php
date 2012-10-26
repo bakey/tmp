@@ -28,8 +28,9 @@ function changeToTabByIndex(event,targettabindex) {
 function addcourse(){
   $.fn.modal({
     'url':'<?php echo Yii::app()->createUrl("teach/course/createpersonalcourse"); ?>',
-    'padding':'20px',
-    'height': 650,
+    'padding':'5px',
+    'height': 450,
+    'width': 650,
   });
 }
 
@@ -81,7 +82,12 @@ function closemodal(){
             </div></a>
         </div>
         <div class="content animated fadeInLeft tinytinyallpadding">
-          dfgdfg
+           <div class="screencenter">
+             <div class="carton col_5">
+                <h2>提示</h2>
+                <h4>您还没有学任何课程，赶紧去<a href="#">LibStore看看吧~</a></h4>
+             </div>
+           </div>
         </div>
 </div>
 
