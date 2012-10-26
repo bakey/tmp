@@ -59,8 +59,14 @@ function doselectchapter(event,cid){
 }
 
 function doopentopchapter(event,cid){
-	$('#subchaptercontainer'+cid).fadeIn();
-	$('#questionlistcontainer'+cid).fadeIn();
+	$('#topchaptercontainer'+cid).siblings().children('.col_12').fadeOut();
+	if($('#subchaptercontainer'+cid).css('display') != 'none'){
+		$('#subchaptercontainer'+cid).fadeOut();
+		$('#questionlistcontainer'+cid).fadeOut();	
+	}else{
+		$('#subchaptercontainer'+cid).fadeIn();
+		$('#questionlistcontainer'+cid).fadeIn();
+	}
 }
 
 function selectChapterForQuestion(){
@@ -207,7 +213,7 @@ $(document).ready(function(){
 						foreach ($toplevelchapter as $singlechapter) {
 							echo '<div class="carton col_12 normalbottommargin" id="topchaptercontainer'.$singlechapter->id.'">
 						<h2 style="cursor:pointer;"  onclick="doopentopchapter(event,'.$singlechapter->id.')">'.$singlechapter->content.'</h2>
-						<div class="col_12" style="display:none" id="subchaptercontainer'.$singlechapter->id.'">
+						<div class="col_12 dotbottom normalbottommargin" style="display:none; padding-bottom:0 !important;" id="subchaptercontainer'.$singlechapter->id.'">
 							<ul class="subchapter">
 								<li class="selected"><a href="javascript:void(0)">Chapter1</a></li>
 								<li><a href="javascript:void(0)">Chapter2</a></li>
