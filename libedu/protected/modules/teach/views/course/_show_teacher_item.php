@@ -19,8 +19,16 @@ $(document).ready(function(){
 });
 </script>
 <ul class="tabs">
-	<li class="active_tab">
-	课程首页
+	<a href="<?php echo Yii::app()->createUrl('/teach/course/update&course_id=' . $course_id); ?>">
+		<li class="side_bar_word active_tab">
+		课程资料
+		</li>
+	</a>
+	<li class="side_bar_word">
+	我的收藏
+	</li>
+	<li class="side_bar_word">
+	热门资料
 	</li>
 </ul>
  <div class="tabs">

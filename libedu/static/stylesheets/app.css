@@ -9792,7 +9792,10 @@ body.feather .map .caption {
 	height:150px;
 	margin-bottom: 20px;
 }
-
+.carton.app_carton{
+	height:300px;
+	margin-bottom:20px;
+}
 .home_board .section.current {
 	overflow : auto;
 	min-height : 800px;	
@@ -10208,6 +10211,7 @@ body .redactor_box_fullscreen {
 	margin:2px 5px !important;
 	padding:2px;
 }
+<<<<<<< HEAD
 
 .stepoutercontainer h4{
 	-webkit-margin-before: 5px !important;
@@ -10216,4 +10220,24 @@ body .redactor_box_fullscreen {
 
 .stepoutercontainer input{
 	height:30px !important;
+=======
+.libstore_header{
+	margin-left: 370px;
+	margin-top:50px;
+}
+.myaccount_tab {
+	margin-top:20px;
+	margin-left:300px;	
+	text-align:center;
+}
+.app_tab {
+	margin-left:200px;
+	margin-top : 40px;
+	text-align:center;
+	margin-top:20px;
+}
+.app_filter{
+	width:120px;
+	height:30px;
+>>>>>>> origin/DEV
 }

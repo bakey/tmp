@@ -310,8 +310,6 @@ class TaskController extends Controller
 		$course_model = Course::model()->findByPk( Yii::app()->user->course );
 		$total_student = $course_model->getCourseStudentCount();
 		$finish_stu_count = $this->getFinishTaskStuCnt( $task_id );
-		//var_dump( $this->getUnfinishStudents() );
-		//exit(); 
 		$this->renderPartial( 'student_task_status' , array(
 							  	'total_student'    => $total_student ,
 							  	'finish_stu_count' => $finish_stu_count,
@@ -730,7 +728,7 @@ class TaskController extends Controller
 		$dataProvider = new CArrayDataProvider( $problem_models );
 		$this->render('participatetask' , array(
 				'problem_data'=>$dataProvider ,
-				'task_id' => $task_id,
+				'task_model' => $task_model,
 		));
 	}
 	public function actionShowFinishTask( $task_id )

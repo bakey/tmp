@@ -28,7 +28,7 @@ h6 { height: 24px; line-height: 24px; font-size: 12px;}
 
 .v_line { padding: 0 10px;}
 
-.pt { position: relative; padding: 10px 20px 10px 70px; height: 50px; border-bottom: 1px solid #9EABAB; }
+.pt { position: relative; /*padding: 10px 20px 10px 70px;*/ padding: 13px 20px 10px 70px; height: 50px; border-bottom: 1px solid #9EABAB; }
 .pt:last-child { border: none;}
 .pt dt, .pt dd { height: 18px; line-height: 18px;}
 .pt dt { margin-top: -2px;} 
@@ -44,11 +44,13 @@ a.btn { display: inline-block; height: 45px; font: bold 14px/45px HelveticaNeue,
 a.btn:hover { background-image: -webkit-linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)); background-image: -moz-linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.3)); text-decoration: none; }
 a.btn:active { background-image: -webkit-linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)); background-image: -moz-linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.5)); }
 
+.btn_next { position: absolute; right: -18px; top: 22%; width: 45px; height: 50px; cursor: pointer;}
+.btn_next .icon { display: block; font-family: Icons; font-size: 35px; -webkit-mask-image: url(../images/mask.png); color: #4D6168; }
 /*cs_index*/
-.section_cs { width: 810px; margin-top: 60px;}
+.section_cs { /*width: 810px;*/ width: 90%; max-width: 1100px; min-width: 950px; margin-top: 60px;}
 .recommend { position: relative; margin-bottom: 40px; padding-top: 20px; height: 225px;overflow: hidden;}
 .pic_list { width: 9999em; height: 225px;}
-.pic_list li { display: inline-block; position: relative; width: 810px; height: 225px;}
+.pic_list li { display: inline-block; position: relative; width: 1100px; height: 225px;}
 .pic_list a { display: block; height: 225px;}
 
 .thumb { position: absolute; left: 50%; bottom: 20px; width: 150px; margin-left: -75px; text-align: center;}
@@ -60,19 +62,23 @@ a.btn:active { background-image: -webkit-linear-gradient(rgba(0,0,0,0.3), rgba(0
 .cs_main .pt dt, .cs_main .pt dd { height: 18px; line-height: 18px;}
 /*show*/
 .show { position: relative; width: 58%; }
-.lib_tab, .show_con_tab { width: 100%;}
+.lib_tab, .show_con_tab, .show_con_tab2 { width: 100%;}
 .lib_tab { height: 36px; line-height: 36px; overflow: hidden; background: #FAFAFA; background: -webkit-linear-gradient(rgba(255,255,255,0.3), #FAFAFA); border-top-left-radius: 2px; border-top-right-radius: 2px; box-shadow: rgba(0, 0, 0, 0.2) 0px -45px 62px -62px inset, 0px 2px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 1px rgba(0, 0, 0, 0.2); }
 .lib_tab a { font-size: 14px;}
 .lib_tab li, .show_con_tab li { display: inline-block; padding: 0 4%;}
+.show_con_tab2 li { display: inline-block; padding: 0 2%;}
 .lib_tab .cur { padding-left: 20px; background-image: -webkit-linear-gradient(rgba(0,0,0,0),rgba(0,0,0,0.1)); border-bottom: 1px solid #ccc; box-shadow: rgba(255,255,255,0.7) 0px 1px 0px inset, white 0px 1px 0px; border-top-left-radius: 2px; border-top-right-radius: 2px; color: #6a6f76; text-shadow: rgba(255,255,255,0.5) 0px 1px 0px; }
 .show_con_tab { position: absolute; left: 0; top: 40px; height: 36px; line-height: 36px; overflow: hidden;}
-.show_con_tab a { font-size: 12px;}
+.show_con_tab2 { height: 30px; line-height: 14px; overflow: hidden;}
+.show_con_tab a, .show_con_tab2 a { font-size: 12px;}
 
 .show_con { padding: 40px 2% 0; background: -webkit-linear-gradient(rgba(255,255,255,0.3), #FAFAFA); border-bottom-left-radius: 2px; border-bottom-right-radius: 2px; box-shadow: rgba(0, 0, 0, 0.2) 0px -45px 62px -62px inset, 0px 2px 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 1px rgba(0, 0, 0, 0.2); }
 .show_item { margin-bottom: 15px; padding: 0 2%; background-color: #fff;}
-.show_item_rank { height:24px; line-height: 20px; font-size: 12px; padding-right: 25px;}
+.show_item_rank { height:24px; line-height: 20px; font-size: 12px; /*padding-right: 25px;*/ padding-right: 6%;}
 .show_item_rank input { vertical-align: -2px;}
 .show_item_rank label { cursor: pointer;}
+.show_item_con { position: relative;}
+.show_item_scroll { position: relative;}
 .show_item_more { float: right;}
 .show_item ul li { height: 18px; line-height: 18px;}
 
@@ -80,6 +86,8 @@ a.btn:active { background-image: -webkit-linear-gradient(rgba(0,0,0,0.3), rgba(0
 .show_large_pic { display: block; width:135px; height: 100px; margin-bottom: 5px;}
 .show_small { width:120px; height: 70px; background-color: #ccc; position: relative; margin: 0 3% 3% 0;}
 
+.show_video { width:105px; margin:10px 3%; display: inline-block;}
+.show_video_pic { display: block; width:105px; height: 65px; margin-bottom: 5px;}
 /*sidebar*/
 .sidebar { width: 15%;}
 .sidebar ul { /*width: 1100px;*/ border-top: 1px solid #9eabab; border-left: 1px solid #9eabab; box-shadow: white -1px 0px 0px, white 0px 0px 0px; }
@@ -109,7 +117,7 @@ a.btn:active { background-image: -webkit-linear-gradient(rgba(0,0,0,0.3), rgba(0
 .resource_descr { }
 .resource_descr li { height: 22px; line-height: 22px;}
 
-.resource_next { position: absolute; right: 10px; top: 400px; width: 45px; height: 50px; cursor: pointer;}
+.resource_next { position: absolute; right: 10px; top: 50%; width: 45px; height: 50px; cursor: pointer;}
 .resource_next .icon { display: block; font-family: Icons; font-size: 50px; -webkit-mask-image: url(../images/mask.png); color: #4D6168; }
 
 /*course*/
@@ -175,3 +183,8 @@ position: relative; height: 36px; line-height: 36px; padding: 0 5%; border-botto
 .video_stu_list span, .video_stu_list a.btn { display: none;}
 .video_stu_hand span { display: block; position: absolute; right: 0; top: -12px; width: 23px; height: 30px; background: url(images/hand.png);}
 .video_stu_hand a.btn { display: block; margin: 5px auto 0; width: 44px; height: 22px; line-height: 22px; font-size: 12px;}
+
+
+/*update*/
+#header .con { width: 90%; max-width: 1100px; min-width: 950px; }
+#header ul li.dashboard a { padding-left: 0; }

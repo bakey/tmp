@@ -1,25 +1,11 @@
 <?php
 
-class VideoController extends Controller
+class LibstoreController extends Controller
 {
-	public function actionAdmin()
-	{
-		$this->render('admin');
-	}
-
 	public function actionIndex()
 	{
-		$this->render('index');
-	}
-
-	public function actionTest()
-	{
-		$this->render('test');
-	}
-	
-	public function actionView(){
-		$this->layout = "//layouts/homepage";
-		$this->render('view');
+		$this->layout = '//layouts/homepage';
+		$this->render('store_index');
 	}
 
 	// Uncomment the following methods and override them if needed

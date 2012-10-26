@@ -59,11 +59,14 @@ $(document).ready(function(){
  			} 
  		?>
  		</div>
- 		<div id="unfinish_student" style="display:none">
+ 		<div id="unfinish_student" style="width:1500px;display:none">
  		<?php
  			foreach( $unfinish_student as $student )
  			{
- 				echo $student->user_profile->real_name; 				
+ 				//echo '<span ="margin-left:50px">';
+ 				echo '<span class="col_1 carton" style="text-align:center;height:20px">';
+ 				echo $student->user_profile->real_name;
+ 				echo '</span>'; 				
  			} 
  		?>
  		</div>

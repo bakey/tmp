@@ -22,7 +22,7 @@ function show_task_status( task_id )
 			}
 			else
 			{
-				echo CHtml::htmlButton('进入练习' , array('onclick' => 'window.location.href="index.php?r=teach/task/previewtask&task_id=' . $task['model']->id . '"' ,
+				echo CHtml::htmlButton('进入练习' , array('onclick' => 'window.location.href="index.php?r=teach/task/participatetask&task_id=' . $task['model']->id . '"' ,
 						'class' => 'sunlit') );
 			}
 		 ?>

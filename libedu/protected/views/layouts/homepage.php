@@ -13,7 +13,7 @@
 <body>
 	<div id="header">
 		<ul class="con">
-			<li class="siteindex">
+			<li class="dashboard siteindex">
 				<a href="<?php echo Yii::app()->createUrl('/site/index'); ?>" data-href="#home" rel="external"><?php echo Yii::app()->params['currentSchoolName']; ?>云校园</a>
 			</li>
 
@@ -63,26 +63,6 @@
 			</li>
 			<li class="search">
 				<input type="text" placeholder="Search" />
-				<ul>
-					<li>
-						<a href="#">
-							<h4>Jens Alba</h4>
-							<p>Lorem ipsum dolor sit imet smd ddm lksdm lkdsm</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h4>Jens Alba</h4>
-							<p>Lorem ipsum dolor sit imet smd ddm lksdm lkdsm</p>
-						</a>
-					</li>
-					<li>
-						<a href="#">
-							<h4>Jens Alba</h4>
-							<p>Lorem ipsum dolor sit imet smd ddm lksdm lkdsm</p>
-						</a>
-					</li>
-				</ul>
 			</li>
 		</ul>
 	</div>

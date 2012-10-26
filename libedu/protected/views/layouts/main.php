@@ -16,12 +16,18 @@
 			<li class="dashboard siteindex">
 				<a href="<?php echo Yii::app()->createUrl('/site/index'); ?>" data-href="#home" rel="external"><?php echo Yii::app()->params['currentSchoolName']; ?>云校园</a>
 			</li>
+			
 			<li>
-				<a href="#" rel="external"><span class="icon">1</span> 个人中心</a>
+				<a href="<?php echo Yii::app()->createUrl('/site/index'); ?>" data-href="#home" rel="external"><span class="icon">|</span> 我的课程</a>
 			</li>
 			<li>
 				<a href="course_square/index.html" rel="external"><span class="icon">|</span>课程广场</a>
 			</li>		
+			
+			<li class="userhome">
+				<a href="<?php echo Yii::app()->createUrl('/user/libuser/home'); ?>" rel="external"><span class="icon">1</span> 个人中心</a>
+			</li>
+				
 			<li class="avatar">
 				<?php
 					$model = LibUser::model()->findByPk(Yii::app()->user->id);
@@ -200,10 +206,10 @@
 			</a>
 			<?php
 				if ( isset(Yii::app()->controller->module) && Yii::app()->controller->module->id == "app" ) {
-					echo '<a href="index.php?r=app/default" class="tile sail" rel="external">';
+					echo '<a href="index.php?r=app/libstore" class="tile sail" rel="external">';
 				}
 				else {
-					echo '<a href="index.php?r=app/default" class="tile" rel="external">';
+					echo '<a href="index.php?r=app/libstore" class="tile" rel="external">';
 				}
 			?>
 				<span class="vector">+</span>

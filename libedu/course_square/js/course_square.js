@@ -23,7 +23,7 @@
 	  if(page == len){ page = 0; }
 	}, 3000);
 	function PicScroll(page){
-	  $('.pic_list li').animate({'left':'-'+810*page+'px'});
+	  $('.pic_list li').animate({'left':'-'+1100*page+'px'});
 	  $('.thumb li span').eq(page).addClass('cur')
 	  $('.thumb li span').eq(page).parent('li').siblings('li').find('span').removeClass('cur');
 	}
@@ -43,6 +43,9 @@
 	}
   
   //资源检索翻页
+	//$('.btn_next').live('click',function(){
+	//	$(this).siblings('.show_item_scroll').animate({'left':'-745px'},1000);
+	//})
 	$('.resource_next').live('click',function(){
 		$('.resource_inner').animate({'left':'-745px'},1000);
 	})
