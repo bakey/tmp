@@ -289,7 +289,6 @@ $.initializeLogin = function() {
 	$.notification( 
 		{
 			title: "欢迎来到人大附中云校园",
-			content: "请登陆使用!",
 			img: "static/demo/cloud.png",
 			border: false
 		}
@@ -300,7 +299,10 @@ $.initializeLogin = function() {
 	$("#users").addClass("animated flipInY");
 	
 	$(".plus").bind("tap", function() {
-		var avatar = $('<a data-username="Javier Roslyn" href="#" class="avatar" data-avatar="static/demo/autumn.jpg" />');
+		var avatar = $('<a data-username="老师" href="#" class="avatar" data-avatar="static/demo/autumn1.jpg" />');
+		if($('#avatars').children('a:last-child').attr('data-avatar') == 'static/demo/autumn1.jpg'){
+			avatar = $('<a data-username="行政" href="#" class="avatar" data-avatar="static/demo/autumn2.jpg" />');
+		}
 		avatar.css("background-image", "url("+ avatar.attr("data-avatar") +")");
 		$("#avatars").append(avatar);
 		avatar.addClass("animated bounceInDown").delay(1000).queue(function(){ 
