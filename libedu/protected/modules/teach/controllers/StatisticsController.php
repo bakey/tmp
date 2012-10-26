@@ -134,6 +134,13 @@ class StatisticsController extends Controller
 			$node = array();
 			$node['model']    = $item;
 			$node['children'] = $item->level_child; 
+			$j = 0;
+			foreach( $node['children'] as $item_model )
+			{
+				$question_cnt = Question::model()->count( 'item=:iid' , array(':iid' => $item_model->id ) );
+				$node['question_count'][$j] = $question_cnt;
+				++ $j;
+			}
 			
 			$item_data[] = $node;
 		}		

@@ -18,6 +18,7 @@ class VideoController extends Controller
 	}
 	
 	public function actionView(){
+		$this->layout = "//layouts/homepage";
 		$this->render('view');
 	}
 

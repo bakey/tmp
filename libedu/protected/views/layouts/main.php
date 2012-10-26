@@ -200,10 +200,10 @@
 			</a>
 			<?php
 				if ( isset(Yii::app()->controller->module) && Yii::app()->controller->module->id == "app" ) {
-					echo '<a href="index.php?r=app/default" class="tile sail" rel="external">';
+					echo '<a href="index.php?r=app/libstore" class="tile sail" rel="external">';
 				}
 				else {
-					echo '<a href="index.php?r=app/default" class="tile" rel="external">';
+					echo '<a href="index.php?r=app/libstore" class="tile" rel="external">';
 				}
 			?>
 				<span class="vector">+</span>

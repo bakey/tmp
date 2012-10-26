@@ -22,10 +22,10 @@ function show_total_task_list(event)
 {
 	//$('#recent_task_list').fadeOut( 300 );
 	$('#recent_task_list').hide();
-	$('#recent_task_tab').removeClass( 'sail' );
+	$('#recent_task_tab').removeClass( 'current' );
 	
 	$('#total_task_list').show();
-	$(event.target).addClass('sail');
+	$(event.target).addClass('current');
 }
 function show_recent_task_list(event)
 {
@@ -33,29 +33,29 @@ function show_recent_task_list(event)
 	{
 		//$('#total_task_list').fadeOut( 200 );
 		$('#total_task_list').toggle();
-		$('#total_task_tab').removeClass('sail');
+		$('#total_task_tab').removeClass('current');
 	}
 	if ( $('#recent_task_list').css('display') == 'none' )
 	{
 		//$('#recent_task_list').fadeIn( 200 );
 		$('#recent_task_list').toggle();
-		$('#recent_task_tab').addClass( 'sail' );
+		$('#recent_task_tab').addClass( 'current' );
 	}
 }
 </script>
 <ul class="tabs">
 	<a href="index.php?r=teach/task" rel="external">
-		<li class="side_bar_head active_tab sail">
+		<li class="side_bar_head active_tab current">
 		我的练习
 		</li>
 	</a>
-	<li class="side_bar_head active_tab">
+	<li class="side_bar_head">
 	共建练习
 	</li>
-	<li class="side_bar_head active_tab">
+	<li class="side_bar_head">
 	热门练习
 	</li>
-	<li class="side_bar_head active_tab">
+	<li class="side_bar_head">
 	我的收藏
 	</li>
 </ul>
@@ -66,7 +66,7 @@ function show_recent_task_list(event)
      
      	<a href="javascript:void(0)" onclick="show_recent_task_list(event)">		
 			<div class="carton col_3 recent_task_tab" >
- 				<div id="recent_task_tab" class="subcontent bordered sail">
+ 				<div id="recent_task_tab" class="subcontent bordered current">
    				最近练习
  				</div>
 			</div>

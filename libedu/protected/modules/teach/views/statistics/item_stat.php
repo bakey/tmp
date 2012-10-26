@@ -13,7 +13,7 @@ function toggle( element , class_name){
 $(document).ready(function(){ 
 	$(".tabs").children("#tab_one").children().not(".tabheader").toggle();
 	toggle( $('.qa_stat.tabheader') , 'qa_stat' );
-	$('.qa_stat.qa_item_stat').addClass('sail');
+	$('.qa_stat.qa_item_stat').addClass('current');
 });
 </script>
 
@@ -53,7 +53,7 @@ function output_column( $content )
 			}
 			output_column( '第' . $data[$i]['children'][$j]->edi_index . '节');
 			output_column( $data[$i]['children'][$j]->content );
-			output_column( 0 );	
+			output_column( $data[$i]['question_count'] );	
 			echo '</tr>';	
 		}	
 	}

@@ -4,6 +4,26 @@ Yii::app()->getClientScript()->scriptMap=array(
 		'jquery.js'=>false,
 );
 ?>
+<script type="text/javascript">
+function switch_to_tools_content()
+{
+	$("#apps_course_content").fadeOut();
+	$("#apps_tools_content").fadeIn();
+	$("#account_tab").removeClass('sail').addClass('carton');
+	$("#apps_tab").removeClass('carton').addClass('sail');
+}
+function switch_to_course_content()
+{
+	$("#apps_tools_content").fadeOut();
+	$("#apps_course_content").fadeIn();
+	$("#account_tab").removeClass('carton').addClass('sail');
+	$('#apps_tab').removeClass('sail').addClass('carton');
+}
+$(document).ready(function(){ 
+	switch_to_tools_content();
+});
+
+</script>
 	<div class="libstore_header col_12">
 		<h1>
 		Libstore
@@ -11,136 +31,36 @@ Yii::app()->getClientScript()->scriptMap=array(
 	</div>
 
 <div class="container dotbottom app_tab">
-	<a href="javascript:void(0)">
-		<span class="col_2 carton ">
+	<a href="javascript:void(0)" onclick="switch_to_course_content()">
+		<span id="account_tab" class="col_2 carton" style="height:30px;font-size:20px;" >
 			我的账户
 		</span>
 	</a>
-	<a href="javascript:void(0)">
-		<span class="col_2 carton ">
+	<a href="javascript:void(0)" onclick="switch_to_tools_content()">
+		<span id="apps_tab" class="col_2 carton"  style="height:30px;font-size:20px;">
 			应用
 		</span>
 	</a>
 	<div class="col_2">
 	<select class="app_filter">
 	<option>资料</option>
+	<option>数学</option>
+	<option>语文</option>
+	<option>英语</option>
+	<option>物理</option>
+	<option>化学</option>
 	</select>
 	</div>
 </div>
+<div id="apps_course_content" style="display:none">
+	<?php
+		$this->renderPartial('apps_course'); 
+	?>	
+</div>
 
- <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
-            <div class="carton col_4 app_carton">
-            	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
-              <div class="content current courseitemcontent">
-              		<span class="">正弦函数  基本定义</span>
-              		<HR align=left width=318 color=#990099 SIZE=1 noShade>
-              
-             </div>
-            </div>
-          </a>
-          
-           <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
-            <div class="carton col_4 app_carton">
-            	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
-              <div class="content current courseitemcontent">
-              		<span class="">正弦函数  基本定义</span>
-              		<HR align=left width=318 color=#990099 SIZE=1 noShade>
-              
-             </div>
-            </div>
-          </a>
-          
-           <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
-            <div class="carton col_4 app_carton">
-            	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
-              <div class="content current courseitemcontent">
-              		<span class="">正弦函数  基本定义</span>
-              		<HR align=left width=318 color=#990099 SIZE=1 noShade>
-              		<img src="http://localhost/dev/libedu/static/images/222boy_avatar.jpg" width="50px" height="50px" />
-              		<span style="height:50px">
-              			<span style="padding-top:1px;">刘莉莉</span>
-              			人大附中 高三年级特级教师
-              		</span>
-              		<div style="margin-top:10px;">              		
-              		正弦函数的基本定义主要是三角函数的入门课程，是本章内容的基础
-              		
-              		</div>
-              		<HR align=left width=318 color=#990099 SIZE=1 noShade>
-              		<span class="col_4">使用人数 789</span>
-    
-              		<span>
-              		<img src="http://localhost/dev/libedu/static/images/star.png" width="20px" height="20px" />
-              		<img src="http://localhost/dev/libedu/static/images/star.png" width="20px" height="20px" />
-              		<img src="http://localhost/dev/libedu/static/images/star.png" width="20px" height="20px" />
-              		<img src="http://localhost/dev/libedu/static/images/star.png" width="20px" height="20px" />
-              		</span>
-              		<span>
-              		￥ 50.00
-              		</span>
-              		
-              
-             </div>
-            </div>
-          </a>
-          
-           <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
-            <div class="carton col_4 app_carton">
-            	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
-              <div class="content current courseitemcontent">
-              		<span class="">正弦函数  基本定义</span>
-              		<HR align=left width=318 color=#990099 SIZE=1 noShade>
-              
-             </div>
-            </div>
-          </a>
+<div id="apps_tools_content" style="display:none">
+<?php
+	$this->renderPartial('apps_tool'); 
+?>
+</div>
 
-            <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
-            <div class="carton col_4 app_carton">
-            	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
-              <div class="content current courseitemcontent">
-              		<span class="">正弦函数  基本定义</span>
-              		<HR align=left width=318 color=#990099 SIZE=1 noShade>
-              
-             </div>
-            </div>
-          </a>
-            <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
-            <div class="carton col_4 app_carton">
-            	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
-              <div class="content current courseitemcontent">
-              		<span class="">正弦函数  基本定义</span>
-              		<HR align=left width=318 color=#990099 SIZE=1 noShade>
-              
-             </div>
-            </div>
-          </a>
-            <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
-            <div class="carton col_4 app_carton">
-            	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
-              <div class="content current courseitemcontent">
-              		<span class="">正弦函数  基本定义</span>
-              		<HR align=left width=318 color=#990099 SIZE=1 noShade>
-              
-             </div>
-            </div>
-          </a>
-            <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
-            <div class="carton col_4 app_carton">
-            	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
-              <div class="content current courseitemcontent">
-              		<span class="">正弦函数  基本定义</span>
-              		<HR align=left width=318 color=#990099 SIZE=1 noShade>
-              
-             </div>
-            </div>
-          </a>
-            <a href="index.php?r=teach/edition/admin" onclick="" rel="external">
-            <div class="carton col_4 app_carton">
-            	<img src="http://localhost/dev/libedu/static/images/boy_avatar.jpg" width="320px" height="120px" />
-              <div class="content current courseitemcontent">
-              		<span class="">正弦函数  基本定义</span>
-              		<HR align=left width=318 color=#990099 SIZE=1 noShade>
-              
-             </div>
-            </div>
-          </a>
